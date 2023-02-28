@@ -311,10 +311,6 @@ set(lightguider_SRC
   ${phd_src_dir}/serialport.h
   ${phd_src_dir}/serialport_loopback.cpp
   ${phd_src_dir}/serialport_loopback.h
-  ${phd_src_dir}/serialport_mac.cpp
-  ${phd_src_dir}/serialport_mac.h
-  ${phd_src_dir}/serialport_win32.cpp
-  ${phd_src_dir}/serialport_win32.h
   ${phd_src_dir}/serialport_posix.cpp
   ${phd_src_dir}/serialport_posix.h
   ${phd_src_dir}/serialports.h
