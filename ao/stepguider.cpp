@@ -35,8 +35,8 @@
 #include "phd.h"
 
 #include "gear_simulator.h"
-#include "image_math.h"
-#include "socket_server.h"
+#include "image/image_math.h"
+#include "server/socket_server.h"
 #include "stepguiders.h"
 
 #include <wx/textfile.h>

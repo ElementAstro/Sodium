@@ -36,8 +36,8 @@
 #include "backlash_comp.h"
 #include "gui/calreview_dialog.h"
 #include "gui/calstep_dialog.h"
-#include "image_math.h"
-#include "socket_server.h"
+#include "image/image_math.h"
+#include "server/socket_server.h"
 
 #include <wx/textfile.h>
 

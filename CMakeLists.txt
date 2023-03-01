@@ -118,7 +118,6 @@ include(thirdparty/thirdparty.cmake)
 include_directories(${phd_src_dir}/)
 
 
-
 #################################################################################
 #
 # main project
@@ -153,15 +152,17 @@ set(scopes_SRC
   ${phd_src_dir}/telescope/scope_indi.h
   ${phd_src_dir}/telescope/scope_indi.cpp
   ${phd_src_dir}/telescope/scopes.h
-  ${phd_src_dir}/stepguider_sxao.cpp
-  ${phd_src_dir}/stepguider_sxao.h
-  ${phd_src_dir}/stepguider_sxao_indi.cpp
-  ${phd_src_dir}/stepguider_sxao_indi.h
-  ${phd_src_dir}/stepguider_sbigao_indi.cpp
-  ${phd_src_dir}/stepguider_sbigao_indi.h
-  ${phd_src_dir}/stepguider.cpp
-  ${phd_src_dir}/stepguider.h
-  ${phd_src_dir}/stepguiders.h
+
+  ${phd_src_dir}/ao/stepguider_sxao.cpp
+  ${phd_src_dir}/ao/stepguider_sxao.h
+  ${phd_src_dir}/ao/stepguider_sxao_indi.cpp
+  ${phd_src_dir}/ao/stepguider_sxao_indi.h
+  ${phd_src_dir}/ao/stepguider_sbigao_indi.cpp
+  ${phd_src_dir}/ao/stepguider_sbigao_indi.h
+  ${phd_src_dir}/ao/stepguider.cpp
+  ${phd_src_dir}/ao/stepguider.h
+  ${phd_src_dir}/ao/stepguiders.h
+
 )
 source_group(Scopes FILES ${scopes_SRC})
 
@@ -198,10 +199,15 @@ source_group(Guiding FILES ${guiding_SRC})
 
 # it would ease if files are organised in an alphabetical order
 set(lightguider_SRC
+
+  # GUI
+
   ${phd_src_dir}/gui/about_dialog.cpp
   ${phd_src_dir}/gui/about_dialog.h
+
   ${phd_src_dir}/gui/advanced_dialog.cpp
   ${phd_src_dir}/gui/advanced_dialog.h
+
   ${phd_src_dir}/gui/aui_controls.cpp
   ${phd_src_dir}/gui/aui_controls.h
 
@@ -210,6 +216,35 @@ set(lightguider_SRC
 
   ${phd_src_dir}/gui/calstep_dialog.cpp
   ${phd_src_dir}/gui/calstep_dialog.h
+
+  ${phd_src_dir}/gui/configdialog.cpp
+  ${phd_src_dir}/gui/configdialog.h
+
+  ${phd_src_dir}/gui/confirm_dialog.cpp
+  ${phd_src_dir}/gui/confirm_dialog.h
+
+  ${phd_src_dir}/gui/darks_dialog.cpp
+  ${phd_src_dir}/gui/darks_dialog.h
+
+  ${phd_src_dir}/gui/indi_gui.cpp
+  ${phd_src_dir}/gui/indi_gui.h
+
+  ${phd_src_dir}/gui/gear_dialog.cpp
+  ${phd_src_dir}/gui/gear_dialog.h
+
+  ${phd_src_dir}/gui/manualcal_dialog.cpp
+  ${phd_src_dir}/gui/manualcal_dialog.h
+
+  ${phd_src_dir}/gui/myframe.cpp
+  ${phd_src_dir}/gui/myframe.h
+  ${phd_src_dir}/gui/myframe_events.cpp
+
+  ${phd_src_dir}/gui/profile_wizard.h
+  ${phd_src_dir}/gui/profile_wizard.cpp
+
+  ${phd_src_dir}/gui/statswindow.cpp
+  ${phd_src_dir}/gui/statswindow.h
+
   ${phd_src_dir}/camera/camcal_import_dialog.cpp
   ${phd_src_dir}/camera/camcal_import_dialog.h
   ${phd_src_dir}/circbuf.h
@@ -219,27 +254,32 @@ set(lightguider_SRC
 
   ${phd_src_dir}/config_indi.cpp
   ${phd_src_dir}/config_indi.h
-  ${phd_src_dir}/gui/configdialog.cpp
-  ${phd_src_dir}/gui/configdialog.h
-  ${phd_src_dir}/gui/confirm_dialog.cpp
-  ${phd_src_dir}/gui/confirm_dialog.h
-  ${phd_src_dir}/gui/darks_dialog.cpp
-  ${phd_src_dir}/gui/darks_dialog.h
+
+  
+
   ${phd_src_dir}/debuglog.cpp
   ${phd_src_dir}/debuglog.h
   ${phd_src_dir}/drift_tool.cpp
   ${phd_src_dir}/drift_tool.h
   ${phd_src_dir}/eegg.cpp
-  ${phd_src_dir}/event_server.cpp
-  ${phd_src_dir}/event_server.h
 
-  ${phd_src_dir}/fitsiowrap.cpp
-  ${phd_src_dir}/fitsiowrap.h
+  ${phd_src_dir}/server/event_server.cpp
+  ${phd_src_dir}/server/event_server.h
+  ${phd_src_dir}/server/socket_server.cpp
+  ${phd_src_dir}/server/socket_server.h
 
-  ${phd_src_dir}/gui/gear_dialog.cpp
-  ${phd_src_dir}/gui/gear_dialog.h
-  ${phd_src_dir}/gear_simulator.h
-  ${phd_src_dir}/gear_simulator.cpp
+  ${phd_src_dir}/image/fitsiowrap.cpp
+  ${phd_src_dir}/image/fitsiowrap.h
+  ${phd_src_dir}/image/image_math.cpp
+  ${phd_src_dir}/image/image_math.h
+  ${phd_src_dir}/image/imagelogger.cpp
+  ${phd_src_dir}/image/imagelogger.h
+  ${phd_src_dir}/image/usImage.cpp
+  ${phd_src_dir}/image/usImage.h
+  
+  ${phd_src_dir}/ao/gear_simulator.h
+  ${phd_src_dir}/ao/gear_simulator.cpp
+
   ${phd_src_dir}/graph-stepguider.cpp
   ${phd_src_dir}/graph-stepguider.h
   ${phd_src_dir}/graph.cpp
@@ -250,25 +290,18 @@ set(lightguider_SRC
   ${phd_src_dir}/guidinglog.h
   ${phd_src_dir}/guiding_stats.cpp
   ${phd_src_dir}/guiding_stats.h
-  ${phd_src_dir}/image_math.cpp
-  ${phd_src_dir}/image_math.h
-  ${phd_src_dir}/imagelogger.cpp
-  ${phd_src_dir}/imagelogger.h
-  ${phd_src_dir}/indi_gui.cpp
-  ${phd_src_dir}/indi_gui.h
+  
+  
   ${phd_src_dir}/json_parser.cpp
   ${phd_src_dir}/json_parser.h
   ${phd_src_dir}/logger.cpp
   ${phd_src_dir}/logger.h
   ${phd_src_dir}/log_uploader.cpp
   ${phd_src_dir}/log_uploader.h
-  ${phd_src_dir}/gui/manualcal_dialog.cpp
-  ${phd_src_dir}/gui/manualcal_dialog.h
+  
   ${phd_src_dir}/messagebox_proxy.cpp
   ${phd_src_dir}/messagebox_proxy.h
-  ${phd_src_dir}/gui/myframe.cpp
-  ${phd_src_dir}/gui/myframe.h
-  ${phd_src_dir}/gui/myframe_events.cpp
+  
   ${phd_src_dir}/nudge_lock.cpp
   ${phd_src_dir}/nudge_lock.h
   ${phd_src_dir}/onboard_st4.cpp
@@ -290,17 +323,15 @@ set(lightguider_SRC
   ${phd_src_dir}/polardrift_tool.h
   ${phd_src_dir}/polardrift_toolwin.h
   ${phd_src_dir}/polardrift_toolwin.cpp
-  ${phd_src_dir}/gui/profile_wizard.h
-  ${phd_src_dir}/gui/profile_wizard.cpp
+  
   ${phd_src_dir}/point.h
   ${phd_src_dir}/Refine_DefMap.cpp
   ${phd_src_dir}/Refine_DefMap.h
 
   # rotators
-  ${phd_src_dir}/rotators.h
-
-  ${phd_src_dir}/rotator.cpp
-  ${phd_src_dir}/rotator.h
+  ${phd_src_dir}/rotator/rotators.h
+  ${phd_src_dir}/rotator/rotator.cpp
+  ${phd_src_dir}/rotator/rotator.h
 
   ###
 
@@ -316,15 +347,13 @@ set(lightguider_SRC
   ${phd_src_dir}/serialports.h
   ${phd_src_dir}/sha1.cpp
   ${phd_src_dir}/sha1.h
-  ${phd_src_dir}/socket_server.cpp
-  ${phd_src_dir}/socket_server.h
+  
   ${phd_src_dir}/starcross_test.cpp
   ${phd_src_dir}/starcross_test.h
   ${phd_src_dir}/staticpa_tool.h
   ${phd_src_dir}/staticpa_toolwin.h
   ${phd_src_dir}/staticpa_toolwin.cpp
-  ${phd_src_dir}/gui/statswindow.cpp
-  ${phd_src_dir}/gui/statswindow.h
+  
 
   ${phd_src_dir}/star.cpp
   ${phd_src_dir}/star.h
@@ -334,8 +363,7 @@ set(lightguider_SRC
   ${phd_src_dir}/target.h
   ${phd_src_dir}/testguide.cpp
   ${phd_src_dir}/testguide.h
-  ${phd_src_dir}/usImage.cpp
-  ${phd_src_dir}/usImage.h
+  
   ${phd_src_dir}/worker_thread.cpp
   ${phd_src_dir}/worker_thread.h
   ${phd_src_dir}/wxled.cpp

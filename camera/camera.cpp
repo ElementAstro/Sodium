@@ -37,7 +37,7 @@
 #include "phd.h"
 
 #include "camera.h"
-#include "gear_simulator.h"
+#include "ao/gear_simulator.h"
 
 #include <wx/stdpaths.h>
 

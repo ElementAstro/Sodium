@@ -154,7 +154,7 @@ WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 #include "phdconfig.h"
 #include "gui/configdialog.h"
 #include "optionsbutton.h"
-#include "usImage.h"
+#include "image/usImage.h"
 #include "point.h"
 #include "star.h"
 #include "circbuf.h"
@@ -174,21 +174,23 @@ WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 #include "camera/camera.h"
 #include "telescope/mount.h"
 #include "telescope/scopes.h"
-#include "stepguiders.h"
-#include "rotators.h"
-#include "image_math.h"
+#include "ao/stepguiders.h"
+#include "rotator/rotators.h"
+
 #include "testguide.h"
 #include "gui/advanced_dialog.h"
 #include "gui/gear_dialog.h"
 #include "gui/myframe.h"
 #include "debuglog.h"
 #include "worker_thread.h"
-#include "event_server.h"
+#include "server/event_server.h"
 #include "gui/confirm_dialog.h"
 #include "phdcontrol.h"
 #include "runinbg.h"
-#include "fitsiowrap.h"
-#include "imagelogger.h"
+
+#include "image/image_math.h"
+#include "image/fitsiowrap.h"
+#include "image/imagelogger.h"
 
 class wxSingleInstanceChecker;
 

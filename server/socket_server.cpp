@@ -38,7 +38,7 @@
 #include "phd.h"
 
 #include "socket_server.h"
-#include "gear_simulator.h"
+#include "ao/gear_simulator.h"
 
 #include <algorithm>
 #include <functional>

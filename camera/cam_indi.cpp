@@ -41,8 +41,8 @@
 #include "cam_indi.h"
 #include "camera.h"
 #include "config_indi.h"
-#include "image_math.h"
-#include "indi_gui.h"
+#include "image/image_math.h"
+#include "gui/indi_gui.h"
 #include "phdindiclient.h"
 
 #include <libindi/basedevice.h>

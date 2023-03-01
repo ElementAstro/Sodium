@@ -45,7 +45,7 @@
 #include <libindi/indiproperty.h>
 # include <libindi/indibasetypes.h>
 
-#include "indi_gui.h"
+#include "gui/indi_gui.h"
 
 enum IndiDevType
 {

@@ -40,7 +40,7 @@
 
 #include "camera/camera.h"
 #include "gear_simulator.h"
-#include "image_math.h"
+#include "image/image_math.h"
 
 #include <wx/dir.h>
 #include <wx/gdicmn.h>

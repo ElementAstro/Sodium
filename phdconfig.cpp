@@ -35,7 +35,7 @@
  */
 
 #include "phd.h"
-#include "event_server.h"
+#include "server/event_server.h"
 #include <wx/wfstream.h>
 #include <wx/txtstrm.h>
 #include <wx/tokenzr.h>
