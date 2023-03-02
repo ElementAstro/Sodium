@@ -643,6 +643,8 @@ bool PhdApp::OnInit()
 
     pFrame->Show(true);
 
+    pFrame->Maximize(true);
+
     if (pConfig->IsNewInstance() || (pConfig->NumProfiles() == 1 && pFrame->pGearDialog->IsEmptyProfile()))
     {
         pFrame->pGearDialog->ShowProfileWizard();               // First-light version of profile wizard

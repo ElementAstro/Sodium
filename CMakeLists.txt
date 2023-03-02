@@ -47,20 +47,9 @@ set(phd_src_dir ${PHD_PROJECT_ROOT_DIR})
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake_modules/")
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake_modules/")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O3")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Os")
 #message(${PHD_PROJECT_ROOT_DIR})
 # Additional files in the workspace, To improve maintainability
-add_custom_target(CmakeAdditionalFiles
-  SOURCES
-  ${phd_src_dir}/thirdparty/thirdparty.cmake
-  ${phd_src_dir}/cmake_modules/FindCFITSIO.cmake
-  ${phd_src_dir}/cmake_modules/FindINDI.cmake
-  ${phd_src_dir}/cmake_modules/FindNova.cmake
-  #${phd_src_dir}/cmake_modules/LightGuiderBuildDoc.cmake
-  #${phd_src_dir}/cmake_modules/LightGuiderGenerateDocScript.cmake
-  ${phd_src_dir}/cmake_modules/LightGuiderRemovegettextwarning.cmake
-  ${phd_src_dir}/cmake_modules/compiler_options.cmake
-  ${phd_src_dir}/cmake_modules/LightGuiderPackaging.cmake)
 
 add_subdirectory(logviewer)
 

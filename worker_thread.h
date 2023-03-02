@@ -201,7 +201,7 @@ protected:
 
 inline void WorkerThread::RequestStop(void)
 {
-    m_interruptRequested |= INT_STOP;
+    m_interruptRequested = m_interruptRequested | INT_STOP;
 }
 
 inline WorkerThread *WorkerThread::This(void)
