@@ -1080,7 +1080,7 @@ void MyFrame::SetupHelpFile()
 
     if (!help->AddBook(filename))
     {
-        Alert(wxString::Format(_("Could not find help file %s"), filename));
+        //Alert(wxString::Format(_("Could not find help file %s"), filename));
     }
 }
 

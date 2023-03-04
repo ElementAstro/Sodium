@@ -64,7 +64,7 @@ if(WIN32)
   set(FIND_LIBRARY_USE_LIB64_PATHS FALSE)
   #set(CMAKE_LIBRARY_ARCHITECTURE x86)
 else()
-  # c++11 options
+  # c++23 options
   check_cxx_compiler_flag(-std=c++23 HAS_CXX23_FLAG)
   check_cxx_compiler_flag(-std=c++20 HAS_CXX20_FLAG)
   check_cxx_compiler_flag(-std=c++17 HAS_CXX17_FLAG)

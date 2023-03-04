@@ -72,15 +72,3 @@ target_include_directories(GPGuider PUBLIC
                            ${gaussian_process_root_dir}/tools 
                            ${phd_src_dir})
 set_property(TARGET GPGuider PROPERTY FOLDER "Contributions/")
-
-
-################################################################
-#
-# Unit tests
-#
-
-if (${CMAKE_SYSTEM_NAME} MATCHES "FreeBSD")
-    set(gtest_link GTest::GTest)
-else()
-    set(gtest_link gtest)
-endif()

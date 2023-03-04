@@ -1,4 +1,35 @@
 /*
+ * event_server.cpp
+ * 
+ * Copyright (C) 2023 Max Qian <lightapt.com>
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+/************************************************* 
+ 
+Copyright: 2023 Max Qian. All rights reserved
+ 
+Author: Max Qian
+
+E-mail: astro_air@126.com
+ 
+Date: 2023-3-5
+ 
+Description: Socket server
+ 
+**************************************************/
+
+/*
  *  event_server.cpp
  *  PHD Guiding
  *
@@ -35,12 +66,15 @@
 #include "phd.h"
 #include "gui/darks_dialog.h"
 
+#include <spdlog/spdlog.h>
+
 #include <sstream>
 #include <string.h>
 #include <wx/sckstrm.h>
 #include <wx/sstream.h>
 
 #include <algorithm>
+#include <string>
 
 EventServer EvtServer;
 
@@ -641,19 +675,27 @@ static void set_exposure(JObj &response, const json_value *params) {
   Params p("exposure", params);
   const json_value *exp = p.param("exposure");
 
+  spdlog::debug("Try setting the exposure time to {}",exp->float_value);
+
   if (!exp || exp->type != JSON_INT) {
+    spdlog::debug("Exposure time parameter not found");
     response << jrpc_error(JSONRPC_INVALID_PARAMS, "expected exposure param");
     return;
   }
 
   bool ok = pFrame->SetExposureDuration(exp->int_value);
   if (ok) {
+    spdlog::debug("Successfully set exposure time");
     response << jrpc_result(0);
   } else {
+    spdlog::debug("Failed to set exposure time");
     response << jrpc_error(1, "could not set exposure duration");
   }
 }
 
+/// @brief Get Current Profile name
+/// @param response 
+/// @param params 
 static void get_profile(JObj &response, const json_value *params) {
   int id = pConfig->GetCurrentProfileId();
   wxString name = pConfig->GetCurrentProfile();
@@ -669,14 +711,19 @@ inline static void devstat(JObj &t, const char *dev, const wxString &name,
 }
 
 static void get_current_equipment(JObj &response, const json_value *params) {
+
+  spdlog::debug("Try to get all of the currently connected devices");
+
   JObj t;
 
   if (pCamera)
     devstat(t, "camera", pCamera->Name, pCamera->Connected);
+    spdlog::debug("Camera name : {} , connect : {}",std::string(pCamera->Name),pCamera->Connected);
 
   Mount *mount = TheScope();
   if (mount)
     devstat(t, "mount", mount->Name(), mount->IsConnected());
+    spdlog::debug("Telescope name : {} , connect : {}",std::string(pMount->Name()),pMount->IsConnected());
 
   Mount *auxMount = pFrame->pGearDialog->AuxScope();
   if (auxMount)
@@ -694,14 +741,20 @@ static void get_current_equipment(JObj &response, const json_value *params) {
 }
 
 static bool all_equipment_connected() {
+  spdlog::debug("Check that all devices are connected");
   return pCamera && pCamera->Connected && (!pMount || pMount->IsConnected()) &&
          (!pSecondaryMount || pSecondaryMount->IsConnected());
 }
 
+/// @brief Set the current file according to the configuration file number. This configuration should already exist.
+/// @param response 
+/// @param params 
 static void set_profile(JObj &response, const json_value *params) {
+  spdlog::debug("Trying to set current profile");
   Params p("id", params);
   const json_value *id = p.param("id");
   if (!id || id->type != JSON_INT) {
+    spdlog::error("Profile number not found in parameters");
     response << jrpc_error(JSONRPC_INVALID_PARAMS, "expected profile id param");
     return;
   }
@@ -712,8 +765,10 @@ static void set_profile(JObj &response, const json_value *params) {
   bool error = pFrame->pGearDialog->SetProfile(id->int_value, &errMsg);
 
   if (error) {
+    spdlog::error("Failed to set profile");
     response << jrpc_error(1, errMsg);
   } else {
+    spdlog::debug("Set profile succesfully");
     response << jrpc_result(0);
   }
 }
@@ -733,18 +788,23 @@ static void set_connected(JObj &response, const json_value *params) {
 
   VERIFY_GUIDER(response);
 
+  spdlog::debug("Try to connect all devices");
+
   wxString errMsg;
   bool error = val->int_value ? pFrame->pGearDialog->ConnectAll(&errMsg)
                               : pFrame->pGearDialog->DisconnectAll(&errMsg);
 
   if (error) {
+    spdlog::error("Failed to connect to devices , error : {}",std::string(errMsg));
     response << jrpc_error(1, errMsg);
   } else {
+    spdlog::debug("Connected to devices successfully");
     response << jrpc_result(0);
   }
 }
 
 static void get_calibrated(JObj &response, const json_value *params) {
+  spdlog::debug("Check if the calibration has been completed");
   bool calibrated = pMount && pMount->IsCalibrated() &&
                     (!pSecondaryMount || pSecondaryMount->IsCalibrated());
   response << jrpc_result(calibrated);
@@ -781,11 +841,13 @@ static bool bool_param(const json_value *jv, bool *val) {
 }
 
 static void get_paused(JObj &response, const json_value *params) {
+  spdlog::debug("Check whether the guide star has paused");
   VERIFY_GUIDER(response);
   response << jrpc_result(pFrame->pGuider->IsPaused());
 }
 
 static void set_paused(JObj &response, const json_value *params) {
+  spdlog::debug("Try to pause the current work");
   Params p("paused", "type", params);
   const json_value *jv = p.param("paused");
 
@@ -816,19 +878,27 @@ static void set_paused(JObj &response, const json_value *params) {
 
   pFrame->SetPaused(pause);
 
+  spdlog::debug("The current task was suspended successfully");
+
   response << jrpc_result(0);
 }
 
 static void loop(JObj &response, const json_value *params) {
+  spdlog::debug("Trying to start looping ...");
   bool error = pFrame->StartLooping();
 
-  if (error)
+  if (error){
+    spdlog::error("Failed to start looping!");
     response << jrpc_error(1, "could not start looping");
-  else
+  } 
+  else{
+    spdlog::debug("Started looping successfully");
     response << jrpc_result(0);
+  }
 }
 
 static void stop_capture(JObj &response, const json_value *params) {
+  spdlog::debug("Stop capture ...");
   pFrame->StopCapturing();
   response << jrpc_result(0);
 }
@@ -859,11 +929,14 @@ static bool parse_rect(wxRect *r, const json_value *j) {
 static void find_star(JObj &response, const json_value *params) {
   VERIFY_GUIDER(response);
 
+  spdlog::debug("Trying to find a star for guiding ...");
+
   Params p("roi", params);
 
   wxRect roi;
   const json_value *j = p.param("roi");
   if (j && !parse_rect(&roi, j)) {
+    spdlog::error("Invilid ROI parameters");
     response << jrpc_error(JSONRPC_INVALID_PARAMS, "invalid ROI param");
     return;
   }
@@ -873,11 +946,12 @@ static void find_star(JObj &response, const json_value *params) {
   if (!error) {
     const PHD_Point &lockPos = pFrame->pGuider->LockPosition();
     if (lockPos.IsValid()) {
+      spdlog::debug("Found a star");
       response << jrpc_result(lockPos);
       return;
     }
   }
-
+  spdlog::error("Failed to find a good star for guiding");
   response << jrpc_error(1, "could not find star");
 }
 
@@ -971,6 +1045,8 @@ static void clear_calibration(JObj &response, const json_value *params) {
   bool clear_mount;
   bool clear_ao;
 
+  spdlog::debug("Try to clear all calibration models");
+
   if (!params) {
     clear_mount = clear_ao = true;
   } else {
@@ -1005,6 +1081,8 @@ static void clear_calibration(JObj &response, const json_value *params) {
   if (ao && clear_ao)
     ao->ClearCalibration();
 
+  spdlog::debug("Successfully cleared all calibration models");
+
   response << jrpc_result(0);
 }
 
@@ -1017,12 +1095,18 @@ static void flip_calibration(JObj &response, const json_value *params) {
     response << jrpc_result(0);
 }
 
+/// @brief 
+/// @param response 
+/// @param params 
 static void get_lock_shift_enabled(JObj &response, const json_value *params) {
   VERIFY_GUIDER(response);
   bool enabled = pFrame->pGuider->GetLockPosShiftParams().shiftEnabled;
   response << jrpc_result(enabled);
 }
 
+/// @brief 
+/// @param response 
+/// @param params 
 static void set_lock_shift_enabled(JObj &response, const json_value *params) {
   Params p("enabled", params);
   const json_value *val = p.param("enabled");
@@ -1040,6 +1124,9 @@ static void set_lock_shift_enabled(JObj &response, const json_value *params) {
   response << jrpc_result(0);
 }
 
+/// @brief 
+/// @param params 
+/// @return 
 static bool is_camera_shift_req(const json_value *params) {
   Params p("axes", params);
   const json_value *j = p.param("axes");
@@ -1062,6 +1149,9 @@ static JObj &operator<<(JObj &j, const LockPosShiftParams &l) {
   return j;
 }
 
+/// @brief 
+/// @param response 
+/// @param params 
 static void get_lock_shift_params(JObj &response, const json_value *params) {
   VERIFY_GUIDER(response);
 
@@ -1160,6 +1250,9 @@ static bool parse_lock_shift_params(LockPosShiftParams *shift,
   return true;
 }
 
+/// @brief 
+/// @param response 
+/// @param params 
 static void set_lock_shift_params(JObj &response, const json_value *params) {
   wxString err;
   LockPosShiftParams shift;
@@ -1176,10 +1269,17 @@ static void set_lock_shift_params(JObj &response, const json_value *params) {
   response << jrpc_result(0);
 }
 
+/// @brief save image to local file
+/// @param response 
+/// @param params 
 static void save_image(JObj &response, const json_value *params) {
+
+  spdlog::debug("Try to save the image locally");
+
   VERIFY_GUIDER(response);
 
   if (!pFrame->pGuider->CurrentImage()->ImageData) {
+    spdlog::error("No image available");
     response << jrpc_error(2, "no image available");
     return;
   }
@@ -1189,6 +1289,7 @@ static void save_image(JObj &response, const json_value *params) {
 
   if (pFrame->pGuider->SaveCurrentImage(fname)) {
     ::wxRemove(fname);
+    spdlog::error("Failed to save an image");
     response << jrpc_error(3, "error saving image");
     return;
   }
@@ -1198,8 +1299,12 @@ static void save_image(JObj &response, const json_value *params) {
   response << jrpc_result(rslt);
 }
 
+/// @brief Capture a single image , not loop
+/// @param response 
+/// @param params {"exposure" : int}
 static void capture_single_frame(JObj &response, const json_value *params) {
   if (pFrame->CaptureActive) {
+    spdlog::error("Cannot capture single frame when capture is currently active");
     response << jrpc_error(
         1, "cannot capture single frame when capture is currently active");
     return;
@@ -1228,18 +1333,27 @@ static void capture_single_frame(JObj &response, const json_value *params) {
 
   bool err = pFrame->StartSingleExposure(exposure, subframe);
   if (err) {
+    spdlog::error("Failed to start exposure");
     response << jrpc_error(2, "failed to start exposure");
     return;
   }
-
+  spdlog::debug("Captured a single image successfully");
   response << jrpc_result(0);
 }
 
+/// @brief Check whether the camera uses sub-frame
+/// @param response 
+/// @param params 
 static void get_use_subframes(JObj &response, const json_value *params) {
+  spdlog::debug("Check whether the camera uses sub-frame");
   response << jrpc_result(pCamera && pCamera->UseSubframes);
 }
 
+/// @brief Get the frame size used by the current camera
+/// @param response 
+/// @param params 
 static void get_search_region(JObj &response, const json_value *params) {
+  spdlog::debug("Get the frame size used by the current camera");
   VERIFY_GUIDER(response);
   response << jrpc_result(pFrame->pGuider->GetSearchRegion());
 }
@@ -1282,12 +1396,17 @@ struct B64Encode {
 const char *const B64Encode::E =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
+/// @brief Try to get an image and transfer it to the client
+/// @param response 
+/// @param params 
 static void get_star_image(JObj &response, const json_value *params) {
+  spdlog::debug("Try to get an image and transfer it to the client");
   int reqsize = 15;
   Params p("size", params);
   const json_value *val = p.param("size");
   if (val) {
     if (val->type != JSON_INT || (reqsize = val->int_value) < 15) {
+      spdlog::error("Illegal image size parameter");
       response << jrpc_error(JSONRPC_INVALID_PARAMS,
                              "invalid image size param");
       return;
@@ -1302,6 +1421,7 @@ static void get_star_image(JObj &response, const json_value *params) {
 
   if (guider->GetState() < GUIDER_STATE::STATE_SELECTED || !img->ImageData ||
       !star.IsValid()) {
+    spdlog::error("No star selected!");
     response << jrpc_error(2, "no star selected");
     return;
   }
@@ -1366,6 +1486,9 @@ static bool parse_settle(SettleParams *settle, const json_value *j,
   return ok;
 }
 
+/// @brief start guiding
+/// @param response 
+/// @param params 
 static void guide(JObj &response, const json_value *params) {
   // params:
   //   settle [object]:
@@ -1435,6 +1558,9 @@ static void guide(JObj &response, const json_value *params) {
     response << jrpc_error(1, err);
 }
 
+/// @brief dither
+/// @param response 
+/// @param params 
 static void dither(JObj &response, const json_value *params) {
   // params:
   //   amount [integer] - max pixels to move in each axis
@@ -1494,27 +1620,46 @@ static void dither(JObj &response, const json_value *params) {
     response << jrpc_error(1, error);
 }
 
+/// @brief Shutdown LightGuider via socket connection
+/// @param response 
+/// @param params 
 static void shutdown(JObj &response, const json_value *params) {
+  spdlog::info("Shutdown LightGuider by client , goodbye!");
   wxGetApp().TerminateApp();
 
   response << jrpc_result(0);
 }
 
+/// @brief get camera current binning mode
+/// @param response 
+/// @param params {}
 static void get_camera_binning(JObj &response, const json_value *params) {
   if (pCamera && pCamera->Connected) {
     int binning = pCamera->Binning;
+    spdlog::debug("Camera current binning mode is : {}",binning);
     response << jrpc_result(binning);
-  } else
+  } else{
+    spdlog::error("Camera is not connected");
     response << jrpc_error(1, "camera not connected");
+  }
 }
 
+/// @brief get current camera frame settings
+/// @param response 
+/// @param params {}
 static void get_camera_frame_size(JObj &response, const json_value *params) {
+  spdlog::debug("Trying to get current camera frame size");
   if (pCamera && pCamera->Connected) {
     response << jrpc_result(pCamera->FullSize);
-  } else
+  } else{
+    spdlog::error("Camera is not connected!");
     response << jrpc_error(1, "camera not connected");
+  }
 }
 
+/// @brief Check whether guiding output is enabled
+/// @param response 
+/// @param params {}
 static void get_guide_output_enabled(JObj &response, const json_value *params) {
   if (pMount)
     response << jrpc_result(pMount->GetGuidingEnabled());
@@ -1522,6 +1667,9 @@ static void get_guide_output_enabled(JObj &response, const json_value *params) {
     response << jrpc_error(1, "mount not defined");
 }
 
+/// @brief Set whether the guiding output enabled
+/// @param response 
+/// @param params {"enabled" : bool}
 static void set_guide_output_enabled(JObj &response, const json_value *params) {
   Params p("enabled", params);
   const json_value *val = p.param("enabled");
@@ -1854,8 +2002,12 @@ static void get_cooler_status(JObj &response, const json_value *params) {
   response << jrpc_result(rslt);
 }
 
+/// @brief Get current tempeture of the camera
+/// @param response 
+/// @param params {}
 static void get_sensor_temperature(JObj &response, const json_value *params) {
   if (!pCamera || !pCamera->Connected) {
+    spdlog::error("Camera is not connected");
     response << jrpc_error(1, "camera not connected");
     return;
   }
@@ -1863,22 +2015,27 @@ static void get_sensor_temperature(JObj &response, const json_value *params) {
   double temperature;
   bool err = pCamera->GetSensorTemperature(&temperature);
   if (err) {
+    spdlog::error("Failed to get camera current temperature");
     response << jrpc_error(1, "failed to get sensor temperature");
     return;
   }
-
+  spdlog::debug("Current temperature : {}",temperature);
   JObj rslt;
   rslt << NV("temperature", temperature, 1);
 
   response << jrpc_result(rslt);
 }
 
+/// @brief export the settings to a local file
+/// @param response 
+/// @param params {}
 static void export_config_settings(JObj &response, const json_value *params) {
   wxString filename(MyFrame::GetDefaultFileDir() + PATHSEPSTR +
                     "phd2_settings.txt");
   bool err = pConfig->SaveAll(filename);
 
   if (err) {
+    spdlog::error("Faild to export settings");
     response << jrpc_error(1, "export settings failed");
     return;
   }
@@ -1925,8 +2082,9 @@ static void dump_response(const JRpcCall &call) {
 /// @param response
 /// @param params
 static void lightapt_modify_response(JObj &response, const json_value *params) {
+  spdlog::info("Verification succeeded. The client is lightapt client");
   JObj rslt;
-  rslt << NV("version", "indev");
+  rslt << NV("version", "2.6.11-patch1");
   rslt << NV("modified", true);
   response << jrpc_result(rslt);
 }
@@ -1937,6 +2095,7 @@ static void lightapt_modify_response(JObj &response, const json_value *params) {
 /// @param response
 /// @param params
 static void is_darklib_loaded(JObj &response, const json_value *params) {
+  spdlog::debug("Check whether the dark-field library has been loaded");
   bool loaded = pFrame->LoadDarkLibrary();
   JObj rslt;
   rslt << NV("loaded", loaded);
@@ -1947,7 +2106,9 @@ static void is_darklib_loaded(JObj &response, const json_value *params) {
 /// @param response
 /// @param params
 static void get_darklib_path(JObj &response, const json_value *params) {
+  spdlog::debug("Try to get the dark field library path");
   wxString path = pFrame->GetDarksDir();
+  spdlog::debug("DarkLib path : {}",std::string(path));
   JObj rslt;
   rslt << NV("path", path);
   response << jrpc_result(rslt);
@@ -1957,9 +2118,11 @@ static void get_darklib_path(JObj &response, const json_value *params) {
 /// @param response
 /// @param params
 static void get_darklib_name(JObj &response, const json_value *params) {
+  spdlog::debug("Try to get the name of darkfield library by number");
   Params p("profile_id", params);
   const json_value *profile_id = p.param("profile_id");
   wxString name = pFrame->DarkLibFileName(profile_id->int_value);
+  spdlog::debug("Current dark lib name : {}",std::string(name));
   JObj rslt;
   rslt << NV("name", name);
   response << jrpc_result(rslt);
@@ -1970,7 +2133,7 @@ static void get_darklib_name(JObj &response, const json_value *params) {
 /// @param params 
 static void set_darklib(JObj &response, const json_value *params)
 {
-
+  spdlog::debug("Try to set the current darkfield library");
 }
 
 /// @brief Start Dark Library Image Capture
@@ -1978,6 +2141,7 @@ static void set_darklib(JObj &response, const json_value *params)
 /// @param params 
 static void start_darklib_capture(JObj &response, const json_value *params)
 {
+    spdlog::debug("Try to build a dark field library");
     // Check whether the camera has a shutter , if not must warn the use to cover the scope
     // This should be finished at the client side , there will not return any message
     if (!pCamera->HasShutter){
@@ -2013,24 +2177,25 @@ static void start_darklib_capture(JObj &response, const json_value *params)
     // 检查相机是否连接
     if (!pCamera || !pCamera->Connected)
     {
-        rslt << NV("error", err);
-        rslt << NV("message" , "Camera is not connected");
-        response << jrpc_result(rslt);
-        return;
+      spdlog::error("Camera is not connected");
+      rslt << NV("error", err);
+      rslt << NV("message" , "Camera is not connected");
+      response << jrpc_result(rslt);
+      return;
     }
 
-    DarksDialog _dlg(pFrame, true);
-    _dlg.m_pDarkMinExpTime->SetValue("0.01 s");
-    _dlg.m_pDarkMaxExpTime->SetValue("0.1 s");
+    DarksDialog dlg(pFrame, true);
 
-    if(_dlg.OnServerStart()){
-    }
-    else{
-    }
+    spdlog::debug("Try to set dark field library parameters");
 
-    
+    dlg.m_pDarkMinExpTime->SetValue("0.01 s");
+    dlg.m_pDarkMaxExpTime->SetValue("0.1 s");
+
+    dlg.OnServerStart();
+
     if (err)
     {
+      spdlog::error("Failed to create dark image library");
         rslt << NV("error", err);
         rslt << NV("message" , "Failed to create dark image library");
     }
@@ -2041,8 +2206,8 @@ static void start_darklib_capture(JObj &response, const json_value *params)
         //if (!pCamera->HasShutter)
             //wrapupMsg = _("Uncover guide scope") + wxT("\n\n") + wrapupMsg;   // Results will appear in smaller font
         //wxMessageBox(wxString::Format(_("Operation complete: %s"), wrapupMsg));
+        spdlog::debug("Created dark lib successfully.Operation complete.");
     }
-    rslt << NV("err", _dlg.m_pDarkMaxExpTime->GetValue());
     response << jrpc_result(rslt);
 }
 
@@ -2051,13 +2216,14 @@ static void start_darklib_capture(JObj &response, const json_value *params)
 /// @param params 
 static void stop_darklib_capture(JObj &response, const json_value *params)
 {
-
+  spdlog::debug("Try to stop the dark-field library shooting");
 }
 
 /// @brief Create a new profile
 /// @param response
 /// @param params
 static void create_profile(JObj &response, const json_value *params) {
+  spdlog::debug("Try to create a new profile");
   Params p("name", params);
 
   const json_value *name = p.param("name");
@@ -2486,8 +2652,12 @@ EventServer::EventServer() : m_configEventDebouncer(nullptr) {}
 
 EventServer::~EventServer() {}
 
+/// @brief Start the socket server non-blocking
+/// @param instanceId 
+/// @return bool
 bool EventServer::EventServerStart(unsigned int instanceId) {
   if (m_serverSocket) {
+    spdlog::warn("Attempt to start event server when it is already started?");
     Debug.AddLine("attempt to start event server when it is already started?");
     return false;
   }
@@ -2498,6 +2668,7 @@ bool EventServer::EventServerStart(unsigned int instanceId) {
   m_serverSocket = new wxSocketServer(eventServerAddr, wxSOCKET_REUSEADDR);
 
   if (!m_serverSocket->Ok()) {
+    spdlog::error("Failed to start server at port {}",port);
     Debug.Write(wxString::Format(
         "Event server failed to start - Could not listen at port %u\n", port));
     delete m_serverSocket;
@@ -2511,6 +2682,7 @@ bool EventServer::EventServerStart(unsigned int instanceId) {
 
   m_configEventDebouncer = new wxTimer();
 
+  spdlog::debug("Started socket server successfully , listening on port {}",port);
   Debug.Write(
       wxString::Format("event server started, listening on port %u\n", port));
 
@@ -2518,7 +2690,9 @@ bool EventServer::EventServerStart(unsigned int instanceId) {
 }
 
 void EventServer::EventServerStop() {
+  spdlog::debug("Trying to stop the socket event server");
   if (!m_serverSocket)
+    spdlog::error("There is not server running");
     return;
 
   for (CliSockSet::const_iterator it = m_eventServerClients.begin();
@@ -2533,6 +2707,7 @@ void EventServer::EventServerStop() {
   delete m_configEventDebouncer;
   m_configEventDebouncer = nullptr;
 
+  spdlog::debug("Stopped socket server successfully");
   Debug.AddLine("event server stopped");
 }
 

@@ -509,6 +509,13 @@ struct EarlyLogger : public wxLog
 
 bool PhdApp::OnInit()
 {
+
+    spdlog::set_pattern("[%Y-%m-%d %H:%M:%S %z][%^---%L---%$][thread %t] %v");
+
+    spdlog::info("Preparing to load LightGuide");
+
+    spdlog::set_level(spdlog::level::debug);
+
 #ifdef __APPLE__
     // for newer versions of OSX the app will hang if the wx log code
     // tries to display a message box in OnOnit.  As a workaround send
@@ -527,11 +534,7 @@ bool PhdApp::OnInit()
         return false;
     }
 
-#if defined(__WINDOWS__)
-    // on MSW, do not strip off the Debug/ and Release/ build subdirs
-    // so that GetResourcesDir() is the same as the location of phd2.exe
-    wxStandardPaths::Get().DontIgnoreAppSubDir();
-#endif
+    spdlog::debug("Starting instance check");
 
     m_instanceChecker = new wxSingleInstanceChecker(wxString::Format("%s.%ld", GetAppName(), m_instanceNumber));
     if (m_instanceChecker->IsAnotherRunning())
@@ -541,6 +544,8 @@ bool PhdApp::OnInit()
         m_instanceChecker = 0;
         return false;
     }
+
+    spdlog::debug("Passed instance check");
 
 #ifndef DEBUG
 # if (wxMAJOR_VERSION > 2 || wxMINOR_VERSION > 8)
@@ -578,22 +583,14 @@ bool PhdApp::OnInit()
         return false;
     }
 
+    spdlog::debug("Start creating log file");
+
     m_logFileTime = DebugLog::GetLogFileTime();     // GetLogFileTime implements grouping by imaging-day, the 24-hour period starting at 09:00 am local time
     OpenLogs(false /* not for rollover */);
 
     logger.Close(); // writes any deferrred error messages to the debug log
 
-#if defined(__WINDOWS__)
-    HRESULT hr = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
-    Debug.Write(wxString::Format("CoInitializeEx returns %x\n", hr));
-#endif
-
     DisableOSXAppNap();
-
-#if defined(__WINDOWS__)
-    // use per-thread locales on windows to that INDI can set the locale in its thread without side effects
-    _configthreadlocale(_ENABLE_PER_THREAD_LOCALE);
-#endif
 
     curl_global_init(CURL_GLOBAL_DEFAULT);
 
@@ -610,6 +607,8 @@ bool PhdApp::OnInit()
 #else
     m_resourcesDir = wxStandardPaths::Get().GetResourcesDir();
 #endif
+
+    spdlog::debug("Search for translation files in the specified folder and load the required");
 
     wxString ldir = GetLocalesDir();
     Debug.Write(wxString::Format("locale: using dir %s exists=%d\n", ldir, wxDirExists(ldir)));
@@ -638,6 +637,8 @@ bool PhdApp::OnInit()
 
     wxImage::AddHandler(new wxJPEGHandler);
     wxImage::AddHandler(new wxPNGHandler);
+
+    spdlog::debug("Create an interface instance and start the main loop");
 
     pFrame = new MyFrame();
 

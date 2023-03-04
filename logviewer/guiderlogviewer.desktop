@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.1
+Name=LightGuider Log Viewer
+Comment=View and analyze LightGuider guide logs
+Icon=phdlogview
+Exec=lightguider_logviewer %f
+Terminal=false
+MimeType=text/plain
+Categories=Education;Science;Astronomy;

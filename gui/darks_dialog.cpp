@@ -482,8 +482,8 @@ bool DarksDialog::OnServerStart()
             ShowStatus(_("Analyzing master dark..."), false);
 
             // create a median-filtered dark
-            Debug.AddLine("Starting construction of filtered master dark file");
             darks.BuildFilteredDark();
+
             Debug.AddLine("Completed construction of filtered master dark file");
 
             // save the master dark and the median filtered dark
@@ -495,13 +495,9 @@ bool DarksDialog::OnServerStart()
         }
     }
 
-    Debug.AddLine("Completed construction of filtered master dark file");
-
     m_pStartBtn->Enable(true);
     m_pResetBtn->Enable(true);
     pFrame->SetDarkMenuState();         // Hard to know where we are at this point
-
-    Debug.AddLine("Completed construction of filtered master dark file");
 
     if (m_cancelling || err)
     {
@@ -512,8 +508,6 @@ bool DarksDialog::OnServerStart()
         Debug.AddLine("3");
         m_started = false;
         m_pStopBtn->SetLabel(_("Cancel"));
-
-        Debug.AddLine("Completed construction of filtered master dark file");
     }
     else
     {
@@ -522,7 +516,6 @@ bool DarksDialog::OnServerStart()
         //if (!pCamera->HasShutter)
             //wrapupMsg = _("Uncover guide scope") + wxT("\n\n") + wrapupMsg;   // Results will appear in smaller font
         //wxMessageBox(wxString::Format(_("Operation complete: %s"), wrapupMsg));
-        EndDialog(wxOK);
     }
 }
 

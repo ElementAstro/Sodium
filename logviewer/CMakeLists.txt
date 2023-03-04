@@ -1,5 +1,5 @@
 #
-#  This file is part of guiderlogview
+#  This file is part of guiderlogviewer
 # 
 #  Copyright (C) 2016 Andy Galasso
 # 
@@ -25,7 +25,7 @@ if(COMMAND cmake_policy)
   endif()
 endif(COMMAND cmake_policy)
 
-project (guiderlogview)
+project (guiderlogviewer)
 
 set(srcdir ${CMAKE_SOURCE_DIR})
 
@@ -47,11 +47,21 @@ include(CheckCXXCompilerFlag)
 #################################################################################
 #
 
+# c++23 options
+check_cxx_compiler_flag(-std=c++23 HAS_CXX23_FLAG)
+check_cxx_compiler_flag(-std=c++20 HAS_CXX20_FLAG)
+check_cxx_compiler_flag(-std=c++17 HAS_CXX17_FLAG)
 check_cxx_compiler_flag(-std=c++11 HAS_CXX11_FLAG)
 check_cxx_compiler_flag(-std=c++0x HAS_CXX0X_FLAG)
 
-if(HAS_CXX11_FLAG)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3")
+if(HAS_CXX22_FLAG)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++23")
+elseif(HAS_CXX17_FLAG)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
+elseif(HAS_CXX17_FLAG)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+elseif(HAS_CXX11_FLAG)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 elseif(HAS_CXX0X_FLAG)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 endif()
@@ -84,8 +94,8 @@ set(SRC
   ${srcdir}/logviewer/LogViewFrame.h
   ${srcdir}/logviewer/logparser.cpp
   ${srcdir}/logviewer/logparser.h
-  ${srcdir}/logviewer/guiderlogview.ico
-  ${srcdir}/logviewer/guiderlogview.rc
+  ${srcdir}/logviewer/guiderlogviewer.ico
+  ${srcdir}/logviewer/guiderlogviewer.rc
   ${srcdir}/logviewer/small.ico
 )
 
@@ -98,7 +108,7 @@ set (ALL_SRC
   ${FBSRC}
 )
 
-add_executable(guiderlogview ${ALL_SRC})
+add_executable(guiderlogviewer ${ALL_SRC})
 
 find_package(GSL REQUIRED)
 if(APPLE)
@@ -108,19 +118,25 @@ if(APPLE)
   set(APP_LINK_EXTERNAL ${APP_LINK_EXTERNAL} ${GSL_LIBRARIES})
   include_directories(${GSL_INCLUDE_DIR})
 else()
-  target_link_libraries(guiderlogview GSL::gsl GSL::gslcblas)
+  target_link_libraries(guiderlogviewer GSL::gsl GSL::gslcblas)
 endif()
 
-target_compile_definitions( guiderlogview PRIVATE "${wxWidgets_DEFINITIONS}" "HAVE_TYPE_TRAITS")
-target_compile_options(     guiderlogview PRIVATE "${wxWidgets_CXX_FLAGS};")
-target_link_libraries(guiderlogview ${APP_LINK_EXTERNAL})
-target_include_directories(guiderlogview PRIVATE ${wxWidgets_INCLUDE_DIRS})
+set_target_properties(
+    guiderlogviewer
+    PROPERTIES
+      OUTPUT_NAME lightguider_logviewer
+    )
+
+target_compile_definitions( guiderlogviewer PRIVATE "${wxWidgets_DEFINITIONS}" "HAVE_TYPE_TRAITS")
+target_compile_options(     guiderlogviewer PRIVATE "${wxWidgets_CXX_FLAGS};")
+target_link_libraries(guiderlogviewer ${APP_LINK_EXTERNAL})
+target_include_directories(guiderlogviewer PRIVATE ${wxWidgets_INCLUDE_DIRS})
 
 if(UNIX AND NOT APPLE)
-  install(TARGETS guiderlogview
+  install(TARGETS guiderlogviewer
           RUNTIME DESTINATION bin)
-  install(FILES ${CMAKE_SOURCE_DIR}/guiderlogview.png
+  install(FILES ${CMAKE_SOURCE_DIR}/logviewer/guiderlogviewer.png
           DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps/ )
-  install(FILES ${CMAKE_SOURCE_DIR}/guiderlogview.desktop
+  install(FILES ${CMAKE_SOURCE_DIR}/logviewer/guiderlogviewer.desktop
           DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications/ )
 endif()

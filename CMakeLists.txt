@@ -85,7 +85,13 @@ project(guider)
 #
 # external libraries
 # to be changed in add_subdirectory
-include(thirdparty/thirdparty.cmake)
+include(cmake_modules/thirdparty.cmake)
+
+#################################################################################
+#
+# webserver oat++
+add_subdirectory(server/web)
+include_directories(server/web)
 
 #################################################################################
 #
@@ -268,6 +274,8 @@ set(lightguider_SRC
 
   ${phd_src_dir}/tools/guiding_assistant.cpp
   ${phd_src_dir}/tools/guiding_assistant.h
+  #${phd_src_dir}/tools/calibration_assistant.cpp
+  #${phd_src_dir}/tools/calibration_assistant.h
 
   ${phd_src_dir}/logger/debuglog.cpp
   ${phd_src_dir}/logger/debuglog.h
@@ -412,11 +420,12 @@ if(UNIX)
       find_package(spdlog REQUIRED)
   endif()
   target_link_libraries(lightguider spdlog::spdlog_header_only)
+  target_link_libraries(lightguider oatpp)
 
   set_target_properties(
     lightguider
     PROPERTIES
-      OUTPUT_NAME guider
+      OUTPUT_NAME lightguider
     )
 
 else()
