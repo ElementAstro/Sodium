@@ -33,8 +33,9 @@
  */
 
 #include "phd.h"
-
 #include "phdupdate.h"
+
+#include <spdlog/spdlog.h>
 
 #include <curl/curl.h>
 #include <memory>
@@ -535,8 +536,7 @@ bool PhdApp::OnInit()
     m_instanceChecker = new wxSingleInstanceChecker(wxString::Format("%s.%ld", GetAppName(), m_instanceNumber));
     if (m_instanceChecker->IsAnotherRunning())
     {
-        wxLogError(wxString::Format(_("PHD2 instance %ld is already running. Use the "
-            "-i INSTANCE_NUM command-line option to start a different instance."), m_instanceNumber));
+        spdlog::error("PHD2 instance %ld is already running. Use the -i INSTANCE_NUM command-line option to start a different instance.", m_instanceNumber);
         delete m_instanceChecker; // OnExit() won't be called if we return false
         m_instanceChecker = 0;
         return false;

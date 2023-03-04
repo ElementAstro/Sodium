@@ -376,6 +376,156 @@ void DarksDialog::OnStart(wxCommandEvent& evt)
     }
 }
 
+bool DarksDialog::OnServerStart()
+{
+    SaveProfileInfo();
+
+    m_pStartBtn->Enable(false);
+    m_pResetBtn->Enable(false);
+    m_pStopBtn->SetLabel(_("Stop"));
+    m_pStopBtn->Refresh();
+    m_started = true;
+    wxYield();
+
+    if (!pCamera->HasShutter)
+        wxMessageBox(_("Cover guide scope"));
+    pCamera->ShutterClosed = true;
+
+    m_pProgress->SetValue(0);
+
+    wxString wrapupMsg;
+
+    bool err = false;
+
+    if (buildDarkLib)
+    {
+        int darkFrameCount = m_pDarkCount->GetValue();
+        int minExpInx = m_pDarkMinExpTime->GetSelection();
+        int maxExpInx = m_pDarkMaxExpTime->GetSelection();
+
+        std::vector<int> exposureDurations(pFrame->GetExposureDurations());
+        std::sort(exposureDurations.begin(), exposureDurations.end());
+
+        int tot_dur = 0;
+        for (int i = minExpInx; i <= maxExpInx; i++)
+            tot_dur += exposureDurations[i] * darkFrameCount;
+
+        m_pProgress->SetRange(tot_dur);
+        if (m_rbNewDarkLib->GetValue())           // User rebuilding from scratch
+            pCamera->ClearDarks();
+
+        for (int inx = minExpInx; inx <= maxExpInx; inx++)
+        {
+            int darkExpTime = exposureDurations[inx];
+            if (darkExpTime >= 1000)
+                ShowStatus (wxString::Format(_("Building master dark at %.1f sec:"), (double)darkExpTime / 1000.0), false);
+            else
+                ShowStatus (wxString::Format(_("Building master dark at %d mSec:"), darkExpTime), false);
+            usImage *newDark = new usImage();
+            err = CreateMasterDarkFrame(*newDark, exposureDurations[inx], darkFrameCount);
+            wxYield();
+            if (m_cancelling || err)
+            {
+                delete newDark;
+                break;
+            }
+            else
+            {
+                pCamera->AddDark(newDark);
+            }
+        }
+
+        if (m_cancelling || err)
+        {
+            ShowStatus(m_cancelling ? _("Operation cancelled - no changes have been made") : _("Operation failed - no changes have been made"), false);
+            if (pFrame->DarkLibExists(pConfig->GetCurrentProfileId(), false))
+            {
+                if (pFrame->LoadDarkHandler(true))
+                    Debug.AddLine("Dark library abort, dark library restored.");
+                else
+                    Debug.AddLine("Dark library abort, dark library still invalid.");
+            }
+        }
+        else
+        {
+            pFrame->SaveDarkLibrary(m_pNotes->GetValue());
+            pFrame->LoadDarkHandler(true);          // Put it to use, including selection of matching dark frame
+            wrapupMsg = _("dark library built");
+            if (m_rbNewDarkLib)
+                Debug.AddLine("Dark library - new dark lib created from scratch.");
+            else
+                Debug.AddLine("Dark library - dark lib modified/extended.");
+            //ShowStatus(wrapupMsg, false);
+        }
+    }
+    else
+    {
+        // Start by computing master dark frame with longish exposure times
+        //ShowStatus(_("Taking darks to compute defect map: "),  false);
+
+        int defectFrameCount = m_pNumDefExposures->GetValue();
+        int defectExpTime = m_pDefectExpTime->GetValue() * 1000;
+
+        m_pProgress->SetRange(defectFrameCount * defectExpTime);
+        m_pProgress->SetValue(0);
+
+        DefectMapDarks darks;
+        err = CreateMasterDarkFrame(darks.masterDark, defectExpTime, defectFrameCount);
+
+        if (m_cancelling)
+        {
+            ShowStatus(_("Operation cancelled"), false);
+        }
+        else if (!err)
+        {
+            // Our role here is to build the dark-related files needed for defect map building
+            ShowStatus(_("Analyzing master dark..."), false);
+
+            // create a median-filtered dark
+            Debug.AddLine("Starting construction of filtered master dark file");
+            darks.BuildFilteredDark();
+            Debug.AddLine("Completed construction of filtered master dark file");
+
+            // save the master dark and the median filtered dark
+            darks.SaveDarks(m_pNotes->GetValue());
+
+            ShowStatus(_("Master dark data files built"), false);
+
+            wrapupMsg = _("Master dark data files built");
+        }
+    }
+
+    Debug.AddLine("Completed construction of filtered master dark file");
+
+    m_pStartBtn->Enable(true);
+    m_pResetBtn->Enable(true);
+    pFrame->SetDarkMenuState();         // Hard to know where we are at this point
+
+    Debug.AddLine("Completed construction of filtered master dark file");
+
+    if (m_cancelling || err)
+    {
+        Debug.AddLine("1");
+        m_pProgress->SetValue(0);
+        Debug.AddLine("2");
+        m_cancelling = false;
+        Debug.AddLine("3");
+        m_started = false;
+        m_pStopBtn->SetLabel(_("Cancel"));
+
+        Debug.AddLine("Completed construction of filtered master dark file");
+    }
+    else
+    {
+        // Put up a message showing results and maybe notice to uncover the scope; then close the dialog
+        pCamera->ShutterClosed = false; // Lights
+        //if (!pCamera->HasShutter)
+            //wrapupMsg = _("Uncover guide scope") + wxT("\n\n") + wrapupMsg;   // Results will appear in smaller font
+        //wxMessageBox(wxString::Format(_("Operation complete: %s"), wrapupMsg));
+        EndDialog(wxOK);
+    }
+}
+
 // Event handler for dual mode cancel/stop button
 void DarksDialog::OnStop(wxCommandEvent& evt)
 {

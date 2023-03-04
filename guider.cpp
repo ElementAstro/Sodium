@@ -33,10 +33,11 @@
  */
 #include "phd.h"
 #include "nudge_lock.h"
-#include "comet_tool.h"
-#include "polardrift_tool.h"
-#include "staticpa_tool.h"
-#include "guiding_assistant.h"
+
+#include "tools/comet_tool.h"
+#include "tools/polardrift_tool.h"
+#include "tools/staticpa_tool.h"
+#include "tools/guiding_assistant.h"
 
 // un-comment to log star deflections to a file
 //#define CAPTURE_DEFLECTIONS

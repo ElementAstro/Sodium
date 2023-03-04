@@ -37,11 +37,11 @@
 #include "phd.h"
 
 #include "aui_controls.h"
-#include "comet_tool.h"
+#include "tools/comet_tool.h"
 #include "config_indi.h"
-#include "guiding_assistant.h"
+#include "tools/guiding_assistant.h"
 #include "phdupdate.h"
-#include "pierflip_tool.h"
+#include "tools/pierflip_tool.h"
 #include "Refine_DefMap.h"
 
 #include <algorithm>
@@ -954,6 +954,9 @@ void MyFrame::SetupToolBar()
 #   include "icons/auto_select_disabled.png.h"
     wxBitmap auto_select_disabled_bmp(wxBITMAP_PNG_FROM_DATA(auto_select_disabled));
 
+//#   include "icons/multistars.xpm"
+//    wxBitmap multi_stars_bmp(wxBITMAP_PNG_FROM_DATA(multi_stars));
+
 #   include "icons/connect.png.h"
     wxBitmap connect_bmp(wxBITMAP_PNG_FROM_DATA(connect));
 
@@ -998,6 +1001,9 @@ void MyFrame::SetupToolBar()
     MainToolbar->AddTool(BUTTON_GEAR, connect_bmp, connect_bmp_disabled, false, 0, _("Connect to equipment. Shift-click to reconnect the same equipment last connected."));
     MainToolbar->AddTool(BUTTON_LOOP, loop_bmp, loop_bmp_disabled, false, 0, _("Begin looping exposures for frame and focus"));
     MainToolbar->AddTool(BUTTON_AUTOSTAR, auto_select_bmp, auto_select_disabled_bmp, false, 0, _("Auto-select Star. Shift-click to de-select star."));
+
+    //MainToolbar->AddTool(BUTTON_MULTISTARS, multi_stars_bmp,auto_select_disabled_bmp, true, 0, _("Multi Stars Guiding Mode"));
+
     MainToolbar->AddTool(BUTTON_GUIDE, guide_bmp, guide_bmp_disabled, false, 0, _("Begin guiding (PHD). Shift-click to force calibration."));
     MainToolbar->AddTool(BUTTON_STOP, stop_bmp, stop_bmp_disabled, false, 0, _("Stop looping and guiding"));
     MainToolbar->AddSeparator();

@@ -34,7 +34,7 @@
 
 #include "phd.h"
 #include "nudge_lock.h"
-#include "comet_tool.h"
+#include "tools/comet_tool.h"
 
 #include <wx/valnum.h>
 

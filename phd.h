@@ -77,9 +77,9 @@
 #include <math.h>
 #include <stdarg.h>
 
-#define APPNAME _T("PHD2 Guiding")
+#define APPNAME _T("Light Guider")
 #define PHDVERSION _T("2.6.11")
-#define PHDSUBVER _T("dev4")
+#define PHDSUBVER _T("patch1")
 #define FULLVER PHDVERSION PHDSUBVER
 
 #if defined (__WINDOWS__)
@@ -153,15 +153,15 @@ WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 
 #include "phdconfig.h"
 #include "gui/configdialog.h"
-#include "optionsbutton.h"
+#include "gui/optionsbutton.h"
 #include "image/usImage.h"
 #include "point.h"
 #include "star.h"
 #include "circbuf.h"
-#include "guidinglog.h"
+#include "logger/guidinglog.h"
 #include "graph.h"
 #include "gui/statswindow.h"
-#include "star_profile.h"
+#include "gui/star_profile.h"
 #include "target.h"
 #include "graph-stepguider.h"
 #include "algorithm/guide_algorithms.h"
@@ -181,7 +181,7 @@ WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 #include "gui/advanced_dialog.h"
 #include "gui/gear_dialog.h"
 #include "gui/myframe.h"
-#include "debuglog.h"
+#include "logger/debuglog.h"
 #include "worker_thread.h"
 #include "server/event_server.h"
 #include "gui/confirm_dialog.h"

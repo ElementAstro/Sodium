@@ -16,6 +16,7 @@ packenv
 lightserver.spec
 webpage
 temp
+*.pyc
 
 # Distribution / packaging
 .Python

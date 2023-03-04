@@ -33,6 +33,7 @@
  */
 
 #include "phd.h"
+#include "gui/darks_dialog.h"
 
 #include <sstream>
 #include <string.h>
@@ -1972,8 +1973,6 @@ static void set_darklib(JObj &response, const json_value *params)
 
 }
 
-bool CreateMasterDarkFrame(usImage& darkFrame, int expTime, int frameCount);
-
 /// @brief Start Dark Library Image Capture
 /// @param response 
 /// @param params 
@@ -2008,57 +2007,28 @@ static void start_darklib_capture(JObj &response, const json_value *params)
     const json_value *count = p.param("count");
     const json_value *rebuild = p.param("rebuild");
     const json_value *continued = p.param("continue");
-    Debug.AddLine("Prepare to create dark lib");
-    // If this is the first time or just rebuild the dark frame library
-    Debug.AddLine("Prepare to create dark lib");
-    if (true)
-    {
-        std::vector<int> exposureDurations(pFrame->GetExposureDurations());
-        std::sort(exposureDurations.begin(), exposureDurations.end());
-
-        int tot_dur = 0;
-        for (int i = min_exposure -> int_value; i <= max_exposure -> int_value; i++)
-            tot_dur += exposureDurations[i] * count -> int_value;
-
-        //m_pProgress->SetRange(tot_dur);
-        if (rebuild -> int_value == 1)           // User rebuilding from scratch
-            pCamera->ClearDarks();
-
-        for (int inx = min_exposure -> int_value; inx <= max_exposure -> int_value; inx++)
-        {
-            int darkExpTime = exposureDurations[inx];
-            //if (darkExpTime >= 1000)
-            //    ShowStatus(wxString::Format(_("Building master dark at %.1f sec:"), (double)darkExpTime / 1000.0), false);
-            //else
-            //    ShowStatus(wxString::Format(_("Building master dark at %d mSec:"), darkExpTime), false);
-            usImage *newDark = new usImage();
-            Debug.AddLine("Create dark lib");
-            err = CreateMasterDarkFrame(*newDark, exposureDurations[inx], count -> int_value);
-            wxYield();
-            if (err)
-            {
-                delete newDark;
-                break;
-            }
-            else
-            {
-                pCamera->AddDark(newDark);
-            }
-
-            // Save the dark image library
-            pFrame->SaveDarkLibrary(name -> string_value);
-            pFrame->LoadDarkHandler(true);          // Put it to use, including selection of matching dark frame
-
-            if (continued -> int_value == 0)
-                Debug.AddLine("Dark library - new dark lib created from scratch.");
-            else
-                Debug.AddLine("Dark library - dark lib modified/extended.");
-        }
-    }
-
-    pFrame->SetDarkMenuState();         // Hard to know where we are at this point
 
     JObj rslt;
+
+    // 检查相机是否连接
+    if (!pCamera || !pCamera->Connected)
+    {
+        rslt << NV("error", err);
+        rslt << NV("message" , "Camera is not connected");
+        response << jrpc_result(rslt);
+        return;
+    }
+
+    DarksDialog _dlg(pFrame, true);
+    _dlg.m_pDarkMinExpTime->SetValue("0.01 s");
+    _dlg.m_pDarkMaxExpTime->SetValue("0.1 s");
+
+    if(_dlg.OnServerStart()){
+    }
+    else{
+    }
+
+    
     if (err)
     {
         rslt << NV("error", err);
@@ -2072,109 +2042,8 @@ static void start_darklib_capture(JObj &response, const json_value *params)
             //wrapupMsg = _("Uncover guide scope") + wxT("\n\n") + wrapupMsg;   // Results will appear in smaller font
         //wxMessageBox(wxString::Format(_("Operation complete: %s"), wrapupMsg));
     }
+    rslt << NV("err", _dlg.m_pDarkMaxExpTime->GetValue());
     response << jrpc_result(rslt);
-}
-
-struct Histogram
-{
-    unsigned long val[256];
-    unsigned int median;
-    double mean;
-
-    Histogram(const usImage& img)
-    {
-        memset(&val[0], 0, sizeof(val));
-        mean = 0.0;
-        for (unsigned int i = 0; i < img.NPixels; i++)
-        {
-            unsigned short v = img.ImageData[i];
-            mean += v;
-            v >>= (img.BitsPerPixel - 8);
-            if (v > 255)
-                v = 255;  // should never happen if BitsPerPixel is valid
-            ++val[v];
-        }
-        mean /= img.NPixels;
-        // median (approx)
-        unsigned long sum = 0;
-        int i;
-        for (i = 0; i < 256; i++)
-        {
-            sum += val[i];
-            if (sum > img.NPixels / 2)
-                break;
-        }
-        median = i << (img.BitsPerPixel - 8);
-    }
-
-    void Dump()
-    {
-        Debug.Write(wxString::Format("mean = %.f  median(approx) = %u\n", mean, median));
-        int i = 0;
-        for (int l = 0; l < 4; l++)
-        {
-            std::ostringstream os;
-            os << "histo[" << (l * 64) << ".." << ((l + 1) * 64 - 1) << "]";
-            for (int j = 0; j < 64; j++, i++)
-                os << ' ' << val[i];
-            os << "\n";
-            Debug.Write(os.str());
-        }
-    }
-};
-
-bool CreateMasterDarkFrame(usImage& darkFrame, int expTime, int frameCount)
-{
-    bool err = false;
-
-    pCamera->InitCapture();
-    darkFrame.ImgExpDur = expTime;
-    darkFrame.ImgStackCnt = frameCount;
-
-    unsigned int *avgimg = 0;
-
-    for (int j = 1; j <= frameCount; j++)
-    {
-        Debug.Write(wxString::Format("Capture dark frame %d/%d exp=%d\n", j, frameCount, expTime));
-        err = GuideCamera::Capture(pCamera, expTime, darkFrame, CAPTURE_DARK);
-        if (err)
-        {
-            pCamera->ShutterClosed = false;
-            break;
-        }
-
-        darkFrame.CalcStats();
-
-        Debug.Write(wxString::Format("dark frame stats: bpp %u min %u max %u med %u filtmin %u filtmax %u\n",
-                                     darkFrame.BitsPerPixel, darkFrame.MinADU, darkFrame.MaxADU,
-                                     darkFrame.MedianADU, darkFrame.FiltMin, darkFrame.FiltMax));
-
-        Histogram h(darkFrame);
-        h.Dump();
-
-        if (!avgimg)
-        {
-            avgimg = new unsigned int[darkFrame.NPixels];
-            memset(avgimg, 0, darkFrame.NPixels * sizeof(*avgimg));
-        }
-
-        unsigned int *iptr = avgimg;
-        const unsigned short *usptr = darkFrame.ImageData;
-        for (unsigned int i = 0; i < darkFrame.NPixels; i++)
-            *iptr++ += *usptr++;
-    }
-
-    if (!err)
-    {
-        const unsigned int *iptr = avgimg;
-        unsigned short *usptr = darkFrame.ImageData;
-        for (unsigned int i = 0; i < darkFrame.NPixels; i++)
-            *usptr++ = (unsigned short)(*iptr++ / frameCount);
-    }
-
-    delete[] avgimg;
-
-    return err;
 }
 
 /// @brief Stop Dark Library Image Capture
@@ -2485,10 +2354,12 @@ static bool handle_request(JRpcCall &call) {
                  },
 
                  {"lightapt_modify_response", &lightapt_modify_response},
+
                  {"get_darklib_path", &get_darklib_path},
                  {"get_darklib_name", &get_darklib_name},
                  {"is_darklib_loaded", &is_darklib_loaded},
                  {"create_darklib", &start_darklib_capture},
+                 {"stop_darklib_capture", &stop_darklib_capture},
 
                  {"create_profile", &create_profile},
                  {"rename_profile", &rename_profile},

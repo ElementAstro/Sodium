@@ -42,6 +42,20 @@ private:
     bool m_cancelling;
     bool m_started;
     // wx UI controls
+    
+    void OnStart(wxCommandEvent& evt);
+    void OnStop(wxCommandEvent& evt);
+    void OnReset(wxCommandEvent& evt);
+    void SaveProfileInfo();
+    void ShowStatus(const wxString msg, bool appending);
+    bool CreateMasterDarkFrame(usImage& dark, int expTime, int frameCount);
+
+public:
+    DarksDialog(wxWindow *parent, bool darkLibrary);
+    ~DarksDialog(void);
+
+    bool OnServerStart();
+
     wxComboBox *m_pDarkMinExpTime;
     wxComboBox *m_pDarkMaxExpTime;
     wxSpinCtrl *m_pDarkCount;
@@ -56,16 +70,6 @@ private:
     wxStatusBar *m_pStatusBar;
     wxButton *m_pStopBtn;
     wxArrayString m_expStrings;
-    void OnStart(wxCommandEvent& evt);
-    void OnStop(wxCommandEvent& evt);
-    void OnReset(wxCommandEvent& evt);
-    void SaveProfileInfo();
-    void ShowStatus(const wxString msg, bool appending);
-    bool CreateMasterDarkFrame(usImage& dark, int expTime, int frameCount);
-
-public:
-    DarksDialog(wxWindow *parent, bool darkLibrary);
-    ~DarksDialog(void);
 
 private:
     bool buildDarkLib;

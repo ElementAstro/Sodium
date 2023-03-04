@@ -87,7 +87,7 @@ void WorkerThread::EnqueueWorkerThreadTerminateRequest(void)
 
 void WorkerThread::EnqueueWorkerThreadExposeRequest(usImage *pImage, int exposureDuration, int exposureOptions, const wxRect& subframe)
 {
-    m_interruptRequested &= ~INT_STOP;
+    m_interruptRequested = m_interruptRequested & ~INT_STOP;
 
     WORKER_THREAD_REQUEST message;
     memset(&message, 0, sizeof(message));
@@ -251,7 +251,7 @@ void WorkerThread::SendWorkerThreadExposeComplete(usImage *pImage, bool bError)
 
 void WorkerThread::EnqueueWorkerThreadMoveRequest(Mount *mount, const GuiderOffset& ofs, unsigned int moveOptions)
 {
-    m_interruptRequested &= ~INT_STOP;
+    m_interruptRequested = m_interruptRequested & ~INT_STOP;
 
     WORKER_THREAD_REQUEST message;
     memset(&message, 0, sizeof(message));
@@ -270,7 +270,7 @@ void WorkerThread::EnqueueWorkerThreadMoveRequest(Mount *mount, const GuiderOffs
 
 void WorkerThread::EnqueueWorkerThreadAxisMove(Mount *mount, const GUIDE_DIRECTION direction, int duration, unsigned int moveOptions)
 {
-    m_interruptRequested &= ~INT_STOP;
+    m_interruptRequested = m_interruptRequested & ~INT_STOP;
 
     WORKER_THREAD_REQUEST message;
     memset(&message, 0, sizeof(message));

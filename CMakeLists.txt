@@ -47,7 +47,6 @@ set(phd_src_dir ${PHD_PROJECT_ROOT_DIR})
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake_modules/")
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake_modules/")
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Os")
 #message(${PHD_PROJECT_ROOT_DIR})
 # Additional files in the workspace, To improve maintainability
 
@@ -61,7 +60,7 @@ include(cmake_modules/LightGuiderBuildDoc.cmake)
 
 # retrieves the version from the source file
 get_lightguider_version()
-message(STATUS "Build-In Guider version '${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}' (extracted from source)")
+message(STATUS "Light Guider version '${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}' (extracted from source)")
 
 #################################################################################
 #
@@ -76,14 +75,11 @@ set(USE_FOLDERS TRUE)
 set(BUILD_SHARED_LIBS FALSE)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-
-
 #################################################################################
 #
 # main project
 # this should appear after setting the architecture
 project(guider)
-
 
 #################################################################################
 #
@@ -238,18 +234,14 @@ set(lightguider_SRC
   ${phd_src_dir}/camera/camcal_import_dialog.h
   ${phd_src_dir}/circbuf.h
 
-  ${phd_src_dir}/comet_tool.cpp
-  ${phd_src_dir}/comet_tool.h
-
   ${phd_src_dir}/config_indi.cpp
   ${phd_src_dir}/config_indi.h
 
-  
+  ${phd_src_dir}/tools/comet_tool.cpp
+  ${phd_src_dir}/tools/comet_tool.h
+  ${phd_src_dir}/tools/drift_tool.cpp
+  ${phd_src_dir}/tools/drift_tool.h
 
-  ${phd_src_dir}/debuglog.cpp
-  ${phd_src_dir}/debuglog.h
-  ${phd_src_dir}/drift_tool.cpp
-  ${phd_src_dir}/drift_tool.h
   ${phd_src_dir}/eegg.cpp
 
   ${phd_src_dir}/server/event_server.cpp
@@ -273,20 +265,25 @@ set(lightguider_SRC
   ${phd_src_dir}/graph-stepguider.h
   ${phd_src_dir}/graph.cpp
   ${phd_src_dir}/graph.h
-  ${phd_src_dir}/guiding_assistant.cpp
-  ${phd_src_dir}/guiding_assistant.h
-  ${phd_src_dir}/guidinglog.cpp
-  ${phd_src_dir}/guidinglog.h
+
+  ${phd_src_dir}/tools/guiding_assistant.cpp
+  ${phd_src_dir}/tools/guiding_assistant.h
+
+  ${phd_src_dir}/logger/debuglog.cpp
+  ${phd_src_dir}/logger/debuglog.h
+  ${phd_src_dir}/logger/guidinglog.cpp
+  ${phd_src_dir}/logger/guidinglog.h
+  ${phd_src_dir}/logger/logger.cpp
+  ${phd_src_dir}/logger/logger.h
+  ${phd_src_dir}/logger/log_uploader.cpp
+  ${phd_src_dir}/logger/log_uploader.h
+
   ${phd_src_dir}/guiding_stats.cpp
   ${phd_src_dir}/guiding_stats.h
   
-  
   ${phd_src_dir}/json_parser.cpp
   ${phd_src_dir}/json_parser.h
-  ${phd_src_dir}/logger.cpp
-  ${phd_src_dir}/logger.h
-  ${phd_src_dir}/log_uploader.cpp
-  ${phd_src_dir}/log_uploader.h
+  
   
   ${phd_src_dir}/messagebox_proxy.cpp
   ${phd_src_dir}/messagebox_proxy.h
@@ -295,8 +292,8 @@ set(lightguider_SRC
   ${phd_src_dir}/nudge_lock.h
   ${phd_src_dir}/onboard_st4.cpp
   ${phd_src_dir}/onboard_st4.h
-  ${phd_src_dir}/optionsbutton.cpp
-  ${phd_src_dir}/optionsbutton.h
+  ${phd_src_dir}/gui/optionsbutton.cpp
+  ${phd_src_dir}/gui/optionsbutton.h
   ${phd_src_dir}/phd.cpp
   ${phd_src_dir}/phd.h
   ${phd_src_dir}/phdconfig.cpp
@@ -307,11 +304,11 @@ set(lightguider_SRC
   ${phd_src_dir}/phdindiclient.h
   ${phd_src_dir}/phdupdate.cpp
   ${phd_src_dir}/phdupdate.h
-  ${phd_src_dir}/pierflip_tool.cpp
-  ${phd_src_dir}/pierflip_tool.h
-  ${phd_src_dir}/polardrift_tool.h
-  ${phd_src_dir}/polardrift_toolwin.h
-  ${phd_src_dir}/polardrift_toolwin.cpp
+  ${phd_src_dir}/tools/pierflip_tool.cpp
+  ${phd_src_dir}/tools/pierflip_tool.h
+  ${phd_src_dir}/tools/polardrift_tool.h
+  ${phd_src_dir}/tools/polardrift_toolwin.h
+  ${phd_src_dir}/tools/polardrift_toolwin.cpp
   
   ${phd_src_dir}/point.h
   ${phd_src_dir}/Refine_DefMap.cpp
@@ -339,15 +336,15 @@ set(lightguider_SRC
   
   ${phd_src_dir}/starcross_test.cpp
   ${phd_src_dir}/starcross_test.h
-  ${phd_src_dir}/staticpa_tool.h
-  ${phd_src_dir}/staticpa_toolwin.h
-  ${phd_src_dir}/staticpa_toolwin.cpp
+  ${phd_src_dir}/tools/staticpa_tool.h
+  ${phd_src_dir}/tools/staticpa_toolwin.h
+  ${phd_src_dir}/tools/staticpa_toolwin.cpp
   
 
   ${phd_src_dir}/star.cpp
   ${phd_src_dir}/star.h
-  ${phd_src_dir}/star_profile.cpp
-  ${phd_src_dir}/star_profile.h
+  ${phd_src_dir}/gui/star_profile.cpp
+  ${phd_src_dir}/gui/star_profile.h
   ${phd_src_dir}/target.cpp
   ${phd_src_dir}/target.h
   ${phd_src_dir}/testguide.cpp
@@ -409,6 +406,12 @@ if(UNIX)
    ${lightguider_SRC}
    )
   target_link_libraries(lightguider X11)
+
+  if(NOT TARGET spdlog)
+      # Stand-alone build
+      find_package(spdlog REQUIRED)
+  endif()
+  target_link_libraries(lightguider spdlog::spdlog_header_only)
 
   set_target_properties(
     lightguider

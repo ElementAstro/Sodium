@@ -39,8 +39,8 @@
 #include "camera/camcal_import_dialog.h"
 #include "darks_dialog.h"
 #include "image/image_math.h"
-#include "log_uploader.h"
-#include "pierflip_tool.h"
+#include "logger/log_uploader.h"
+#include "tools/pierflip_tool.h"
 #include "Refine_DefMap.h"
 #include "starcross_test.h"
 
