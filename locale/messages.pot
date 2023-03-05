@@ -5784,102 +5784,102 @@ msgstr ""
 msgid "Custom Port Address:"
 msgstr ""
 
-#: phd.cpp:280
+#: lightguider.cpp:280
 msgid "Win32s on Windows 3.1"
 msgstr ""
 
-#: phd.cpp:290
+#: lightguider.cpp:290
 msgid "Windows 95 OSR2"
 msgstr ""
 
-#: phd.cpp:294
+#: lightguider.cpp:294
 msgid "Windows 95"
 msgstr ""
 
-#: phd.cpp:301
+#: lightguider.cpp:301
 msgid "Windows 98 SE"
 msgstr ""
 
-#: phd.cpp:305
+#: lightguider.cpp:305
 msgid "Windows 98"
 msgstr ""
 
-#: phd.cpp:309
+#: lightguider.cpp:309
 msgid "Windows ME"
 msgstr ""
 
-#: phd.cpp:312
+#: lightguider.cpp:312
 #, c-format
 msgid "Windows 9x (%d.%d)"
 msgstr ""
 
-#: phd.cpp:330
+#: lightguider.cpp:330
 msgid "Windows 2000"
 msgstr ""
 
-#: phd.cpp:339
+#: lightguider.cpp:339
 msgid "Windows Server 2003"
 msgstr ""
 
-#: phd.cpp:345
+#: lightguider.cpp:345
 msgid "Windows XP"
 msgstr ""
 
-#: phd.cpp:355
+#: lightguider.cpp:355
 msgid "Windows Server 2008"
 msgstr ""
 
-#: phd.cpp:356
+#: lightguider.cpp:356
 msgid "Windows Vista"
 msgstr ""
 
-#: phd.cpp:361
+#: lightguider.cpp:361
 msgid "Windows Server 2008 R2"
 msgstr ""
 
-#: phd.cpp:362
+#: lightguider.cpp:362
 msgid "Windows 7"
 msgstr ""
 
-#: phd.cpp:367
+#: lightguider.cpp:367
 msgid "Windows Server 2012"
 msgstr ""
 
-#: phd.cpp:368
+#: lightguider.cpp:368
 msgid "Windows 8"
 msgstr ""
 
-#: phd.cpp:373
+#: lightguider.cpp:373
 msgid "Windows Server 2012 R2"
 msgstr ""
 
-#: phd.cpp:374
+#: lightguider.cpp:374
 msgid "Windows 8.1"
 msgstr ""
 
-#: phd.cpp:381
+#: lightguider.cpp:381
 msgid "Windows Server 2016"
 msgstr ""
 
-#: phd.cpp:382
+#: lightguider.cpp:382
 msgid "Windows 10"
 msgstr ""
 
-#: phd.cpp:388
+#: lightguider.cpp:388
 #, c-format
 msgid "Windows NT %lu.%lu"
 msgstr ""
 
-#: phd.cpp:394
+#: lightguider.cpp:394
 #, c-format
 msgid "build %lu"
 msgstr ""
 
-#: phd.cpp:402
+#: lightguider.cpp:402
 msgid ", 64-bit edition"
 msgstr ""
 
-#: phd.cpp:538
+#: lightguider.cpp:538
 #, c-format
 msgid ""
 "PHD2 instance %ld is already running. Use the -i INSTANCE_NUM command-line "

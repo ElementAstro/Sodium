@@ -44,4 +44,4 @@ def create_logger(name : str) -> logging.Logger:
 if not os.path.exists("./logs"):
     os.mkdir("./logs")
 
-phd2_logger = create_logger("phd2")
+lightguider_logger = create_logger("lightguier")

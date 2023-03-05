@@ -42,11 +42,11 @@ set(_default_locale "en_EN")
 #.rst:
 # .. command:: get_phd_version
 #
-#    Extract the current version from the phd.h and populates the variables
+#    Extract the current version from the lightguider.h and populates the variables
 #    `VERSION_MAJOR`, `VERSION_MINOR` and `VERSION_PATCH`.
 #    Raises an error if the version cannot be extracted
 function(get_lightguider_version)
-  set(filename_to_extract_from ${PHD_PROJECT_ROOT_DIR}/phd.h)
+  set(filename_to_extract_from ${PHD_PROJECT_ROOT_DIR}/src/lightguider.h)
   file(STRINGS ${filename_to_extract_from} file_content
        #REGEX "PHDVERSION[ _T\\(]+\"(.*)\""
   )

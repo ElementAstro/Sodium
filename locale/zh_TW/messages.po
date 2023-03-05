@@ -6006,102 +6006,102 @@ msgstr "選擇平行埠"
 msgid "Custom Port Address:"
 msgstr "自定通訊埠位址:"
 
-#: phd.cpp:280
+#: lightguider.cpp:280
 msgid "Win32s on Windows 3.1"
 msgstr "Win32s on Windows 3.1"
 
-#: phd.cpp:290
+#: lightguider.cpp:290
 msgid "Windows 95 OSR2"
 msgstr "Windows 95 OSR2"
 
-#: phd.cpp:294
+#: lightguider.cpp:294
 msgid "Windows 95"
 msgstr "Windows 95"
 
-#: phd.cpp:301
+#: lightguider.cpp:301
 msgid "Windows 98 SE"
 msgstr "Windows 98 SE"
 
-#: phd.cpp:305
+#: lightguider.cpp:305
 msgid "Windows 98"
 msgstr "Windows 98"
 
-#: phd.cpp:309
+#: lightguider.cpp:309
 msgid "Windows ME"
 msgstr "Windows ME"
 
-#: phd.cpp:312
+#: lightguider.cpp:312
 #, c-format
 msgid "Windows 9x (%d.%d)"
 msgstr "Windows 9x (%d.%d)"
 
-#: phd.cpp:330
+#: lightguider.cpp:330
 msgid "Windows 2000"
 msgstr "Windows 2000"
 
-#: phd.cpp:339
+#: lightguider.cpp:339
 msgid "Windows Server 2003"
 msgstr "Windows Server 2003"
 
-#: phd.cpp:345
+#: lightguider.cpp:345
 msgid "Windows XP"
 msgstr "Windows XP"
 
-#: phd.cpp:355
+#: lightguider.cpp:355
 msgid "Windows Server 2008"
 msgstr "Windows Server 2008"
 
-#: phd.cpp:356
+#: lightguider.cpp:356
 msgid "Windows Vista"
 msgstr "Windows Vista"
 
-#: phd.cpp:361
+#: lightguider.cpp:361
 msgid "Windows Server 2008 R2"
 msgstr "Windows Server 2008 R2"
 
-#: phd.cpp:362
+#: lightguider.cpp:362
 msgid "Windows 7"
 msgstr "Windows 7"
 
-#: phd.cpp:367
+#: lightguider.cpp:367
 msgid "Windows Server 2012"
 msgstr "Windows Server 2012"
 
-#: phd.cpp:368
+#: lightguider.cpp:368
 msgid "Windows 8"
 msgstr "Windows 8"
 
-#: phd.cpp:373
+#: lightguider.cpp:373
 msgid "Windows Server 2012 R2"
 msgstr "Windows Server 2012 R2"
 
-#: phd.cpp:374
+#: lightguider.cpp:374
 msgid "Windows 8.1"
 msgstr "Windows 8.1"
 
-#: phd.cpp:381
+#: lightguider.cpp:381
 msgid "Windows Server 2016"
 msgstr "Windows Server 2016"
 
-#: phd.cpp:382
+#: lightguider.cpp:382
 msgid "Windows 10"
 msgstr "Windows 10"
 
-#: phd.cpp:388
+#: lightguider.cpp:388
 #, c-format
 msgid "Windows NT %lu.%lu"
 msgstr "Windows NT %lu.%lu"
 
-#: phd.cpp:394
+#: lightguider.cpp:394
 #, c-format
 msgid "build %lu"
 msgstr "build %lu"
 
-#: phd.cpp:402
+#: lightguider.cpp:402
 msgid ", 64-bit edition"
 msgstr ", 64 位元版"
 
-#: phd.cpp:538
+#: lightguider.cpp:538
 #, c-format
 msgid ""
 "PHD2 instance %ld is already running. Use the -i INSTANCE_NUM command-line "

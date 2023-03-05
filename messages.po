@@ -4873,7 +4873,7 @@ msgstr ""
 msgid "Custom Port Address:"
 msgstr ""
 
-#: phd.cpp:110
+#: lightguider.cpp:110
 #, c-format
 msgid ""
 "PHD2 instance %ld is already running. Use the -i INSTANCE_NUM command-line "
