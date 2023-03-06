@@ -25,7 +25,7 @@
 #ifndef oatpp_swagger_Generator_hpp
 #define oatpp_swagger_Generator_hpp
 
-#include "oatpp-swagger/oas3/Model.hpp"
+#include "oas3/Model.hpp"
 
 #include "oatpp/web/server/api/Endpoint.hpp"
 

@@ -274,8 +274,8 @@ set(lightguider_SRC
   ${phd_src_dir}/src/gui/guiding_assistant.cpp
   ${phd_src_dir}/src/gui/guiding_assistant.h
 
-  #${phd_src_dir}/src/gui/calibration_assistant.cpp
-  #${phd_src_dir}/src/gui/calibration_assistant.h
+  ${phd_src_dir}/src/gui/calibration_assistant.cpp
+  ${phd_src_dir}/src/gui/calibration_assistant.h
 
   ${phd_src_dir}/src/gui/optionsbutton.cpp
   ${phd_src_dir}/src/gui/optionsbutton.h

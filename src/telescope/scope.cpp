@@ -987,9 +987,10 @@ void Scope::CheckCalibrationDuration(int currDuration)
 
     double raSpd;
     double decSpd;
+    double const siderealSecsPerSec = 0.9973;
     bool haveRates = !pPointingSource->GetGuideRates(&raSpd, &decSpd);          // units of degrees/sec as in ASCOM
 
-    double currSpd = 0.0021;           // 0.5x sidereal, default value
+    double currSpdX = raSpd * 3600.0 / (15.0 * siderealSecsPerSec);             // multiple of sidereal
 
     // Don't check the step size on very first calibration and don't adjust if the reported mount guide speeds are bogus
     if (!haveRates || calDetails.raGuideSpeed <= 0)
@@ -1001,10 +1002,7 @@ void Scope::CheckCalibrationDuration(int currDuration)
 
     int rslt;
     CalstepDialog::GetCalibrationStepSize(pFrame->GetFocalLength(), pCamera->GetCameraPixelSize(),
-        pCamera->Binning, currSpd, CalstepDialog::DEFAULT_STEPS, 0.0, GetCalibrationDistance(), 0, &rslt);
-
-    if (rslt == currDuration)
-        return;
+        pCamera->Binning, currSpdX, CalstepDialog::DEFAULT_STEPS, 0.0, GetCalibrationDistance(), 0, &rslt);
 
     wxString why = binningChange ? " binning " : " mount guide speed ";
     Debug.Write(wxString::Format("CalDuration adjusted at start of calibration from %d to %d because of %s change\n",

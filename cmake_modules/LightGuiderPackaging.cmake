@@ -43,7 +43,7 @@ if(UNIX AND NOT APPLE)
           RUNTIME DESTINATION bin)
   install(FILES ${PHD_INSTALL_LIBS}
           DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/lightguider/)
-  install(FILES ${phd_src_dir}/icons/phd2_48.png
+  install(FILES ${phd_src_dir}/src/icons/phd2_48.png
           DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps/
           RENAME "phd2.png")
   install(FILES ${phd_src_dir}/phd2.desktop

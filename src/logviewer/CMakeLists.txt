@@ -135,8 +135,8 @@ target_include_directories(guiderlogviewer PRIVATE ${wxWidgets_INCLUDE_DIRS})
 if(UNIX AND NOT APPLE)
   install(TARGETS guiderlogviewer
           RUNTIME DESTINATION bin)
-  install(FILES ${CMAKE_SOURCE_DIR}/logviewer/guiderlogviewer.png
+  install(FILES ${CMAKE_SOURCE_DIR}/src/logviewer/guiderlogviewer.png
           DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps/ )
-  install(FILES ${CMAKE_SOURCE_DIR}/logviewer/guiderlogviewer.desktop
+  install(FILES ${CMAKE_SOURCE_DIR}/src/logviewer/guiderlogviewer.desktop
           DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications/ )
 endif()

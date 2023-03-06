@@ -29,7 +29,7 @@
 #ifndef oatpp_swagger_oas3_Model_hpp
 #define oatpp_swagger_oas3_Model_hpp
 
-#include "oatpp-swagger/Model.hpp"
+#include "../Model.hpp"
 
 #include "oatpp/core/data/mapping/type/Object.hpp"
 #include "oatpp/core/macro/codegen.hpp"
