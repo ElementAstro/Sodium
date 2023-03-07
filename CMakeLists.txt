@@ -89,10 +89,8 @@ include(cmake_modules/thirdparty.cmake)
 
 #################################################################################
 #
-# webserver oat++
-add_subdirectory(src/server/web)
-include_directories(src/server/web)
-include_directories(src/server/http/)
+# spdlog
+include_directories(libs)
 
 #################################################################################
 #
@@ -444,16 +442,8 @@ if(UNIX)
    ${cam_SRC}
    ${guiding_SRC}
    ${lightguider_SRC}
-   ${HTTP_SERVER_SRC}
    )
   target_link_libraries(lightguider X11)
-
-  if(NOT TARGET spdlog)
-      # Stand-alone build
-      find_package(spdlog REQUIRED)
-  endif()
-  target_link_libraries(lightguider spdlog::spdlog_header_only)
-  target_link_libraries(lightguider oatpp)
 
   set_target_properties(
     lightguider
