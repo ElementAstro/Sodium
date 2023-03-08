@@ -550,6 +550,10 @@ struct JRpcResponse : public JObj {
 };
 
 static wxString parser_error(const JsonParser &parser) {
+  spdlog::error("Failed to parser JSON message from client...");
+  spdlog::debug("invalid JSON request: %s on line %d at \"%.12s...\"",
+                          parser.ErrorDesc(), parser.ErrorLine(),
+                          parser.ErrorPos());
   return wxString::Format("invalid JSON request: %s on line %d at \"%.12s...\"",
                           parser.ErrorDesc(), parser.ErrorLine(),
                           parser.ErrorPos());
@@ -591,6 +595,7 @@ static void deselect_star(JObj &response, const json_value *params) {
 
 static void get_exposure(JObj &response, const json_value *params) {
   response << jrpc_result(pFrame->RequestedExposureDuration());
+  spdlog::debug("Current Exposure time : {}",pFrame->RequestedExposureDuration());
 }
 
 static void get_exposure_durations(JObj &response, const json_value *params) {
@@ -700,6 +705,7 @@ static void set_exposure(JObj &response, const json_value *params) {
 static void get_profile(JObj &response, const json_value *params) {
   int id = pConfig->GetCurrentProfileId();
   wxString name = pConfig->GetCurrentProfile();
+  spdlog::debug("Current profile name : {}",std::string(name));
   JObj t;
   t << NV("id", id) << NV("name", name);
   response << jrpc_result(t);
@@ -741,10 +747,17 @@ static void get_current_equipment(JObj &response, const json_value *params) {
   response << jrpc_result(t);
 }
 
+/// @brief 
+/// @return status(bool)
 static bool all_equipment_connected() {
   spdlog::debug("Check that all devices are connected");
-  return pCamera && pCamera->Connected && (!pMount || pMount->IsConnected()) &&
+  bool status = pCamera && pCamera->Connected && (!pMount || pMount->IsConnected()) &&
          (!pSecondaryMount || pSecondaryMount->IsConnected());
+  if(status)
+    spdlog::debug("All of the devices connected");
+  else
+    spdlog::debug("Not all of the devices connected");
+  return status;
 }
 
 /// @brief Set the current file according to the configuration file number. This configuration should already exist.
@@ -808,6 +821,10 @@ static void get_calibrated(JObj &response, const json_value *params) {
   spdlog::debug("Check if the calibration has been completed");
   bool calibrated = pMount && pMount->IsCalibrated() &&
                     (!pSecondaryMount || pSecondaryMount->IsCalibrated());
+  if(calibrated)
+    spdlog::debug("Calibration had already completed , you can start guiding now");
+  else
+    spdlog::debug("Calibration had not been completed.");
   response << jrpc_result(calibrated);
 }
 
@@ -844,7 +861,12 @@ static bool bool_param(const json_value *jv, bool *val) {
 static void get_paused(JObj &response, const json_value *params) {
   spdlog::debug("Check whether the guide star has paused");
   VERIFY_GUIDER(response);
-  response << jrpc_result(pFrame->pGuider->IsPaused());
+  bool status = pFrame->pGuider->IsPaused();
+  if(status)
+    spdlog::debug("LightGuider paused successfully");
+  else
+    spdlog::debug("LightGuider is not paused");
+  response << jrpc_result(status);
 }
 
 static void set_paused(JObj &response, const json_value *params) {
@@ -854,6 +876,7 @@ static void set_paused(JObj &response, const json_value *params) {
 
   bool val;
   if (!jv || !bool_param(jv, &val)) {
+    spdlog::error("Unexpected params given by client when set paused");
     response << jrpc_error(JSONRPC_INVALID_PARAMS,
                            "expected bool param at index 0");
     return;
@@ -947,7 +970,7 @@ static void find_star(JObj &response, const json_value *params) {
   if (!error) {
     const PHD_Point &lockPos = pFrame->pGuider->LockPosition();
     if (lockPos.IsValid()) {
-      spdlog::debug("Found a star");
+      spdlog::debug("Found a star at [{}{}]",lockPos.X,lockPos.Y);
       response << jrpc_result(lockPos);
       return;
     }
@@ -960,8 +983,10 @@ static void get_pixel_scale(JObj &response, const json_value *params) {
   double scale = pFrame->GetCameraPixelScale();
   if (scale == 1.0)
     response << jrpc_result(NULL_VALUE); // scale unknown
-  else
+  else{
+    spdlog::debug("Current pixel size : {}",scale);
     response << jrpc_result(scale);
+  }
 }
 
 static void get_app_state(JObj &response, const json_value *params) {

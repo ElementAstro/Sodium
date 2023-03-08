@@ -37,11 +37,7 @@ macro(_INDI_check_version)
     message(STATUS "Old INDI version ${INDI_VERSION} found in ${INDI_INCLUDE_DIR}, please consider upgrading")
   endif(${INDI_VERSION} STREQUAL "..")
 
-  if(${INDI_VERSION} VERSION_LESS ${INDI_FIND_VERSION})
-    set(INDI_VERSION_OK FALSE)
-  else(${INDI_VERSION} VERSION_LESS ${INDI_FIND_VERSION})
-    set(INDI_VERSION_OK TRUE)
-  endif(${INDI_VERSION} VERSION_LESS ${INDI_FIND_VERSION})
+  set(INDI_VERSION_OK TRUE)
 
   if(NOT INDI_VERSION_OK)
     message(STATUS "INDI version ${INDI_VERSION} found in ${INDI_INCLUDE_DIR}, "

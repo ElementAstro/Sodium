@@ -277,12 +277,12 @@ else()
   # Linux or OSX
   set(USE_SYSTEM_LIBINDI On)
   if(USE_SYSTEM_LIBINDI)
-    message(STATUS "Using system's libindi. ${INDI_INCLUDE_DIR}")
+  find_package(INDI REQUIRED)
+    message(STATUS "Using system's libindi. ")
     # INDI
-    #find_package(INDI 2.0.0 REQUIRED)
+    
     # source files include <libindi/baseclient.h> so we need the libindi parent directory in the include directories
-    get_filename_component(INDI_INCLUDE_PARENT_DIR ${INDI_INCLUDE_DIR} DIRECTORY)
-    include_directories(${INDI_INCLUDE_PARENT_DIR})
+    include_directories(${INDI_INCLUDE_DIR})
     set(PHD_LINK_EXTERNAL ${PHD_LINK_EXTERNAL} ${INDI_CLIENT_LIBRARIES})
 
     find_package(ZLIB REQUIRED)
