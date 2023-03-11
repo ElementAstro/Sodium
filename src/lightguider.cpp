@@ -510,9 +510,9 @@ struct EarlyLogger : public wxLog
 bool PhdApp::OnInit()
 {
 
-    spdlog::set_pattern("[%Y-%m-%d %H:%M:%S %z][%^---%L---%$][thread %t] %v");
+    spdlog::set_pattern("[%Y-%m-%d %H:%M:%S %z][%l][process %P][thread %t] %v");
 
-    spdlog::info("Preparing to load LightGuide");
+    spdlog::info("Preparing to load LightGuider");
 
     spdlog::set_level(spdlog::level::debug);
 

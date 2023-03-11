@@ -256,6 +256,8 @@ public:
     wxDialog *pCalSanityCheckDlg;
     wxDialog *pCalReviewDlg;
     wxDialog *pCalibrationAssistant;
+    wxDialog *pServerAssistant;
+    wxDialog *pSolverAssistant;
     bool CaptureActive; // Is camera looping captures?
     bool m_exposurePending; // exposure scheduled and not completed
     double Stretch_gamma;
@@ -305,6 +307,8 @@ public:
     void OnPolarDriftTool(wxCommandEvent& evt);
     void OnStaticPaTool(wxCommandEvent& evt);
     void OnCalibrationAssistant(wxCommandEvent& evt);
+    void OnServerAssistant(wxCommandEvent& evt);
+    void OnSolverAssistant(wxCommandEvent& evt);
     void OnCometTool(wxCommandEvent& evt);
     void OnGuidingAssistant(wxCommandEvent& evt);
     void OnSetupCamera(wxCommandEvent& evt);
@@ -670,6 +674,8 @@ enum {
     BUTTON_GRAPH_ZOOMOUT,
     ABOUT_LINK,
     MENU_CALIBRATIONASSIST,
+    MENU_SERVERASSIST,
+    MENU_SOLVERASSIST,
     EEGG_RESTORECAL,
     EEGG_MANUALCAL,
     EEGG_CLEARCAL,

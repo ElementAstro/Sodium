@@ -88,6 +88,8 @@ wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(EEGG_CLEARCAL, MyFrame::OnEEGG)
     EVT_MENU(EEGG_REVIEWCAL, MyFrame::OnEEGG)
     EVT_MENU(MENU_CALIBRATIONASSIST, MyFrame::OnCalibrationAssistant)
+    EVT_MENU(MENU_SERVERASSIST, MyFrame::OnServerAssistant)
+    EVT_MENU(MENU_SOLVERASSIST, MyFrame::OnSolverAssistant)
     EVT_MENU(EEGG_MANUALLOCK, MyFrame::OnEEGG)
     EVT_MENU(EEGG_STICKY_LOCK, MyFrame::OnEEGG)
     EVT_MENU(EEGG_FLIPCAL, MyFrame::OnEEGG)
@@ -365,6 +367,8 @@ MyFrame::MyFrame()
     pCalSanityCheckDlg = nullptr;
     pCalReviewDlg = nullptr;
     pCalibrationAssistant = nullptr;
+    pServerAssistant = nullptr;
+    pSolverAssistant = nullptr;
     pierFlipToolWin = nullptr;
     m_starFindMode = Star::FIND_CENTROID;
     m_rawImageMode = false;
@@ -509,7 +513,8 @@ void MyFrame::SetupMenuBar()
     m_autoSelectStarMenuItem = tools_menu->Append(MENU_AUTOSTAR, _("&Auto-select Star\tAlt-S"), _("Automatically select star"));
     tools_menu->Append(MENU_CALIBRATIONASSIST, _("Calibration Assistant..."), _("Slew to a preferred calibration position"));
     tools_menu->Append(EEGG_REVIEWCAL, _("&Review Calibration Data\tAlt-C"), _("Review calibration data from last successful calibration"));
-    
+    tools_menu->Append(MENU_SERVERASSIST, _("Server Assistant"), _("Manage socket server and web server"));
+    tools_menu->Append(MENU_SOLVERASSIST, _("Solver Assistant"), _("Using astrometry or astap as the platesolve engine"));
     wxMenu *calib_menu = new wxMenu;
     calib_menu->Append(EEGG_RESTORECAL, _("Restore Calibration Data..."), _("Restore calibration data from last successful calibration"));
     calib_menu->Append(EEGG_MANUALCAL, _("Enter Calibration Data..."), _("Manually enter the calibration data"));

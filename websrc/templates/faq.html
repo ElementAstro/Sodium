@@ -1,0 +1,144 @@
+<!--
+
+   Copyright(c) 2022-2023 Max Qian  <lightapt.com>
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+   
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+   MA 02110-1301, USA.
+   
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<!-- HTML Head-->
+
+<head>
+    
+    {{ basic.load_basic_meta() }}
+
+    <title>LightAPT FAQ</title>
+
+    {{ basic.icon() }}
+
+    {{ basic.load_basic_css() }}
+
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="/static/css/plugins/OverlayScrollbars.min.css">
+    <!-- Loading animation -->
+    <link rel="stylesheet" href="/static/css/client/loading.css">
+    
+</head>
+<!-- Body Part -->
+
+<body class="dark-mode" data-panel-auto-height-mode="height">
+    
+    {{ basic.loading() }}
+
+    <div class="wrapper">
+        <!-- Main content -->
+        <section class="content" data-widget="iframe">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-12" id="accordion">
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseOne">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        1. 为什么我的软件里没有客户端,只有一些软件的整合?
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseOne" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    目前LihgtAPT处于内侧状态,软件尚不完善,为了保障您的使用体验和设备安全,我们暂时没有加入,日后更新会引入客户端.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12" id="accordion">
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseTwo">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        2. 软件挂了怎么办?
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    一般情况下,客户端不会挂掉,但是不排除出现什么意外情况,有备用方法Kstars+VNC.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12" id="accordion">
+                        <div class="card card-danger card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseThree">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        3. VNC无法连接桌面怎么办?
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseThree" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    检查VNC服务是否正常开启,并且看看VNC端口是否正确.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12" id="accordion">
+                        <div class="card card-primary card-outline">
+                            <a class="d-block w-100" data-toggle="collapse" href="#collapseFour">
+                                <div class="card-header">
+                                    <h4 class="card-title w-100">
+                                        4.INDI服务器启动异常怎么办?
+                                    </h4>
+                                </div>
+                            </a>
+                            <div id="collapseFour" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    请将INDI服务器的错误日志发送给开发者,能够获得更好的解决.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    {{ basic.load_basic_js() }}
+
+    <!-- overlayScrollbars -->
+	<script src="/static/js/jquery/jquery.overlayScrollbars.min.js"></script>
+	<script>
+		$(function () {
+			$('body').overlayScrollbars({});
+		});
+	</script>
+
+</body>
+</html>

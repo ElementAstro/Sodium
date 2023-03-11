@@ -38,10 +38,14 @@
 #include "staticpa_tool.h"
 #include "manualcal_dialog.h"
 #include "calreview_dialog.h"
+#include "server_dialog.h"
+#include "solver_dialog.h"
 #include "nudge_lock.h"
 #include "comet_tool.h"
 #include "guiding_assistant.h"
 #include "calibration_assistant.h"
+
+#include <spdlog/spdlog.h>
 
 static wxString FlipCalEnabledKey()
 {
@@ -241,6 +245,25 @@ void MyFrame::OnCalibrationAssistant(wxCommandEvent& WXUNUSED(evt))
         pCalibrationAssistant = CalibrationAssistantFactory::MakeCalibrationAssistant();
     pCalibrationAssistant->Show();
 }
+
+void MyFrame::OnServerAssistant(wxCommandEvent& WXUNUSED(evt))
+{
+    if (!pServerAssistant){
+        pServerAssistant = ServerAssistantFactory::MakeServerAssistant();
+    }
+    spdlog::debug("Open server assistant ...");
+    pServerAssistant->Show();
+}
+
+void MyFrame::OnSolverAssistant(wxCommandEvent& WXUNUSED(evt))
+{
+    if (!pSolverAssistant){
+        pSolverAssistant = SolverAssistantFactory::MakeSolverAssistant();
+    }
+    spdlog::debug("Open solver assistant ...");
+    pSolverAssistant->Show();
+}
+
 
 void MyFrame::OnStaticPaTool(wxCommandEvent& WXUNUSED(evt))
 {

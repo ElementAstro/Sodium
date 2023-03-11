@@ -1,0 +1,89 @@
+<!--
+
+   Copyright(c) 2022-2023 Max Qian  <astroair.cn>
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+   
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+   MA 02110-1301, USA.
+   
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+    {{ basic.load_basic_meta() }}
+
+    <title>404</title>
+    
+    {{ basic.icon() }}
+    
+    <link rel="stylesheet" href="/static/css/client/404.css" />
+</head>
+
+<body>
+    <!-- partial:index.partial.html -->
+    <div id="page">
+        <div id="container">
+            <h1>:(</h1>
+            <h2>
+                Your PC ran into a problem and needs to restart. We're just collecting
+                some error info, and then we'll restart for you.
+            </h2>
+            <h2><span id="percentage">0</span>% complete</h2>
+            <div id="details">
+                <div id="qr">
+                    <div id="image">
+                        <img src="/static/textures/404.png" alt="QR Code" />
+                    </div>
+                </div>
+                <div id="stopcode">
+                    <h4>
+                        For more information about this issue and possible fixes, visit
+                        <br />
+                        <a
+                            href="https://github.com/AstroAir-Develop-Team/lightapt/issues">https://github.com/AstroAir-Develop-Team/lightapt/issues</a>
+                    </h4>
+                    <h5>
+                        If you call a support person, give them this info: <br />Stop
+                        Code: {{ error }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- partial -->
+    <script>
+        var percentageElement = document.getElementById("percentage");
+        var percentage = 0;
+
+        function process() {
+            percentage += parseInt(Math.random() * 10);
+            if (percentage > 100) {
+                percentage = 100;
+            }
+            percentageElement.innerText = percentage;
+            processInterval();
+        }
+
+        function processInterval() {
+            setTimeout(process, Math.random() * (1000 - 500) + 500);
+        }
+        processInterval();
+
+    </script>
+</body>
+
+</html>

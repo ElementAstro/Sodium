@@ -1,0 +1,691 @@
+<!--
+
+   Copyright(c) 2022-2023 Max Qian  <astroair.cn>
+
+   This program is free software; you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation; either version 2 of the License, or
+   (at your option) any later version.
+   
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+   
+   You should have received a copy of the GNU General Public License
+   along with this program; if not, write to the Free Software
+   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+   MA 02110-1301, USA.
+   
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+    {{ basic.load_basic_meta() }}
+
+    <title>Script Editor</title>
+
+    <link rel='Shortcut Icon' type='image/x-icon' href='/static/textures/icons/scripteditor.png'>
+
+    <!-- Select2 -->
+    <link rel="stylesheet" href="/static/css/plugins/select2.min.css">
+    <!-- Select2 with bootstrap -->
+    <link rel="stylesheet" href="/static/css/bootstrap/select2-bootstrap4.min.css">
+    <!-- Icheck -->
+    <link rel="stylesheet" href="/static/css/bootstrap/icheck-bootstrap.min.css">
+    <!-- Bootstrap Table -->
+    <link rel="stylesheet" href="/static/css/bootstrap/bootstrap-table.min.css">
+    <!-- Loading animation -->
+    <link rel="stylesheet" href="/static/css/client/loading.css">
+
+    {{ basic.load_basic_css() }}
+    
+</head>
+
+<body style="height: auto;" class="dark-mode">
+    
+    {{ basic.loading() }}
+    
+    <div class="wrapper">
+        <!-- Main content -->
+        <section class="content" data-widget="iframe">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col px-lg-1 px-xl-2 mb-xl-4 mb-2">
+                        <div class="card elegant-color h100 card-default card-primary">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <i class="fas fa-pen mr-2"></i>
+                                    脚本编辑器
+                                </div>
+                            </div>
+                            <!-- Card content -->
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-md-6 px-lg-1 px-xl-2 mb-xl-4 mb-2">
+                                        <div class="card elegant-color h100 card-default card-primary">
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    <i class="fas fa-clock mr-2"></i>
+                                                    序列设置
+                                                </div>
+                                                <div class="card-tools">
+                                                    <button type="button" class="btn btn-tool"
+                                                        data-card-widget="collapse" title="Collapse">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-3">
+                                                        <div class="form-group form-group-sm">
+                                                            <label class="text-sm">曝光时长</label>
+                                                            <input type="number" min="0" max="3600"
+                                                                class="form-control form-control-sm" id="exposure"
+                                                                placeholder="请输入曝光时间">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-3">
+                                                        <div class="form-group form-group-sm">
+                                                            <label class="text-sm">循环次数</label>
+                                                            <input type="number" min="0"
+                                                                class="form-control form-control-sm" id="repeat"
+                                                                placeholder="请输入循环次数">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group form-group-sm">
+                                                            <label class="text-sm">滤镜轮</label>
+                                                            <select id="filterwheel"
+                                                                class="form-control select2 form-control-sm"
+                                                                style="width: 100%;">
+                                                                <option value="none" selected="selected">None</option>
+                                                                <option value="red">Red</option>
+                                                                <option value="green">Green</option>
+                                                                <option value="blue">Blue</option>
+                                                                <option value="ha">Ha</option>
+                                                                <option value="hb">Hb</option>
+                                                                <option value="oiii">OIII</option>
+                                                                <option value="sii">SII</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group form-group-sm">
+                                                            <label class="text-sm">像素合并</label>
+                                                            <select class="form-control select2 form-control-sm"
+                                                                id="binning" style="width: 100%;">
+                                                                <option value="1" selected="selected">1</option>
+                                                                <option value="2">2</option>
+                                                                <option value="4">4</option>
+                                                                <option value="8">8</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <div class="form-group form-group-sm">
+                                                            <label class="text-sm">序列模式</label>
+                                                            <select class="form-control select2 form-control-sm"
+                                                                id="sequence_format" style="width: 100%;">
+                                                                <option value="1" selected="selected">顺序拍摄</option>
+                                                                <option value="2">倒序拍摄</option>
+                                                                <option value="3">随即顺序</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group form-group-sm">
+                                                            <label class="text-sm">延迟</label>
+                                                            <input type="number" min="0"
+                                                                class="form-control form-control-sm" id="sequence_delay"
+                                                                placeholder="请输入延迟">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-group-sm">
+                                                            <label class="text-sm">类型</label>
+                                                            <select class="form-control select2 form-control-sm"
+                                                                id="sequence_type" style="width: 100%;">
+                                                                <option value="1" selected="selected">亮场</option>
+                                                                <option value="2">暗场</option>
+                                                                <option value="3">平场</option>
+                                                                <option value="4">偏置</option>
+                                                                <option value="5">暗平场</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <div class="form-group form-group-sm">
+                                                            <label class="text-sm">导星</label>
+                                                            <br>
+                                                            <div class="icheck-success d-inline">
+                                                                <input class="input-sm" type="checkbox" checked
+                                                                    id="guiding_enable">
+                                                                <label for="guiding_enable"></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group form-group-sm">
+                                                            <label class="text-sm">中天翻转</label>
+                                                            <br>
+                                                            <div class="icheck-success d-inline">
+                                                                <input class="input-sm" type="checkbox" checked
+                                                                    id="mid_enable">
+                                                                <label for="mid_enable"></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group form-group-sm">
+                                                            <label class="text-sm">抖动</label>
+                                                            <br>
+                                                            <div class="icheck-success d-inline">
+                                                                <input class="input-sm" type="checkbox" checked
+                                                                    id="dither_enable">
+                                                                <label for="dither_enable"></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group form-group-sm">
+                                                            <label class="text-sm">抖动间隔</label>
+                                                            <input type="number" min="0"
+                                                                class="form-control form-control-sm" id="dither_delay"
+                                                                placeholder="请输入抖动延迟">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <div class="form-group form-group-sm">
+                                                            <label>目标名称</label>
+                                                            <input type="text" class="form-control form-control-sm"
+                                                                id="target_name" placeholder="请输入目标名称">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-group-sm">
+                                                            <label>图像保存名称</label>
+                                                            <input type="text" class="form-control form-control-sm"
+                                                                id="image_name" placeholder="请输入正则表达式">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <div class="form-group form-group-sm">
+                                                            <label>图像格式</label>
+                                                            <select class="form-control select2 form-control-sm"
+                                                                id="image_type" style="width: 100%;">
+                                                                <option value="jpg" selected="selected">jpg</option>
+                                                                <option value="png">png</option>
+                                                                <option value="tiff">tiff</option>
+                                                                <option value="fits">fits</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-group-sm">
+                                                            <label>赤经</label>
+                                                            <input type="text" class="form-control form-control-sm"
+                                                                id="target_ra" placeholder="请输入目标赤经">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-group-sm">
+                                                            <label>赤纬</label>
+                                                            <input type="text" class="form-control form-control-sm"
+                                                                id="target_dec" placeholder="请输入目标赤纬">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card elegant-color h100 card-default card-primary">
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    <i class="fas fa-paper-plane mr-2"></i>
+                                                    序列预览
+                                                </div>
+                                                <div class="card-tools">
+                                                    <button type="button" class="btn btn-tool"
+                                                        data-card-widget="collapse" title="Collapse">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label>预计开始时间</label>
+                                                        <input type="text" id="sequence_start"
+                                                            class="form-control form-control-sm" placeholder=""
+                                                            disabled>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label>预计完成时间</label>
+                                                        <input type="text" id="sequence_stop"
+                                                            class="form-control form-control-sm" placeholder=""
+                                                            disabled>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label>持续时间</label>
+                                                        <input type="text" id="sequence_last"
+                                                            class="form-control form-control-sm" placeholder=""
+                                                            disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <label>预计开始时间(此目标)</label>
+                                                        <input type="text" id="sequence_target_start"
+                                                            class="form-control form-control-sm" placeholder=""
+                                                            disabled>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label>预计完成时间(此目标)</label>
+                                                        <input type="text" id="sequence_target_stop"
+                                                            class="form-control form-control-sm" placeholder=""
+                                                            disabled>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <label>持续时间(此目标)</label>
+                                                        <input type="text" id="sequence_target_last"
+                                                            class="form-control form-control-sm" placeholder=""
+                                                            disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 mt-2">
+                                                        <div class="card card-default card-pink collapsed-card" >
+                                                            <div class="card-header">
+                                                                <div class="card-title">
+                                                                    <i class="fas fa-language"></i>
+                                                                    JSON格式
+                                                                </div>
+                                                                <div class="card-tools">
+                                                                    <button type="button" class="btn btn-tool"
+                                                                        id="copy">
+                                                                        <i class="fas fa-copy"></i>
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-tool"
+                                                                        id="upload">
+                                                                        <i class="fas fa-upload"></i>
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-tool"
+                                                                        id="save">
+                                                                        <i class="fas fa-save"></i>
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-tool"
+                                                                        id="refresh">
+                                                                        <i class="fas fa-redo"></i>
+                                                                    </button>
+                                                                    <button type="button" class="btn btn-tool"
+                                                                        data-card-widget="collapse" title="Collapse">
+                                                                        <i class="fas fa-minus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <p>所有的脚本都会被保存为JSON格式,下面是JSON格式语法</p>
+                                                                <textarea id="output-json" rows="15"
+                                                                    style="width: 100%; font-family: monospace;"
+                                                                    class="form-control"></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <button id="sequence_add" type="button" class="btn btn-block btn-info btn-sm">
+                                                            <i class="fas fa-add"></i>
+                                                            添加
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <button id="sequence_reset" type="button" class="btn btn-block btn-danger btn-sm">
+                                                            <i class="fas fa-redo"></i>
+                                                            重置
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card card-default card-primary">
+                                            <div class="card-header">
+                                                <div class="card-title">
+                                                    <i class="fas fa-table"></i>
+                                                    序列
+                                                </div>
+                                                <div class="card-tools">
+                                                    <button type="button" class="btn btn-tool"
+                                                        data-card-widget="collapse" title="Collapse">
+                                                        <i class="fas fa-minus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+
+                                                <div id="toolbar">
+                                                    <button id="remove" class="btn btn-danger" disabled>
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </button>
+                                                </div>
+                                                <table id="table" data-toolbar="#toolbar" data-search="true"
+                                                    data-show-refresh="true" data-show-toggle="true"
+                                                    data-show-columns="true"
+                                                    data-show-columns-toggle-all="true" data-detail-view="true"
+                                                    data-show-export="true" data-click-to-select="true"
+                                                    data-detail-formatter="detailFormatter"
+                                                    data-minimum-count-columns="10" data-show-pagination-switch="true"
+                                                    data-pagination="true" data-id-field="id"
+                                                    data-page-list="[10, 25, 50, 100, all]" data-show-footer="true"
+                                                    data-side-pagination="server" data-reorderable-rows="true"
+                                                    data-response-handler="responseHandler">
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-primary text-center mt-2">
+                                脚本编辑器
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    {{ basic.load_danger_model() }}
+
+	{{ basic.load_warning_model() }}
+
+	{{ basic.load_info_model() }}
+
+    {{ basic.load_basic_js() }}
+
+    <!-- Select2 -->
+    <script src="/static/js/plugins/select2.full.min.js"></script>
+    <!-- Clipboard -->
+    <script src="/static/js/plugins/clipboard.min.js"></script>
+    <!-- Bootstrap Table Dependence -->
+    <script src="/static/js/jquery/jquery.tablednd.min.js"></script>
+    <!-- Bootstrap Table Dependence -->
+    <script src="/static/js/plugins/tableExport.min.js"></script>
+    <!-- Bootstrap Table -->
+    <script src="/static/js/bootstrap/bootstrap-table.min.js"></script>
+    <!-- Bootstrap Table I18n -->
+    <script src="/static/js/bootstrap/bootstrap-table-zh-CN.min.js"></script>
+    <!-- Bootstrap Table Draggable -->
+    <script src="/static/js/bootstrap/bootstrap-table-reorder-rows.min.js"></script>
+    <!-- Bootstrap Table Export -->
+    <script src="/static/js/bootstrap/bootstrap-table-export.min.js"></script>
+    <script>
+        //Initialize Select2 Elements
+        $('.select2').select2()
+        
+        var data = {};
+
+        var defaultOptions = {
+            exposure: 1,
+            repeat: 1,
+            filterwheel: "none",
+            binning: 1,
+            sequence_format: 1,
+            sequence_delay: 0,
+            sequence_type: 1,
+            guiding_enable: false,
+            mid_enable: false,
+            dither_enable: false,
+            dither_delay: 0,
+            target_name: "",
+            image_name: "",
+            image_type: "jpg",
+            target_ra: "",
+            target_dec: "",
+        }
+
+        document.getElementById("refresh").addEventListener("click", refresh)
+
+        function refresh() {
+            let exposure = $("#exposure").val(),
+                repeat = $("#repeat").val(),
+                filterwheel = $("#filterwheel").val(),
+                binning = $("#binning").val(),
+                sequence_format = $("#sequence_format").val(),
+                sequence_delay = $("#sequence_delay").val(),
+                sequence_type = $("#sequence_type").val(),
+                guiding_enable = $("#guiding_enable").is(":checked"),
+                mid_enable = $("#mid_enable").is(":checked"),
+                dither_enable = $("#dither_enable").is(":checked"),
+                dither_delay = $("#dither_delay").val(),
+                target_name = $("#target_name").val(),
+                image_name = $("#image_name").val(),
+                image_type = $("#image_type").val(),
+                target_ra = $("#target_ra").val(),
+                target_dec = $("#target_dec").val()
+
+            console.log("exposure:" + exposure)
+            console.log("repeat:" + repeat)
+            console.log("filterwheel:" + filterwheel)
+            console.log("binnings:" + binning)
+            console.log("sequence_format:" + sequence_format)
+            console.log("sequence_delay:" + sequence_delay)
+            console.log("sequence_type:" + sequence_type)
+            console.log("guiding_enable:" + guiding_enable)
+            console.log("mid_enable:" + mid_enable)
+            console.log("dither_enable:" + dither_enable)
+            console.log("dither_delay:" + dither_delay)
+            console.log("target_name:" + target_name)
+            console.log("image_name:" + image_name)
+            console.log("image_type:" + image_type)
+            console.log("target_ra:" + target_ra)
+            console.log("target_dec:" + target_dec)
+
+            var options = {
+                exposure: exposure,
+                repeat: repeat,
+                filterwheel: filterwheel,
+                binning: binning,
+                sequence_format: sequence_format,
+                sequence_delay: sequence_delay,
+                sequence_type: sequence_type,
+                guiding_enable: guiding_enable,
+                mid_enable: mid_enable,
+                dither_enable: dither_enable,
+                dither_delay: dither_delay,
+                target_name: target_name,
+                image_name: image_name,
+                image_type: image_type,
+                target_ra: target_ra,
+                target_dec: target_dec,
+            }
+
+            $("#output-json").text(JSON.stringify(options, null, 4));
+        }
+
+        // ----------------------------------------------------------------
+
+        var $table = $('#table')
+        var $remove = $('#remove')
+        var selections = []
+        var sequence_id = 0
+        
+        function getIdSelections() {
+            return $.map($table.bootstrapTable('getSelections'), function (row) {
+            return row.id
+            })
+        }
+        
+        function responseHandler(res) {
+            $.each(res.rows, function (i, row) {
+                row.state = $.inArray(row.id, selections) !== -1
+            })
+            return res
+        }
+
+        function detailFormatter(index, row) {
+            var html = []
+            $.each(row, function (key, value) {
+            html.push('<p><b>' + key + ':</b> ' + value + '</p>')
+            })
+            return html.join('')
+        }
+        function initTable() {
+            $table.bootstrapTable('destroy').bootstrapTable({
+                height: 550,
+                locale: $('#locale').val(),
+                columns: [
+                    [{
+                        field: 'state',
+                        checkbox: true,
+                        rowspan: 2,
+                        align: 'center',
+                        valign: 'middle'
+                    },{
+                        field:'id',
+                        title:'序号',
+                        align:'center',
+                    },{
+                        title: '序列名称',
+                        field: 'sequence_name',
+                        align: 'center',
+                    }, {
+                        title: '目标名称',
+                        field: 'target_name',
+                        align: 'center'
+                    }, {
+                        title: '曝光时间',
+                        field: 'exposure',
+                        align: 'center',
+                    }, {
+                        "title": "循环次数",
+                        field: 'repeat',
+                        align: 'center',
+                    }, {
+                        "title": "类型",
+                        field: 'sequence_type',
+                        align: 'center',
+                    }, {
+                        "title": "像素合并",
+                        field: 'binning',
+                        align: 'center',
+                    }, {
+                        "title": "滤镜轮",
+                        field: 'filterwheel',
+                        align: 'center',
+                    }, {
+                        "title": "导星",
+                        field: 'guiding_enable',
+                        align: 'center',
+                    }, {
+                        "title": "抖动",
+                        field: 'dither_enable',
+                        align: 'center',
+                    }, {
+                        "title": "中天翻转",
+                        field:'mid_enable',
+                        align: 'center',
+                    }, {
+                        "title": "延迟",
+                        field: 'sequence_delay',
+                        align: 'center',
+                    }
+                    ],
+                    []
+                ]
+            })
+            $table.on('check.bs.table uncheck.bs.table ' +
+                'check-all.bs.table uncheck-all.bs.table',
+            function () {
+                $remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+                // save your data, here just save the current page
+                selections = getIdSelections()
+                // push or splice the selections if you want to save all data selections
+            })
+            $remove.click(function () {
+                var ids = getIdSelections()
+                $table.bootstrapTable('remove', {
+                    field: 'id',
+                    values: ids
+                })
+                $remove.prop('disabled', true)
+                sequence_id = $table.bootstrapTable("getData").length;
+            })
+        }
+
+        $(function () {
+            initTable()
+
+            $('#locale').change(initTable)
+        })
+
+        document.getElementById("sequence_add").addEventListener("click", add_new_row)
+
+        function add_new_row() {
+            let exposure = $("#exposure").val(),
+                repeat = $("#repeat").val(),
+                filterwheel = $("#filterwheel").val(),
+                binning = $("#binning").val(),
+                sequence_format = $("#sequence_format").val(),
+                sequence_delay = $("#sequence_delay").val(),
+                sequence_type = $("#sequence_type").val(),
+                guiding_enable = $("#guiding_enable").is(":checked"),
+                mid_enable = $("#mid_enable").is(":checked"),
+                dither_enable = $("#dither_enable").is(":checked"),
+                dither_delay = $("#dither_delay").val(),
+                target_name = $("#target_name").val(),
+                image_name = $("#image_name").val(),
+                image_type = $("#image_type").val(),
+                target_ra = $("#target_ra").val(),
+                target_dec = $("#target_dec").val()
+
+            var options = {
+                id : sequence_id,
+                exposure: exposure,
+                repeat: repeat,
+                filterwheel: filterwheel,
+                binning: binning,
+                sequence_format: sequence_format,
+                sequence_delay: sequence_delay,
+                sequence_type: sequence_type,
+                guiding_enable: guiding_enable,
+                mid_enable: mid_enable,
+                dither_enable: dither_enable,
+                dither_delay: dither_delay,
+                target_name: target_name,
+                image_name: image_name,
+                image_type: image_type,
+                target_ra: target_ra,
+                target_dec: target_dec,
+            }
+            $table.bootstrapTable('append',options)
+            $table.bootstrapTable('updateRow',options)
+            sequence_id = $table.bootstrapTable("getData").length;
+        }
+
+        // ----------------------------------------------------------------
+
+    </script>
+</body>
+
+</html>

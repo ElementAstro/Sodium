@@ -87,10 +87,13 @@ project(guider)
 # to be changed in add_subdirectory
 include(cmake_modules/thirdparty.cmake)
 
+find_package(spdlog REQUIRED)
+
 #################################################################################
 #
-# spdlog
-include_directories(libs)
+#
+
+add_subdirectory(libs/)
 
 #################################################################################
 #
@@ -321,6 +324,16 @@ set(lightguider_SRC
   ${phd_src_dir}/src/gui/target.cpp
   ${phd_src_dir}/src/gui/target.h
 
+  ${phd_src_dir}/src/gui/server_dialog_base.cpp
+  ${phd_src_dir}/src/gui/server_dialog_base.h
+  ${phd_src_dir}/src/gui/server_dialog.cpp
+  ${phd_src_dir}/src/gui/server_dialog.h
+
+  ${phd_src_dir}/src/gui/solver_dialog_base.cpp
+  ${phd_src_dir}/src/gui/solver_dialog_base.h
+  ${phd_src_dir}/src/gui/solver_dialog.cpp
+  ${phd_src_dir}/src/gui/solver_dialog.h
+
   ${phd_src_dir}/src/circbuf.h
 
   ${phd_src_dir}/src/server/event_server.cpp
@@ -450,6 +463,9 @@ if(UNIX)
    ${lightguider_SRC}
    )
   target_link_libraries(lightguider X11)
+
+  find_package(spdlog REQUIRED)
+  target_link_libraries(lightguider spdlog::spdlog_header_only)
 
   set_target_properties(
     lightguider
