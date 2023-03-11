@@ -97,12 +97,6 @@ add_subdirectory(libs/)
 
 #################################################################################
 #
-# tiny web server
-find_package(Boost REQUIRED)
-add_subdirectory(src/web/)
-
-#################################################################################
-#
 # contributions
 
 # PEC Guider, Max Planck Institute for Intelligent Systems, Tuebingen, Germany.
