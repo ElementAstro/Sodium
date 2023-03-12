@@ -216,7 +216,7 @@ std::vector<wxString> ConfigSection::GetGroupNames(const wxString& baseName)
 
 static wxString ConfigName(int instance)
 {
-    wxString configName = _T("PHDGuidingV2");
+    wxString configName = _T("LightGuiderConfig.apt");
     if (instance > 1)
     {
         configName += wxString::Format("-instance%d", instance);

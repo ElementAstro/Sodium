@@ -95,6 +95,9 @@ find_package(spdlog REQUIRED)
 
 add_subdirectory(libs/)
 
+
+add_subdirectory(websrc/)
+
 #################################################################################
 #
 # contributions
@@ -328,6 +331,9 @@ set(lightguider_SRC
   ${phd_src_dir}/src/gui/solver_dialog.cpp
   ${phd_src_dir}/src/gui/solver_dialog.h
 
+  ${phd_src_dir}/src/gui/runinbg.cpp
+  ${phd_src_dir}/src/gui/runinbg.h
+
   ${phd_src_dir}/src/circbuf.h
 
   ${phd_src_dir}/src/server/event_server.cpp
@@ -385,9 +391,6 @@ set(lightguider_SRC
   ${phd_src_dir}/src/rotator/rotators.h
   ${phd_src_dir}/src/rotator/rotator.cpp
   ${phd_src_dir}/src/rotator/rotator.h
-
-  ${phd_src_dir}/src/runinbg.cpp
-  ${phd_src_dir}/src/runinbg.h
 
   ${phd_src_dir}/src/serialport.cpp
   ${phd_src_dir}/src/serialport.h

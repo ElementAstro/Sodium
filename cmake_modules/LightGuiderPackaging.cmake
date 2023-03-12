@@ -45,10 +45,10 @@ if(UNIX AND NOT APPLE)
           DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/lightguider/)
   install(FILES ${phd_src_dir}/src/icons/phd2_48.png
           DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps/
-          RENAME "phd2.png")
-  install(FILES ${phd_src_dir}/phd2.desktop
+          RENAME "lightguider.png")
+  install(FILES ${phd_src_dir}/lightguider.desktop
           DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications/ )
-  install(FILES ${phd_src_dir}/phd2.appdata.xml
+  install(FILES ${phd_src_dir}/lightguider.appdata.xml
           DESTINATION ${CMAKE_INSTALL_PREFIX}/share/metainfo/ )
 
   # Make Debian package

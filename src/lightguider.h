@@ -186,7 +186,7 @@ WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 #include "server/event_server.h"
 #include "gui/confirm_dialog.h"
 #include "phdcontrol.h"
-#include "runinbg.h"
+#include "gui/runinbg.h"
 
 #include "image/image_math.h"
 #include "image/fitsiowrap.h"

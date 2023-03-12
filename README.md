@@ -9,7 +9,8 @@ On Ubuntu / Debian
 ```
 sudo apt-get install build-essential gcc git cmake pkg-config libwxgtk3.0-gtk3-dev \
    wx-common wx3.0-i18n libindi-dev libnova-dev gettext zlib1g-dev libx11-dev \
-   libcurl4-gnutls-dev libcfitsio-dev libeigen3-dev libspdlog-dev libgsl-dev libboost-dev
+   libcurl4-gnutls-dev libcfitsio-dev libeigen3-dev libspdlog-dev libgsl-dev libboost-dev \
+   libasio-dev libboost-system-dev libboost-thread-dev libssl-dev
 ```
 
 ```

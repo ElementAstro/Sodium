@@ -37,6 +37,10 @@
 
 #include <wx/dir.h>
 
+#include <regex>
+
+#include <spdlog/spdlog.h>
+
 #define ALWAYS_FLUSH_DEBUGLOG
 const int RetentionPeriod = 30;
 
@@ -197,7 +201,9 @@ wxString DebugLog::Write(const wxString& str)
                                                               deltaTime.Format("%S.%l"),
                                                               (unsigned long) wxThread::GetCurrentId(),
                                                               str);
-
+        std::regex newlines_re("\n+");
+        auto result = std::regex_replace(std::string(outputLine), newlines_re, "");
+        spdlog::debug(result);
         wxFFile::Write(outputLine);
 #if defined(ALWAYS_FLUSH_DEBUGLOG)
         wxFFile::Flush();
