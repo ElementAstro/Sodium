@@ -112,15 +112,12 @@ add_subdirectory(websrc/)
 # include_directories(${wxWidgets_INCLUDE_DIRS})
 # include_directories(${phd_src_dir}/src/cameras/)
 include_directories(${phd_src_dir}/src/)
+include_directories(${phd_src_dir}/libs/)
 
 
 #################################################################################
 #
 # main project
-
-# if(KWIQGuider_PLATFORM_SRC)
-#  source_group(Cameras\\cam_KWIQGuider FILES ${KWIQGuider_PLATFORM_SRC})
-# endif()
 
 set(cam_SRC
   ${phd_src_dir}/src/camera/cam_indi.cpp
@@ -192,28 +189,7 @@ set(guiding_SRC
 )
 source_group(Guiding FILES ${guiding_SRC})
 
-set(
-  HTTP_SERVER_SRC
-  ${phd_src_dir}/src/server/http/AsyncController.hpp
-  ${phd_src_dir}/src/server/http/Controller.hpp
-  ${phd_src_dir}/src/server/http/ControllerPaths.hpp
-  ${phd_src_dir}/src/server/http/Generator.cpp
-  ${phd_src_dir}/src/server/http/Generator.hpp
-  ${phd_src_dir}/src/server/http/Model.hpp
-  ${phd_src_dir}/src/server/http/Resources.cpp
-  ${phd_src_dir}/src/server/http/Resources.hpp
-  ${phd_src_dir}/src/server/http/Types.cpp
-  ${phd_src_dir}/src/server/http/Types.hpp
-  ${phd_src_dir}/src/server/http/oas3/Model.hpp
-)
-source_group(HTTP_SERVER FILES HTTP_SERVER_SRC)
-
-
-# it would ease if files are organised in an alphabetical order
-set(lightguider_SRC
-
-  # GUI
-
+set(gui_src
   ${phd_src_dir}/src/gui/about_dialog.cpp
   ${phd_src_dir}/src/gui/about_dialog.h
 
@@ -333,13 +309,22 @@ set(lightguider_SRC
 
   ${phd_src_dir}/src/gui/runinbg.cpp
   ${phd_src_dir}/src/gui/runinbg.h
+)
+source_group(Gui FILES ${gui_src})
+
+# it would ease if files are organised in an alphabetical order
+set(lightguider_SRC
 
   ${phd_src_dir}/src/circbuf.h
 
   ${phd_src_dir}/src/server/event_server.cpp
   ${phd_src_dir}/src/server/event_server.h
+  ${phd_src_dir}/src/server/event_server_ws.cpp
+  ${phd_src_dir}/src/server/event_server_ws.h
   ${phd_src_dir}/src/server/socket_server.cpp
   ${phd_src_dir}/src/server/socket_server.h
+  ${phd_src_dir}/src/server/json_parser.cpp
+  ${phd_src_dir}/src/server/json_parser.h
 
   ${phd_src_dir}/src/image/fitsiowrap.cpp
   ${phd_src_dir}/src/image/fitsiowrap.h
@@ -366,9 +351,6 @@ set(lightguider_SRC
 
   ${phd_src_dir}/src/guiding_stats.cpp
   ${phd_src_dir}/src/guiding_stats.h
-  
-  ${phd_src_dir}/src/json_parser.cpp
-  ${phd_src_dir}/src/json_parser.h
   
   ${phd_src_dir}/src/onboard_st4.cpp
   ${phd_src_dir}/src/onboard_st4.h
@@ -457,6 +439,7 @@ if(UNIX)
    ${scopes_SRC}
    ${cam_SRC}
    ${guiding_SRC}
+   ${gui_src}
    ${lightguider_SRC}
    )
   target_link_libraries(lightguider X11)

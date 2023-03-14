@@ -517,6 +517,7 @@ bool DarksDialog::OnServerStart()
             //wrapupMsg = _("Uncover guide scope") + wxT("\n\n") + wrapupMsg;   // Results will appear in smaller font
         //wxMessageBox(wxString::Format(_("Operation complete: %s"), wrapupMsg));
     }
+    return true;
 }
 
 // Event handler for dual mode cancel/stop button

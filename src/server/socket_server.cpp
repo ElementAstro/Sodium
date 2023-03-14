@@ -120,7 +120,7 @@ bool MyFrame::StartServer(bool state)
             return true;
         }
 
-        Debug.AddLine(wxString::Format("Server started, listening on port %u", port));
+        Debug.AddLine(wxString::Format("%u", port));
         StatusMsg(_("Server started"));
     }
     else {

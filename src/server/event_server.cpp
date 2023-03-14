@@ -2135,6 +2135,7 @@ static void is_darklib_loaded(JObj &response, const json_value *params) {
     spdlog::debug("Dark-field library was not loaded");
   }
   JObj rslt;
+  rslt << NV("status",true);
   rslt << NV("loaded", loaded);
   response << jrpc_result(rslt);
 }
@@ -2147,6 +2148,7 @@ static void get_darklib_path(JObj &response, const json_value *params) {
   wxString path = pFrame->GetDarksDir();
   spdlog::debug("DarkLib path : {}",std::string(path));
   JObj rslt;
+  rslt << NV("status",true);
   rslt << NV("path", path);
   response << jrpc_result(rslt);
 }
@@ -2158,9 +2160,19 @@ static void get_darklib_name(JObj &response, const json_value *params) {
   spdlog::debug("Try to get the name of darkfield library by number");
   Params p("profile_id", params);
   const json_value *profile_id = p.param("profile_id");
-  wxString name = pFrame->DarkLibFileName(profile_id->int_value);
-  spdlog::debug("Current dark lib name : {}",std::string(name));
+
   JObj rslt;
+  if(!profile_id){
+    spdlog::error("The profile id must be provided");
+    rslt << NV("status",false);
+    rslt << NV("error","The file id must be provided");
+    response << jrpc_result(rslt);
+    return;
+  }
+
+  wxString name = pFrame->DarkLibFileName(profile_id->int_value);
+  spdlog::debug("Dark lib name : {} , profile id : {}",std::string(name),profile_id->int_value);
+  rslt << NV("status",true);
   rslt << NV("name", name);
   response << jrpc_result(rslt);
 }
@@ -2178,6 +2190,13 @@ static void set_darklib(JObj &response, const json_value *params)
 /// @param params 
 static void start_darklib_capture(JObj &response, const json_value *params)
 {
+  if (pFrame->pGuider->IsCalibratingOrGuiding() || pFrame -> pGuider -> IsGuiding()) {
+    response << jrpc_error(
+        1, "cannot issue guide pulse while calibrating or guiding");
+        spdlog::error("cannot issue guide pulse while calibrating or guiding");
+    return;
+  }
+
     spdlog::debug("Try to build a dark field library");
     // Check whether the camera has a shutter , if not must warn the use to cover the scope
     // This should be finished at the client side , there will not return any message
@@ -2200,14 +2219,36 @@ static void start_darklib_capture(JObj &response, const json_value *params)
     // rebuild : whether to rebuild the dark lib
     // m_rbNewDarkLib->GetValue()
     // continue : to continue process the old dark lib
-    Params p("name","max_exposure", "min_exposure" , "count ", params);
+    Params p("name","max_exposure", "min_exposure" , "count ", "tip",params);
 
     const json_value *name = p.param("name");
     const json_value *max_exposure = p.param("max_exposure");
     const json_value *min_exposure = p.param("min_exposure");
     const json_value *count = p.param("count");
+    const json_value *tip = p.param("tip");
 
     JObj rslt;
+
+    // Just check the parameters
+    if(!max_exposure){
+      spdlog::error("Max exposure time should be given");
+      rslt << NV("error","Max exposure time should be given");
+      response << jrpc_result(rslt);
+      return;
+    }
+    if(!min_exposure){
+      spdlog::error("Min exposure time should be given");
+      rslt << NV("error","Min exposure time should be given");
+      response << jrpc_result(rslt);
+      return;
+    }
+    if(!count){
+      spdlog::error("Number of the dark frames should be given");
+      rslt << NV("error","Number of the dark frames should be given");
+      response << jrpc_result(rslt);
+      return;
+    }
+    
 
     // 检查相机是否连接
     if (!pCamera || !pCamera->Connected)
@@ -2223,16 +2264,21 @@ static void start_darklib_capture(JObj &response, const json_value *params)
 
     spdlog::debug("Try to set dark field library parameters");
 
-    dlg.m_pDarkMinExpTime->SetValue("0.01 s");
-    dlg.m_pDarkMaxExpTime->SetValue("0.1 s");
+    wxString max;
+    wxString min;
 
-    dlg.OnServerStart();
+    dlg.m_pDarkMinExpTime->SetValue(min.Format("%f s",min_exposure->float_value));
+    dlg.m_pDarkMaxExpTime->SetValue(max.Format("%f s",max_exposure->float_value));
+    dlg.m_pDarkCount->SetValue(count->int_value);
+    if(tip)
+      dlg.m_pNotes->SetValue(wxString(tip->string_value));
 
-    if (err)
-    {
+    err = dlg.OnServerStart();
+
+    if (err){
       spdlog::error("Failed to create dark image library");
-        rslt << NV("error", err);
-        rslt << NV("message" , "Failed to create dark image library");
+      rslt << NV("status", err);
+      rslt << NV("message" , "Failed to create dark image library");
     }
     else
     {
@@ -2254,25 +2300,56 @@ static void stop_darklib_capture(JObj &response, const json_value *params)
   spdlog::debug("Try to stop the dark-field library shooting");
 }
 
+static void delete_darklib_by_profile(JObj &response, const json_value *params)
+{
+  Params p("id",params);
+  const json_value *profile_id = p.param("id");
+
+  JObj rslt;
+
+  if(!profile_id){
+    spdlog::error("No profile id was given");
+    rslt << NV("status",false);
+    rslt << NV("error","A profile id must be given");
+    response << jrpc_result(rslt);
+    return;
+  }
+
+  pFrame -> DeleteDarkLibraryFiles(profile_id->int_value);
+
+  spdlog::debug("Deleted the dark lib by profile id successfully");
+  rslt << NV("status",true);
+  response << jrpc_result(rslt);
+}
+
 /// @brief Create a new profile
 /// @param response
 /// @param params
 static void create_profile(JObj &response, const json_value *params) {
   spdlog::debug("Try to create a new profile");
   Params p("name", params);
-
   const json_value *name = p.param("name");
+
+  JObj rslt;
+  if(!name){
+    spdlog::error("Must provide the name of the file you want to create");
+    rslt << NV("status",false);
+    rslt << NV("error"," the name of the file want to create must be provide");
+    response << jrpc_result(rslt);
+    return;
+  }
+
   bool status = pConfig->CreateProfile(name->string_value);
   pConfig->InitializeProfile();
+  
+  rslt << NV("status", status);
   if(status){
     spdlog::debug("Created a new profile successfully");
   }
   else{
     spdlog::error("Failed to create a new profile");
+    rslt << NV("error", "Failed to create a new profile");
   }
-
-  JObj rslt;
-  rslt << NV("status", status);
   response << jrpc_result(rslt);
 
   // unsigned int number =  pConfig -> NumProfiles();
@@ -2282,11 +2359,88 @@ static void create_profile(JObj &response, const json_value *params) {
   EvtServer.NotifyConfigurationChange();
 }
 
+bool isStringInList(const std::string& targetStr, const std::vector<std::string>& strList) {
+    auto it = std::find(strList.begin(), strList.end(), targetStr);
+    return it != strList.end();
+}
+
+typedef std::uint64_t hash_t;
+typedef std::vector<std::string>  StringList;
+
+constexpr hash_t prime = 0x100000001B3ull;  
+constexpr hash_t basis = 0xCBF29CE484222325ull;  
+
+/*以下三个函数均是用于switch支持string*/
+constexpr hash_t hash_compile_time(char const* str, hash_t last_value = basis)  
+{  
+  return *str ? hash_compile_time(str+1, (*str ^ last_value) * prime) : last_value;  
+}  
+
+hash_t hash_(char const* str)  
+{  
+  hash_t ret{basis};  
+  while(*str){  
+            ret ^= *str;  
+            ret *= prime;  
+            str++;  
+        }  
+        return ret;  
+  }  
+    
+constexpr unsigned long long operator "" _hash(char const* p, size_t)
+{
+  return hash_compile_time(p);
+}
+
 /// @brief Update the infomation in the profile
 /// @param response
 /// @param params
 static void update_profile(JObj &response, const json_value *params) {
+  spdlog::debug("Trying to update the profile with given parameters");
+  Params p("type", "name","value", params);
+  const json_value *type = p.param("type");
+  const json_value *name = p.param("name");
+  const json_value *value = p.param("value");
 
+  JObj rslt;
+  // Although these codes look a lot, they are still useful when debugging
+  if(!type){
+    spdlog::error("the type of the parameter must be provide");
+    rslt << NV("status",false);
+    rslt << NV("error"," the type of the parameter must be provide");
+    response << jrpc_result(rslt);
+    return;
+  }
+  if(!name){
+    spdlog::error("the name of the parameter must be provide");
+    rslt << NV("status",false);
+    rslt << NV("error"," the name of the parameter must be provide");
+    response << jrpc_result(rslt);
+    return;
+  }
+  if(!value){
+    spdlog::error("the value of the parameter must be provide");
+    rslt << NV("status",false);
+    rslt << NV("error"," the value of the parameter must be provide");
+    response << jrpc_result(rslt);
+    return;
+  }
+
+  switch(hash_(type->string_value))
+  {
+    case "auto_exp"_hash:{
+
+      break;
+    }
+    case "CalStepCalc"_hash:{
+
+      break;
+    }       
+    default:
+      break;
+  }
+  wxString command;
+  pConfig->Profile.SetInt(command.Format("/%s/%s",type->string_value,name->string_value),value->int_value);
 }
 
 /// @brief Rename a profile to a new name
@@ -2294,14 +2448,28 @@ static void update_profile(JObj &response, const json_value *params) {
 /// @param params
 static void rename_profile(JObj &response, const json_value *params) {
   Params p("oldname", "newname", params);
-
   const json_value *oldname = p.param("oldname");
   const json_value *newname = p.param("newname");
-  bool status =
-      pConfig->RenameProfile(oldname->string_value, newname->string_value);
 
   JObj rslt;
+  if(!oldname || !newname){
+    spdlog::debug("The original name and new name of the file to be modified must be provided");
+    rslt << NV("status",false);
+    rslt << NV("error","The original name and new name of the file to be modified must be provided");
+    response << jrpc_result(rslt);
+    return;
+  }
+  bool status =
+      pConfig->RenameProfile(oldname->string_value, newname->string_value);
+  
   rslt << NV("status", status);
+  if(!status){
+    spdlog::error("Failed to rename the profile from {} to {}",oldname->string_value,newname->string_value);
+    rslt << NV("error","Failed to rename the profile");
+  }
+  else{
+    spdlog::debug("Renamed a profile successfully ...");
+  }  
   response << jrpc_result(rslt);
 }
 
@@ -2310,7 +2478,33 @@ static void rename_profile(JObj &response, const json_value *params) {
 /// @param params 
 static void copy_profile(JObj &response, const json_value *params)
 {
+  Params p("dest", "source", params);
+  const json_value *source = p.param("source");
+  const json_value *dest = p.param("dest");
 
+  JObj rslt;
+
+  if(!source || !dest){
+    spdlog::error("The source file and address of the replication profile must be provided");
+    rslt << NV("status",false);
+    rslt << NV("error","The source file and address of the replication profile must be provided");
+    response << jrpc_result(rslt);
+    return;
+  }
+  spdlog::debug("Trying to copy the profile from {} to {}",source->string_value,dest->string_value);
+  bool status = pConfig->CloneProfile(wxString(source->string_value, wxConvUTF8),wxString( dest->string_value, wxConvUTF8));
+  
+  
+  if(!status){
+    spdlog::error("Failed to copy the profile");
+    rslt << NV("status", status);
+    rslt << NV("error","Failed to copy the profile");
+  }
+  else{
+    spdlog::debug("Copy the profile successfully");
+    rslt << NV("status", status);
+  }
+  response << jrpc_result(rslt);
 }
 
 /// @brief Delete the profile by name
@@ -2320,10 +2514,20 @@ static void delete_profile(JObj &response, const json_value *params) {
   Params p("name", params);
   const json_value *name = p.param("name");
 
+  JObj rslt;
+  if(!name){
+    spdlog::error("The profile ID to be deleted must be provided");
+    rslt << NV("status",false);
+    rslt << NV("error","The profile ID to be deleted must be provided");
+    response << jrpc_result(rslt);
+    return;
+  }
+
   spdlog::debug("Trying to delete {} profile",name->string_value);
   pConfig->DeleteProfile(name->string_value);
   spdlog::debug("Deleted the {} profile",name->string_value);
-  JObj rslt;
+
+  rslt << NV("status",true);
   response << jrpc_result(rslt);
 }
 
@@ -2334,6 +2538,7 @@ static void delete_all_profiles(JObj &response, const json_value *params) {
   pConfig->DeleteAll();
   spdlog::debug("Deleted all of the profiles LightGuider found");
   JObj rslt;
+  rslt << NV("status",true);
   response << jrpc_result(rslt);
 }
 

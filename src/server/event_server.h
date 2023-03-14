@@ -36,7 +36,7 @@
 #define EVENT_SERVER_INCLUDED
 
 #include <set>
-#include "json_parser.h"
+#include "server/json_parser.h"
 
 class EventServer : public wxEvtHandler
 {

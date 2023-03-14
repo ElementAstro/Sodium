@@ -66,6 +66,7 @@ int YWinSize = 512;
 
 static const wxCmdLineEntryDesc cmdLineDesc[] =
 {
+    { wxCMD_LINE_SWITCH, "v", "version", "Show the version of the LightGuider" },
     { wxCMD_LINE_OPTION, "i", "instanceNumber", "sets the PHD2 instance number (default = 1)", wxCMD_LINE_VAL_NUMBER, wxCMD_LINE_PARAM_OPTIONAL},
     { wxCMD_LINE_OPTION, "l", "load", "load settings from file and exit", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
     { wxCMD_LINE_SWITCH, "R", "Reset", "Reset all PHD2 settings to default values" },
@@ -579,6 +580,10 @@ bool PhdApp::OnInit()
     else if (s_configOp == CONFIG_OP_SAVE)
     {
         bool err = pConfig->SaveAll(s_configPath);
+        if(err)
+            spdlog::error("Failed to save the profile to {}",s_configPath);
+        else
+            spdlog::debug("Saved the profile to {} successfully",s_configPath);
         ::exit(err ? 1 : 0);
         return false;
     }
@@ -674,6 +679,8 @@ int PhdApp::OnExit()
     delete m_instanceChecker;
     m_instanceChecker = nullptr;
 
+    spdlog::debug("Shutdown by user , good bye!");
+
     return wxApp::OnExit();
 }
 
@@ -687,13 +694,37 @@ bool PhdApp::OnCmdLineParsed(wxCmdLineParser& parser)
 {
     bool bReturn = true;
 
-    parser.Found("i", &m_instanceNumber);
+    spdlog::debug("LightGuider is running on {}",std::string(wxGetCwd()));
 
-    if (parser.Found("l", &s_configPath))
+    if (parser.Found("v")){
+        spdlog::info("LightGuider version : {} , based on PHD2 : {}","1.0.0-indev","2.6.11-dev5");
+        ::exit(1);
+    }
+
+    if (parser.Found("i", &m_instanceNumber)){
+        if(typeid(m_instanceNumber).name() != "long"){
+            spdlog::error("Wrong entity number type provided");
+            ::exit(1);
+        }
+    }
+
+    if (parser.Found("l", &s_configPath)){
+        spdlog::debug("trying to load profile from {}",s_configPath);
+        if(!wxFileExists(s_configPath)){
+            spdlog::error("Profile {} is not existed ! Please have a check!",s_configPath);
+            ::exit(1);
+        }
         s_configOp = CONFIG_OP_LOAD;
-    if (parser.Found("s", &s_configPath))
+    }
+        
+    if (parser.Found("s", &s_configPath)){
+        if(wxFileExists(s_configPath)){
+            spdlog::error("The profile had already existed.Please change to a new name");
+            ::exit(1);
+        }
         s_configOp = CONFIG_OP_SAVE;
-
+    }
+    
     m_resetConfig = parser.Found("R");
 
     return bReturn;

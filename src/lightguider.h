@@ -78,9 +78,10 @@
 #include <stdarg.h>
 
 #define APPNAME _T("Light Guider")
+#define LGVERSION _T("1.0.0")
 #define PHDVERSION _T("2.6.11")
 #define PHDSUBVER _T("patch1")
-#define FULLVER PHDVERSION PHDSUBVER
+#define FULLVER LGVERSION PHDSUBVER
 
 #if defined (__WINDOWS__)
 # pragma warning(disable:4189)
@@ -184,6 +185,7 @@ WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 #include "logger/debuglog.h"
 #include "worker_thread.h"
 #include "server/event_server.h"
+#include "server/event_server_ws.h"
 #include "gui/confirm_dialog.h"
 #include "phdcontrol.h"
 #include "gui/runinbg.h"
