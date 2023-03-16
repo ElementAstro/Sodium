@@ -59,7 +59,7 @@ AboutDialog::AboutDialog()
         "<font size=\"5\">"
         "<b>%s %s</b></font><br>"
         "<table CELLPADDING=0 cellspacing=10><tr><td>"
-        "<a href=\"https://lightapt.com\">LightGuider home - openphdguiding.org</a> "
+        "<a href=\"https://lightapt.com\">LightGuider home - lightapt.com</a> "
         "</td><td>"
         "<a href=\"https://github.com/AstroAir-Develop-Team/LightGuider\">Source code on GitHub</a>"
         "</td></tr></table>"

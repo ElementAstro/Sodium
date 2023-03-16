@@ -6,11 +6,12 @@
 #include <unordered_set>
 #include <mutex>
 
+std::unordered_set<crow::websocket::connection*> users;
+
 void load_ws(){
 
     std::mutex mtx;
-    std::unordered_set<crow::websocket::connection*> users;
-
+    
     CROW_WEBSOCKET_ROUTE(app, "/ws")
       .onopen([&](crow::websocket::connection& conn) {
           CROW_LOG_INFO << "new websocket connection from " << conn.get_remote_ip();

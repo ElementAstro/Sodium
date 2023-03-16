@@ -3,6 +3,7 @@
 
 #include "crow.h"
 
-crow::SimpleApp app;
+extern crow::SimpleApp app;
+extern "C" void run_http_server();
 
 #endif

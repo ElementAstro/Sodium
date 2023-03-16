@@ -39,14 +39,24 @@ using namespace crow::utility;
 
 #include <sstream>
 
-int main()
-{
-    load_url();
-    // enables all log
-    app.loglevel(crow::LogLevel::DEBUG);
-    //crow::logger::setHandler(std::make_shared<ExampleLogHandler>());
+crow::SimpleApp app;
 
-    app.port(8080)
-        .multithreaded()
-        .run();
+void run_http_server()
+{
+        load_url();
+        // enables all log
+        app.loglevel(crow::LogLevel::DEBUG);
+        //crow::logger::setHandler(std::make_shared<ExampleLogHandler>());
+
+        app.port(5000)
+            .server_name("LightServer")
+            .timeout(100)
+            .multithreaded()
+            .run();
+}
+
+
+int main(){
+    run_http_server();
+    return 0;
 }

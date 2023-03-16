@@ -95,7 +95,7 @@ find_package(spdlog REQUIRED)
 
 add_subdirectory(libs/)
 
-
+include_directories(${CMAKE_SOURCE_DIR}/libs/crow)
 add_subdirectory(websrc/)
 
 #################################################################################

@@ -70,6 +70,7 @@ static const wxCmdLineEntryDesc cmdLineDesc[] =
     { wxCMD_LINE_OPTION, "i", "instanceNumber", "sets the PHD2 instance number (default = 1)", wxCMD_LINE_VAL_NUMBER, wxCMD_LINE_PARAM_OPTIONAL},
     { wxCMD_LINE_OPTION, "l", "load", "load settings from file and exit", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
     { wxCMD_LINE_SWITCH, "R", "Reset", "Reset all PHD2 settings to default values" },
+    { wxCMD_LINE_SWITCH, "w", "web", "Start the http server" },
     { wxCMD_LINE_OPTION, "s", "save", "save settings to file and exit", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
     { wxCMD_LINE_NONE }
 };
@@ -690,6 +691,13 @@ void PhdApp::OnInitCmdLine(wxCmdLineParser& parser)
     parser.SetSwitchChars(wxT("-"));
 }
 
+#include <dlfcn.h>
+#include <thread>
+
+
+/// @brief Command line parsing
+/// @param parser 
+/// @return bReturn(bool)
 bool PhdApp::OnCmdLineParsed(wxCmdLineParser& parser)
 {
     bool bReturn = true;
@@ -723,6 +731,25 @@ bool PhdApp::OnCmdLineParsed(wxCmdLineParser& parser)
             ::exit(1);
         }
         s_configOp = CONFIG_OP_SAVE;
+    }
+
+    if (parser.Found("w")){
+        spdlog::debug("Prepare to start the web server on host: {} port: {}","0.0.0.0","5000");
+        void* handle = dlopen("./libserver.so", RTLD_NOW); // 加载.so文件
+        if (!handle) {
+            std::cerr << "Failed to load library: " << dlerror() << std::endl;
+            return 1;
+        }
+        typedef void (*RunHttpServerFunc)();
+        RunHttpServerFunc run_http_server = (RunHttpServerFunc) dlsym(handle, "run_http_server"); // 获取函数指针
+        if (!run_http_server) {
+            std::cerr << "Failed to load function: " << dlerror() << std::endl;
+            dlclose(handle);
+            return 1;
+        }
+        std::thread http_server(run_http_server); // 调用函数
+        http_server.detach();
+        spdlog::debug("Started web server successfully");
     }
     
     m_resetConfig = parser.Found("R");
