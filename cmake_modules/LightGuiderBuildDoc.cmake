@@ -218,7 +218,7 @@ endfunction()
 #        [OUTPUTS <output_variable>]
 #      )
 #
-#  * `INPUT_FOLDER` input folder. This folder should contain a `PHD2GuideHelp.hhp` file and the .html files.
+#  * `INPUT_FOLDER` input folder. This folder should contain a `LightGuiderGuideHelp.hhp` file and the .html files.
 #  * `LOCALE` the current locale for the documentation. Defaults to `en_EN`
 #  * `OUTPUT`: the prefix used to advertise all the generated files of the current locale
 #
@@ -246,33 +246,33 @@ function(generate_single_doc_targets)
   endif()
 
   # about HTML files
-  if(EXISTS "${input_folder}/help")
+  if(EXISTS "${input_folder}/doc/help")
 
     message(STATUS "[DOC] Creating HTML target for locale ${locale}")
     set(html_input_files)
     set(html_target_files)
 
-    if(NOT (EXISTS "${input_folder}/help/PHD2GuideHelp.hhp"))
-      message(FATAL_ERROR "'${input_folder}/help/PHD2GuideHelp.hhp' file is missing")
+    if(NOT (EXISTS "${input_folder}/doc/help/LightGuiderGuideHelp.hhp"))
+      message(FATAL_ERROR "'${input_folder}/doc/help/LightGuiderGuideHelp.hhp' file is missing")
     endif()
 
     # retrieves the filenames for the documentation
-    list(APPEND html_input_files ${input_folder}/help/PHD2GuideHelp.hhp)
-    extract_help_filenames(${input_folder}/help/PHD2GuideHelp.hhp
-                           ${input_folder}/help
+    list(APPEND html_input_files ${input_folder}/doc/help/LightGuiderGuideHelp.hhp)
+    extract_help_filenames(${input_folder}/doc/help/LightGuiderGuideHelp.hhp
+                           ${input_folder}/doc/help
                            documentation_filelist)
 
     list(APPEND html_input_files ${documentation_filelist})
 
     set(current_locale_output_folder ${CMAKE_BINARY_DIR}/${html_build_folder_names}/${locale}/)
-    set(generated_hhk ${current_locale_output_folder}/PHD2GuideHelp.hhk)
+    set(generated_hhk ${current_locale_output_folder}/LightGuiderGuideHelp.hhk)
     set(generated_outputs
         ${generated_hhk}
-        ${current_locale_output_folder}/PHD2GuideHelp.zip)
+        ${current_locale_output_folder}/LightGuiderGuideHelp.zip)
 
     list(APPEND html_target_files ${generated_outputs})
 
-    # this command generates the hhk file and the zip command, see script PHD2GenerateDocScript.cmake
+    # this command generates the hhk file and the zip command, see script LightGuiderGenerateDocScript.cmake
     # for more details
     add_custom_command(
         OUTPUT ${generated_outputs}
@@ -281,8 +281,8 @@ function(generate_single_doc_targets)
           -Dproject_root_dir=${PHD_PROJECT_ROOT_DIR}
           "-Dlist_of_files='${documentation_filelist}'"
           "-Doutput_folder=${current_locale_output_folder}"
-          "-Dinput_folder=${input_folder}/help/"
-          -P ${PHD_PROJECT_ROOT_DIR}/cmake_modules/PHD2GenerateDocScript.cmake
+          "-Dinput_folder=${input_folder}/doc/help/"
+          -P ${PHD_PROJECT_ROOT_DIR}/cmake_modules/LightGuiderGenerateDocScript.cmake
         )
 
     add_custom_target(${locale}_html
@@ -323,14 +323,14 @@ function(generate_single_doc_targets)
 
       # extracts the messages from the sources and merges those messages with the locale/messages.pot
       # into the build folder. This is a manual step
-
+      message("${current_translation_output_folder}")
       set(_extract_locales_commands
           COMMAND 
             ${CMAKE_COMMAND} 
               -E make_directory
               "${current_translation_output_folder}"
           COMMAND 
-            ${XGETTEXT} *.cpp *.h -C
+            ${XGETTEXT} src/*.cpp src/*.h src/camera/*.cpp src/camera/*.h src/algorithm/*.cpp src/algorithm/*.h src/ao/*.cpp src/ao/*.h src/device/*.cpp src/device/*.h src/gui/*.cpp src/gui/*.h src/image/*.cpp src/image/*.h src/logger/*.cpp src/logger/*.h src/rotator/*.cpp src/rotator/*.h src/server/*.cpp src/server/*.h src/server/*.h src/telescope/*.cpp src/telescope/*.h src/win32/*.cpp src/win32/*.h -C
               --from-code=CP1252
               --keyword="_"
               --keyword="wxPLURAL:1,2"
@@ -341,7 +341,7 @@ function(generate_single_doc_targets)
           COMMAND 
             ${CMAKE_COMMAND}
               -Dinput_file="${current_translation_output_folder}/messages.po"
-              -P ${PHD_PROJECT_ROOT_DIR}/cmake_modules/PHD2Removegettextwarning.cmake
+              -P ${PHD_PROJECT_ROOT_DIR}/cmake_modules/LightGuiderRemovegettextwarning.cmake
           COMMAND 
             ${MSGMERGE} 
               -N

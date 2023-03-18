@@ -1,0 +1,8 @@
+{
+    "name" : "Web server addition for LightGuider",
+    "author" : "Max Qian",
+    "version" : "1.0.0",
+    "licence" : "GPL-3",
+    "description" : "A simple web server using crow as the framework and host all of the pages",
+    "dependence" : "None"
+}

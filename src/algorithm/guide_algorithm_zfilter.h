@@ -35,7 +35,7 @@
 #ifndef GUIDE_ALGORITHM_ZFILTER_H_INCLUDED
 #define GUIDE_ALGORITHM_ZFILTER_H_INCLUDED
 
-#include "zfilterfactory.h"
+#include "algorithm/zfilterfactory.h"
 
 class GuideAlgorithmZFilter : public GuideAlgorithm
 {

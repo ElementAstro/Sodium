@@ -1,0 +1,880 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><title>Trouble-shooting</title></head>
+<body>
+<h2>Trouble-shooting and Analysis</h2><h3><a name="Problems-_General_trouble-shooting"></a>General Guide to Resolving Problems</h3>The
+field experience with LightGuider since its initial release in 2013, involving
+thousands of users worldwide,&nbsp; has shown that 99% of what people
+think of as "guiding problems" are not really that at all.
+&nbsp;Instead, they
+usually&nbsp;come from two sources:<br><div style="margin-left: 40px;">1) Operational errors made by the user<br>2) &nbsp;Mechanical problems with the mount or the physical equipment riding on the mount<br></div><br>It's
+important to remember this when you encounter difficulties and can't
+get the results you want.&nbsp; Operational
+mistakes can be avoided by carefully studying the documentation on the
+LightGuider web site (or in this built-in Help),&nbsp;following the steps described in the "Best
+Practices" document, and using the 'search' tools on the LightGuider support
+forum. YouTube videos, unless done by someone close to the LightGuider
+project, have wildly variable quality, often reflecting misunderstandings and&nbsp;sometimes producing a witches'
+brew of good and bad advice - so be careful what you watch.&nbsp; One
+of the most common mistakes is to
+wildly change the LightGuider guiding parameters in a futile attempt to
+correct for&nbsp;mechanical problems that exist in your setup.
+&nbsp;This only makes things worse. The default guiding parameters
+calculated by LightGuider reflect the parameters you entered in the
+new-profile-wizard, so they are already adjusted for your setup. You
+should be able to get reasonable results
+out-of-the-box if the equipment behaves and if you don't, you are
+probably dealing with operational mistakes or mechanical
+problems.&nbsp; Although it is
+frustrating to
+be confronted with mechanical problems, it is important to isolate,
+identify, and understand them before trying to fix&nbsp;them or
+mitigate their effects. &nbsp;Mechanical problems won't simply go away.
+&nbsp;Even if they temporarily subside, they will inevitably come back to bite you. &nbsp;And
+something that worked fine just last week or even last night may no
+longer work - that is the nature of hardware.<br><br>LightGuider or any
+guiding software is often the messenger of bad news because of the
+incredible level of accuracy required for guiding. &nbsp;Modern guide
+cameras are capable of measuring movement on scales of just a few
+microns - as a comparison, a human hair is about 50 microns thick.
+&nbsp;Until you have tried guiding, your equipment setup has probably
+never been
+tested or measured at this level of accuracy even by the manufacturers.
+&nbsp;Beginners are often in denial about mechanical problems because
+the
+scope and mount apparently slew well enough, they seem to track the sky
+reasonably well, various planetarium applications can move them without
+complaint, and they look and feel well-made. Even worse, they were
+expensive!&nbsp; But none of this matters when you're trying to get the
+full assembly of equipment to track the sky, hour after hour, horizon
+to horizon, with
+sub-arc-second accuracy. &nbsp;Fortunately, most mechanical problems
+can be eliminated or reduced fairly easily or at least without great
+financial expense. &nbsp;Most vendors are willing to help with the
+problems so long as they have been carefully documented and
+demonstrated - and LightGuider is an excellent tool for doing that. &nbsp;For
+most people, the cost of eliminating problems comes from time spent
+doing trouble-shooting,&nbsp;lost imaging opportunities, and general
+frustration; but these problems are&nbsp;part of the hobby
+and&nbsp;most successful imagers have&nbsp;learned how to work
+through them.<br><br>If
+you're unfamiliar with the kinds of mechanical problems commonly found
+with telescope mounts, you can get a quick introduction here: <a href="Supplemental_Info.htm#Common_mount_problems">Common Mount Problems</a>
+&nbsp; &nbsp;Also, many problems can arise from the way&nbsp;the imaging-related gear
+is attached to the main scope and mount - guide scopes, camera
+attachments, cable routing schemes, etc. &nbsp;When these components sag,
+drag, or move around on their own, they create unwanted guide star
+movements that masquerade as tracking problems in the mount. &nbsp;If you're
+unhappy with your overall guiding results, you should proceed in a
+careful and systematic way to identify the sources - flailing around in
+the dark is a recipe for failure. &nbsp;Here is a quick blueprint for
+trouble-shooting:<br><br>1. &nbsp;Be sure the parameters you entered in the
+new-profile-wizard were accurate - guide scope focal length, mount
+guide speed, and the camera pixel size if you had to enter it manually.
+&nbsp;If you find mistakes, don't try to fix them manually - just re-run the
+new-profile-wizard.<br>2. &nbsp;Be sure you have reliable camera operations
+that deliver consistent, reasonable-looking images of the sky. &nbsp;If you
+have problems in this area, follow the procedures in the <a href="Problems-_Camera_Timeouts">Camera Timeout and Connection Problems</a>.<br>3.
+&nbsp;Be sure the guide camera is well-focused and you aren't getting
+frequent lost-star messages when using 2-second guide camera exposures.
+&nbsp;Tips for getting a good focus are discussed here: &nbsp;<a href="Visualization.htm#Star_Profile_and_Target_Displays">Star Profile Tool</a> . &nbsp;If you're using imaging and guide cameras from the same manufacturere, be sure LightGuider is connected to the right one.<br>4.
+Get a reasonable mechanical polar alignment, one that is within about
+10 arc-min of the celestial pole. &nbsp;Doing this requires mechanical
+adjustments of your mount or wedge - you will be loosening fasteners
+and cranking knobs to get this done, it can't be done by software
+alone. &nbsp;You can use a polar alignment scope, a high-powered eyepiece,
+another app that assists with polar alignment,&nbsp; or one of the polar
+alignment tools in LightGuider. &nbsp;Great precision isn't required, "close
+enough" is "good enough".<br>5. &nbsp;Concentrate on getting a usable
+calibration in LightGuider, one that doesn't generate error messages or
+"alert" warnings. &nbsp;If site conditions allow it, calibrate with the
+scope pointing in a declination range of -20 to +20 degrees and a right
+ascension (hour angle) that keeps&nbsp;the scope pointing well above the
+east and west horizons. &nbsp; If you have visibility restrictions at your
+site, come as close as you can to the above goals. &nbsp;If you get error
+messages (failed calibrations) or you see alert messages at the top of
+the display, follow the advice shown here: <a href="Problems-_Mount_Control">Calibration Problems</a>.
+&nbsp;It's important to get workable results in this step because the
+calibration is fundamental to all the guiding activity that will follow.<br>6. &nbsp;Use the <a href="Tools.htm#Guiding_Assistant">Guiding Assistant</a>
+tool to examine how your mount tracks and behaves working on its own,
+without guiding. &nbsp;Use the GA to measure the declination backlash and
+once the measurement session has finished, apply the recommendations
+you'll be given. &nbsp;If you see &nbsp;large, abrupt guide star excursions or
+other inexplicable results during the GA session, resolve those
+problems first.<br>7. Perform a series of 15-20 minute guiding sessions, still in the same region of the sky. &nbsp;Do <span style="font-weight: bold;">NOT</span> modify any of the guiding parameters attempting to make things better. &nbsp;<br>8.
+&nbsp;Use the LightGuider LogViewer tool to analyze your results and develop a
+strategy for fixing the problems that have been revealed. &nbsp;You can get
+help doing this on the LightGuider support forum.<h3><a name="Problems-_Guide_star_deflections"></a>Large/Abrupt Guide Star Deflections</h3>Most
+users eventually encounter situations where the guide star appears to
+make a large, abrupt excursion away from the lock-point. &nbsp;The
+great majority of these problems&nbsp;arise from neither the mount
+nor&nbsp;LightGuider's guide commands. &nbsp;Instead, they usually come
+from&nbsp;unwanted mechanical movement in the gear that is riding on
+top of the mount, especially the guide camera/guide scope assembly.
+&nbsp;This is especially true if the large deflections occur in
+declination because the Dec motor is normally idle except for executing
+the very short, relatively infrequent guide commands it receives.
+&nbsp;The unwanted mechanical movement usually comes from several
+sources: <br><ol><li>Tiny movements of the various components in the
+guiding assembly as a result of the changing gravitational forces while
+the mount tracks the target object</li><li>Dragging, binding, or snagging of cables, especially those that are connected to the guide camera</li><li>Wind gusts or less commonly, effects from camera filter changes, auto-focusing, or mirror movement</li><li>Use of mount features for backlash compensation - these should not be used with LightGuider guiding</li></ol>Before
+rejecting these things as likely sources of&nbsp; problems, think again
+about the tiny measurement scales and tolerances described in the
+previous section. &nbsp;With many guiding set-ups, a movement of only 5
+microns can create an apparent tracking error (guide star deflection)
+of over 6 arc-sec, the equivalent of many star diameters. Every
+mechanical interface, every set-screw, every movable element has the
+potential to shift or move on its own by these tiny amounts. &nbsp;Even
+when cables have been routed in a purposeful way, they may bind or pull
+in certain sky positions or after a meridian flip. &nbsp;Cable ties or
+ribbed plastic cable guides hare small protrusions that can briefly
+catch on stationary parts of the mount. &nbsp;For large Dec
+deflections, it's easy to determine if these things are coming into
+play. &nbsp;Just use the PHDLogViewer tool to zoom in on the time of
+interest and see if the deflection was immediately preceded by a
+correspondingly large guide command in the direction of movement.
+&nbsp;In most cases, you will find this didn't happen. &nbsp;It can
+sometimes happen at the beginning of a guide session if you're using
+LightGuider Dec backlash compensation, but those events should disappear
+quickly. &nbsp;If the abrupt deflections occur in RA, the analysis is
+less straightforward because the RA motor runs continuously. &nbsp;But
+even then, unusually large, randomly space deflections are more likely
+to arise from the sorts of mechanical problems described here than from
+errors in the RA drive system.<h3><a name="Problems-_Camera_Timeouts"></a>Camera Timeout and Download Problems</h3>
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal;"><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">In some cases, you may experience
+problems where guider images aren't downloaded or displayed. &nbsp;In extreme
+cases, this may even cause <i>LightGuider</i> or other camera-related applications to
+be non-responsive (i.e. to "hang"). &nbsp;This is nearly always due
+to hardware, camera driver, or&nbsp;connectivity issues, with one of the most
+common culprits being a faulty USB cable or device. &nbsp;It is highly unlikely
+to be caused by an application like <i>LightGuider</i>, so you should begin your
+investigation at the lower levels of the system. <o:p></o:p></span></p>
+
+
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal;"><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">To help detect these problems and
+avoid &#8220;hangs&#8221;, LightGuider uses a camera timeout/retry mechanism. &nbsp;This timeout
+value is set in the Camera tab of&nbsp;<u><span style="color: blue;"><a href="file:///C:%5Cbwdev%5Copenphd2_gh%5Cphd2%5Chelp%5CAdvanced_settings.htm"><span style="color: blue;">Advanced Settings</span></a></span></u> and uses a default
+value of 15 seconds. &nbsp;This means that LightGuider will wait up to 15 seconds <i>after
+the expected completion of the exposure</i> to receive the image from the
+camera. &nbsp;This is a very generous amount of time and should work well for
+most cameras. When the timeout occurs, LightGuider will automatically disconnect the
+camera and try to re-connect.<span style="">&nbsp; </span>An alert
+message at the top of the screen will advise you of the timeout event and
+whether the reconnection attempt was successful.<span style="">&nbsp; </span>Regardless of whether the reconnection
+succeeded, you have a hardware problem of some kind that needs attention.<o:p></o:p></span></p>
+
+
+
+
+
+<p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal;"><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><o:p>&nbsp;</o:p>Here is an approach you can use to
+reproduce and then identify the problem:<o:p>&nbsp;</o:p></span></p>
+
+<ol><li><p><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Make sure you are running the latest
+version of LightGuider &#8211; often a development version &#8211; and the latest versions of the
+camera drivers.<span style="">&nbsp; </span>Some of the camera
+vendors issue frequent software changes that must be matched by corresponding
+changes in the software libraries used by LightGuider.<span style="">&nbsp;
+</span>When these updates aren&#8217;t backward compatible, you have no choice but to
+run the latest versions of everything.<o:p></o:p></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style=""></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"></span></p></li><li><p><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Confirm that the guide camera is basically
+functional - try using a short, direct cable from the camera to the computer
+and taking exposures with the&nbsp;native&nbsp;or test application that came
+with the camera. <o:p></o:p></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span></p></li><li><p><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Repeat step 2 but use LightGuider as the
+application.<span style="">&nbsp; </span>You can do this in the
+daytime by just connecting to the camera and looping 1-2 second exposures for a
+reasonably long time.<span style="">&nbsp; </span>The LightGuider display
+will often be all-white in daytime operation, but as long as the looping
+continues with no error messages, things are going ok.<span style="">&nbsp; </span>If you see problems in this step, it doesn&#8217;t
+mean it&#8217;s a LightGuider problem &#8211; it isn&#8217;t.<span style="">&nbsp; </span>The
+difference is that LightGuider is using the camera in single-exposure mode whereas
+most other apps use it in video streaming mode.<span style="">&nbsp;
+</span>The single-exposure mode involves more back-and-forth data traffic with
+the camera and can expose timing problems in the drivers.<o:p></o:p></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"></span></p></li><li><p><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">If you can&#8217;t trigger a failure in
+step 3, add the imaging camera into the mix.<span style="">&nbsp;
+</span>Use your imaging application to loop exposures in parallel with what
+LightGuider is doing.<span style="">&nbsp; </span>This will help expose
+traffic and bandwidth problems in the USB system.<o:p></o:p></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"></span></p></li><li><p><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">If no problems occur in step 4 over
+extended time periods, use the same USB cables and host computer that you were
+using when you first encountered problems.<span style="">&nbsp;
+</span>If you&#8217;re already doing this, you need to consider other possibilities:<span style=""></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"></span></p></li></ol><ul><ul><li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">The problem may be
+temperature-related &#8211; perhaps it occurs in colder nighttime conditions but not
+during the daytime.</span></li><li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">The OS may be suspending one or more
+of the USB ports for power-conservation.<span style="">&nbsp;
+</span>This has become a more common problem with Windows 10 and later releases.<span style="">&nbsp; </span>Use the Windows device manager and find all
+the entries that refer to a USB &#8220;hub&#8221; or a USB controller.<span style="">&nbsp; </span>For each of these entries, open their properties
+dialog and click on the &#8216;power management&#8217; tab.<span style="">&nbsp;
+</span>Disable any permissions that allow the OS to suspend the device for
+power management reasons.</span></li><li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Make sure the power source on your
+test computer matches that of the computer you use for imaging.<span style="">&nbsp; </span>Both should be running on A/C power at this
+point.</span></li><li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">The problem may be triggered by
+loose cable connections on either end &#8211; the cables should not lose connectivity
+if the cable is moved around as it will be during imaging.</span></li></ul></ul><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style=""></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><o:p></o:p></span>
+<p><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"></span>When you can replicate the timeout
+problem, the first place to look is the USB cable followed by the other USB
+components on your system.<span style="">&nbsp; </span>Sources of
+USB-related problems include the following:<o:p></o:p></p>
+
+<div style="margin-left: 40px;"><ul><li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><o:p>&nbsp;</o:p></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Low-quality or slightly damaged USB
+cables - in recent years, some of the camera vendors have started shipping
+low-quality USB cables with their cameras so you shouldn't assume the one you
+got with the camera will work.&nbsp;It&#8217;s also important to remember that we
+work in a&nbsp;hostile environment while imaging, and many of the components we
+use were not designed for cold, outdoor conditions. If you regularly tear down
+and reassemble your gear, the flexing of the cables can damage low-quality
+conductors. So something that worked just last week or last month may no longer
+be reliable.<span style="">&nbsp; </span>High-quality USB cables
+with 24AWG conductors and lengths no greater than 15 feet are recommended.</span></li><li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;</span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">USB-2 cameras and cables plugged in
+to USB-3 ports - t<span style="color: rgb(0, 0, 3);">hose combinations are supposed to
+be backward-compatible but that&#8217;s only at the hardware level, the driver
+implementations can be adversely affected.</span></span></li><li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;</span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">USB port suspension by the OS (step
+5b above)</span></li><li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Marginal power delivery to the guide
+camera - y<span style="color: rgb(0, 0, 3);">our main imaging camera probably has its
+own power supply but other devices like the guide camera are typically powered
+via the USB cable. &nbsp;Particularly with laptops and inexpensive computers,
+you may want to try using a powered USB hub to deliver power to the camera.<span style="">&nbsp; </span>This approach may also be required when
+operating in cold conditions or when using cables of maximum length.</span></span></li></ul></div><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><br>If you can&#8217;t isolate the problem at
+this point, there are a few other places to look:</span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><br><br></span><div style="margin-left: 40px;"><ul><li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Use a Microsoft tool (USB View) for mapping the
+tree structure of USB ports and USB controllers.<span style="">&nbsp; </span></span></li><li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Try choosing ports that will keep your
+imaging and guide cameras on separate USB buses.</span></li><li><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;</span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Try using a different camera
+driver.<span style="">&nbsp; </span>Many vendors supply both an
+ASCOM and a native driver, so try the one you haven&#8217;t been using.<span style="">&nbsp; </span>It&#8217;s not uncommon for some of the ASCOM
+drivers to lag the native drivers in terms of bug fixes and compatibility</span></li><li>See if the problem is related to
+overall USB bandwidth and try to reduce the total USB usage:</li></ul><div style="margin-left: 80px;"><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style="">a.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Throttle the USB usage limit of the
+imaging camera if possible &#8211; many of the drivers allow that.</span><br><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style="">b.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Bin the guiding camera unless that
+will result in an image scale greater than 6 arc-sec/px.</span><br><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style="">c.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Use sub-frames in LightGuider if the camera
+driver supports that.</span><br><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">d. &nbsp;</span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Don&#8217;t run other processor-intensive
+applications while imaging and don&#8217;t allow any of the planetarium applications
+to poll devices and other applications at high rates.</span><br></div></div><h3><a name="Problems-_Mount_Control"></a>Calibration and Mount Control Problems</h3>If
+you are just starting to use <span style="font-style: italic;">LightGuider</span>
+or are connecting to new equipment
+for the first time, you may have trouble getting&nbsp;calibration
+done. &nbsp;This problem&nbsp;takes one of two forms: 1) outright
+failures of the calibration because the mount didn't move far enough in
+RA and Declination or 2) cases where calibration completes but the
+results are suspect. &nbsp;Both types of results are shown by Alert
+messages at the top of the LightGuider window. &nbsp;For the situation where
+the calibration fails, there are, again, two likely reasons:<br><ol><li><span style="font-weight: bold;">Mount/connectivity problems or operational mistakes:</span>&nbsp;These are the most common sources of the problem. &nbsp;The best tools for trouble-shooting them are the
+'Manual Guide' dialog or the Star-Cross test, both under the 'Tools' menu and described in the <a href="Tools.htm">Tools</a>
+section of this help document. &nbsp;Simply use the directional
+controls in the 'Manual Guide' window to send commands directly to the
+mount while watching a star in the image display window. &nbsp;Use
+fairly large guide pulse amounts - at least several seconds - so you
+can clearly see if the mount is moving. &nbsp;Try to move the mount
+in all four directions and verify the target star is moving by roughly
+equal amounts. &nbsp;If the mount does not respond, you know you have
+either
+hardware or connectivity problems to resolve - nothing to do with <span style="font-style: italic;">LightGuider</span>.
+Operationally, you cannot complete a calibration if you're pointing
+close to the celestial pole or if the mount isn't properly initialized,
+un-parked, and tracking at the sidereal rate.&nbsp; If you're using a
+Shoestring device to connect to
+the mount,
+watch its indicator lights to see if the commands are reaching it.
+&nbsp;Similarly, your ST-4 compatible guide camera may have indicator
+lights to show when guide commands are being received. &nbsp;If you're
+using an ASCOM connection to the mount, be sure the COM port
+assignments are correct and you've selected the correct ASCOM mount
+driver for your equipment. &nbsp;You can use some of the
+ASCOM-supplied tools like POTH to be sure the ASCOM driver is
+communicating correctly with the mount. &nbsp;It is best to use the
+latest version of the ASCOM driver for your mount&nbsp;to insure
+pulse-guiding support is complete.<span style="font-weight: bold;"></span></li><li><span style="font-weight: bold;">Incorrect calibration step-size:</span>&nbsp;
+If you've used the
+new-profile wizard and have provided correct values for focal length,
+camera pixel-size, and mount guide speed, the "step-size" used
+in calibration should
+already be correct. You should confirm this, however, because beginners
+frequently enter incorrect values for these parameters.&nbsp; If you've
+defined or modified your profile by hand (a bad idea)
+or have changed guide speed settings in the mount, you may need
+to&nbsp;adjust the 'calibration step-size' parameter in the 'Guiding'
+tab of <a href="Advanced_settings.htm">Advanced Settings</a>.
+The help content there describes how this parameter is used, and you
+should be able to resolve the problem quickly. &nbsp;But if you've used
+the new profile wizard carefully and are seeing problems with too
+little or no guide star movement, the problem probably lies elsewhere.</li></ol><br><a name="Calibration_sanity_check"></a><span style="font-weight: bold;">Calibration Sanity-Checks</span> <span style="font-weight: bold;">and Alerts</span><br>It
+is also possible that the calibration process will complete but LightGuider
+will post a calibration alert message saying that some of the results
+are
+questionable. These messages <span style="font-weight: bold;">do not </span>mean
+that the calibration failed or is unusable, but they are warning you
+that some of the results don't look quite right. Such a "sanity check"
+dialog will show an explanation
+of the issue and some details of the calibration results: <br><br><img style="width: 797px; height: 426px;" alt="" src="Calib_Sanity.png"><br><br>There are currently 4 things checked by LightGuider as part of calibration:<br><ul><li><span style="font-weight: bold;">Too
+few steps</span>
+(shown above) - resolving this issue can be easy assuming the
+mount is actually working correctly.
+&nbsp;Just adjust the calibration step-size downward until you get at
+least 8 steps in both the west and north calibrations. &nbsp;If you
+used the new profile wizard to set up your configuration, a good
+starting value for calibration step-size will already be set. In that
+case, the alert suggests you entered parameters incorrectly in the
+new-profile-wizard or the mount guide speed has changed. &nbsp;You
+should check these things and make sure they're right.&nbsp; If
+you find that the number of steps in RA and Declination are
+substantially different, &nbsp;you are probably seeing evidence of
+declination backlash&nbsp;unless you are using different guide speed
+settings on
+the two axes.</li><li><span style="font-weight: bold;">Orthogonality error</span> - the camera axes are normally computed independently even
+though they&nbsp;<span style="font-style: italic;">should</span>
+be perpendicular. &nbsp;The angle calculations do not require
+great precision, but if they are significantly non-orthogonal, you
+should repeat the calibration. &nbsp;If you see repetitive alerts of
+this type and the axes are significantly non-orthogonal, you need to
+identify the&nbsp;problem and fix it. &nbsp;Common causes are
+bad polar alignment, large declination backlash, or large periodic error in RA. &nbsp;Any of
+these problems can cause the guide star to move significantly on one
+axis while LightGuider is trying to measure its motion on the other axis. If
+you suspect these problems, go ahead and accept the calibration, then
+run the Guiding Assistant to measure&nbsp;your polar alignment error, declination backlash,
+and&nbsp;RA tracking error. &nbsp;In other cases, the mount
+may not be moving at all, and the measured
+displacements of the star are just caused by seeing effects.
+&nbsp;This sort of problem should be obvious in the calibration graph
+at the left of the dialog. &nbsp;If the axis error is relatively small
+and you are convinced the
+hardware is working properly, you can avoid further alerts of this type
+by setting the
+option to 'Assume Dec orthogonal to RA' in the 'Guiding' tab of the
+Advanced Settings dialog. But you should do this only if the error is
+fairly small - otherwise, you are simply ignoring a serious problem.
+&nbsp; </li><li><span style="font-weight: bold;">Questionable RA and Dec rates</span> - assuming the guide speeds reported by the mount are
+accurate, the measured guide rate for right ascension should be
+related
+to the declination guide rate by approximately a factor
+of&nbsp;cosine (Declination). &nbsp;In other words, the apparent RA
+rate gets
+smaller as you move the scope closer to the pole. &nbsp;LightGuider won't try
+to identify
+which rate is incorrect - it is simply alerting you that something
+looks wrong with the rates. &nbsp;You can sanity check these rates
+yourself quite simply. &nbsp;If you are guiding at 1X sidereal rate,
+your declination guide rate should be approximately 15 arc-sec/sec;
+with a guide rate of 0.5X sidereal, the declination rate would be 7.5
+arc-sec/sec,
+etc. &nbsp;<span style="font-weight: bold;">A declination rate that is significantly smaller than the RA
+rate is often an indication of substantial declination backlash</span>.
+&nbsp;Using a calibration that triggered this alert can lead to
+over-shooting in Dec guiding because the actual guide rate is probably
+larger than the measured one. &nbsp;To work around this problem, you
+should manually clear the Dec backlash before starting calibration.
+&nbsp;You can do this in either of two ways: 1) make sure the mount's
+last slew direction was <span style="font-weight: bold;">north</span> or 2) use the hand controller to manually
+move the mount <span style="font-weight: bold;">north</span> ('up' arrow) at guide speed for 10-20 seconds. &nbsp;</li><li><span style="font-weight: bold;">Inconsistent results</span> - if the calibration results are
+significantly different from your last-used calibration, an alert
+message will be generated. &nbsp;This may happen because you've made a
+change in your configuration. &nbsp;That doesn't imply a real problem,
+but you should probably consider creating a separate profile for the
+new configuration. &nbsp;By doing so,&nbsp; LightGuider will remember settings
+for each of your profiles, letting you switch between them easily.
+&nbsp;If you haven't made a configuration change, you should determine why the results are so different.<span style="font-weight: bold;"></span></li></ul>With
+any
+of these alerts, the relevant data field will be highlighted based on
+the
+type of message. &nbsp;You can choose to ignore the warning ('Accept
+calibration'), re-run the calibration ('Discard calibration'), or
+restore your last good calibration ('Restore old calibration').
+&nbsp;With the third option, you can defer calibration until later and
+start guiding with your last good calibration data. &nbsp;If you see
+repeated alerts on the same topic and are convinced there really
+isn't&nbsp;a problem, you can use the 'don't show' checkbox to block
+future alerts of that type. &nbsp;But you should be aware that the
+sanity-checking used by LightGuider works well for a wide range of equipment,
+and most users don't see these calibration alerts at all.<br><br><span style="font-weight: bold;"><a name="Declination_backlash"></a>Declination Backlash</span><span style="font-weight: bold;"></span><br>The
+most common source of calibration problems&nbsp;is declination
+backlash, which is present to some degree in most geared mounts.
+&nbsp;Backlash can occur when the direction of motion on the axis is
+reversed. The telescope may not immediately start moving in the reverse
+direction, even though the motor is turning. The usual cause is loose
+meshing of the gears in the drive train. With many less-expensive
+mounts, it may take several seconds for the axis to start moving in the
+correct direction and this can lead&nbsp;to poor calibration and
+guiding results. &nbsp;Consider the
+following
+example of a calibration review dialog: <br><br><img style="width: 767px; height: 399px;" alt="" src="Calib_Review_Backlash.png"><br><br>The
+first clue to the problem is found by comparing the number of steps
+required for calibration on the two axes - 10 for RA but 42 for Dec.
+&nbsp;This shows&nbsp;the mount was not moving consistently in
+declination, probably&nbsp;because the backlash had not been&nbsp;cleared. &nbsp;This also explains the "wandering" behavior
+of the declination points (light green) when the guide commands were
+reversed from north to south. Finally, the computed declination rate is
+much smaller than the RA rate even though the guide speed settings on
+the two axes were identical. &nbsp;In fact, this would have triggered a
+calibration alert dialog.
+&nbsp;There are
+actually two problems to be addressed here. &nbsp;First, the
+calibration result is poor and should be repeated in order to get a
+more accurate measure of the declination guide rate. &nbsp;Second, the
+mount is likely to behave badly during direction reversals in
+declination even if the dec guide rate is correct. &nbsp;<span style="font-weight: bold;">The
+calibration can be improved by taking these steps:<br></span><div style="margin-left: 40px;">Start
+looping guide camera exposures on a field with usable stars, preferably
+near Dec=0 and within 15 degrees of the celestial meridian<br>Using the hand-controller, move the mount north ('up' arrow) until you see the stars in the display moving<br>Start the calibration</div>Once
+this is
+done, most of the declination backlash in your mount should have been
+cleared and you will probably get better results from the calibration.
+&nbsp;The underlying backlash problem generally requires some
+mechanical adjustment
+to the mount. &nbsp;If the mount isn't using a guide speed close to
+1x sidereal, you can probably get an immediate improvement by
+increasing the mount guide speed. &nbsp;You can also try using a
+LightGuider backlash compensation setting,
+but this is not likely to work well&nbsp;if the backlash is large -
+more&nbsp; than&nbsp;3 seconds, for example. &nbsp;If you can't correct
+the
+backlash or reduce
+it to manageable levels, you should consider choosing uni-directional
+guiding&nbsp;for declination. To do this, you&nbsp;determine
+which way the mount drifts due to polar alignment error and tell LightGuider
+to guide only in the opposite direction (see &nbsp;<a href="Advanced_settings.htm#Declination-Uni-directional_guiding">Uni-directional guiding</a>). This is controlled by the 'Dec
+guide mode' control on the'Algorithms' tab of the Advanced Settings dialog.
+&nbsp;For example, if the
+mount tends to drift north overall, restrict guide commands to
+south-only. This is not an ideal solution, obviously, but you can
+still use reasonably long exposures and achieve good guiding results
+- many imagers choose to use this approach.<font style="color: rgb(0, 0, 3);" color="navy"><span style="font-size: 10pt;"></span></font>&nbsp; &nbsp;<br><br><span style="font-weight: bold;"><a name="Star_cross_test"></a>Validating Basic Mount Control - the Star-Cross Test<br></span>If you are having<span style="font-weight: bold;"> </span>repeated
+problems getting calibration to complete without alert messages, you
+should run a very simple test to see if the mount is responding to
+guide commands. &nbsp;This test basically mimics what is done during
+calibration, but it is more direct and can give you a better feel for
+what's going on. &nbsp;We'll call it the "star-cross" test. &nbsp;The
+idea is to open the shutter on the main imaging camera, then send guide
+commands that should cause the stars in the field to trace out a
+distinctive cross pattern. &nbsp;In other words, you want to get an
+image that looks something like this: <br><br><img style="width: 360px; height: 382px;" alt="" src="Star_cross_1.png"><br><br>The angular orientation doesn't matter, that's just a function of how you
+have the guide camera rotated. &nbsp;What is important is that the
+lines in the cross are perpendicular and have roughly equal lengths in
+each of the four directions relative to the starting point in the
+center. &nbsp;If the image you get doesn't have this approximate
+appearance, guiding will either be impaired or perhaps impossible.
+&nbsp;For example, consider the following poor result:<br><br><img style="width: 360px; height: 347px;" alt="" src="Bad_Star_Cross_1.png"><br><br>You
+can see the star has moved along only one axis&nbsp; -&nbsp;only
+in right ascension in this example. &nbsp;The declination guide
+commands sent to the mount did nothing at all. &nbsp;Until this is
+fixed in the mount, you won't be able to guide in declination at all
+and will have to disable declination guiding to even complete a
+calibration. &nbsp;There are&nbsp; many other permutations of bad
+results, each suggesting a particular problem in the mount, the guide
+cable, or much less likely, the ASCOM driver for the mount. &nbsp;You
+can safely assume it has nothing to do with LightGuider.<br><br>Here are the steps for running the test: <br>
+
+<ol><li>Set the mount guide speed to 1X sidereal.&nbsp; Bring up
+the 'Manual Guide' tool in LightGuider and choose an initial pulse size - start with,
+say, 5 seconds.</li><li>Start a 60 second exposure on the main camera.</li><li>Send
+a 5-second pulse west, then two 5-second pulses east, then a final
+5-second pulse west. &nbsp;This should return the star to its
+approximate starting position. &nbsp;You should&nbsp;wait about 5
+seconds after sending each guide pulse to give the command time to
+complete before sending the next pulse. <span style="font-family: Arial;"></span></li><li>Now send a 5 second pulse north, then two 5-second pulses south, then a final
+5-second pulse north. &nbsp;This should again return the star to its starting position.<br></li><li><span style="font-size: 10pt; font-family: Arial;">
+Wait for the main camera image to download and see what you get.</span></li></ol>You
+can use different pulse lengths if you want, perhaps using smaller
+values to confirm the mount will respond to them. &nbsp;Just be sure
+the total exposure time on the main imaging camera is longer than the
+total&nbsp; of guide durations plus a margin for error. On most mounts,
+the star will not return to its exact center because of some
+declination backlash - you can see that in the first example&nbsp;image. &nbsp;But
+it should be fairly close or you'll need to look more carefully at how
+much declination backlash you have in the mount. &nbsp;LightGuider also has a star-cross test tool, described here: <a href="Tools.htm#Star_cross_tool">Star-cross Tool</a>. &nbsp;You can use that to automatically perform the test steps described in 1-5 above.<br><br>One benefit to
+using this test is that it reduces things to the absolute basics: will
+the mount move as directed or not. &nbsp;It has nothing to do with LightGuider
+guide settings because they aren't involved in the test. &nbsp;You may
+find it helpful to use the test results to communicate with the mount
+manufacturer or other users who understand your type of mount and its typical&nbsp; problems.<br><br><span style="font-weight: bold;"><a name="Measuring_Mount_Behavior"></a>Measuring the Mount's Behavior<br></span>If you're having<span style="font-weight: bold;"> </span>trouble
+getting decent guiding results, your first instinct will probably be to
+try making wild changes to the guiding parameters in the hope of
+finding a magic solution. &nbsp;This almost never works, and you're
+more likely to just make things worse. &nbsp;If the default parameters
+from the new-profile-wizard aren't producing reasonable results, the
+fault is probably with the hardware and you'll need to determine the
+underlying cause. &nbsp;Once you understand the cause, you can probably
+improve your guiding results even if no actual repairs can be made -
+but understanding the underlying problem is important. &nbsp;To
+understand what the mount is doing, perform the following steps:<br><br><div style="margin-left: 40px;">1. Use the new-profile-wizard to create a new equipment profile for the test, being sure the <span style="font-style: italic;">guide scope</span> focal length and camera pixel size are correct. &nbsp;Don't guess at them, look them up if you aren't sure. <br>2.
+Use an ASCOM connection to the mount if one is available and set the
+mount guide speed to 0.5x - 1x sidereal. &nbsp;Disable any backlash
+compensation you have in the mount.<br>3.
+Use&nbsp;2-second exposures and let LightGuider auto-select a guide star near Dec=0 with the scope pointing at least
+45 degrees above the east and west horizons to minimize seeing effects. <br>4. Run the
+Guiding Assistant for 10-15 minutes and apply whatever recommendations
+it makes, particularly with respect to min-move values. &nbsp;Let it
+measure your declination backlash. &nbsp;You may need to use a large
+tracking region to avoid losing the guide star during this part of the
+process - just be sure there aren't multiple stars in the tracking
+rectangle. &nbsp;The backlash test will move the star a long distance
+north, so choose a guide star that is nearer the southern edge of your
+camera frame to give yourself plenty of room.<br>5.
+Watch how things are going during the GA session. &nbsp;If you bump the
+mount or something really unusual happens, stop the test and then
+restart it. &nbsp;The goal is to measure the performance when things
+are running normally.<br>6. Do not change any of the guide parameters beyond what is recommended by the Guiding Assistant.<br>7.
+Take a careful look at the results shown in the Guiding Assistant
+table. &nbsp;Each entry in the table can tell you something useful
+about the mount's performance. &nbsp;These results are also written to
+the guiding log, so they are available for later analysis.<br>8.
+If you got calibration alert messages in step 3, you should probably
+remedy those problems before proceeding. &nbsp;Guiding with a bad
+calibration is not likely to produce good results. &nbsp;Also, if your
+polar alignment error is 10 arc-min or more, you should improve on that
+and then repeat the above steps.<br>9. Let LightGuider guide for another 10-15
+minutes, just letting it run as long as there aren't gross errors from
+wind or other "mistakes." &nbsp;<span style="font-weight: bold;">Do NOT</span> change any of the guiding parameters while this is being done.<br></div><br>If
+you want to analyze the results yourself, use the PHDLogView tool and
+the tutorial on "Analyzing LightGuider Guiding Results". &nbsp;You should also
+consult the document on LightGuider Best Practices. &nbsp;All of these
+references are available on the OpenPHDGuiding.org web site under the
+'News' tab. &nbsp;If you'd like some help understanding the results,
+post both the guiding and debug log files on the OpenLightGuider Google forum
+and we'll be glad to help you out.<br><span style="font-weight: bold;"><br></span><span style="font-weight: bold;"></span><h3><a name="Problems-_Lost_stars"></a>Lost-Star Events</h3>When LightGuider can't locate the primary guide star in a camera frame, several things happen:<br><ol><li>The
+screen will flash and a "beep" tone will sound. &nbsp;The sound can be
+disabled if you wish (Advanced Settings/Guide tab) but the screen will
+always flash</li><li>No guide commands will be issued and the next guide camera exposure will be started</li><li>Lost-star event messages will be sent to any imaging applications that are connected to LightGuider</li><li>Lost-star
+messages will be displayed in the status bar including the reason for
+the loss - low SNR, low HFD, low-mass, or mass-change</li></ol>Lost-star
+events occur when the object in the search region no longer meets the
+criteria for identification as a star. &nbsp;It may no longer be bright
+enough, meaning that its SNR or its total brightness ("mass") are too
+low. &nbsp;Or it may look too much like camera sensor noise, meaning
+that its size (HFD) is lower than your setting for Min-HFD. &nbsp;If
+you are using "star-mass-detection" as a way to discriminate between
+mutliple similar stars in the search region, a lost-star event will be
+triggered if the star mass value changes by more than the allowed
+amount. &nbsp;This feature is generally unnecessary for current
+versions of LightGuider and can be disabled. &nbsp;In any case, the first
+steps in trouble-shooting will be to understand the reason for the
+lost-star events and whether they happened because of degraded sky
+conditions, mechanical tracking errors, or inappropriate star selection
+parameters. &nbsp;For beginners, a common cause of lost-star events is
+poor focus of the guide camera, and you should insure that your guide
+camera remains well-focused using the procedures described in the Star
+Profile tool section. &nbsp;<a href="Visualization.htm#Star_Profile_and_Target_Displays">Star Profile Tool</a><br><br>LightGuider doesn't invoke any sort of extended
+guide star recovery process - it simply keeps taking exposures and
+looking to see if the guide star reappears within the current search
+region. &nbsp;This works well for brief or intermittent problems like
+clouds, wind gusts, or sporadic mechanical problems but it assumes that
+the tracking accuracy of the mount is sufficient to keep a guide star
+within the search region for a reasonable length of time. &nbsp;As the
+elapsed time of the lost-star events grows, the mount will slowly drift
+off-target and a star that re-appears in the search region at a much
+later time is probably a different star. &nbsp;In this case, LightGuider will
+resume guiding but the original astronomical target will no longer be
+centered and may not even be in the field of view. &nbsp;Recovery from
+extended lost-star periods is the responsibility of the end-user or the
+imaging automation application, not LightGuider. &nbsp;Doing the recovery
+properly requires re-slewing the scope to its original sky pointing
+position, a procedure that LightGuider is not equipped to do.<br><br><h3><a name="Problems-_Alerts"></a>Alert Messages</h3>LightGuider
+will sometimes display alert messages at the top of the main display
+window. &nbsp;These generally show error or diagnostic information that
+warrant your attention. &nbsp;During normal operation, you probably
+won't see any of these, but if you do, this section can help you decide
+what to do about them.<br><br><span style="font-weight: bold;">Dark-library and Bad-pixel Map Alerts</span><br><br><span style="font-weight: bold;">"Use a Dark Library or a Bad-pixel Map"</span>
+- using a dark library or bad-pixel map reduces the likelihood that
+LightGuider will mistakenly identify hot pixels or other sensor noise as
+a star. &nbsp;If you choose to ignore this message, you'll be
+vulnerable to situations where LightGuider inadvertently switches from the
+guide star to a hot pixel and no longer guides correctly.<br><br><span style="font-weight: bold;">Format/geometry mismatches</span>
+- dark frames and bad-pixel maps must match the format of the sensor in
+the camera being used. &nbsp;If you've changed the camera in an
+existing profile, the existing dark/bpm files will not be usable and
+you'll&nbsp;see this alert message. &nbsp;To avoid seeing the message,
+you should
+instead create a new profile when you change cameras. You'll still need
+to shoot new darks or bpms, but you can keep the old files for use with
+the original camera.&nbsp; You might
+also
+see&nbsp;a
+format-incompatibility alert message if you have mistakenly connected
+LightGuider to the wrong camera - this is a particular risk when your guiding
+and imaging cameras come from the same vendor. You can completely
+specify the camera you are using for guiding in the Connection
+Dialog&nbsp;<a href="Basic_use.htm#Camera_id_specification">Specifying camera ids</a> &nbsp;. Unless you're
+connected to the wrong camera,, you should rebuild the dark library or
+bad-pixel
+map from scratch - more information can be found here: &nbsp;<span style="font-weight: bold;"></span><a href="Darks_BadPixel_Maps.htm">Dark Frames and Bad-pixel Maps</a><br><span style="font-weight: bold;"><br>ASCOM Alerts</span><br>When
+you first connect to a mount, camera, or other ASCOM-controlled device,
+you may see an alert message saying that a required capability is not
+supported by the driver. &nbsp;One example would be lack of support for
+pulse-guiding by an ASCOM telescope/mount driver, something that can
+occur with outdated drivers. &nbsp;In these situations, your only
+recourse is to update the ASCOM driver. &nbsp;These drivers are
+generally available from the ASCOM web site or, in some cases, from the
+device manufacturer. <span style="font-weight: bold;">&nbsp;</span>As
+a rule, the best practice is to use the latest versions of these
+drivers so you don't encounter problems that have already been&nbsp;fixed.<br><br>You might also see other alert messages associated with the ASCOM driver for the mount: <br><div style="margin-left: 40px;">1.
+"PulseGuide command to mount has failed - guiding is likely to be
+ineffective." &nbsp;This is usually caused by a bug or timing
+sensitivity in the ASCOM mount driver, and there is generally no way to
+know if the guide command was executed properly or not. &nbsp;If
+you&nbsp;rarely see the alert and your guiding results are acceptable,
+you can probably ignore it. &nbsp;Despite the alert condition, LightGuider
+will continue to issue guide commands, so you don't need to take any
+immediate action. &nbsp;If you see the alert frequently, you should
+send us your debug log so we can help you communicate the problem&nbsp; to the author of the ASCOM driver.<br>2.
+"Guiding stopped: the scope started slewing." &nbsp;This is pretty
+self-explanatory, but the determination that the scope was slewing is
+something reported to LightGuider by the ASCOM mount driver. &nbsp;Whether it
+was actually slewing isn't known to LightGuider. &nbsp;Assuming you didn't
+mistakenly slew the scope with guiding active, there is probably a
+timing problem in the driver. &nbsp;If you want to sidestep the problem
+temporarily, you can disable the logic to check for slewing - go into
+the 'Guiding' tab of the Advanced Settings dialog, and un-check the box that says
+"Stop guiding when mount slews." &nbsp;This will let you continue
+guiding, but the results might be suspect. &nbsp;The debug log should
+provide the details needed to describe the problem to the author of the
+ASCOM driver.<br>3.
+"Mount is reporting invalid guide speeds." &nbsp;Some new drivers don't
+follow the standards and report &nbsp;nonsense guide speeds, often
+because they aren't using the correct units of degrees/sec. When this
+occurs, LightGuider will treat the reported guide speeds as "unknown" and will
+ignore them. &nbsp;This degrades the accuracy of the LightGuider PPEC guide
+algorithm and otherwise reduces the effectiveness of calibration review
+and other diagnostic tools. &nbsp;This is not a LightGuider problem, it must
+be fixed by the author of the driver.<br></div><span style="font-weight: bold;"><span style="font-weight: bold;"><br>Camera Timeout Alerts<br><span style="font-weight: bold;"><span style="font-weight: bold;"></span></span></span></span>Alert messages associated with camera timing/timeout problems are discussed above: <span style="font-weight: bold;"><span style="font-weight: bold;"><span style="font-weight: bold;"><span style="font-weight: bold;"></span></span><a href="Trouble_shooting.htm#Problems-_Camera_Timeouts">Camera Timeouts</a><br><br>Calibration Alerts<br></span></span>A number of alerts<span style="font-weight: bold;"><span style="font-weight: bold;"> </span></span>may appear during the mount calibration process. &nbsp;These are described here: <a href="Trouble_shooting.htm#Problems-_Mount_Control">Calibration Alerts</a><br><span style="font-weight: bold;"><br>Maximum-Duration Limit Alerts<br><span style="font-weight: bold;"></span></span>During
+normal guiding, you may see an alert message saying that your settings
+for maximum-duration limits in RA or Dec&nbsp;are preventing
+LightGuider from keeping the guide star locked. &nbsp;If you've decreased
+these parameters from their default values, you should restore them. &nbsp;However, if the limits are well above one
+second,
+this alert probably indicates you've encountered a mechanical problem
+that needs to be corrected. &nbsp;In the simplest cases, you may have
+suffered a cable snag, wind gust, mount bump, or other external event
+that caused the guide star to move by a large amount. &nbsp;In such
+cases, you simply need to correct the problem if you can and proceed
+with guiding. &nbsp;But in other cases, the alert may be triggered by a
+steadily growing guide star displacement that is not being corrected at
+all.
+&nbsp;For example, if LightGuider can't move the mount correctly in either the
+north or south directions, the cumulative uncorrected error will
+eventually reach a point that triggers the alert. &nbsp;Or you may be
+encountering "runaway" Dec guiding because the setting for 'reverse Dec
+output after meridian flip' (Advanced Settings/Guiding tab) is incorrect.
+These sorts of
+problems will require some diagnosis and simply
+increasing the maximum-duration limits will not help.<br><h3><a name="Problems-_Display_Window"></a>Display Window Problems</h3>New users often&nbsp;<span style="font-size: 10pt;"></span>complain
+that the image displayed in the main window is extremely noisy or is
+almost all-white or all-black. &nbsp;Assuming the camera is
+functioning and actually downloading images, the display issues are
+often caused by the absence of any usable stars in the frame. &nbsp;For
+example, trying to test the camera indoors or in daylight will almost always create
+these conditions. &nbsp;The appearance of the image display window in
+these situations provides no useful information and should be
+discounted. &nbsp;LightGuider uses an automatic screen-stretching function
+that is intended to help you see real stars under a nighttime sky.
+&nbsp;When no stars are present, the display will be stretched to show
+the range of minimum-to-maximum brightness values of whatever is in the
+frame - which is often nothing at all. &nbsp;This is usually what
+causes the noisy/all-white/all-black display results. &nbsp;You may
+also encounter display problems if the guider is not well-focused.
+&nbsp;Focusing the guider can be a tedious process
+but it's critical to getting good guiding results. &nbsp;A good
+technique is to start with a bright <span style="font-style: italic;">but unsaturated</span>
+star and try to reach focus with that. &nbsp;Then move to successively
+fainter stars to fine-tune the focus position using the LightGuider Star
+Profile tool to measure the size of the guide star. &nbsp;Good results
+can also be obtained using a Bahtinov focusing mask or focusing tools
+in other applications. &nbsp;It doesn't matter what you use, but just
+trying to judge focus by looking at the display is not likely to
+produce a good result.<br><h3><a name="Problems-Hot_Pixels"></a>Hot-pixel and Star-Selection Problems</h3>With most guide cameras, you can encounter problems where
+clumps of hot pixels are mistaken by LightGuider as guide stars. &nbsp;This
+can be especially troublesome&nbsp; if you're using automation tools and&nbsp;
+the 'auto-select' guide star selection is mistakenly choosing hot pixels. &nbsp;For many cameras, a
+simple dark frame will suffice for reducing or eliminating hot-pixel
+problems, and dark frames should always be used as a starting-point.
+&nbsp;But for other cameras, you will need to build a bad-pixel map and
+update it as necessary when you see changes in the locations and sizes
+of defective pixels. &nbsp;Camera sensors change over time and may
+react to changing temperatures, so bad-pixel map maintenance is a small
+task you should be willing to perform. &nbsp;Step-by-step instructions can
+be found in the&nbsp;<a href="Darks_BadPixel_Maps.htm#Bad-pixel_Maps">Bad-pixel map</a>
+chapter of this document. &nbsp;These problems are different from
+transient hot pixels, which can be caused by cosmic ray strikes on the
+sensor. &nbsp;Although cosmic ray hits can disrupt guiding, there's
+really little you can do about them. &nbsp;<br><br>Since
+the recommended practice is to let LightGuider choose the guide star
+("auto-select"), you should use the available UI controls to help LightGuider
+do the best possible job. &nbsp;The Minimum-HFD property on the Guiding
+tab of the Advanced Settings dialog is probably the most
+effective&nbsp;tool for
+avoiding&nbsp;hot-pixel selection. &nbsp;You should set its value to
+allow use of the smallest and faintest real stars your setup can
+produce. &nbsp;You should use the Star Profile tool to measure a
+reasonable sample of legitimate guide stars for your system. &nbsp;Then
+set the Minimum-HFD value to accept those stars while rejecting smaller
+bright spots that are really just sensor defects. &nbsp;At the other
+end of the &nbsp;scale, you should also specify&nbsp;the brightest
+pixel value your system will deliver - the ADU value that represents
+saturation. &nbsp;By doing this, you will prevent LightGuider from rejecting
+stars that have a flattened profile but aren't really saturated. The
+saturation control resides on the Camera tab of the Advanced Settings
+dialog and
+is part of a control group labeled 'Star Saturation Detection'.
+&nbsp;Choose the option for 'Saturation by Max-ADU value', then set the
+value for your system. &nbsp;If you have an 8-bit camera, saturation
+will be around 255, while a 16-bit camera will saturate around 65000
+ADUs. &nbsp;If you don't know the correct value, you can just point the
+scope at a bright star, use a multi-second guide camera exposure, and
+again look at the Star Profile window. &nbsp;One of the things you'll
+see in that window is the 'Peak Value' - that's the ADU value for the
+brightest pixel &nbsp;and will tell you whether your images are 8-bit
+or 16-bit.. &nbsp;Using both of these controls is likely to produce
+much
+better results for LightGuider guide star selection.<br><br><h3><a name="Problems-Restore_Guiding_Parameters"></a>Restoring a Working Baseline</h3>Despite&nbsp;advice to the contrary, you may have made rapid, uninformed
+changes to your guiding parameters only to find the performance stayed
+the same or even got worse. &nbsp;Before proceeding, you should restore the
+settings to their default values. &nbsp;If you used the
+new-profile-wizard to build your profiles, the parameters will have
+been set based on the specifics of your configuration, and they are
+likely to be pretty close. &nbsp;If you encounter&nbsp;significant
+guiding problems using those settings, you are probably having
+issues with the mount or other hardware. Blindly changing guiding
+parameters almost never solves these problems and quite often makes
+things worse. &nbsp;You have several options for restoring the settings
+to their default values: <br><ol><li>On the 'Algorithm' tab of the
+Advanced Settings dialog, you can individually reset parameters by looking at
+the tool-tip for each field. &nbsp;Hover your mouse cursor over the
+field and the default value will be displayed. &nbsp;Note that this is
+not accurate for the min-move settings, which depend on your image
+scale. &nbsp;This approach is best when you want to restore only a few
+settings.</li><li>Click the 'reset' buttons on the 'Algorithm' tab for
+the selected RA and Dec guide algorithms. &nbsp;This is the recommended
+approach for resetting all the guiding parameters. &nbsp;The min-move
+settings will be reset to the values originally calculated by the
+new-profile-wizard. &nbsp;If you subsequently adjusted those settings
+by running the Guiding Assistant, you should repeat that process.</li><li>Run the new-profile-wizard, accessed by clicking on the 'Manage Profiles' button in the 'Connection' dialog.
+&nbsp;Use the same camera and mount choices you already have and give
+the profile a new name. &nbsp;If you want to re-use the dark library
+and bad-pixel map from the old profile, connect to the new profile and
+use the 'Darks' menu to import those files from the old profile.
+&nbsp;Once you are satisfied with the new profile settings, you can
+delete the old one.</li></ol><br><h3><a name="Problems-_Poor_Guiding"></a>Poor Guiding Performance&nbsp;</h3>Once
+you've gotten everything running, you will probably get reasonably good
+guiding results almost immediately. You will have to decide what
+"good enough" means, and everyone's standard is likely to be different.
+&nbsp;But if you find&nbsp;your imaging results are not acceptable
+because the stars are streaked or elongated, you'll need to take a
+systematic approach to correcting the problems. &nbsp;It is often
+tempting to just start blindly adjusting the various guide parameters
+in an effort to make things better. &nbsp;There is nothing wrong with
+adjusting the parameters - that's why they're there - but it should be
+done carefully based on an understanding of what they do and what problem you're trying to solve. &nbsp;The
+LightGuider default settings are carefully chosen to produce reasonable
+results for most amateur equipment and locations. &nbsp;Optimal
+settings are entirely dependent on the image scale, seeing conditions,
+and behavior of your specific mount. &nbsp;In other words, they are
+unique to your situation - there is no magic "red book" of correct
+guiding parameters, and settings you get from other users may be
+completely irrelevant to your situation. &nbsp;If you got started by
+using the new-profile-wizard, the default settings will already be
+tuned fairly well to match your image scale. &nbsp;By using the Guiding
+Assistant, you can get more specifics about your situation - how the
+seeing conditions look and how you might adjust the minimum-move
+settings to avoid chasing the seeing. &nbsp;You can also use either the
+Guiding Assistant or the Manual Guiding tool to see how much backlash
+is present in your mount, something that can be important to understanding your declination guiding results.<br><br><span style="font-weight: bold;"></span><br><h3><a name="Log_analysis"></a>Log Analysis</h3>Any
+sort of problem isolation or&nbsp;tuning will invariably require use of
+the LightGuider log files. &nbsp;Both are formatted for straightforward
+interpretation by a human reader, and the guide log is constructed to
+enable easy import into other applications. &nbsp;As mentioned in the
+'Tools' section, applications such as PHDLogViewer or Excel
+can
+be used to visualize overall&nbsp;performance, compute performance
+statistics, and examine time periods when guiding was problematic.
+&nbsp;With Excel or similar applications, simply specify that the guide
+log uses a comma as a column separator. &nbsp;That said, PHDLogViewer
+is strongly recommended for log analysis and is the tool used by the
+developers to provide support on the LightGuider Google forum.<br><h4>Guiding Log Contents</h4>The
+contents of the guiding log will continue to evolve as new capabilities
+are added. &nbsp;But the basic content is stable, and considerable care
+is taken to not "break" applications that parse it. &nbsp;If you wish
+to analyze the log yourself, the following information will be helpful.
+&nbsp;<br><br>
+
+<p class="MsoNormal">The LightGuider guide log will contain zero or more sequences of
+calibration and zero or more sequences of guiding.<span style="">&nbsp; </span>Each of these&nbsp;sections has a
+header that provides most of the information about the guiding algorithms being
+used and the internal parameters used by LightGuider for guiding.<span style="">&nbsp;&nbsp;</span>At the start of either a calibration run or
+a guiding sequence, the last line of the header information defines a set of
+column headings.<span style="">&nbsp;&nbsp; </span>The meanings of those
+columns are shown below:</p>
+
+
+
+<p class="MsoNormal"><b style=""><o:p>&nbsp;</o:p>Calibration columns:<o:p></o:p></b></p>
+
+
+
+
+
+<ul><li>dx, dy<span style="">&nbsp;
+</span>are offsets from the starting position, in pixels, in the camera coordinate
+system</li><li>x, y are the camera x/y coordinates of the guide
+star at the end of each calibration step</li><li>Dist is the total distance moved in the camera
+coordinate system (dist = sqrt(dx*dx + dy*dy).<span style="">&nbsp;
+</span>This is the value used by LightGuider to compute the calibration parameters<o:p></o:p></li></ul><o:p>&nbsp;</o:p><b style="">Guiding columns:<o:p></o:p></b>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ul><li><span style="font-family: Symbol;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span>dx, dy are the same as for calibration - offsets
+from the "lock position" of the guide star in the camera coordinate
+system</li><li><span style="font-family: Symbol;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;</span></span></span>RARawDistance and DECRawDistance - these are the
+transforms of dx and dy into the mount coordinates - in other words, they use
+the arbitrary angle of the guide camera to map from X/Y on the camera to RA/Dec
+on the mount</li><li><span style="font-family: Symbol;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;</span></span></span>RAGuideDistance and DECGuideDistance - these are
+the outputs from the various guiding algorithms.<span style="">&nbsp; </span>The guide algorithms operate on the
+"raw" distances and decide how far, if any, the telescope position
+should be adjusted in each axis.<span style="">&nbsp; </span>For
+example, with a "minimum move" parameter set, the "guide"
+distances can be zero even when the "raw" distances are non-zero.</li><li><span style="font-family: Symbol;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span>RADuration, RADirection, DECDuration, DECDirection
+- these are the values determined by the two "guide" distances
+above.<span style="">&nbsp; </span>The "durations" are the
+lengths of the guide pulses, in milliseconds, needed to move the mount by the
+distances specified by RAGuideDistance and DECGuideDistance</li><li><span style="font-family: Symbol;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span>XStep, YStep - step-adjustment durations for the
+adaptive optics device if one is being used</li><li><span style="font-family: Symbol;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span>StarMass - a brightness measure of the guide
+star image</li><li><span style="font-family: Symbol;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span>SNR
+- an internal "star-detection ratio"&nbsp;used by LightGuider - essentially a
+measure of how well the star can be distinguished from the sky
+background</li><li><span style="font-family: Symbol;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span>ErrorCode - an integer value representing the quality of the guide star measurement:</li><ul><li>0 - no error</li><li>1 - star is saturated</li><li>2 - star has low SNR</li><li>3 - star mass is too low for accurate measurement</li><li>4 - star has drifted too near the edge of the frame</li><li>5 - star mass has changed beyond the specified amount</li><li>6 - unexpected error</li></ul></ul>
+
+
+
+<p class="MsoNormal">All&nbsp;distance values are in units of pixels.<span style="">&nbsp; </span>The header for the guiding section will show
+the image scale as it is known by LightGuider, and that can be used to scale the pixel
+distance values into units of arc-seconds if desired.</p><h3><a name="Problem_Reporting"></a>Problem Reporting</h3>If
+you encounter application problems that&nbsp;are specific to <span style="font-style: italic;">LightGuider</span>, you
+are encouraged to report them to the open-phd-guiding Google group: <span style="font-weight: bold;">https://groups.google.com/forum/?fromgroups=#!forum/open-phd-guiding</span>.
+&nbsp;Obviously, the more information you can provide, the more likely
+we will be able to resolve the problem. &nbsp;Using the following
+guidelines will help in that regard: <br><ol><li>Try to reproduce the
+problem - if we have a clear set of steps to follow, we are more likely
+to find a solution quickly. &nbsp;If you can reproduce it, try to
+reduce things to the minimum number of steps. &nbsp;Remember, we won't
+have your hardware or computer environment when we try to reproduce it
+ourselves.</li><li>Try to be complete about describing your configuration - operating system, equipment types, <span style="font-style: italic;">LightGuider</span> version, etc.</li><li>Attach
+the <span style="font-style: italic;">LightGuider</span>
+debug log from the session in which you encountered the
+problem. &nbsp;You can find the debug log in the LightGuider folder in your
+Documents folder.&nbsp;If you can't reproduce the problem, try to
+estimate the
+time of day when you first saw it - this could help us find evidence in
+the debug log without having to sift through hundreds of lines of
+output. &nbsp;The 'Upload log files' function on the 'Help' menu can help you find and upload the log files.</li></ol>
+<br>
+&nbsp;&nbsp;
+</body></html>

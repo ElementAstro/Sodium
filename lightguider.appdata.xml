@@ -4,12 +4,12 @@
     <id>phd2.desktop</id>
     <metadata_license>CC0-1.0</metadata_license>
     <project_license>BSD-3-Clause</project_license>
-    <name>PHD2</name>
+    <name>LightGuider</name>
     <summary>Telescope guiding software</summary>
     
     <description>
         <p>
-        PHD2 is telescope guiding software that simplifies the process
+        LightGuider is telescope guiding software that simplifies the process
         of tracking a guide star, letting you concentrate on other aspects of
         deep-sky imaging or spectroscopy.
         </p>

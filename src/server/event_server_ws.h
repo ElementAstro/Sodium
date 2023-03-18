@@ -60,15 +60,16 @@ namespace LightGuider
             explicit Event_WS_Server();
             ~Event_WS_Server();
 
+            void run(int port);
+        
+        protected:
             virtual void on_open(websocketpp::connection_hdl hdl);
 			virtual void on_close(websocketpp::connection_hdl hdl);
 			virtual void on_message(websocketpp::connection_hdl hdl,message_ptr msg);
             virtual void send(std::string message);
             virtual void stop();
             virtual bool is_running();
-            virtual void run(int port,configor::json::value config);
-        
-        protected:
+
             virtual bool SaveClientInfo(websocketpp::connection_hdl hdl);
             virtual void JsonParser(std::string message);
         
@@ -85,6 +86,7 @@ namespace LightGuider
                 std::atomic_int MaxThreadCount;
             }*Ws_Info;
     };
+    extern Event_WS_Server Evt_WS_Server;
 }
 
 #endif

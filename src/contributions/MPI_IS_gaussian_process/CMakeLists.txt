@@ -70,5 +70,5 @@ target_include_directories(GPGuider PUBLIC
                            ${EIGEN_SRC} 
                            ${gaussian_process_root_dir}/src
                            ${gaussian_process_root_dir}/tools 
-                           ${phd_src_dir})
+                           ${lightguider_src_dir})
 set_property(TARGET GPGuider PROPERTY FOLDER "contributions/")

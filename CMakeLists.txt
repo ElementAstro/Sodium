@@ -42,7 +42,19 @@ endif()
 
 # root directory of the project
 set(PHD_PROJECT_ROOT_DIR ${CMAKE_SOURCE_DIR})
-set(phd_src_dir ${PHD_PROJECT_ROOT_DIR})
+set(lightguider_src_dir ${PHD_PROJECT_ROOT_DIR})
+
+add_custom_target(CmakeAdditionalFiles
+  SOURCES
+  ${lightguider_src_dir}/cmake_modules/FindASCOM_INTERFACE.cmake
+  ${lightguider_src_dir}/cmake_modules/FindCFITSIO.cmake
+  ${lightguider_src_dir}/cmake_modules/FindINDI.cmake
+  ${lightguider_src_dir}/cmake_modules/FindNova.cmake
+  ${lightguider_src_dir}/cmake_modules/LightGuiderBuildDoc.cmake
+  ${lightguider_src_dir}/cmake_modules/LightGuiderGenerateDocScript.cmake
+  ${lightguider_src_dir}/cmake_modules/LightGuiderRemovegettextwarning.cmake
+  ${lightguider_src_dir}/cmake_modules/compiler_options.cmake
+  ${lightguider_src_dir}/cmake_modules/LightGuiderPackaging.cmake)
 
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake_modules/")
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake_modules/")
@@ -72,7 +84,7 @@ if(UNIX AND NOT APPLE)
 endif()
 
 set(USE_FOLDERS TRUE)
-set(BUILD_SHARED_LIBS FALSE)
+set(BUILD_SHARED_LIBS On)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 #################################################################################
@@ -87,8 +99,6 @@ project(guider)
 # to be changed in add_subdirectory
 include(cmake_modules/thirdparty.cmake)
 
-find_package(spdlog REQUIRED)
-
 #################################################################################
 #
 #
@@ -96,7 +106,19 @@ find_package(spdlog REQUIRED)
 add_subdirectory(libs/)
 
 include_directories(${CMAKE_SOURCE_DIR}/libs/crow)
-add_subdirectory(websrc/)
+include_directories(${CMAKE_SOURCE_DIR}/libs/)
+
+add_subdirectory(modules)
+
+#################################################################################
+#
+# generates the documentation targets. Part of those targets define the
+# zip files PHD2GuideHelp.zip. In order to include them in the main build
+# we need to declare them here. Those targets should not depend on any source file
+# but may require thirdparty (gettext etc).
+generate_doc_targets(
+  DEFAULT_LOCALE default_locale
+  GENERATED_LOCALES all_locales)
 
 #################################################################################
 #
@@ -110,9 +132,9 @@ add_subdirectory(websrc/)
 # Global include directories
 # WxWidgets inclusion narrowed to lightguider project only
 # include_directories(${wxWidgets_INCLUDE_DIRS})
-# include_directories(${phd_src_dir}/src/cameras/)
-include_directories(${phd_src_dir}/src/)
-include_directories(${phd_src_dir}/libs/)
+# include_directories(${lightguider_src_dir}/src/cameras/)
+include_directories(${lightguider_src_dir}/src/)
+include_directories(${lightguider_src_dir}/libs/)
 
 
 #################################################################################
@@ -120,277 +142,323 @@ include_directories(${phd_src_dir}/libs/)
 # main project
 
 set(cam_SRC
-  ${phd_src_dir}/src/camera/cam_indi.cpp
-  ${phd_src_dir}/src/camera/cam_indi.h
-  ${phd_src_dir}/src/camera/camera.cpp
-  ${phd_src_dir}/src/camera/camera.h
-  ${phd_src_dir}/src/camera/cameras.h
+  ${lightguider_src_dir}/src/camera/cam_ascom.cpp
+  ${lightguider_src_dir}/src/camera/cam_ascom.h
+  ${lightguider_src_dir}/src/camera/cam_indi.cpp
+  ${lightguider_src_dir}/src/camera/cam_indi.h
+  ${lightguider_src_dir}/src/camera/camera.cpp
+  ${lightguider_src_dir}/src/camera/camera.h
+  ${lightguider_src_dir}/src/camera/cameras.h
 )
 
 source_group(Cameras FILES ${cam_SRC})
 
-set(scopes_SRC
-  ${phd_src_dir}/src/telescope/mount.cpp
-  ${phd_src_dir}/src/telescope/mount.h
-  ${phd_src_dir}/src/telescope/scope.cpp
-  ${phd_src_dir}/src/telescope/scope.h
-  ${phd_src_dir}/src/telescope/scope_manual_pointing.cpp
-  ${phd_src_dir}/src/telescope/scope_manual_pointing.h
-  ${phd_src_dir}/src/telescope/scope_onboard_st4.cpp
-  ${phd_src_dir}/src/telescope/scope_onboard_st4.h
-  ${phd_src_dir}/src/telescope/scope_oncamera.cpp
-  ${phd_src_dir}/src/telescope/scope_oncamera.h
-  ${phd_src_dir}/src/telescope/scope_onstepguider.cpp
-  ${phd_src_dir}/src/telescope/scope_onstepguider.h
-  ${phd_src_dir}/src/telescope/scope_indi.h
-  ${phd_src_dir}/src/telescope/scope_indi.cpp
-  ${phd_src_dir}/src/telescope/scopes.h
-
-  ${phd_src_dir}/src/ao/stepguider_sxao.cpp
-  ${phd_src_dir}/src/ao/stepguider_sxao.h
-  ${phd_src_dir}/src/ao/stepguider_sxao_indi.cpp
-  ${phd_src_dir}/src/ao/stepguider_sxao_indi.h
-  ${phd_src_dir}/src/ao/stepguider_sbigao_indi.cpp
-  ${phd_src_dir}/src/ao/stepguider_sbigao_indi.h
-  ${phd_src_dir}/src/ao/stepguider.cpp
-  ${phd_src_dir}/src/ao/stepguider.h
-  ${phd_src_dir}/src/ao/stepguiders.h
-
+set(server_SRC
+  ${lightguider_src_dir}/src/server/event_server.cpp
+  ${lightguider_src_dir}/src/server/event_server.h
+  ${lightguider_src_dir}/src/server/event_server_ws.cpp
+  ${lightguider_src_dir}/src/server/event_server_ws.h
+  ${lightguider_src_dir}/src/server/socket_server.cpp
+  ${lightguider_src_dir}/src/server/socket_server.h
+  ${lightguider_src_dir}/src/server/json_parser.cpp
+  ${lightguider_src_dir}/src/server/json_parser.h
 )
+
+source_group(Server FILES ${server_SRC})
+
+set(modloader_SRC
+  ${lightguider_src_dir}/src/modules/modloader.cpp
+  ${lightguider_src_dir}/src/modules/modloader.h
+)
+
+source_group(ModLoader FILES ${modloader_SRC})
+
+set(scopes_SRC
+  ${lightguider_src_dir}/src/telescope/mount.cpp
+  ${lightguider_src_dir}/src/telescope/mount.h
+  ${lightguider_src_dir}/src/telescope/scope.cpp
+  ${lightguider_src_dir}/src/telescope/scope.h
+  ${lightguider_src_dir}/src/telescope/scope_manual_pointing.cpp
+  ${lightguider_src_dir}/src/telescope/scope_manual_pointing.h
+  ${lightguider_src_dir}/src/telescope/scope_onboard_st4.cpp
+  ${lightguider_src_dir}/src/telescope/scope_onboard_st4.h
+  ${lightguider_src_dir}/src/telescope/scope_oncamera.cpp
+  ${lightguider_src_dir}/src/telescope/scope_oncamera.h
+  ${lightguider_src_dir}/src/telescope/scope_onstepguider.cpp
+  ${lightguider_src_dir}/src/telescope/scope_onstepguider.h
+  ${lightguider_src_dir}/src/telescope/scope_indi.h
+  ${lightguider_src_dir}/src/telescope/scope_indi.cpp
+  ${lightguider_src_dir}/src/telescope/scopes.h
+)
+
 source_group(Scopes FILES ${scopes_SRC})
 
+set(stepguiders_SRC
+  ${lightguider_src_dir}/src/ao/stepguider_sxao.cpp
+  ${lightguider_src_dir}/src/ao/stepguider_sxao.h
+  ${lightguider_src_dir}/src/ao/stepguider_sxao_indi.cpp
+  ${lightguider_src_dir}/src/ao/stepguider_sxao_indi.h
+  ${lightguider_src_dir}/src/ao/stepguider_sbigao_indi.cpp
+  ${lightguider_src_dir}/src/ao/stepguider_sbigao_indi.h
+  ${lightguider_src_dir}/src/ao/stepguider.cpp
+  ${lightguider_src_dir}/src/ao/stepguider.h
+  ${lightguider_src_dir}/src/ao/stepguiders.h
+)
+
+source_group(StepGuider FILES ${stepguiders_SRC})
+
+set(rotators_SRC
+  # rotators
+  ${lightguider_src_dir}/src/rotator/rotators.h
+  ${lightguider_src_dir}/src/rotator/rotator.cpp
+  ${lightguider_src_dir}/src/rotator/rotator.h
+  ${lightguider_src_dir}/src/rotator/rotator_ascom.cpp
+  ${lightguider_src_dir}/src/rotator/rotator_ascom.h
+)
+
+source_group(Rotator FILES ${rotators_SRC})
+
 set(guiding_SRC
-  ${phd_src_dir}/src/backlash_comp.cpp
-  ${phd_src_dir}/src/backlash_comp.h
-  ${phd_src_dir}/src/algorithm/guide_algorithm_hysteresis.cpp
-  ${phd_src_dir}/src/algorithm/guide_algorithm_hysteresis.h
-  ${phd_src_dir}/src/algorithm/guide_algorithm_gaussian_process.cpp # MPI.IS PEC Guider: requires link to the GP target (contrib)
-  ${phd_src_dir}/src/algorithm/guide_algorithm_gaussian_process.h
-  ${phd_src_dir}/src/algorithm/guide_algorithm_identity.cpp
-  ${phd_src_dir}/src/algorithm/guide_algorithm_identity.h
-  ${phd_src_dir}/src/algorithm/guide_algorithm_lowpass.cpp
-  ${phd_src_dir}/src/algorithm/guide_algorithm_lowpass.h
-  ${phd_src_dir}/src/algorithm/guide_algorithm_lowpass2.cpp
-  ${phd_src_dir}/src/algorithm/guide_algorithm_lowpass2.h
-  ${phd_src_dir}/src/algorithm/guide_algorithm_resistswitch.cpp
-  ${phd_src_dir}/src/algorithm/guide_algorithm_resistswitch.h
-  ${phd_src_dir}/src/algorithm/guide_algorithm_zfilter.cpp
-  ${phd_src_dir}/src/algorithm/guide_algorithm_zfilter.h
-  ${phd_src_dir}/src/algorithm/guide_algorithm.cpp
-  ${phd_src_dir}/src/algorithm/guide_algorithm.h
-  ${phd_src_dir}/src/algorithm/guide_algorithms.h
-  ${phd_src_dir}/src/algorithm/guider_multistar.cpp
-  ${phd_src_dir}/src/algorithm/guider_multistar.h
-  ${phd_src_dir}/src/guider.cpp
-  ${phd_src_dir}/src/guider.h
-  ${phd_src_dir}/src/guiders.h
-  ${phd_src_dir}/src/zfilterfactory.cpp
-  ${phd_src_dir}/src/zfilterfactory.h
+  ${lightguider_src_dir}/src/algorithm/backlash_comp.cpp
+  ${lightguider_src_dir}/src/algorithm/backlash_comp.h
+  ${lightguider_src_dir}/src/algorithm/guide_algorithm_hysteresis.cpp
+  ${lightguider_src_dir}/src/algorithm/guide_algorithm_hysteresis.h
+  ${lightguider_src_dir}/src/algorithm/guide_algorithm_gaussian_process.cpp # MPI.IS PEC Guider: requires link to the GP target (contrib)
+  ${lightguider_src_dir}/src/algorithm/guide_algorithm_gaussian_process.h
+  ${lightguider_src_dir}/src/algorithm/guide_algorithm_identity.cpp
+  ${lightguider_src_dir}/src/algorithm/guide_algorithm_identity.h
+  ${lightguider_src_dir}/src/algorithm/guide_algorithm_lowpass.cpp
+  ${lightguider_src_dir}/src/algorithm/guide_algorithm_lowpass.h
+  ${lightguider_src_dir}/src/algorithm/guide_algorithm_lowpass2.cpp
+  ${lightguider_src_dir}/src/algorithm/guide_algorithm_lowpass2.h
+  ${lightguider_src_dir}/src/algorithm/guide_algorithm_resistswitch.cpp
+  ${lightguider_src_dir}/src/algorithm/guide_algorithm_resistswitch.h
+  ${lightguider_src_dir}/src/algorithm/guide_algorithm_zfilter.cpp
+  ${lightguider_src_dir}/src/algorithm/guide_algorithm_zfilter.h
+  ${lightguider_src_dir}/src/algorithm/guide_algorithm.cpp
+  ${lightguider_src_dir}/src/algorithm/guide_algorithm.h
+  ${lightguider_src_dir}/src/algorithm/guide_algorithms.h
+  ${lightguider_src_dir}/src/algorithm/guider_multistar.cpp
+  ${lightguider_src_dir}/src/algorithm/guider_multistar.h
+  ${lightguider_src_dir}/src/algorithm/zfilterfactory.cpp
+  ${lightguider_src_dir}/src/algorithm/zfilterfactory.h
+
+  ${lightguider_src_dir}/src/guider.cpp
+  ${lightguider_src_dir}/src/guider.h
+  ${lightguider_src_dir}/src/guiders.h
 )
 source_group(Guiding FILES ${guiding_SRC})
 
 set(gui_src
-  ${phd_src_dir}/src/gui/about_dialog.cpp
-  ${phd_src_dir}/src/gui/about_dialog.h
+  ${lightguider_src_dir}/src/gui/about_dialog.cpp
+  ${lightguider_src_dir}/src/gui/about_dialog.h
 
-  ${phd_src_dir}/src/gui/advanced_dialog.cpp
-  ${phd_src_dir}/src/gui/advanced_dialog.h
+  ${lightguider_src_dir}/src/gui/advanced_dialog.cpp
+  ${lightguider_src_dir}/src/gui/advanced_dialog.h
 
-  ${phd_src_dir}/src/gui/aui_controls.cpp
-  ${phd_src_dir}/src/gui/aui_controls.h
+  ${lightguider_src_dir}/src/gui/aui_controls.cpp
+  ${lightguider_src_dir}/src/gui/aui_controls.h
 
-  ${phd_src_dir}/src/gui/calreview_dialog.cpp
-  ${phd_src_dir}/src/gui/calreview_dialog.h
+  ${lightguider_src_dir}/src/gui/calreview_dialog.cpp
+  ${lightguider_src_dir}/src/gui/calreview_dialog.h
 
-  ${phd_src_dir}/src/gui/calstep_dialog.cpp
-  ${phd_src_dir}/src/gui/calstep_dialog.h
+  ${lightguider_src_dir}/src/gui/calstep_dialog.cpp
+  ${lightguider_src_dir}/src/gui/calstep_dialog.h
 
-  ${phd_src_dir}/src/gui/configdialog.cpp
-  ${phd_src_dir}/src/gui/configdialog.h
+  ${lightguider_src_dir}/src/gui/configdialog.cpp
+  ${lightguider_src_dir}/src/gui/configdialog.h
 
-  ${phd_src_dir}/src/gui/confirm_dialog.cpp
-  ${phd_src_dir}/src/gui/confirm_dialog.h
+  ${lightguider_src_dir}/src/gui/confirm_dialog.cpp
+  ${lightguider_src_dir}/src/gui/confirm_dialog.h
 
-  ${phd_src_dir}/src/gui/darks_dialog.cpp
-  ${phd_src_dir}/src/gui/darks_dialog.h
+  ${lightguider_src_dir}/src/gui/darks_dialog.cpp
+  ${lightguider_src_dir}/src/gui/darks_dialog.h
 
-  ${phd_src_dir}/src/gui/indi_gui.cpp
-  ${phd_src_dir}/src/gui/indi_gui.h
+  ${lightguider_src_dir}/src/gui/indi_gui.cpp
+  ${lightguider_src_dir}/src/gui/indi_gui.h
 
-  ${phd_src_dir}/src/gui/gear_dialog.cpp
-  ${phd_src_dir}/src/gui/gear_dialog.h
+  ${lightguider_src_dir}/src/gui/gear_dialog.cpp
+  ${lightguider_src_dir}/src/gui/gear_dialog.h
 
-  ${phd_src_dir}/src/gui/manualcal_dialog.cpp
-  ${phd_src_dir}/src/gui/manualcal_dialog.h
+  ${lightguider_src_dir}/src/gui/manualcal_dialog.cpp
+  ${lightguider_src_dir}/src/gui/manualcal_dialog.h
 
-  ${phd_src_dir}/src/gui/myframe.cpp
-  ${phd_src_dir}/src/gui/myframe.h
-  ${phd_src_dir}/src/gui/myframe_events.cpp
+  ${lightguider_src_dir}/src/gui/myframe.cpp
+  ${lightguider_src_dir}/src/gui/myframe.h
+  ${lightguider_src_dir}/src/gui/myframe_events.cpp
 
-  ${phd_src_dir}/src/gui/profile_wizard.h
-  ${phd_src_dir}/src/gui/profile_wizard.cpp
+  ${lightguider_src_dir}/src/gui/profile_wizard.h
+  ${lightguider_src_dir}/src/gui/profile_wizard.cpp
 
-  ${phd_src_dir}/src/gui/statswindow.cpp
-  ${phd_src_dir}/src/gui/statswindow.h
+  ${lightguider_src_dir}/src/gui/statswindow.cpp
+  ${lightguider_src_dir}/src/gui/statswindow.h
 
-  ${phd_src_dir}/src/gui/config_indi.cpp
-  ${phd_src_dir}/src/gui/config_indi.h
+  ${lightguider_src_dir}/src/gui/config_indi.cpp
+  ${lightguider_src_dir}/src/gui/config_indi.h
 
-  ${phd_src_dir}/src/gui/comet_tool.cpp
-  ${phd_src_dir}/src/gui/comet_tool.h
+  ${lightguider_src_dir}/src/gui/comet_tool.cpp
+  ${lightguider_src_dir}/src/gui/comet_tool.h
 
-  ${phd_src_dir}/src/gui/drift_tool.cpp
-  ${phd_src_dir}/src/gui/drift_tool.h
+  ${lightguider_src_dir}/src/gui/drift_tool.cpp
+  ${lightguider_src_dir}/src/gui/drift_tool.h
 
-  ${phd_src_dir}/src/gui/Refine_DefMap.cpp
-  ${phd_src_dir}/src/gui/Refine_DefMap.h
+  ${lightguider_src_dir}/src/gui/Refine_DefMap.cpp
+  ${lightguider_src_dir}/src/gui/Refine_DefMap.h
 
-  ${phd_src_dir}/src/gui/graph-stepguider.cpp
-  ${phd_src_dir}/src/gui/graph-stepguider.h
+  ${lightguider_src_dir}/src/gui/graph-stepguider.cpp
+  ${lightguider_src_dir}/src/gui/graph-stepguider.h
 
-  ${phd_src_dir}/src/gui/graph.cpp
-  ${phd_src_dir}/src/gui/graph.h
+  ${lightguider_src_dir}/src/gui/graph.cpp
+  ${lightguider_src_dir}/src/gui/graph.h
 
-  ${phd_src_dir}/src/gui/guiding_assistant.cpp
-  ${phd_src_dir}/src/gui/guiding_assistant.h
+  ${lightguider_src_dir}/src/gui/guiding_assistant.cpp
+  ${lightguider_src_dir}/src/gui/guiding_assistant.h
 
-  ${phd_src_dir}/src/gui/calibration_assistant.cpp
-  ${phd_src_dir}/src/gui/calibration_assistant.h
+  ${lightguider_src_dir}/src/gui/calibration_assistant.cpp
+  ${lightguider_src_dir}/src/gui/calibration_assistant.h
 
-  ${phd_src_dir}/src/gui/optionsbutton.cpp
-  ${phd_src_dir}/src/gui/optionsbutton.h
+  ${lightguider_src_dir}/src/gui/optionsbutton.cpp
+  ${lightguider_src_dir}/src/gui/optionsbutton.h
 
-  ${phd_src_dir}/src/gui/pierflip_tool.cpp
-  ${phd_src_dir}/src/gui/pierflip_tool.h
+  ${lightguider_src_dir}/src/gui/pierflip_tool.cpp
+  ${lightguider_src_dir}/src/gui/pierflip_tool.h
 
-  ${phd_src_dir}/src/gui/polardrift_tool.h
-  ${phd_src_dir}/src/gui/polardrift_toolwin.h
-  ${phd_src_dir}/src/gui/polardrift_toolwin.cpp
+  ${lightguider_src_dir}/src/gui/polardrift_tool.h
+  ${lightguider_src_dir}/src/gui/polardrift_toolwin.h
+  ${lightguider_src_dir}/src/gui/polardrift_toolwin.cpp
 
-  ${phd_src_dir}/src/gui/starcross_test.cpp
-  ${phd_src_dir}/src/gui/starcross_test.h
+  ${lightguider_src_dir}/src/gui/starcross_test.cpp
+  ${lightguider_src_dir}/src/gui/starcross_test.h
 
-  ${phd_src_dir}/src/gui/staticpa_tool.h
-  ${phd_src_dir}/src/gui/staticpa_toolwin.h
-  ${phd_src_dir}/src/gui/staticpa_toolwin.cpp
+  ${lightguider_src_dir}/src/gui/staticpa_tool.h
+  ${lightguider_src_dir}/src/gui/staticpa_toolwin.h
+  ${lightguider_src_dir}/src/gui/staticpa_toolwin.cpp
 
-  ${phd_src_dir}/src/gui/star_profile.cpp
-  ${phd_src_dir}/src/gui/star_profile.h
+  ${lightguider_src_dir}/src/gui/star_profile.cpp
+  ${lightguider_src_dir}/src/gui/star_profile.h
 
-  ${phd_src_dir}/src/gui/testguide.cpp
-  ${phd_src_dir}/src/gui/testguide.h
+  ${lightguider_src_dir}/src/gui/testguide.cpp
+  ${lightguider_src_dir}/src/gui/testguide.h
 
-  ${phd_src_dir}/src/gui/wxled.cpp
-  ${phd_src_dir}/src/gui/wxled.h
+  ${lightguider_src_dir}/src/gui/wxled.cpp
+  ${lightguider_src_dir}/src/gui/wxled.h
 
-  ${phd_src_dir}/src/gui/camcal_import_dialog.cpp
-  ${phd_src_dir}/src/gui/camcal_import_dialog.h
+  ${lightguider_src_dir}/src/gui/camcal_import_dialog.cpp
+  ${lightguider_src_dir}/src/gui/camcal_import_dialog.h
 
-  ${phd_src_dir}/src/gui/messagebox_proxy.cpp
-  ${phd_src_dir}/src/gui/messagebox_proxy.h
+  ${lightguider_src_dir}/src/gui/messagebox_proxy.cpp
+  ${lightguider_src_dir}/src/gui/messagebox_proxy.h
 
-  ${phd_src_dir}/src/gui/eegg.cpp
+  ${lightguider_src_dir}/src/gui/eegg.cpp
 
-  ${phd_src_dir}/src/gui/nudge_lock.cpp
-  ${phd_src_dir}/src/gui/nudge_lock.h
+  ${lightguider_src_dir}/src/gui/nudge_lock.cpp
+  ${lightguider_src_dir}/src/gui/nudge_lock.h
 
-  ${phd_src_dir}/src/gui/target.cpp
-  ${phd_src_dir}/src/gui/target.h
+  ${lightguider_src_dir}/src/gui/target.cpp
+  ${lightguider_src_dir}/src/gui/target.h
 
-  ${phd_src_dir}/src/gui/server_dialog_base.cpp
-  ${phd_src_dir}/src/gui/server_dialog_base.h
-  ${phd_src_dir}/src/gui/server_dialog.cpp
-  ${phd_src_dir}/src/gui/server_dialog.h
+  ${lightguider_src_dir}/src/gui/server_dialog_base.cpp
+  ${lightguider_src_dir}/src/gui/server_dialog_base.h
+  ${lightguider_src_dir}/src/gui/server_dialog.cpp
+  ${lightguider_src_dir}/src/gui/server_dialog.h
 
-  ${phd_src_dir}/src/gui/solver_dialog_base.cpp
-  ${phd_src_dir}/src/gui/solver_dialog_base.h
-  ${phd_src_dir}/src/gui/solver_dialog.cpp
-  ${phd_src_dir}/src/gui/solver_dialog.h
+  ${lightguider_src_dir}/src/gui/solver_dialog_base.cpp
+  ${lightguider_src_dir}/src/gui/solver_dialog_base.h
+  ${lightguider_src_dir}/src/gui/solver_dialog.cpp
+  ${lightguider_src_dir}/src/gui/solver_dialog.h
 
-  ${phd_src_dir}/src/gui/runinbg.cpp
-  ${phd_src_dir}/src/gui/runinbg.h
+  ${lightguider_src_dir}/src/gui/runinbg.cpp
+  ${lightguider_src_dir}/src/gui/runinbg.h
 )
 source_group(Gui FILES ${gui_src})
 
 # it would ease if files are organised in an alphabetical order
 set(lightguider_SRC
 
-  ${phd_src_dir}/src/circbuf.h
+  ${lightguider_src_dir}/src/circbuf.h
 
-  ${phd_src_dir}/src/server/event_server.cpp
-  ${phd_src_dir}/src/server/event_server.h
-  ${phd_src_dir}/src/server/event_server_ws.cpp
-  ${phd_src_dir}/src/server/event_server_ws.h
-  ${phd_src_dir}/src/server/socket_server.cpp
-  ${phd_src_dir}/src/server/socket_server.h
-  ${phd_src_dir}/src/server/json_parser.cpp
-  ${phd_src_dir}/src/server/json_parser.h
-
-  ${phd_src_dir}/src/image/fitsiowrap.cpp
-  ${phd_src_dir}/src/image/fitsiowrap.h
-  ${phd_src_dir}/src/image/image_math.cpp
-  ${phd_src_dir}/src/image/image_math.h
-  ${phd_src_dir}/src/image/imagelogger.cpp
-  ${phd_src_dir}/src/image/imagelogger.h
-  ${phd_src_dir}/src/image/usImage.cpp
-  ${phd_src_dir}/src/image/usImage.h
+  ${lightguider_src_dir}/src/image/fitsiowrap.cpp
+  ${lightguider_src_dir}/src/image/fitsiowrap.h
+  ${lightguider_src_dir}/src/image/image_math.cpp
+  ${lightguider_src_dir}/src/image/image_math.h
+  ${lightguider_src_dir}/src/image/imagelogger.cpp
+  ${lightguider_src_dir}/src/image/imagelogger.h
+  ${lightguider_src_dir}/src/image/usImage.cpp
+  ${lightguider_src_dir}/src/image/usImage.h
   
-  ${phd_src_dir}/src/ao/gear_simulator.h
-  ${phd_src_dir}/src/ao/gear_simulator.cpp
+  ${lightguider_src_dir}/src/ao/gear_simulator.h
+  ${lightguider_src_dir}/src/ao/gear_simulator.cpp
 
   
 
-  ${phd_src_dir}/src/logger/debuglog.cpp
-  ${phd_src_dir}/src/logger/debuglog.h
-  ${phd_src_dir}/src/logger/guidinglog.cpp
-  ${phd_src_dir}/src/logger/guidinglog.h
-  ${phd_src_dir}/src/logger/logger.cpp
-  ${phd_src_dir}/src/logger/logger.h
-  ${phd_src_dir}/src/logger/log_uploader.cpp
-  ${phd_src_dir}/src/logger/log_uploader.h
+  ${lightguider_src_dir}/src/logger/debuglog.cpp
+  ${lightguider_src_dir}/src/logger/debuglog.h
+  ${lightguider_src_dir}/src/logger/guidinglog.cpp
+  ${lightguider_src_dir}/src/logger/guidinglog.h
+  ${lightguider_src_dir}/src/logger/logger.cpp
+  ${lightguider_src_dir}/src/logger/logger.h
+  ${lightguider_src_dir}/src/logger/log_uploader.cpp
+  ${lightguider_src_dir}/src/logger/log_uploader.h
 
-  ${phd_src_dir}/src/guiding_stats.cpp
-  ${phd_src_dir}/src/guiding_stats.h
+  ${lightguider_src_dir}/src/guiding_stats.cpp
+  ${lightguider_src_dir}/src/guiding_stats.h
   
-  ${phd_src_dir}/src/onboard_st4.cpp
-  ${phd_src_dir}/src/onboard_st4.h
+  ${lightguider_src_dir}/src/device/onboard_st4.cpp
+  ${lightguider_src_dir}/src/device/onboard_st4.h
   
-  ${phd_src_dir}/src/lightguider.cpp
-  ${phd_src_dir}/src/lightguider.h
-  ${phd_src_dir}/src/phdconfig.cpp
-  ${phd_src_dir}/src/phdconfig.h
-  ${phd_src_dir}/src/phdcontrol.cpp
-  ${phd_src_dir}/src/phdcontrol.h
-  ${phd_src_dir}/src/phdindiclient.cpp
-  ${phd_src_dir}/src/phdindiclient.h
-  ${phd_src_dir}/src/phdupdate.cpp
-  ${phd_src_dir}/src/phdupdate.h
-  
-  ${phd_src_dir}/src/point.h
-  
+  ${lightguider_src_dir}/src/lightguider.cpp
+  ${lightguider_src_dir}/src/lightguider.h
 
-  # rotators
-  ${phd_src_dir}/src/rotator/rotators.h
-  ${phd_src_dir}/src/rotator/rotator.cpp
-  ${phd_src_dir}/src/rotator/rotator.h
+  ${lightguider_src_dir}/src/lightconfig.cpp
+  ${lightguider_src_dir}/src/lightconfig.h
+  ${lightguider_src_dir}/src/lightcontrol.cpp
+  ${lightguider_src_dir}/src/lightcontrol.h
+  ${lightguider_src_dir}/src/phdindiclient.cpp
+  ${lightguider_src_dir}/src/phdindiclient.h
+  ${lightguider_src_dir}/src/phdupdate.cpp
+  ${lightguider_src_dir}/src/phdupdate.h
+  
+  ${lightguider_src_dir}/src/point.h
 
-  ${phd_src_dir}/src/serialport.cpp
-  ${phd_src_dir}/src/serialport.h
-  ${phd_src_dir}/src/serialport_loopback.cpp
-  ${phd_src_dir}/src/serialport_loopback.h
-  ${phd_src_dir}/src/serialport_posix.cpp
-  ${phd_src_dir}/src/serialport_posix.h
-  ${phd_src_dir}/src/serialports.h
-  ${phd_src_dir}/src/sha1.cpp
-  ${phd_src_dir}/src/sha1.h
+  ${lightguider_src_dir}/src/device/serialport.cpp
+  ${lightguider_src_dir}/src/device/serialport.h
+  ${lightguider_src_dir}/src/device/serialport_loopback.cpp
+  ${lightguider_src_dir}/src/device/serialport_loopback.h
+  ${lightguider_src_dir}/src/device/serialport_mac.cpp
+  ${lightguider_src_dir}/src/device/serialport_mac.h
+  ${lightguider_src_dir}/src/device/serialport_win32.cpp
+  ${lightguider_src_dir}/src/device/serialport_win32.h
+  ${lightguider_src_dir}/src/device/serialport_posix.cpp
+  ${lightguider_src_dir}/src/device/serialport_posix.h
+  ${lightguider_src_dir}/src/device/serialports.h
+
+  ${lightguider_src_dir}/src/sha1.cpp
+  ${lightguider_src_dir}/src/sha1.h
   
-  ${phd_src_dir}/src/star.cpp
-  ${phd_src_dir}/src/star.h
+  ${lightguider_src_dir}/src/star.cpp
+  ${lightguider_src_dir}/src/star.h
   
-  ${phd_src_dir}/src/worker_thread.cpp
-  ${phd_src_dir}/src/worker_thread.h
+  ${lightguider_src_dir}/src/worker_thread.cpp
+  ${lightguider_src_dir}/src/worker_thread.h
   
 )
+
+
+if (WIN32)
+  set(lightguider_SRC
+      ${lightguider_SRC}
+      # windows-only sources
+      ${lightguider_src_dir}/src/win32/parallelports.h
+      ${lightguider_src_dir}/src/win32/parallelport.h
+      ${lightguider_src_dir}/src/win32/parallelport.cpp
+
+      ${lightguider_src_dir}/src/win32/parallelport_win32.h
+      ${lightguider_src_dir}/src/win32/parallelport_win32.cpp
+
+      ${lightguider_src_dir}/src/win32/comdispatch.h
+      ${lightguider_src_dir}/src/win32/comdispatch.cpp
+     )
+endif()
 
 source_group(src FILES ${lightguider_SRC})
 
@@ -436,12 +504,17 @@ if(UNIX)
   # should be linux there
   add_executable(
    lightguider
+   ${server_SRC}
+   ${modloader_SRC}
    ${scopes_SRC}
    ${cam_SRC}
+   ${stepguiders_SRC}
+   ${rotators_SRC}
    ${guiding_SRC}
    ${gui_src}
    ${lightguider_SRC}
    )
+
   target_link_libraries(lightguider X11)
 
   find_package(spdlog REQUIRED)
@@ -516,6 +589,50 @@ foreach(locale IN LISTS all_locales)
   endif()
 
 endforeach()
+
+
+## Windows bundling of documentation + translation
+if(WIN32)
+  # here we generate the installation commands and the commands that will make the
+  # build tree look like the install tree, such that users can run the application directly
+  # from Visual Studio.
+  foreach(current_locale IN LISTS all_locales)
+
+    if("${current_locale}" STREQUAL "${default_locale}")
+      # because of wXWidget (wxStandardPaths::IgnoreAppBuildSubDirs)
+      # the paths "Debug", "Release" are discarded, and the parent path
+      # is considered instead as the application directory
+      # This is only for running the app from a Development environment
+      # (TODO: use only for multiconfig cmake projects)
+      set(build_tree_target_folder $<TARGET_FILE_DIR:lightguider>/)
+      set(install_options DESTINATION ${CMAKE_INSTALL_PREFIX}/)
+    else()
+      set(build_tree_target_folder $<TARGET_FILE_DIR:lightguider>/locale/${current_locale})
+      set(install_options DESTINATION ${CMAKE_INSTALL_PREFIX}/locale/${current_locale}/ OPTIONAL)
+    endif()
+
+    # installation of the document and translation files
+    get_zip_file(current_zip LOCALE ${current_locale})
+    get_translation_files(current_translations LOCALE ${current_locale})
+
+    foreach(current_file IN LISTS current_translations current_zip)
+      get_filename_component(message_file_basename ${current_file} NAME)
+      get_filename_component(message_file_ext ${current_file} EXT)
+      if("${message_file_ext}" STREQUAL ".mo" OR "${message_file_ext}" STREQUAL ".zip")
+        add_custom_command(
+          TARGET lightguider
+          POST_BUILD
+             COMMAND ${CMAKE_COMMAND} -E make_directory "${build_tree_target_folder}"
+             COMMAND "${CMAKE_COMMAND}" -E copy_if_different ${current_file} "${build_tree_target_folder}/${message_file_basename}"
+        )
+        install(FILES       ${current_file}
+                DESTINATION  ${CMAKE_INSTALL_PREFIX}/locale/${current_locale}
+                OPTIONAL)
+      endif()
+    endforeach()
+
+  endforeach() # for all locales
+endif()
 
 ## Linux bundling of documentation + translation
 if(UNIX AND NOT APPLE)

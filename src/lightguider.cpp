@@ -71,6 +71,7 @@ static const wxCmdLineEntryDesc cmdLineDesc[] =
     { wxCMD_LINE_OPTION, "l", "load", "load settings from file and exit", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
     { wxCMD_LINE_SWITCH, "R", "Reset", "Reset all PHD2 settings to default values" },
     { wxCMD_LINE_SWITCH, "w", "web", "Start the http server" },
+    { wxCMD_LINE_SWITCH, "g", "websocket", "Start the websocket server" },
     { wxCMD_LINE_OPTION, "s", "save", "save settings to file and exit", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
     { wxCMD_LINE_NONE }
 };
@@ -617,6 +618,9 @@ bool PhdApp::OnInit()
     spdlog::debug("Search for translation files in the specified folder and load the required");
 
     wxString ldir = GetLocalesDir();
+
+    spdlog::debug("Current locales folder : {}",std::string(ldir));
+
     Debug.Write(wxString::Format("locale: using dir %s exists=%d\n", ldir, wxDirExists(ldir)));
     wxLocale::AddCatalogLookupPathPrefix(ldir);
 
@@ -625,6 +629,7 @@ bool PhdApp::OnInit()
     Debug.Write(wxString::Format("locale: initialized with lang id %d (r=%d)\n", langid, ok));
     if (!m_locale.AddCatalog(PHD_MESSAGES_CATALOG))
     {
+        spdlog::debug(std::string(wxString::Format("locale: AddCatalog(%s) failed\n", PHD_MESSAGES_CATALOG)));
         Debug.Write(wxString::Format("locale: AddCatalog(%s) failed\n", PHD_MESSAGES_CATALOG));
     }
     wxSetlocale(LC_NUMERIC, "C");
@@ -694,7 +699,6 @@ void PhdApp::OnInitCmdLine(wxCmdLineParser& parser)
 #include <dlfcn.h>
 #include <thread>
 
-
 /// @brief Command line parsing
 /// @param parser 
 /// @return bReturn(bool)
@@ -750,6 +754,13 @@ bool PhdApp::OnCmdLineParsed(wxCmdLineParser& parser)
         std::thread http_server(run_http_server); // 调用函数
         http_server.detach();
         spdlog::debug("Started web server successfully");
+    }
+
+    if (parser.Found("g")){
+        spdlog::debug("Trying to start websocket server for LightGuider");
+        int port = 4444;
+        std::thread ws_server(&LightGuider::Event_WS_Server::run,&LightGuider::Evt_WS_Server,port); // 调用函数
+        ws_server.detach();
     }
     
     m_resetConfig = parser.Found("R");

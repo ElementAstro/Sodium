@@ -38,9 +38,9 @@
 #if defined(ASCOM_CAMERA)
 
 #include "camera.h"
-#include "comdispatch.h"
+#include "win32/comdispatch.h"
 #include "time.h"
-#include "image_math.h"
+#include "image/image_math.h"
 #include "wx/stopwatch.h"
 #include <wx/wfstream.h>
 #include <wx/txtstrm.h>

@@ -1,0 +1,519 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><title>Tools and Utilities</title></head>
+<body>
+  <h2>Tools and Utilities</h2><a href="Tools.htm#Polar_alignment_tools"><span style="text-decoration: underline;">Polar Alignment Tools</span></a><br><a href="Tools.htm#Auto-Select_Star">Auto-select Stars</a><br><a href="Tools.htm#Guiding_Assistant">Guiding Assistant</a><br><a href="Tools.htm#Calibration_Details">Calibration &nbsp;Review and Modification</a><br><a href="#Manual_Guide">Manual Guide</a><br>
+  <a href="Tools.htm#Star_cross_tool">Star Cross Tool</a><br><a href="Tools.htm#pierflip_cal_tool">Meridian Flip Calibration Tool</a><br>
+  <a href="Tools.htm#Polar_alignment_tools"><span style="text-decoration: underline;"></span></a><a href="Tools.htm#Comet_Tracking">Comet Tracking</a><br>
+  <a href="#Lock_Positions">Lock Positions</a><br>
+  <a href="#LightGuider_Server">LightGuider Server</a><br>
+  <br><h3><a name="Polar_alignment_tools"></a>Polar Alignment Tools</h3>
+
+LightGuider offers three different polar alignment tools.<span style="">&nbsp; </span>The three approaches share the same basic
+objective: to help you physically align the RA axis of your mount to the
+celestial pole.<span style="">&nbsp; </span>These polar alignment
+tools are different from the &#8220;two-star&#8221; or &#8220;three-star&#8221; alignment procedures
+that are part of many popular go-to mounts.<span style="">&nbsp;
+</span>The mount software routines are generally focused on optimizing go-to
+operations by adjusting the slewing/pointing operations to compensate for various errors
+in the mount, including polar alignment error.<span style="">&nbsp;
+</span>They generally don&#8217;t involve physical adjustment of the mount&#8217;s azimuth
+and altitude controls, which is what is necessary for successful imaging and
+guiding.<br><br>The
+three polar alignment tools have different requirements and behaviors,
+as summarized in the table below. &nbsp;The accuracy and speed columns
+show values in the range of 1-3, where 1 is lowest and 3 is highest.<br>
+<br><table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2"><tbody><tr><td style="font-weight: bold;">Method</td><td><span style="font-weight: bold;">Accuracy</span></td><td><span style="font-weight: bold;">Speed</span></td><td><span style="font-weight: bold;">Sky View</span></td><td><span style="font-weight: bold;">Other</span> </td></tr><tr><td>Traditional drift alignment</td><td>3</td><td>1</td><td>East or west horizon<br>Meridian/celestial equator</td><td>Most slewing<br>Axes measured/adjusted separately</td></tr><tr><td>Static polar alignment</td><td>1</td><td>3</td><td>Polar region</td><td>Requires identification of polar region stars<br>Minimal slewing</td></tr><tr><td>Polar drift alignment<br></td><td>2<br></td><td>2</td><td>Polar region<br></td><td>Minimal slewing<br></td></tr></tbody></table><br>The original polar alignment routine, drift alignment, is
+still considered by most to be the &#8220;gold standard&#8221; for accuracy.<span style="">&nbsp; </span>Partly, this is because it directly measures
+the thing you&#8217;re interested in: the amount of drift that will be caused by
+mis-alignment of the RA axis on the celestial pole.<span style="">&nbsp; </span>The drift alignment tool requires use of only
+one visible star at a time, and identification of the star is unnecessary.<span style="">&nbsp; </span>But the procedure can be time-consuming,
+especially for beginners, because each mount axis must be adjusted separately
+and the telescope will need to slew over a fairly wide area.<span style="">&nbsp; </span>Also, it works best if you have clear views
+of the celestial equator/meridian intersection and an area around 30 degrees
+above either the eastern or western horizon (azimuth 90 or 270 degrees).<span style="">&nbsp;&nbsp; </span>For imagers who are rushing to set up each
+night or have a limited view of the sky, these requirements may be unappealing.
+
+<p class="MsoNormal"><o:p></o:p>The second alignment option, static polar alignment,
+addresses these concerns by taking a different approach.<span style="">&nbsp; </span>It specifically trades off some&nbsp;accuracy
+to optimize the speed of the process.<span style="">&nbsp; </span>It
+requires only a clear view of the northern or southern polar region, and it
+facilitates adjustment of both mount axes at the same time.<span style="">&nbsp; </span>It is therefore a bit more intuitive and quite
+likely to be quicker to complete.<span style="">&nbsp; </span>It
+does require visibility and identification of several stars near the pole, but
+the tool makes that reasonably easy assuming your sky conditions are good
+enough to see the stars.&nbsp; </p><span style=""></span>
+
+<p>The third alignment option, polar drift alignment, is probably the
+simplest one to perform at the expense of a bit of accuracy and speed.
+It
+requires a clear view of the northern or southern polar region, and it
+facilitates adjustment of both mount axes at the same time. Minimal
+user input is needed so it is very simple to use.
+</p><p class="MsoNormal"><o:p></o:p>The three techniques are described in detail in the following
+sections.<span style="">&nbsp; </span>Imagers should probably
+experiment with them and choose the one that best suits their
+needs.<span style="">&nbsp; </span>The importance of alignment
+accuracy is often over-emphasized, so users need to keep things in
+perspective.<span style="">&nbsp; </span>Most declination drift can
+be well-managed by LightGuider guiding assuming the mount behaves well and doesn&#8217;t
+have a lot of declination backlash.<span style="">&nbsp;&nbsp;
+</span>However, at some point, the amount of polar alignment error can create
+field rotation in the images, something that can&#8217;t be corrected.<span style="">&nbsp; </span>The larger the imaging sensor and the closer
+to the pole the target is, the more field rotation can be an issue.<span style="">&nbsp; </span>You can compute the expected field rotation
+using an online calculator such as this one:
+
+</p><p class="MsoNormal"><a href="http://celestialwonders.com/tools/rotationMaxErrorCalc.html">http://celestialwonders.com/tools/rotationMaxErrorCalc.html</a></p>
+
+<p class="MsoNormal"><o:p></o:p>The calculator can help you decide how much accuracy is
+&#8220;good enough&#8221; for your situation.<span style="">&nbsp; </span>It&#8217;s
+also important to remember that any of the procedures can be limited by
+the
+precision of the adjustment mechanisms on the mount and your ability to
+tighten them sufficiently to keep things from moving around as you slew
+to various parts of the sky.<br></p>
+
+<h3><a href="Tutorials.htm#Drift_Align">Drift Alignment Tutorial</a></h3>
+<h3><a href="Tutorials.htm#Static_polar_alignment">Static Polar Alignment Tutorial</a></h3>
+<h3><a href="Tutorials.htm#Polar_Drift_Align">Polar Drift Alignment Tutorial</a></h3><br>
+<h3><a name="Auto-Select_Star"></a>Auto-Select Stars</h3>Automatic guide
+star selection can be accomplished in several ways. &nbsp;The simplest way
+is to click&nbsp;on the 'Auto-Select Stars' icon in the main window,
+next to the 'Guide' icon.&nbsp; Auto-selection can also be triggered by&nbsp;using
+the keyboard
+shortcut of &lt;Alt&gt;S or by clicking on the 'Auto-select stars' item
+under the 'Tools' menu. &nbsp;Taking any of these actions tells <span style="font-style: italic;">LightGuider</span>
+to scan the current guide image
+and identify&nbsp;stars most suitable for guiding. &nbsp;LightGuider will try
+to select stars of sufficient brightness that are not
+saturated, have sufficient size, and are not too near other stars
+nor&nbsp;too close to the edge of the
+frame. &nbsp;The
+selected stars may appear fairly dim on the screen, but that's&nbsp;not
+important - just adjust the gamma slider on the main window if you feel
+the need to see them.
+&nbsp;The auto-select function will nearly always do a better
+job&nbsp;than
+you can by just looking at the display, and it is the only way to invoke
+multi-star guiding. &nbsp;In many cases, a star
+you choose interactively is at or near saturation and will produce
+sub-par results. &nbsp;You can use the&nbsp;<a href="Visualization.htm#Star_Profile_and_Target_Displays">Star Profile</a>&nbsp;tool
+to examine the properties of the primary (brightest) selected star,
+however it was chosen.
+&nbsp;To get the best results from&nbsp;Auto-Select, you should&nbsp;
+use either a bad-pixel map or dark library and specify a
+Min-HFD value (Advanced Settings/Guiding tab) to reduce the
+likelihood of LightGuider mistakenly choosing a hot pixel. &nbsp;It also works
+better if you set the option to measure saturation by Max-ADU value
+(Advanced Settings/Camera tab), assuming you know or can determine the
+maximum ADU value of your camera. &nbsp;For example, a 16-bit guide
+camera will have maximum ADU values approaching 65000, an 8-bit camera
+will saturate near 255. &nbsp;Camera images are always delivered as
+either 8 or 16-bit quantities by the camera &nbsp;drivers, regardless
+of the internal electronics of the camera (e.g. 12 or 14-bit ADCs).<br><br>To
+de-select the star and continue looping exposures, just shift-click on
+the 'Auto-Select Star' icon or shift-click anywhere in the image
+display window. &nbsp;This can be useful if you're using sub-frames and
+want to return to a full-frame view of the guider images.<br><br><h3><a name="Guiding_Assistant"></a>Guiding Assistant</h3>The
+Guiding Assistant (GA) is an instructional tool to help you measure
+current seeing conditions and the general behavior of your mount and
+guiding
+subsystem. &nbsp;When it's run, it temporarily disables guiding output
+and measures the ensuing motion of the guide star. This&nbsp;can help
+you
+see the high-frequency motions&nbsp;caused by seeing (atmospheric)
+conditions. &nbsp;These cannot&nbsp;be corrected by conventional
+guiding because they occur at a much higher frequency than you
+can&nbsp;measure. Trying to correct for them with conventional
+guiding&nbsp;is often called "chasing the seeing" and usually leads to
+poor results. &nbsp;Avoiding it is best accomplished by
+setting a minimum-move level that will cause LightGuider to ignore most of
+this high-frequency behavior. &nbsp;The GA can also show
+you other behavior of your system such as overall drift
+rates in right ascension and declination as well as peak-to-peak and
+maximum-rate-of-change measurements in
+right ascension,. &nbsp;While these things can usually be "guided out",
+measuring them can be helpful if you want to improve the underlying
+performance of the mount - for example, by applying periodic error
+correction in RA. &nbsp;The&nbsp;GA can also measure the declination
+backlash in your system if
+you select that option in the user interface. &nbsp;If you're not
+familiar with these terms, you can find a short discussion here: &nbsp;<a href="Supplemental_Info.htm#Common_mount_problems">Common Mount Problems</a><br><br>When
+you start the Guiding Assistant, its behavior depends on whether
+you are already guiding. &nbsp;If guiding is active, the initial screen
+will look like this (with different data values of course):<br><br><img style="width: 779px; height: 520px;" alt="" src="Guiding_Assistant_Start.png"><br><br>The
+topmost field in the form always shows what the GA is doing and what
+action you should take, so you should always look there first if you
+don't know what's happening. &nbsp;In this case, the measurement
+process has been started automatically and you should simply let it run
+for at least two minutes. &nbsp;The text field immediately above the
+buttons also summarizes what's happening. &nbsp;The three buttons are
+enabled or disabled based on the operating state of the GA. &nbsp;In
+this case, 'Start' is disabled because the measurement is already
+underway.<br><br>If you launch the GA when guiding is inactive, the initial form will look different:<br><br><img style="width: 959px; height: 609px;" alt="" src="Guiding_Assistant_Start_a.png"><br><br>In
+this case, you'll need to first start guiding in LightGuider - start looping,
+auto-select a star, and guide. &nbsp;Once that's done, the 'Start' button in
+the GA will be enabled and you can begin measurement.<br><br>When
+GA measurement is active, guiding commands will be disabled, so the
+star
+will appear to wander around on the display - this is entirely normal.
+&nbsp;As guider images are acquired, statistics are computed and
+displayed in real-time in the user interface.&nbsp;&nbsp;After about
+two
+minutes of data collection, the more volatile measurements like
+High-frequency Star Motion and Polar Alignemt Error will usually
+stabilize and
+you will probably have reasonably accurate measurements. &nbsp;If you
+want to get a
+more accurate measure of your polar alignment error
+and any uncorrected periodic error in RA, you'll need to let the GA run for up to 10 minutes. Also, the computed polar
+alignment error is sensitive to the current scope declination. &nbsp;To
+get the most accurate measurement, you should point the scope to within
+a few degrees of the celestial equator and near the celestial meridian, the same area you should use
+for calibration.. &nbsp;When you finally click
+the 'Stop'
+button, this phase of the measurement process will stop. If
+you've checked the box to 'Measure Declination Backlash" that process
+will commence (see below). &nbsp;If not, guiding commands will be
+re-enabled and the data collection
+process will end. &nbsp;Other computed results will&nbsp;be displayed
+in the lower area of the table showing overall drift rates and various
+other measurements. &nbsp;All of these values are displayed in
+units of both arc-seconds and pixels. &nbsp;The dialog box will look
+something like this:<br><br><img style="width: 780px; height: 540px;" alt="" src="Guiding_Assistant_Finish_NoBL.png"><br><br>The
+contents of the 'Recommendations' group on the right side of the window
+reflect the results of the statistical measurements. &nbsp;Assuming
+your chosen guide algorithms support a minimum-move property, you have
+the option of automatically setting those parameters based on the
+results. &nbsp;You can also elect to re-run the measurements or close
+the dialog box altogether if you want to proceed with normal guiding
+operations. <br><br><span style="font-weight: bold;">Measuring Declination Backlash</span> <span style="font-weight: bold;">(Dec reversal delay)</span><br>If
+you've checked the box to 'Measure Declination Backlash',
+that&nbsp;process will begin as soon as the baseline measurements
+are completed. &nbsp;In other words, clicking once on the 'Stop' button
+halts the baseline measurements and begins the measurement of
+declination backlash. &nbsp;However, if the initial sampling period was
+less than 2 minutes, a dialog box will appear and the GA
+will continue to sample until the 2-minute period has expired. &nbsp; A
+new group of status messages will be
+shown immediately above the 'Start' and 'Stop' buttons so you can see
+what's being done:<br><br><img style="width: 772px; height: 511px;" alt="" src="Guiding_Assistant_MeasuringBL.png"><br><br>To
+do backlash measurement, LightGuider will move the star by large amounts,
+first in the north direction, then back to the south. &nbsp;There is
+some risk the star will be lost during this process or the star might
+already be&nbsp; too close to the north edge of the sensor. &nbsp;You
+should choose a guide star that has plenty of room to move&nbsp;north
+to get the best accuracy. You may&nbsp;need to manually select a single guide star if the
+auto-select function keeps choosing a primary star too close to the
+edge of the frame. &nbsp;If the star is lost because it's been
+moved outside the search region, you can temporarily increase the size of that region from
+the '<a href="Advanced_settings.htm#Guiding_Tab">Guiding</a>'
+tab of the Advanced Settings dialog.&nbsp;&nbsp; A search region size of 20 pixels should work for most
+configurations - just be sure you don't have multiple stars&nbsp;inside
+the
+search region. &nbsp;The first phase of backlash measurement tries to clear the backlash that is present in the north
+direction. &nbsp;The&nbsp;GA will continue with these
+clearing commands until it sees a significant and consistent movement
+of the
+guide star in one direction. &nbsp;Once this is done, the GA will issue
+another sequence of commands to continue moving the star north by a
+large amount.
+&nbsp;This will take at least 16 seconds and may take longer depending
+on the configuration - you can watch the status update to see what's
+being done. &nbsp;When the north steps are finished, the GA will issue
+an identical number of steps in the south direction. &nbsp;If there's
+significant backlash in the mount, it may take a long time for the star
+to start moving south, but that will usually be handled. &nbsp;Once the
+south steps are done,&nbsp; the GA will try to compute an accurate
+estimate of&nbsp;the backlash amount, corrected for Declination drift.
+&nbsp;This won't be done if the mount never established a consistent
+rate of south movement that was at least 90% of the measured rate
+moving north &nbsp;That situation usually indicates&nbsp;binding in the
+Dec axis or substantial imbalance, in which case&nbsp;a simple estimate
+of backlash will be inaccurate and probably irrelevant.&nbsp;<span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;;"><span style="">&nbsp;</span></span>You
+can always use the 'Show graph' button to see what happened during the
+test even if no estimate is produced. &nbsp;When the test is completed,
+the GA will&nbsp;try to move the star back close to its
+starting position and will re-enable guiding. &nbsp;Again, there is
+some risk the star may be lost, but this won't affect the calculations
+- you can simply stop and resume guiding as you normally would.
+&nbsp;Unlike the first phase of baseline measurements, you don't need to click on the 'Stop' button once backlash
+measurement has begun. &nbsp;The measurement process will terminate
+when all the steps have been completed, and normal guiding will be
+resumed. &nbsp;However, you can click on the 'Stop' button if something
+has gone wrong - such as a lost-star condition - and then restart when
+you're ready.&nbsp; When the backlash tests are finished, you'll see
+the results
+displayed as before, with the addition of entries for the amount of
+declination backlash and the measurement uncertainty (or a status line
+that says the test failed):<br><br><img style="width: 776px; height: 622px;" alt="" src="Guiding_Assistant_Finish.png"><br><br>Depending
+on the amount of backlash, you may see a recommendation for setting a
+backlash compensation factor - 230 ms in the example shown above.
+This type of backlash compensation is different from the feature offered in many mount controllers and is described here: &nbsp;<a href="Advanced_settings.htm#Declination_backlash_comp">LightGuider backlash compensation</a> &nbsp; &nbsp;If the measured amount is less than 100 ms, no recommendation
+will be made because such a small amount probably doesn't warrant any
+compensation. &nbsp;If the backlash is very large, over 3 seconds,
+you'll see a different recommendation to use uni-directional guiding in
+declination. &nbsp;That's because trying to compensate for such large
+values probably won't work very well, and the mount will probably not
+be able to reverse directions quickly enough to support bi-directional
+guiding. Obviously, you can reach your own conclusions based on your
+experience with how the mount behaves. &nbsp;Before doing these
+measurements, be sure to disable any backlash compensation that's
+previously been
+enabled in the mount software. &nbsp;If this isn't done, the
+measurements and
+any subsequent attempts at compensation by LightGuider will be invalid.
+&nbsp;If you want to try uni-directional guiding, you can find
+instructions here: &nbsp;<a href="Supplemental_Info.htm#Declination-Uni-directional_guiding">Uni-directional guiding</a><br><br>You
+can look at a graphical display of the backlash measurement results to
+get a better understanding of how the mount performed even if the test failed. &nbsp;Just click
+on the 'Show Graph' button to see a graph that might look something like
+this: <br><br><img style="width: 472px; height: 391px;" alt="" src="Guiding_Assistant_BL_Small.png"><br><br>The
+green points show the measured declination positions, shown left to
+right, beginning with the north moves and ending with the south
+(return) moves. &nbsp;The white points show the south-return behavior
+for a perfect mount with zero backlash. &nbsp;In this example, there is
+only a small amount of backlash as evidenced by the flattened top of
+the green
+points. However, the flattened top will be&nbsp;more pronounced when
+there is significantly more declination backlash in the mount, as in
+the following example:<br><br><img style="width: 471px; height: 393px;" alt="" src="Guiding_Assistant_BL_Large.png"><br><br>The 'Review Previous' button at the bottom of
+the window lets you review the previous three GA results. &nbsp;If
+you've run backlash tests at any time, at least one of the three
+sessions will include a backlash measurement result. &nbsp;Clicking on
+the 'Review' button displays a list of timestamps when a GA was run for
+the current profile, so you can just select the date/time you want.
+&nbsp;All the grid values and recommendations will be filled with the
+results from the selected GA run, including active buttons for applying
+the recommendations.<br><span style="font-weight: bold;"></span><br><br><h3><a name="Calibration_Details"></a>Calibration Review and Modification</h3>Most of the calibration-related windows, including calibration sanity-checks, will open a window that looks something like this:<br><br><img style="width: 763px; height: 421px;" alt="" src="Calib_Review.png"><br><br>The
+first thing to look at is the graph to the left, which shows the guide
+star
+movements as a result of the guide pulses that LightGuider sent during
+calibration. &nbsp;The lines show how the RA and Dec mount axes relate
+to the camera sensor X/Y axes - these lines should be
+roughly perpendicular but their overall orientation is unimportant.
+&nbsp;The data points on the lines will never be perfectly spaced or
+aligned, but they should not have major&nbsp;curves, sharp inflections,
+or reversals in direction. Particularly with longer focal length
+scopes, the
+points will often show&nbsp;scatter around the lines, but this
+is normal. &nbsp;The solid points (west and north pulses) are used to
+compute the RA and declination rates, while the hollow points show the
+"return" paths of the east and south moves. &nbsp;These can help you
+see how much fluctuation occurred due to seeing and also whether there
+is a significant amount of backlash. &nbsp;If you are using the
+"fast-recenter" option in the Advanced Settings, there will be many
+fewer points shown in the east and south paths. &nbsp;The tabular
+information to the right
+shows what was known about the pointing position of the scope and the
+various ASCOM settings that relate to guiding. &nbsp;If you are not
+using an ASCOM mount and don't have an "Aux mount" specified, some of
+this information will be missing. The table will also show
+the&nbsp;expected guiding rates&nbsp;for a "perfect" calibration using
+the same sky position and guide speed settings you used. &nbsp;You will
+almost never achieve these ideal values, but you shouldn't worry about
+them unless you see alert messages warning of suspicious&nbsp;values. &nbsp;If you didn't see
+any
+alert messages when the calibration completed, your results are probably
+good enough. &nbsp; If you want to re-use a calibration for an extended
+time, &nbsp;it is probably worth a few extra minutes&nbsp;to check this
+information and confirm that the calibration went
+reasonably well and produced sensible results. &nbsp;Bad calibrations
+can occur even for&nbsp;experienced imagers and high-end mounts, so
+it is good to check.<br><br><span style="font-weight: bold;"></span>If you are having consistent problems getting alert-free calibrations, you should review the material in the <a href="Trouble_shooting.htm#Problems-_Mount_Control">Trouble-shooting</a> section . <br><br><big><span style="font-weight: bold;">Other Calibration-Related Menu Options</span></big><br>
+Calibration data are saved automatically each time a calibration sequence completes
+successfully. &nbsp;The use of the calibration data has been described
+elsewhere (<a href="Basic_use.htm">Using PHD Guiding</a>),
+including options for restoring calibration data from an earlier
+time or "flipping" it after a meridian flip. &nbsp;You access these
+functions using the 'Modify Calibration' sub-menu under the 'Tools' menu. &nbsp;Two other
+calibration-related items are&nbsp; shown there, namely the options to
+clear the current data or to enter calibration data manually. &nbsp;The
+"clear" option accomplishes the same thing as the 'Clear calibration'
+checkbox in the Advanced Settings dialog - it will force a recalibration
+whenever guiding is resumed. &nbsp;The 'Enter calibration data'
+option is intended for development work or for use by experts, and is mostly there for completeness. <br><br><h3><a name="Manual_Guide"></a>Manual Guide</h3><br>
+<img style="width: 437px; height: 251px;" alt="" src="ManualGuide.png">&nbsp;&nbsp;&nbsp; <br>
+<br>
+If you are encountering calibration
+problems, you should be sure that <span style="font-style: italic;">LightGuider</span>'s
+commands are&nbsp;getting to the mount and the mount is responding accordingly. Or you may want to nudge the mount or
+experiment with manual dithering. &nbsp;In the 'Tools' menu, click on
+'Manual
+Guide'&nbsp;<span style="font-weight: bold;"><span style="font-weight: bold;"></span></span>and
+a dialog will appear to let you move the mount <span style="font-weight: bold;">at guide speed</span>
+in any
+direction. If you have an
+adaptive optics device attached, you'll see separate move buttons for
+both the AO and the secondary mount. &nbsp;Each time you click the
+button, a pulse of the&nbsp;duration
+specified in the 'Guide Pulse Duration' field will
+be sent. Holding a button down has no effect and you need to give the
+mount time to respond (at least the full duration of the guide pulse)
+between button-clicks. The default value is the 'calibration step-size'
+set in
+the Advanced Settings dialog. &nbsp;If you are debugging
+mount/calibration
+problems in the daytime, listen to (rather than watch) your mount to
+determine if it is getting
+the commands from <span style="font-style: italic;">LightGuider</span>. The idea here is just to determine if the
+mount is responding
+to <span style="font-style: italic;">LightGuider</span>'s guide commands. You won't be able to see the mount move (it's moving
+at guide speed)
+but you may be able to hear the motors. Other options include watching
+the
+motors and gears or
+attaching a laser pointer to your scope and aiming it at something
+fairly far away (to amplify your motions). &nbsp;A better&nbsp;approach
+for nighttime testing is to run the "star-cross" test described <a href="Trouble_shooting.htm#Star_cross_test">here</a>.&nbsp;
+&nbsp;Beginners often make the mistake of confusing the slewing-type
+operations done by planetarium and imaging applications with the
+completely different guiding operations done by LightGuider. &nbsp;Knowing&nbsp;that an imaging app can slew your telescope correctly
+doesn't tell you anything useful about whether the mount is guidable.<br>
+<br>
+<a name="Dithering_Manual"></a>Dithering
+is used primarily with image capture or automation applications using the LightGuider server interface. &nbsp;However, you can do
+manual dithering or experiment with dither settings using the controls
+at the bottom of the dialog. &nbsp;The 'dither' amount field at the
+left controls the&nbsp;amount the mount will be moved, in units of
+pixels. &nbsp;You can scale this amount - i.e. multiply it by a
+constant - by using the 'scale' spin control to the right. &nbsp;These
+two controls establish a maximum amount of movement that will be used
+for dithering - the product of 'scale' x 'dither'.&nbsp; When you click
+on the 'Dither' button, LightGuider will move the mount by a random amount
+that is less than or equal to the limit you have set, in one of the
+north/south/east/west directions. &nbsp;The 'RA Only' checkbox will
+constrain the dither adjustments to only east or west. &nbsp;Obviously,
+if you are doing a manual dither in this way, you'll want to be sure
+your imaging camera is not in the middle of an exposure.<br>
+<h3><a name="Star_cross_tool"></a>Star-Cross Tool</h3>
+The Star-Cross tool can help you test the mount's response to guide commands as described in this&nbsp;<a href="Trouble_shooting.htm#Problems-_Mount_Control">Trouble-shooting</a>
+section. Although the test is easy to perform manually, you may prefer
+to use this tool. &nbsp;The star-cross tool will show the following
+dialog: <br><br><img style="width: 603px; height: 309px;" alt="" src="Star_cross_tool.png"><br><br><span style="font-weight: bold;">This test presumes you're using the main image camera to expose the image</span>, and LightGuider doesn't know what image scale is being used for that.
+&nbsp;You need to be sure the settings are large enough to show a
+distinct
+pattern on the main camera image but not so large that all the stars will move
+out of the field of view. &nbsp;The default settings should work well
+for most set-ups but you can adjust them as needed. &nbsp;The important
+thing is to get a clear record of the movement of the stars in the main
+camera image and to save that image in a raw, uncompressed format (eg.
+FITs or uncompressed TIF). &nbsp;During this test, looping will be
+active but no guide star will be selected, and it doesn't matter if
+individual stars move out of the guide camera frame. &nbsp;Looping is
+activated just so you get some quick visual feedback on whether the
+mount
+is moving.
+<h3><a name="pierflip_cal_tool"></a>Meridian flip calibration Tool</h3>
+
+The meridian flip calibration tool (wizard) is used to automatically determine
+the correct value for the setting <a href="Advanced_settings.htm#Reverse_Dec_output_after_meridian_flip">Reverse Dec output after meridian flip</a>.
+Running the wizard involves two calibrations -- one with the telescope
+on the East side of the pier, and one on the West. You will be
+instructed to slew (meridian flip) the telescope when needed.
+&nbsp;This only needs to be done once for each type of mount you use. &nbsp;You <span style="font-weight: bold;">must carefully follow all the instructions</span> shown in the wizard's dialogs - failing to do so or taking short-cuts will invalidate the results and will siimply waste time.<br><br><h3><a name="Comet_Tracking"></a>Comet Tracking</h3>
+
+One way to image a comet is to have LightGuider use the head of the comet as the guide
+"star", but this approach may not always work. For example, the head
+of the comet may not present a star-like center suitable for
+guiding. Or, when using an off-axis guider, the comet may not even be
+visible in the guide camera.<br>
+<br>
+LightGuider provides a Comet Tracking tool for use when guiding on the comet
+itself is not feasible.  The idea is to guide on an ordinary star, but
+to gradually shift the lock position to match the comet's motion,
+or <i>tracking rate</i>.<br>
+<br>
+There are a three different ways to provide the comet tracking rate to LightGuider.<br>
+<br>
+<ul><li>Some planetarium applications, especially Cartes du Ciel, can send the rate directly to LightGuider;</li><li>You can enter the tracking rate manually, or,</li><li>You can train the rate in LightGuider by following the comet for a period of time in the imaging camera.</li></ul>
+<br>
+<br>
+<img style="width: 426px; height: 408px;" alt="" src="CometTrackingTool.png"><br>
+<br>
+<br>
+To enter the rates manually, you would select "Arcsec/hr" for units and
+"RA/Dec" for axes, then enter the rates from the comet's ephemeris.
+&nbsp;If you are getting the rates from the MinorPlanetCenter web site,
+you should choose the option for 'Separate RA and Declination
+coordinate motions'. &nbsp;LightGuider will automatically adjust the rates to
+compute the apparent motions in the sky.<br>
+<br>
+Comet rate training works like this:<br>
+<br>
+First, center the comet in your imaging camera. If your imaging
+application has some kind of reticle display, you should use that to
+note the precise position of the comet on the imaging sensor. Once
+this is ready, select a guide star in LightGuider and start guiding. Next
+click "Start" in the Comet Tracking tool to begin training.<br>
+<br>
+Take a continuous series of short exposures in your imaging camera
+using your imaging application's Frame and Focus feature. Over time,
+the comet will drift away from the starting location. Use LightGuider's
+"Adjust Lock Position" controls to move the comet back to the starting
+location. You may have to experiment a bit to determine which way the
+comet moves on the imaging camera sensor in response to the
+Up/Down/Left/Right controls in LightGuider. You may find it useful to enable
+the "Always on top" button in the Adjust Lock Position window so the
+controls stay visible on top of your imaging application.<br>
+<br>
+LightGuider will quickly learn the comet tracking rate as you re-center the
+comet. Once you are satisfied that LightGuider is tracking the comet, you can
+click Stop to end the training. LightGuider will continue shifting the lock
+position to track the comet until you disable comet tracking by
+toggling the Enable/Disable button.<br>
+<br>
+You can practice the comet training technique using the built-in
+camera simulator. Check the "Comet" option in the Camera Settings dialog, and the
+simulator will display a comet. Use a bookmark to mark the comet's
+starting location, and use the Adjust Lock Position controls to move
+the comet back to the bookmark location.
+<br><h3><a name="Lock_Positions"></a>Lock Positions</h3>
+<span style="font-style: italic;">LightGuider</span> normally
+sets a 'lock position' where the guide star is located at the end of
+a calibration. &nbsp;Depending on the details of the calibration
+sequence, this may not be exactly where the star was located at the
+start of calibration - it could be off by a few pixels. &nbsp;If you
+are trying to precisely center your target after calibration, you may want to use a
+'<span style="font-weight: bold;">sticky lock position.</span>' &nbsp;You do this by clicking on your guide
+star <span style="font-style: italic;">before calibration</span>, then
+setting the 'Sticky Lock Position' under the 'Tools' menu. &nbsp;After
+calibration is complete, <span style="font-style: italic;">LightGuider</span> will continue to move the mount until the
+star is located at the sticky lock&nbsp;position. &nbsp;So you may see
+an additional delay after the calibration while <span style="font-style: italic;">LightGuider</span> repositions the
+scope at guide speed. &nbsp;The sticky lock position will continue to
+be used even as guiding is stopped and subsequently resumed unless you change the lock point through actions such as dithering.
+&nbsp;Again, this insures a rigorous positioning of the guide star (and
+presumably your image target) at the expense of delays needed for <span style="font-style: italic;">LightGuider</span>
+to reposition the mount.<br><br>If
+you need to &nbsp;fine-tune the position of the guide star on the
+camera sensor after guiding has begun, you can use the 'Adjust Lock
+Position' function under the Tools menu: <br><br><img style="width: 354px; height: 190px;" alt="" src="Adjust_Lock_Position.png"><br><br>You
+can nudge the guide star in small increments (at guide speed) or you
+can move it by a larger amount by typing in a new&nbsp;lock position
+and clicking 'Set'.
+&nbsp;Clicking on the up/down/left/right buttons will cause the lock
+position to be shifted in the corresponding direction by the amount
+shown in 'Step', and the revised lock position will be displayed &nbsp;
+If you type in a new lock position,&nbsp;you run the risk of losing
+the guide star if the new&nbsp;position falls outside the current
+search region. &nbsp;This tool is&nbsp;useful if you need to achieve
+precise positioning of either the guide star or the imaging target, for
+example with spectroscopy - but it is unnecessary for most users.<br><h3><a name="LightGuider_Server"></a><span style="font-style: italic;">LightGuider</span> Server Interface</h3>
+<span style="font-style: italic;">LightGuider</span> supports third-party
+imaging and automation applications that need to control&nbsp;guiding
+operations. &nbsp;In recent years, many new automation applications
+have become available and nearly all of them use the LightGuider server
+interface. &nbsp;By using this API, these applications can control all
+the typical activities relating to LightGuider guiding: starting/stopping,
+pausing/resuming, dithering/settling, calibrating, profile-loading, and
+many others.
+&nbsp;To use automation applications of this type, you should be
+sure&nbsp;the LightGuider '<a name="Enable_Server"></a>Enable
+Server' option under the 'Tools'
+menu is enabled. &nbsp;With the option enabled, the operating system
+firewall must be configured to let LightGuider use network connections,
+something that is typically done as part of the LightGuider
+installation.&nbsp; Documentation for the
+server API is available on
+the <a href="https://github.com/OpenPHDGuiding/phd2/wiki">LightGuider
+Wiki</a>.</body></html>

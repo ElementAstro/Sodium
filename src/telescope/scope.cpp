@@ -33,7 +33,7 @@
  */
 #include "lightguider.h"
 
-#include "backlash_comp.h"
+#include "algorithm/backlash_comp.h"
 #include "gui/calreview_dialog.h"
 #include "gui/calstep_dialog.h"
 #include "image/image_math.h"

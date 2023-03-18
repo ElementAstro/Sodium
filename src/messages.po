@@ -4880,7 +4880,7 @@ msgid ""
 "option to start a different instance."
 msgstr ""
 
-#: phdconfig.cpp:44
+#: lightconfig.cpp:44
 msgid "My Equipment"
 msgstr ""
 

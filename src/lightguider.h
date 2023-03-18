@@ -152,7 +152,7 @@ WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 #define PHD_MESSAGES_CATALOG "phd2"
 #endif
 
-#include "phdconfig.h"
+#include "lightconfig.h"
 #include "gui/configdialog.h"
 #include "gui/optionsbutton.h"
 #include "image/usImage.h"
@@ -168,9 +168,9 @@ WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 #include "algorithm/guide_algorithms.h"
 #include "guiders.h"
 #include "gui/messagebox_proxy.h"
-#include "serialports.h"
-#include "parallelports.h"
-#include "onboard_st4.h"
+#include "device/serialports.h"
+#include "win32/parallelports.h"
+#include "device/onboard_st4.h"
 #include "camera/cameras.h"
 #include "camera/camera.h"
 #include "telescope/mount.h"
@@ -187,12 +187,14 @@ WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 #include "server/event_server.h"
 #include "server/event_server_ws.h"
 #include "gui/confirm_dialog.h"
-#include "phdcontrol.h"
+#include "lightcontrol.h"
 #include "gui/runinbg.h"
 
 #include "image/image_math.h"
 #include "image/fitsiowrap.h"
 #include "image/imagelogger.h"
+
+#include "modules/modloader.h"
 
 class wxSingleInstanceChecker;
 

@@ -1,0 +1,692 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head><title>Advanced Settings</title></head>
+<body>
+<h2>Advanced Settings</h2>
+Advanced settings are accessed by clicking on
+the 'Brain button' in the main display.
+&nbsp;<span style="font-style: italic;">LightGuider</span> has a large set of parameters that can be
+adjusted to optimize your guiding experience. &nbsp;Although these
+are
+called "advanced" settings, they are not particularly difficult to
+understand, and there may be situations when you&nbsp;need to modify them. &nbsp;All
+of
+the fields on these forms include "tool tips", small message windows
+that describe each&nbsp;field in some detail. &nbsp;Simply
+"hover" the
+cursor over the field to see the tool-tip. &nbsp;In many cases,
+this
+will provide all the information you need. &nbsp; Because there are so many parameters available, the Advanced Dialog in <span style="font-style: italic;">LightGuider</span>
+is organized
+into notebook tabs that are activated by clicking on the tab names.
+&nbsp;All of the tabs share a common set of 'Ok' and 'Cancel' buttons
+at the bottom of the form. &nbsp;Clicking on 'Ok' means that changes
+made to any of the tab fields will be put into effect. &nbsp;Clicking
+on 'Cancel' discards any changes that were made.<br><br><span style="text-decoration: underline;"><a href="#Global_Tab">Global Tab</a></span><br><span style="text-decoration: underline;"><a href="#Camera_Tab">Camera Tab</a></span><br><span style="text-decoration: underline;"><a href="#Guiding_Tab">Guiding Tab</a><br><a href="#Algorithms_Tab">Algorithms Tab</a><br><a href="#Other_Devices_Tab">Other Devices Tab</a><br><a href="#Rotator_Tab"></a><br></span>
+<h3><a name="Global_Tab"></a>Global Tab</h3>
+<span style="font-size: 10pt; font-family: Arial;"></span><img style="width: 604px; height: 577px;" alt="" src="Advanced_global.png"><br><br>
+The&nbsp;controls on the
+'Global' tab are well-described by their respective tool-tips, but they
+are summarized here for completeness:<br>
+<ul>
+<li>'<a name="Language"></a>Language' - determines the language
+used in the <span style="font-style: italic;">LightGuider</span> user interface, subject to available localization.
+&nbsp;Changing this requires a program restart.</li><li>'<a name="Reset_Configuration"></a>Reset Configuration' - restores all settings to their
+    initial values as if <span style="font-style: italic;">LightGuider</span> had been freshly installed.</li><li>'<a name="Reset_Dont_Ask"></a>Reset Don't Show Again messages' - restores the display of alert messages if you have previously chosen to not show them.</li>
+  <li><a name="Check_for_updates"></a>Software Update</li>
+  <ul>
+    <li><a name="Automatically_check_for_updates"></a>Automatically check for updates - allow <span style="font-style: italic;">LightGuider</span>
+to check for software updates when the program starts up. If no
+internet connection is available, checking will be deferred until the
+next time LightGuider is run.</li>
+    <li><a name="Only_check_for_major_releases"></a>Only check for major releases - don't include development builds when checking for software updates.</li>
+  </ul>
+See the <a href="Supplemental_info.htm#Software_Update">Software Update</a> section for more information about <span style="font-style: italic;">LightGuider</span> software updates.
+<li>'<a name="Log_File_Location"></a>Log
+File Location' - specifies a&nbsp;directory where LightGuider guide logs,
+debug logs, and any diagnostic image files will be stored. The default
+location on Windows is the "My Documents" folder associated with the
+logged-in user..</li><li><a name="Dither_Settings"></a>Dither Settings</li><ul><li><a name="Dither_Random_Mode"></a>'Random
+mode' - tells LightGuider to use a random-number generator to compute both the
+size and the direction of the dither, subject to any constraints
+imposed by RA-only mode or by the Dec guiding mode being set to 'Off'.</li><li><a name="Dither_Spiral_Mode"></a>'Spiral mode' - tells LightGuider to dither with fixed-size amounts in a clockwise spiral pattern.
+&nbsp;This can be a good choice when the imaging camera has
+significant fixed-pattern noise or the mount has a troublesome amount
+of Dec backlash.</li></ul>
+
+<ul><li>'<a name="Dither_RA_only"></a>Dither
+RA only' - tells LightGuider to dither&nbsp;only on the RA axis.</li></ul>
+<ul><li>'<a name="Dither_scale"></a>Dither scale' - an optional multiplier used to adjust the maximum-dither amount specified by the image application. See <a href="Supplemental_info.htm#Dithering_Ops">Dithering Operations</a>&nbsp;</li></ul><li><a name="Image_Logging"></a>'Enable
+diagnostic image logging' - used primarily for product support and
+diagnosis of problems dealing with the guide camera or LightGuider
+star-recognition and
+measurement. &nbsp;Guide frame images
+are captured and logged in a FITs format subject to the filter/trigger
+controls in the group-box. &nbsp;Images are saved in sub-folders of the
+LightGuider logging directory with the date and time encoded as part of the
+sub-folder name. For example, a folder named
+'LightGuider_CameraFrames_2022-03-03-184542' refers to a logging event that
+began on March 3, 2022 at 18:45:42 local time. Individual guide frames
+are saved with filenames
+that indicate the time the image was captured and the reason the frame
+was saved. &nbsp;Since the guide frames are saved in a FITs format, the
+header will include other useful information such as exposure time.
+&nbsp;Because the logging function is primarily used for
+trouble-shooting, the image sub-folders are automatically removed after
+30 days. &nbsp;If you wish to keep the images for your own purposes,
+you should either rename the sub-folders or copy/move them to a
+different directory. &nbsp;When logging is triggered by one of the
+"events" - e.g. lost star or large errors - a group of&nbsp;images
+(an <span style="font-style: italic;">image set)</span> will be saved, centered in time on the image that
+triggered the event. This provides a record &nbsp;of guider
+images that will show what the guide star and guide frame looked like
+both before and after the unusual condition occurred. &nbsp;The various
+triggering and filtering controls are described below and are also shown in the tooltips for the controls:</li><ul><li>'All
+lost star frames' - logs the image set for any lost-star events,
+regardless of the reason for the lost star (low SNR, mass-change, etc.)</li><li>'All
+auto-select star frames' - logs the image set for any frames used for
+auto-selection of the star, regardless of outcome. &nbsp;Note that any
+failed attempts to auto-select a star will always result in a logged
+image, regardless of&nbsp;choices made in the user interface.</li><li>'When
+relative error exceeds' - logs the image set when the star deflection
+on the current frame exceeds&nbsp;the running-average error by the
+factor chosen in the adjacent spin control. &nbsp;For example, if the
+average (RMS) error is 0.5 pixels and the current frame's error is 1.5
+pixels, the relative error is 3.</li><li>'When
+absolute error exceeds' - logs the image set when&nbsp;the star
+deflection exceeds the number of pixels specified in the adjacent spin
+control.</li><li>'Until
+this count is reached' &nbsp;- logs images until the count matches the
+value of the adjacent spin control. &nbsp;The counter is reset to zero
+when the limit is reached.</li></ul></ul><div style="margin-left: 40px;">Since
+the images
+are saved in an industry-standard format, there are many
+astronomy-related applications that can display or analyze them, many
+of which are free. &nbsp;Most of the image-capture and image-processing
+applications can do that along with other, more specific tools that can
+perform detailed measurements on the stars and the optical quality of
+the field of view. &nbsp;You can just do a web search to find a list of
+applications that support the FITs format for whatever platform you're
+using. &nbsp;If you simply want to look at the images to check focus or
+see the general quality of the images being returned from your camera,
+you can use LightGuider for that. &nbsp;With LightGuider&nbsp;in an idle state -
+neither looping nor guiding - just drag-and-drop one of your saved FITs
+image onto the main window. The display will then update to show the
+image you just dropped. &nbsp;There's
+no need for LightGuider to be connected to any of the hardware. &nbsp;You can
+adjust the gamma slider, select a star (manually or automatically), and
+use the Star Profile tool to view the HFD and profile of the selected
+star.</div><h3><a name="Camera_Tab"></a>Camera Tab</h3>
+<span style="font-size: 10pt; font-family: Arial;"></span><img style="width: 750px; height: 681px;" alt="" src="Advanced_camera.png"><br>
+<br>
+The controls on the 'Camera' tab are used as follows: <br>
+<ul><li>'<a name="Noise_reduction"></a>Noise
+reduction' - specifies the algorithm to use for handling noisy guide
+camera images - those for which dark frames are not sufficient.
+&nbsp;Choices include None, 2x2 mean, and 3x3 median. Both 2x2 mean
+and 3x3
+median will reduce the noise considerably. 3x3 median is especially
+effective at removing hot pixels and neither will significantly affect
+guiding accuracy. &nbsp;However, &nbsp;creating a bad-pixel map is
+likely to be a better solution with less impact on your ability to
+detect faint stars.</li><li>'<a name="Time_lapse"></a>Time lapse' - imposes a fixed delay between
+guide exposures. &nbsp;This can be useful if the guide exposures
+are
+very short and you don't want to overload either the mount or the
+camera
+link with very high traffic rates.</li><li>Variable
+Exposure Delay - very precise/encoder-equipped mounts often&nbsp;
+benefit from conservative auto-guiding. &nbsp;This can include use of
+medium-long exposure times (4+ seconds) and an additional delay between
+guide camera exposures. &nbsp;The goal is to create a slow guiding
+"cadence" that is only reacting to tracking changes that aren't already
+being handled&nbsp;by the mount encoders or by its pointing model.
+&nbsp;Details of the approach can be found here: &nbsp;<a href="Supplemental_info.htm#Variable_delay_guiding">Variable Delay Guiding</a>
+&nbsp;The variable exposure delay controls provide a way to achieve
+these goals while avoiding unnecessary delays when the system is engaged in
+actions other than "steady-state" guiding for imaging/science
+operations.</li><ul><li>'Use Variable Exposure Delays - enables the feature</li><li>Short
+delay (sec) - sets the exposure delay when&nbsp; LightGuider is&nbsp;looping,
+star-selecting, calibrating, dithering and settling, or running the
+Guiding Assistant. &nbsp;For some mounts, this value should be non-zero
+to give the mount encoders enough time to complete their position
+adjustments.</li><li>Long delay (sec) - sets the exposure delay when
+LightGuider is guiding and not in any of the other states named above.
+&nbsp;This delay actually defines the time between the completion of
+the last guide command, if any, and the start of the next camera
+exposure.</li><li>For both the long and short delay scenarios, the interval
+between successive guide camera exposures (and guide commands) will be
+exposure_time + guide_pulse_times + delay_value.</li></ul><li><a name="Auto_exposure_settings"></a>'Auto Exposure' - these are the settings that control Auto exposure time:, useful for automated imaging or AO guiding:</li><ul><li>Min
+Exposure - the minimum exposure time.&nbsp; LightGuider will not set the
+exposure
+time
+less than this value, even if the guide star SNR is higher than the
+target SNR value.
+If the minimum exposure time is set too low, you are likely to chase
+seeing
+effects and thereby get poor guiding results. Users of adaptive optics
+units might set this to a lower value since rapid small
+corrections are more manageable with an AO. &nbsp;Lower values, down to
+0.5-sec, can also be tried if multiple guide stars are normally
+available in the field of view.</li><li>Max
+Exposure - the maximum exposure time. Before a guide star is selected,
+LightGuider
+will set the exposure time to the maximum value. After selection is completed, LightGuider
+will then incrementally decrease the exposure time until the desired
+SNR is reached. &nbsp;The setting should be sufficiently small to allow
+LightGuider to adequately handle the tracking errors in your mount.</li><li>Target SNR - this is the average SNR value that LightGuider will attempt
+to achieve
+by adjusting the exposure time. SNR often fluctuates from frame to frame
+even with a
+fixed exposure duration, so be sure to account for that when choosing a
+target SNR
+value. LightGuider will always reject frames when SNR drops below 3.0. The default
+value of 6.0 may provide enough of a cushion to prevent fluctuations from causing
+the SNR to
+go below 3.0 - but double-digit values are recommended. &nbsp;As mentioned in the 'Basic Use' section, SNR is
+similar but not identical to the signal-to-noise ratio used in
+photometry.</li></ul><li><a name="Star_saturation_detection"></a>'Star
+Saturation Detection'
+- &nbsp;when identifying candidate guide stars, LightGuider tries to avoid
+saturated stars in order to get the most accurate calculations of their
+positions. &nbsp;You can assist this process by specifying how the
+assessment of saturation should be done:</li><ul><li>Saturation
+by ADU value - this is the default option because it relies on the
+brightness levels&nbsp;measured by the guide camera sensor. &nbsp;Most
+guide camera drivers return image data in either 8-bit or 16-bit
+formats even if the camera electronics natively work in 12-bit or
+14-bit modes. &nbsp;An 8-bit camera will saturate at a brightness level
+of 255 while a 16-bit camera will saturate at levels above 65000.
+&nbsp;If you are uncertain about your camera's behavior, you can use
+the Star Profile tool to measure the brightest pixel level when taking
+exposures of a very bright star. This will quickly tell you if the
+camera is returning values in the range of 0-255 or 0-65K and you can
+set the saturation value accordingly.</li><li>Saturation via star-profile -
+this relies on a less accurate judgment of saturation based on whether
+the star profile has a flat top. &nbsp;It is not recommended for normal
+applications.</li></ul><li>'<a name="Pixel_size"></a>Pixel
+size' - The guide camera pixel size in microns. This is needed by <span style="font-style: italic;">LightGuider</span>
+to compute the
+guider image scale and thus report guider statistics in units of
+arc-seconds. &nbsp;Refer to your camera documentation to determine
+the
+correct value for pixel size. &nbsp;If your camera has non-square
+pixels, just choose one of the dimensions or input the average of the
+two. &nbsp;The pixel size has no effect on guiding accuracy, so a small
+amount of imprecision in this parameter won't cause any
+problems. &nbsp;If you're using the binning setting in this dialog to
+control camera binning, the pixel size should be the native, un-binned
+size. &nbsp;<span style="font-weight: bold;">Note:&nbsp;</span>
+<span style="font-weight: bold;">this control may be disabled</span> if the camera and camera driver can report
+the pixel size to LightGuider (most can). &nbsp;In that case, the value displayed in the
+disabled control represents the device-reported pixel size - it is what
+it is. &nbsp;If you're also specifying a binning factor at the camera
+driver level rather than in LightGuider, the reported pixel size may change as
+a result. &nbsp;It is generally better to use LightGuider to set binning (see
+below).</li><li>'<a name="Camera_gain"></a>Camera
+gain' - Sets the gain level for the&nbsp;cameras
+that support this feature. &nbsp;Reducing this parameter can help to
+reduce the noise level or may allow use of a bright star without
+saturation. &nbsp;The range of values and their specific effects are
+dependent on the individual camera, so this LightGuider parameter is treated
+as a percentage of the range between the minimum and maximum gain
+values supported by the camera. &nbsp;For example, if the camera uses
+absolute
+gain values in the range of 40 to 80, a LightGuider gain value of 50% would
+translate to a camera gain of 60. &nbsp;Adjusting the gain level is not
+usually required once the configuration has been stabilized, and doing
+so will require replacement of dark libraries and bad-pixel maps.</li><li>'<a name="Disconnect_nonresponsive_camera"></a>Disconnect
+nonresponsive camera after (seconds) - Camera malfunctions will
+sometimes occur, often because of faulty USB connections. &nbsp;In many
+cases, the camera will not return the requested image data, and LightGuider
+will appear to "hang." &nbsp;This parameter determines
+how long LightGuider should wait for a response after the expected exposure
+time has expired. &nbsp;For example, a timeout value of 5 seconds in
+conjunction with an exposure time of 2 seconds will tell LightGuider to wait
+up to 7 seconds for a response. &nbsp;If the data are not received
+within that period, LightGuider will attempt to halt the operation, disconnect
+the camera,&nbsp;display an alert message in the main window, then try to reconnect the camera.
+&nbsp;Since a hardware/power problem is nearly always the underlying issue, this
+recovery attempt won't always succeed. &nbsp;You should&nbsp;be
+generous with these timeout values to avoid spurious recovery
+actions. &nbsp;Also, if you are using a guide camera that shares
+electronics with the main imaging camera, you should set this timeout
+to a large
+value, well above the maximum expected time for a full-frame download
+from the main imager. This is a consideration for users of some of the SBIG dual-chip cameras.
+&nbsp;Regardless of whether LightGuider is able to handle the situation
+gracefully, the underlying problem is almost certainly in&nbsp;the
+hardware or the camera driver and will need to be resolved before
+guiding is continued.</li><li><a name="Binning_setting"></a>Binning
+- for those cameras that support on-chip (hardware) binning, you can
+specify the binning that will be used while taking guide exposures.
+&nbsp;Detailed information is available here: <a href="Supplemental_info.htm#Binning_usage">Use of Binning</a>. &nbsp;This control will
+appear only if the camera is capable of on-chip binning and only if the
+camera is connected to LightGuider. &nbsp;You should always use a separate LightGuider
+profile for each different binning setting because it affects many
+downstream guiding parameters, too many to try to adjust manually.</li><li>'<a name="Use_subframes"></a>Use subframes' - For&nbsp;cameras that support this
+feature, <span style="font-style: italic;">LightGuider</span>
+will download only a subframe of each guide
+exposure. The subframe shows the region around the star bounded by
+the tracking region limits. This is&nbsp;useful for cameras with slow download
+times, allowing them to be used more effectively for guiding.&nbsp;
+This feature applies to both calibration and guiding.
+&nbsp;During initial looping without a selected star, the full
+frame is downloaded, but once a star is selected, only this small
+subframe is downloaded. &nbsp; If you are using subframes but want to
+see the full frame to select a different star, just shift-click
+anywhere in the image display window or shift-click on the 'Auto-select
+star' button. &nbsp;Using subframes eliminates the option for
+multi-star guiding, only a single star can be used with the subframe
+option.</li><li><a name="Camera_cooler"></a>Cooler
+controls - a few guide cameras support sensor cooling. &nbsp;These
+controls let you specify whether the cooler is on and what the cooler
+set-point should be.</li></ul><span style="font-weight: bold;">Note
+that some of the controls in this list will be disabled if the camera
+isn't connected to LightGuider or if the camera driver doesn't support the
+feature</span>.<br><span style="font-weight: bold;"><br></span><h3><a name="Guiding_Tab"></a>Guiding Tab</h3><span style="font-size: 10pt; font-family: Arial;"></span><img style="width: 632px; height: 572px;" alt="" src="Advanced_guiding.png"><br><br>The
+guiding tab shows the&nbsp; parameters used for calibration,
+star-tracking, and guiding behavior shared by all of the guide algorithms..<br><br>Guide Star Tracking<br><ul><li>'<a name="Search_region"></a>Search
+region' - specifies the size of the "tracking rectangle", in units of
+pixels. &nbsp;You may need to increase this value if your mount
+does
+not perform well or, more commonly, if it's not well-aligned on the
+celestial
+pole. &nbsp;You may also want to increase it temporarily while using
+the Guiding Assistant so that backlash measurement can be done without
+losing the guide star. &nbsp;Just remember that an overly large search
+region also increases the likelihood that multiple stars will live
+within its boundaries, which could lead to guiding problems. &nbsp;The
+value is actually a "radius" amount, so a search region of 15 pixels
+translates to a square of 30x30 pixels.</li><li>'<a name="Star_mass_change_detection"></a>Star mass&nbsp;detection' - tells <span style="font-style: italic;">LightGuider</span>
+to monitor the
+brightness and size of the guide star compared to the sky background.
+&nbsp; This feature has been deprecated and can generally be left un-checked (default value) for most configurations.</li><li>'<a name="Star_mass_tolerance"></a>Star mass tolerance' - if the 'Enable' box
+is checked, <span style="font-style: italic;">LightGuider</span> will trigger a 'lost star' error if the measured
+brightness and size vary by more than this percentage. &nbsp;This
+might be useful if you have two stars inside the tracking rectangle and
+you want to be sure&nbsp;<span style="font-style: italic;">LightGuider</span>
+doesn't mistakenly&nbsp;switch stars.
+&nbsp;It can also
+prevent errors caused by thin clouds, high camera noise, or alpha
+particle artifacts;
+but it may be unreliable if you are guiding on a faint star. &nbsp;If
+you are getting too many 'lost star - mass change'' errors when the star is plainly
+visible on the display, try increasing the value of this setting or disable it entirely.
+.</li><li>'<a name="Minimum_star_HFD"></a>Minimum
+star HFD' - specifies the minimum half-flux-diameter (roughly the
+'size') of a suitable guide star. &nbsp;This is
+probably the best way to prevent&nbsp;LightGuider from
+mis-identifying clumps of hot pixels as usable guide stars. &nbsp;You
+can
+determine a suitable value for your system by manually selecting
+some&nbsp;small stars that you know are not just hot pixels, then use
+the star-profile tool to see the HFD values of those stars.
+&nbsp;You'll want to specify a minimum HFD value that allows selection
+of legitimate faint stars but not hot pixels. &nbsp;The default value
+of 1.5px should work for most configurations but you can adjust it if
+needed - for example, if the guide camera pixels are large and too many
+candidate guide stars are being rejected because of their apparent
+small sizes.</li><li>'Minimum
+star SNR for AutoFind': specifies the minimum SNR value that will be
+accepted by the auto-select function for non-saturated stars.
+&nbsp;This should only be adjusted by experts because a value that is
+too large can result in no stars being selected. &nbsp;It can be used
+&nbsp;in situations where you would rather use a saturated star instead
+of a faint star that you know from experience will prove to be
+unusable. &nbsp;However, many of these situations can be avoided by
+getting better guide camera focus, refreshing the dark library, or
+slightly increasing the exposure times.</li><li>'<a name="Multi-Star_Option"></a>Use multiple stars' - determines whether LightGuider will use more than one star for guiding. &nbsp;See&nbsp;<a href="Basic_use.htm#Multi-star_guiding"></a><a href="Basic_use.htm#Multi-star_Guiding">Multi-star Guiding</a> for details.</li><li>'Auto-selection frame downsample' - can
+be used in unusual situations where LightGuider guide star auto-selection is
+not recognizing misshapen stars. &nbsp;If this happens, you can try
+values greater than 1 to improve the chances of recognizing such stars.
+&nbsp;For most users, this property should be left at its default value
+of 'Auto'.</li><li>'Beep on lost star' - specifies whether LightGuider will produce an audible 'beep' sound when the guide star is lost during guiding.</li></ul>Calibration<br><ul><li>'<a name="Focal_length"></a>Focal length' - the focal length of the guide scope (millimeters). This provides one of
+two parameters needed by <span style="font-style: italic;">LightGuider</span>
+to compute the image scale and thus
+report guiding performance in units of arc-seconds.&nbsp;If the focal length value is wrong, some
+of the default guiding parameters will not be set correctly, and we
+won't be able to help
+you assess performance and resolve problems. &nbsp;You should use the
+new-profile-wizard to specify focal length as part of defining your
+equiipment configuration.</li><li>'<a name="Calibration_step-size"></a>Calibration
+step-size' -&nbsp;specifies the duration of the guide pulse that
+<span style="font-style: italic;">LightGuider</span>
+will use during calibration. &nbsp;Its use is described in the
+'Auto
+Calibration' section of the 'Basic Use' help page. &nbsp;You can
+adjust
+the value depending on whether the guide star is moving&nbsp;too
+quickly
+or&nbsp;too slowly during calibration. &nbsp;As a general guideline, it
+is best to calibrate within about 20 degrees of the celestial equator
+(declination = 0), well above the east and west horizons; and to use a calibration step size that will result
+in 8-14&nbsp;steps in each direction. &nbsp; The 'Advanced...' button
+to
+the right of this control will launch a calculator dialog that can help
+you
+compute an appropriate value (see below) . &nbsp;As with other
+parameters, this value is computed for you as part of running the
+new-profile-wizard so there is usually no need to adjust it.</li><li>'<a name="Auto_restore_calibration"></a>Auto restore calibration' - tells
+<span style="font-style: italic;">LightGuider</span> to automatically reload
+the most recent calibration data as soon
+as the equipment is connected. &nbsp;If
+you're using an ASCOM (or Indi) mount connection or have an 'aux-mount'
+connection, you probably want to set this option.
+&nbsp;Conversely, if LightGuider has no scope pointing
+information available, this option should be reset.
+&nbsp;The new-profile wizard will ask you how you want to set this
+option.
+&nbsp;Note that auto-restore is remembered for each separate equipment
+profile,&nbsp;and it only has an effect when you load the profile and
+connect to the equipment. &nbsp;If you want to force a recalibration
+before an individual guiding session begins, there are multiple ways to do that - doing a Shift-Click on
+the LightGuider/guiding 'Guide' button is the easiest. <span style="font-weight: bold;">&nbsp;If you have set the auto-restore
+option, you must be sure that the guide camera is not rotated with
+respect to the guide scope or the sky.</span></li><li>'<a name="Assert_Dec_Orthogonal"></a>Assume
+Dec orthogonal to RA' - Normally, the calibration process independently
+computes the camera angles for both right ascension and declination.
+&nbsp;There is no need for great precision on these values, and the
+default behavior normally works well. &nbsp;However, if your mount has
+very high periodic error, very large Dec backlash, or you are dealing with very bad seeing
+conditions, you may want to force the RA and Declination angles to be
+perpendicular. &nbsp;If you choose that option, LightGuider will compute the
+camera angle for RA, then assert a declination angle that is orthogonal
+to it.</li><li>'<a name="Clear_calibration"></a>Clear mount calibration'
+-&nbsp;tells <span style="font-style: italic;">LightGuider</span>&nbsp;
+you want to clear the calibration data currently being used for the mount and
+re-calibrate
+before
+guiding is restarted. &nbsp;You might do this for a variety of
+reasons
+- rotating the guide camera or seeing that guiding results are substantially worse than normal, for example.
+&nbsp;You can&nbsp;accomplish the same result by doing a Shift-Click on
+the LightGuider guiding icon on the main page, which will force a re-calibration.</li><li>'<a name="Declination_compensation"></a>Use
+Declination Compensation' - if LightGuider can get pointing information from
+the mount via an ASCOM/Indi connection ('Mount' or 'Aux'), it will
+automatically adjust the RA guide rate based on the current
+declination.
+&nbsp;This box should be left checked except in very unusual
+cases where the mount controller is making the adjustment.&nbsp;Don't confuse this option with 'Declination backlash
+compensation', which is an entirely different feature.</li></ul>Shared Guiding Parameters<ul><li>'<a name="Fast_Re-center"></a>Fast
+re-center after calibration or dither' - during calibration or
+dithering, the mount may be moved a significant distance from the
+initial "lock" position. &nbsp;If you click this checkbox, LightGuider will
+move the mount&nbsp;back to the lock position as quickly as possible,
+using the largest guide commands permitted by the 'Max Duration'
+settings of
+your guide algorithms and by the size of your tracking region.
+&nbsp;This is only a way to speed up the calibration process,&nbsp; the
+use
+of this checkbox is completely optional. &nbsp;If you find that
+calibration often fails because the star is lost during the fast
+re-center,
+you should disable this option. &nbsp;That sort of problem may
+indicate that you have a large polar alignment error or excessive
+periodic
+error in RA. &nbsp;You can run the Guiding Assistant to help see what's
+causing the problem.</li>
+
+  <li>'<a name="Reverse_Dec_output_after_meridian_flip"></a>Reverse Dec output after meridian flip' -&nbsp;
+    tells <span style="font-style: italic;">LightGuider</span> how to adjust the
+calibration data after a meridian flip. &nbsp;Some
+newer mounts track their 'side of pier' state and automatically reverse the
+direction of the declination motor after a meridian flip. &nbsp;Older mounts do not do this. &nbsp;In either case, <span style="font-style: italic;">LightGuider</span>
+needs to know if the mount will automatically change its behavior based on
+side-of-pier. &nbsp;You may have difficulty finding information about
+    how your mount behaves in this respect, so LightGuider provides the <a href="Tools.htm#pierflip_cal_tool">Meridian flip calibration tool</a> to determine the correct setting automatically.
+    It's also easy to figure out the setting manually with this quick experiment:
+
+    <ul>
+      <li>With the checkbox disabled, calibrate on one side of the pier, then move the mount to the other
+        side.</li>
+      <li>If you are guiding via ASCOM or Indi or are using an 'aux mount' connection, just start guiding.</li>
+      <li>If
+you're guiding only via ST-4 and LightGuider has no scope pointing
+information, first select 'Flip Calibration' under the 'Tools' menu,
+and then start guiding.</li>
+      <li>In either case, if the guiding works normally, leave the box un-checked; but</li>
+      <li>if you see guiding run-away <span style="font-weight: bold; font-style: italic;">in
+          declination</span>, check the box and repeat the entire procedure, including calibration. &nbsp;You <span style="font-weight: bold;">must repeat the procedure</span>, simply checking the box doesn't "fix" anything.</li>
+    </ul>&nbsp;<span style="font-weight: bold;">Note</span>:
+<span style="font-weight: bold;">this procedure must be following in its entirety&nbsp;until you
+determine the correct setting</span>. &nbsp;Changing the 'Reverse Dec' setting
+only determines what will happen <span style="font-weight: bold;">in the future</span>, at the next calibration.&nbsp;
+  </li>
+
+  <li>'<a name="Enable_guide_output"></a>Enable mount guide output'
+- this is normally checked because it tells <span style="font-style: italic;">LightGuider</span>
+to send guide
+commands&nbsp;to the mount. There are some
+circumstances
+where you might want to disable this, usually because you want to
+observe the uncorrected behavior of the mount. &nbsp;In most cases, you will be better
+off running the Guiding Assistant for these purposes, which
+automatically handles this setting for you.</li><li>'<a name="Stop_guiding_on_slew"></a>Stop
+guiding when mount slews' - prevents LightGuider from trying to continue
+guiding when the mount is being slewed, often by an imaging automation
+app. &nbsp;It should normally be left checked..</li></ul><a name="Calculator_auto-step-size"></a>Advanced Calibration Calculator<br><br><img style="width: 600px; height: 441px;" alt="" src="Advanced_calstep_calculator.png"><br><span style="font-size: 10pt; font-family: Arial;"></span><br>
+To review or change&nbsp;calibration parameters,
+be sure the topmost four edit controls are
+correctly filled in. &nbsp;If you have already specified the focal
+length and
+the camera pixel size&nbsp; via the new-profile-wizard,
+those fields will already be populated in this form. &nbsp;If you are
+using an ASCOM connection to your mount, the fields for "Guide speed"
+and "Calibration declination" will usually show the correct values unless the driver doesn't report them correctly.
+&nbsp;Otherwise, you'll need to supply them yourself. &nbsp;The guide
+speed is specified as a multiple of sidereal speed - most mounts will
+use something
+like
+1X or 0.5X sidereal, but you can choose something else. &nbsp;<span style="font-weight: bold;">Note:
+changing the guide speed setting here never changes the guide speed
+setting in the mount - that can only be done via the mount driver or
+the hand-controller. &nbsp; If this field is already filled in,
+changing it will have no&nbsp;effect.</span>
+You
+can
+leave the 'calibration steps' field at the default value of 12, which
+is likely to result in a good calibration. &nbsp;Use of a significantly
+smaller value raises the likelihood that seeing errors or small mount
+errors will cause calibration errors . &nbsp;You should be careful
+about increasing this value above 12&nbsp;because
+"bigger" is not always "better". &nbsp;With larger
+values,&nbsp;&nbsp;uncorrected periodic error in RA or large drift in
+Dec will degrade the accuracy of the calibration. &nbsp; As you
+change the values
+in these fields,&nbsp; <span style="font-style: italic;">LightGuider</span>
+will recalculate the&nbsp;value for
+the
+calibration step-size. &nbsp;If you then click on 'Ok', that value
+will
+be inserted into the calibration step-size field of the 'Guiding'
+dialog and will be used for the next calibration.
+&nbsp;Clicking 'Ok' will also populate the focal length and camera
+pixel size fields in the 'Guiding' and 'Camera' tabs, so any changes
+you
+made in the calculator will be reflected there as well. &nbsp;Don't do
+this if you are just using the calculator to experiment or check
+settings for someone else's system. Clicking on the 'Cancel' button
+will close the calculator without changing any of the values in the
+curren profile. &nbsp;Again, LightGuider never changes the guide speed setting
+in
+your mount regardless of what may be entered in the 'Guide Speed' field.<br><br>If you've used the
+new-profile-wizard to build your equipment profile, there's rarely any
+reason to use the 'Advanced" button and the Calibration Calculator
+dialog.<h3><a name="Algorithms_Tab"></a>Algorithms Tab</h3>
+<span style="font-size: 10pt; font-family: Arial;"></span><img style="width: 633px; height: 610px;" alt="" src="Advanced_algorithms.png"><br><br>
+The algorithms tab can be used to select the guiding algorithms you
+want and&nbsp;fine-tune the parameters associated with them. &nbsp;The parameters displayed will change significantly if
+you
+change the algorithm selections. &nbsp;For that reason, all the
+parameters related to <a href="Guide_algorithms.htm">guide algorithms</a> will be treated together, in a
+separate section.<br>
+<br>
+The remaining controls, the ones that are independent of the guiding
+algorithm selections, are described below. &nbsp;
+<ul><li>'<a name="Max_Duration_RA"></a>Max RA duration' - specifies the
+maximum allowed
+guide pulse duration for right ascension. &nbsp;You might reduce
+this
+below the default value if you want to avoid&nbsp;chasing a large
+deflection that could be caused by a spurious event (e.g. wind gust,
+hot pixel, etc.) .' &nbsp;However, there is rarely any reason for
+changing it if you have protected yourself against hot pixels (Minimum
+star HFD).</li><li>'Enable' LightGuider Backlash Compensation - this
+controls whether LightGuider will apply a compensation factor when the
+direction of declination guiding needs to be reversed.
+<span style="font-weight: bold;">&nbsp;See section below</span>.</li><li>'<a name="Max_Duration_Declination"></a>Max Dec. duration' - specifies the
+maximum allowed guide pulse duration for declination (same as above but
+for declination).</li><li>'<a name="Dec_guide_mode"></a>Declination
+guide mode' -&nbsp;gives you additional control over declination
+guiding. &nbsp;Declination guiding is not like RA guiding because the
+tracking errors are not caused
+by imperfections in your mount's drive system - the Dec motor is idle
+during normal sidereal tracking, running only in response to short Dec guide commands. &nbsp;Instead, tracking errors in
+declination are caused by polar
+alignment error, mechanical flexure, wind, binding or dragging of cables, or
+unwanted movement of the guiding assembly.
+&nbsp;Absent these mechanical&nbsp;problems, declination
+tracking&nbsp;should be smooth and mostly uni-directional assuming
+there is no&nbsp;over-shoot from an
+earlier correction. &nbsp;The default value of 'auto' tells <span style="font-style: italic;">LightGuider</span>
+that
+some reversals in direction are acceptable, subject to the behavior of
+the various guiding algorithms. &nbsp;However, if your mount has severe
+declination backlash, you may want to prevent&nbsp;direction reversal
+altogether. You could&nbsp;then&nbsp;select either 'north' or 'south'
+to
+restrict corrections to only that direction (uni-directional Dec
+guiding). &nbsp;Keep in mind,
+however, that an&nbsp;over-shoot in correction with one of these modes
+might leave the star positioned off-target for an extended period of
+time. So you'll probably want to use conservative
+aggressiveness values for either 'North' or 'South' modes and you may
+want to intentionally degrade the polar alignment to help keep the
+drift rate larger than the deflections caused by seeing.
+&nbsp;Finally, a choice of 'off'' here disables declination guiding
+altogether, an appropriate choice for simple tracking mounts that don't
+support Dec guiding.</li><li>'Reset'
+- resets the guiding parameters for the selected RA or Dec algorithm to
+their default values. &nbsp;Min-move settings will be set using the
+same algorithm employed in the new-profile-wizard. &nbsp;If you
+previously used the Guiding Assistant to adjust the min-move settings,
+you should&nbsp;repeat that procedure.</li></ul><h4><a name="Declination_backlash_comp"></a>Declination Backlash Compensation</h4>Most
+commonly-used mounts have some&nbsp;backlash in declination.
+&nbsp;You can find a brief discussion of backlash mechanics here: &nbsp;<a href="Supplemental_Info.htm#Dec_backlash">Dec Backlash</a>
+&nbsp;Backlash causes a delay whenever there is a change in direction
+of
+the Dec guide commands. &nbsp;During this interval, the declination
+gears aren't fully engaged and the axis doesn't move in response to the
+guide commands. &nbsp;Many mounts have settings for backlash
+compensation but these should not be used for guiding - they are
+typically intended for visual use only.
+&nbsp;Because the actual amount of compensation needed at any given
+time depends on the pointing position and the mechanical load on the
+system, a fixed value will usually result in oscillations that never
+stabilize. &nbsp;Reasons for the positional dependency&nbsp;include
+uneven gear wear&nbsp;or&nbsp;significant imbalance of the scope in
+declination.&nbsp; The backlash compensation implemented by LightGuider is
+adaptive, meaning that the compensation amount is adjusted up or down
+depending on the measured results. &nbsp;Before enabling this feature,
+you should run the Guiding Assistant and measure the declination
+backlash - the time delay required to fully reverse direction in
+declination. &nbsp;Keep in mind, the higher the guide speed setting in
+the mount (e.g. 0.9x sidereal), the smaller this delay will be.
+&nbsp;If the measured amount is 3 seconds or less, the Guiding
+Assistant will recommend trying backlash compensation. &nbsp;If you
+apply that recommendation, the backlash compensation settings will be
+handled for you automatically. &nbsp;The UI controls for backlash
+compensation include settings for 'minimum' and 'maximum' compensation
+amounts. &nbsp;These effectively limit the range of the adjustments
+that are made to the starting compensation value. &nbsp;If you're
+experienced with your mount's behavior, you can adjust these settings
+manually to be sure&nbsp;the compensation stays within a range that you
+know works well. &nbsp;Otherwise, you should just leave these at their
+default values. &nbsp;The backlash compensation algorithm will
+generally work well if the backlash is less than a few seconds and the
+mount doesn't have other significant mechanical problems. &nbsp;You
+should expect a short period of&nbsp; instability when guiding starts
+because the initial state of the Dec gear system is unknown - just let
+it stabilize before you actually start imaging. &nbsp;If you see
+recurring periods of Dec oscillation or the axis won't settle down,
+disable the compensation feature and submit your debug log file to the
+LightGuider support forum.&nbsp;<h3><a name="Other_Devices_Tab"></a>Other Devices Tab</h3><span style="font-size: 10pt; font-family: Arial;"></span><img style="width: 597px; height: 329px;" alt="" src="Advanced_other.png"><br><br>If
+you are using either an adaptive optics or rotator device, the "Other
+Devices" tab will be shown. &nbsp;A general discussion of using an AO for guiding can be found here: <a href="Supplemental_Info.htm#AO_Devices">AO Guiding</a>&nbsp;&nbsp; The upper section deals with the AO
+device if one is being used. &nbsp;You
+can use these parameters&nbsp;to control the
+calibration process and the manner in which 'bump' operations are done.
+&nbsp;The 'calibration step' field tells <span style="font-style: italic;">LightGuider</span> the amount to move the
+tip/tilt element&nbsp;in each of the up/down/left/right directions, in
+units of AO steps, during calibration. &nbsp;The guide star position is measured at the
+beginning and end of each&nbsp;leg of the calibration, and the 'samples to
+average' parameter tells <span style="font-style: italic;">LightGuider</span>
+how many samples to take at each of these
+points. &nbsp;Averaging images is important because the seeing will
+always cause the guide star to "bounce around" a bit. &nbsp;As
+discussed elsewhere, the AO unit can make corrections
+only within a limited range of guide star movement. &nbsp;You
+will&nbsp;want to initiate mount 'bump' corrections before these limits
+are actually reached, and the 'bump percentage' field is used for that
+purpose. &nbsp;To move the mount, the full bump correction is
+accomplished in&nbsp;steps - the 'bump step' field controls the size of
+these increments. &nbsp;If the bump operation has begun and the guide
+star remains outside the "bump percentage" area, <span style="font-style: italic;">LightGuider</span>
+will increase the
+bump size until the guide star is back within that range.
+&nbsp;Additional movement from that point to the&nbsp;center position
+will
+continue at the specified "bump step size". &nbsp;This complexity is
+required in order to maintain good guiding, with no elongated stars,
+even as the mount is being bumped. &nbsp;During the bump operation, the
+AO is continuing to make corrections, so the long "mount bump" is
+continuously&nbsp;offset by adjustments in the AO. &nbsp;The 'AO
+Travel' field specifies the number of steps the AO can make on each
+axis. &nbsp;The default value works well for most SX AO devices but in
+some cases it may be too large. &nbsp;If you encounter problems during
+AO calibration where the AO hits its limits, you can adjust the 'AO
+Travel' amount downward. &nbsp; <br><br>The
+'Bump on dither' option tells LightGuider to bump the mount when a dither
+command is received and thus move the guide star back closer to the
+center position of the AO. &nbsp;The
+option to enable or disable AO guide commands operates independently
+from the 'Enable mount guide output' checkbox in the Guiding tab.
+&nbsp;So
+you can
+independently enable/disable either the guide commands to the tip/tilt
+device or the
+'bump' guide commands to the mount. &nbsp;The same principle holds for
+the 'Clear AO calibration' option - that will force a recalibration of
+the AO without affecting calibration of the mount. &nbsp;The 'Mount
+Backlash Compensation' controls let you apply LightGuider Dec backlash
+compensation when mount bumps are done. &nbsp;This can help speed up
+large dither operations, but it's only appropriate if the mount has a
+limited amount of Dec backlash. You should use the Guiding Assistant to
+measure your Dec backlash and see what it recommends with regard to
+using Dec backlash compensation. &nbsp;The backlash compensation value
+cannot be adjusted automatically when the AO is being used so it is a
+good idea to specify a value that is perhaps 1/2 the value suggested by
+the Guiding Assistant.<br><br>When an AO is in use, the 'Algorithms' tab will only show choices for controlling the tip/tilt optical element in the AO
+device
+itself.<br><br><img style="width: 635px; height: 574px;" alt="" src="Advanced_other_Algo.png"><br><br>Since
+the
+AO is not trying to move a heavy piece of equipment, you can
+afford to be more aggressive in your guide algorithm choices.
+&nbsp;The default algorithms for an AO are&nbsp;'Hysteresis'', which provides an easy way to control damping and
+aggressiveness.&nbsp;&nbsp;If
+you use a different algorithm,&nbsp;you should
+probably start with a high level of aggressiveness there as well.
+&nbsp; The other, shared guiding parameters normally displayed on the
+'Algorithms' tab will not be shown for the AO because they aren't used
+to control the device.<br><br>The rotator device has only
+one parameter which lets you match the behavior of the device to the
+ASCOM notion of positive and negative angles. &nbsp;The "Reversed"
+checkbox can be used for
+optical systems that reverse the image, usually because they have an odd number
+of mirrors. &nbsp;The direction and amount of rotation&nbsp;is used to
+adjust the calibration data, so LightGuider follows the ASCOM standard:
+&nbsp;"the rotator position is expressed as an angle from 0 up to but
+not including 360 degrees, counter-clockwise against the sky."
+&nbsp;Experimentation is likely to be the quickest way to determine if
+the box should be checked.
+</body></html>

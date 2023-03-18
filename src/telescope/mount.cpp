@@ -34,7 +34,7 @@
  */
 
 #include "lightguider.h"
-#include "backlash_comp.h"
+#include "algorithm/backlash_comp.h"
 #include "gui/guiding_assistant.h"
 #include "gaussian_process_guider.h"
 

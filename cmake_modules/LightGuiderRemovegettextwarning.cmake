@@ -36,7 +36,7 @@
 
 # Usage: cmake
 #   -Dinput=input
-#   -P PHD2GenerateDocScript.cmake
+#   -P LightGuiderGenerateDocScript.cmake
 
 
 file(READ ${input_file} file_content)

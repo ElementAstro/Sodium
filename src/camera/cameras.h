@@ -34,7 +34,22 @@
 
 #ifndef CAMERAS_INCLUDED
 
+#if defined(__WINDOWS__)
+
+# define ASCOM_CAMERA
+# define INDI_CAMERA
+# define SIMULATOR
+
+#elif defined(__APPLE__)
+
+# define INDI_CAMERA
+# define SIMULATOR
+
+#elif defined (__linux__) || defined (__FreeBSD__)
+
 # define SIMULATOR
 # define INDI_CAMERA
+
+#endif
 
 #endif // CAMERAS_INCLUDED

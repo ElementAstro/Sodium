@@ -41,6 +41,9 @@ constexpr hash_t basis = 0xCBF29CE484222325ull;
 
 namespace LightGuider
 {
+
+    Event_WS_Server Evt_WS_Server;
+
     Event_WS_Server::Event_WS_Server()
     {
         /*初始化WebSocket服务器*/
@@ -222,16 +225,14 @@ namespace LightGuider
      * 描述：启动WebSocket服务器
 	 * calls: IDLog(const char *fmt, ...)
      */
-    void Event_WS_Server::run(int port,configor::json::value config)
+    void Event_WS_Server::run(int port)
     {
-        Ws_Info->MaxClientCount = config["ws"]["MaxClientCount"];
-        Ws_Info->MaxThreadCount = config["ws"]["MaxThreadCount"];
-        Ws_Info->Timeout = config["ws"]["Timeout"];
         try
         {
             spdlog::info("Websocket server start at {} and keep listening",port);
             /*设置端口为IPv4模式并指定端口*/
             m_server.listen(websocketpp::lib::asio::ip::tcp::v4(),port);
+            m_server.set_reuse_addr(true);
             m_server.start_accept();
             m_server.run();
         }

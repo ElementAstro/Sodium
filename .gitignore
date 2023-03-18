@@ -17,6 +17,7 @@ lightserver.spec
 webpage
 temp
 *.pyc
+*.Identifier
 
 # Distribution / packaging
 .Python

@@ -37,12 +37,12 @@
 #   -Dinput_folder=input_folder
 #   -Dproject_root_dir=root_dir
 #   -Doutput_folder=output_folder
-#   -P PHD2GenerateDocScript.cmake
+#   -P LightGuiderGenerateDocScript.cmake
 
-include(${project_root_dir}/cmake_modules/PHD2BuildDoc.cmake)
+include(${project_root_dir}/cmake_modules/LightGuiderBuildDoc.cmake)
 
 # Generates the hhk file of the given locale
-generate_hhk(OUTPUT_FILE "${output_folder}/PHD2GuideHelp.hhk"
+generate_hhk(OUTPUT_FILE "${output_folder}/LightGuiderGuideHelp.hhk"
              INPUT_FILES "${list_of_files}")
 
 # this is required for zip: we copy the files in the output folder to be able to zip them
@@ -51,7 +51,7 @@ generate_hhk(OUTPUT_FILE "${output_folder}/PHD2GuideHelp.hhk"
 
 file(GLOB additional_files
      ${input_folder}/*.png ${input_folder}/*.PNG ${input_folder}/*.hh[cp])
-set(files_to_zip PHD2GuideHelp.hhk)
+set(files_to_zip LightGuiderGuideHelp.hhk)
 foreach(_f IN LISTS list_of_files additional_files)
   get_filename_component(filename "${_f}" NAME)
   set(files_to_zip ${files_to_zip} ${filename})
@@ -63,13 +63,13 @@ message(STATUS "Adding files")
 foreach(_f IN LISTS files_to_zip)
   message("\t'${_f}'")
 endforeach()
-message("to ${output_folder}/PHD2GuideHelp.zip")
+message("to ${output_folder}/LightGuiderGuideHelp.zip")
 
 # TODO check if the zip is available (cmake version 3.2)
 # if this is not the case, we might require 7zip and plug it as explained in here:
 # http://stackoverflow.com/questions/7050997/zip-files-using-cmake
 
 execute_process(COMMAND
-                ${CMAKE_COMMAND} -E tar cfv ${output_folder}/PHD2GuideHelp.zip --format=zip ${files_to_zip}
+                ${CMAKE_COMMAND} -E tar cfv ${output_folder}/LightGuiderGuideHelp.zip --format=zip ${files_to_zip}
                 WORKING_DIRECTORY ${output_folder}
                 OUTPUT_QUIET)
