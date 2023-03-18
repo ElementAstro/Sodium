@@ -105,6 +105,8 @@ include(cmake_modules/thirdparty.cmake)
 
 add_subdirectory(libs/)
 
+add_subdirectory(libs/lua)
+
 include_directories(${CMAKE_SOURCE_DIR}/libs/crow)
 include_directories(${CMAKE_SOURCE_DIR}/libs/)
 
@@ -516,6 +518,11 @@ if(UNIX)
    )
 
   target_link_libraries(lightguider X11)
+  target_link_libraries(lightguider lua)
+
+  find_package(OpenSSL REQUIRED)
+  target_link_libraries(lightguider ${OPENSSL_LIBRARIES})
+  message("-- Using OpenSSL ${OPENSSL_VERSION}")
 
   find_package(spdlog REQUIRED)
   target_link_libraries(lightguider spdlog::spdlog_header_only)

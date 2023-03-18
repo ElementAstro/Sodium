@@ -323,7 +323,6 @@ function(generate_single_doc_targets)
 
       # extracts the messages from the sources and merges those messages with the locale/messages.pot
       # into the build folder. This is a manual step
-      message("${current_translation_output_folder}")
       set(_extract_locales_commands
           COMMAND 
             ${CMAKE_COMMAND} 

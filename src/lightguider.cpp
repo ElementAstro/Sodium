@@ -635,6 +635,8 @@ bool PhdApp::OnInit()
     wxSetlocale(LC_NUMERIC, "C");
 
     wxTranslations::Get()->SetLanguage((wxLanguage)langid);
+
+    spdlog::debug(std::string(wxString::Format("locale: wxTranslations language set to %d\n", langid)));
     Debug.Write(wxString::Format("locale: wxTranslations language set to %d\n", langid));
 
     Debug.RemoveOldFiles();
@@ -655,12 +657,17 @@ bool PhdApp::OnInit()
 
     pFrame->Show(true);
 
+    spdlog::debug("Maximum mode is turned on by default");
+
     pFrame->Maximize(true);
 
     if (pConfig->IsNewInstance() || (pConfig->NumProfiles() == 1 && pFrame->pGearDialog->IsEmptyProfile()))
     {
+        spdlog::debug("The first load starts the configuration guidance interface");
         pFrame->pGearDialog->ShowProfileWizard();               // First-light version of profile wizard
     }
+
+    spdlog::debug("Start checking for updates");
 
     PHD2Updater::InitUpdater();
 
@@ -738,22 +745,19 @@ bool PhdApp::OnCmdLineParsed(wxCmdLineParser& parser)
     }
 
     if (parser.Found("w")){
-        spdlog::debug("Prepare to start the web server on host: {} port: {}","0.0.0.0","5000");
-        void* handle = dlopen("./libserver.so", RTLD_NOW); // 加载.so文件
-        if (!handle) {
-            std::cerr << "Failed to load library: " << dlerror() << std::endl;
+        if (!LightGuider::module_loader.LoadModule("./libserver.so","server")) {
             return 1;
         }
         typedef void (*RunHttpServerFunc)();
-        RunHttpServerFunc run_http_server = (RunHttpServerFunc) dlsym(handle, "run_http_server"); // 获取函数指针
+        void* handle = LightGuider::module_loader.GetHandle("server");
+        RunHttpServerFunc run_http_server = (RunHttpServerFunc) dlsym(handle, "run_http_server");
         if (!run_http_server) {
-            std::cerr << "Failed to load function: " << dlerror() << std::endl;
-            dlclose(handle);
+            spdlog::error("Failed to load function: {}", dlerror());
             return 1;
         }
-        std::thread http_server(run_http_server); // 调用函数
+        std::thread http_server(run_http_server);
         http_server.detach();
-        spdlog::debug("Started web server successfully");
+        spdlog::info("Started web server successfully");
     }
 
     if (parser.Found("g")){
