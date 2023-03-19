@@ -146,7 +146,7 @@ LogViewFrameBase::LogViewFrameBase( wxWindow* parent, wxWindowID id, const wxStr
 	m_hminus->SetForegroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_BTNTEXT ) );
 	m_hminus->SetToolTip( wxT("Zoom out") );
 	
-	bSizer5->Add( m_hminus, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer5->Add( m_hminus, 0, static_cast<int>(wxALL) | static_cast<int>(wxALIGN_CENTER_VERTICAL), 5 );
 	
 	m_hplus = new wxButton( panel6, wxID_ANY, wxT("+"), wxDefaultPosition, wxSize( 30,-1 ), 0 );
 	m_hplus->SetForegroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_BTNTEXT ) );
@@ -255,7 +255,7 @@ LogViewFrameBase::LogViewFrameBase( wxWindow* parent, wxWindowID id, const wxStr
 	m_corrections->SetValue(true); 
 	m_corrections->SetToolTip( wxT("Plot guide pulses") );
 	
-	bSizer12->Add( m_corrections, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer12->Add( m_corrections, 0, static_cast<int>(wxALL) | static_cast<int>(wxALIGN_CENTER_VERTICAL), 5 );
 	
 	m_grid = new wxCheckBox( sbSizer4->GetStaticBox(), wxID_ANY, wxT("Grid"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_grid->SetValue(true); 
@@ -290,12 +290,12 @@ LogViewFrameBase::LogViewFrameBase( wxWindow* parent, wxWindowID id, const wxStr
 	m_mass = new wxCheckBox( sbSizer4->GetStaticBox(), wxID_ANY, wxT("Star mass"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_mass->SetToolTip( wxT("Plot star mass value (guide star intensity)") );
 	
-	bSizer101->Add( m_mass, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer101->Add( m_mass, 0, static_cast<int>(wxALL) | static_cast<int>(wxALIGN_CENTER_VERTICAL), 5 );
 	
 	m_snr = new wxCheckBox( sbSizer4->GetStaticBox(), wxID_ANY, wxT("SNR"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_snr->SetToolTip( wxT("Plot star SNR (signal-to-noise ratio)") );
 	
-	bSizer101->Add( m_snr, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer101->Add( m_snr, 0, static_cast<int>(wxALL) | static_cast<int>(wxALIGN_CENTER_VERTICAL), 5 );
 	
 	
 	sbSizer4->Add( bSizer101, 0, wxALIGN_CENTER_VERTICAL, 5 );
@@ -307,7 +307,7 @@ LogViewFrameBase::LogViewFrameBase( wxWindow* parent, wxWindowID id, const wxStr
 	m_events->SetValue(true); 
 	m_events->SetToolTip( wxT("Plot events, including guide parameter changes, server commands received, and star lost events") );
 	
-	bSizer11->Add( m_events, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer11->Add( m_events, 0, static_cast<int>(wxALL) | static_cast<int>(wxALIGN_CENTER_VERTICAL), 5 );
 	
 	m_limits = new wxCheckBox( sbSizer4->GetStaticBox(), wxID_ANY, wxT("Limits"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_limits->SetToolTip( wxT("Plot the min-motion and max-duration levels") );
@@ -590,14 +590,14 @@ SettingsDialogBase::SettingsDialogBase( wxWindow* parent, wxWindowID id, const w
 	
 	m_staticText1 = new wxStaticText( sbSizer5->GetStaticBox(), wxID_ANY, wxT("Settle at <"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText1->Wrap( -1 );
-	bSizer15->Add( m_staticText1, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer15->Add( m_staticText1, 0, static_cast<int>(wxALL) | static_cast<int>(wxALIGN_CENTER_VERTICAL), 5 );
 	
 	m_settlePixels = new wxTextCtrl( sbSizer5->GetStaticBox(), wxID_ANY, wxT("1.00"), wxDefaultPosition, wxSize( 45,-1 ), 0 );
-	bSizer15->Add( m_settlePixels, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer15->Add( m_settlePixels, 0, static_cast<int>(wxALL) | static_cast<int>(wxALIGN_CENTER_VERTICAL), 5 );
 	
 	m_staticText4 = new wxStaticText( sbSizer5->GetStaticBox(), wxID_ANY, wxT("pixels"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText4->Wrap( -1 );
-	bSizer15->Add( m_staticText4, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer15->Add( m_staticText4, 0, static_cast<int>(wxALL) | static_cast<int>(wxALIGN_CENTER_VERTICAL), 5 );
 	
 	
 	bSizer19->Add( bSizer15, 1, wxEXPAND, 5 );
@@ -607,14 +607,14 @@ SettingsDialogBase::SettingsDialogBase( wxWindow* parent, wxWindowID id, const w
 	
 	m_staticText11 = new wxStaticText( sbSizer5->GetStaticBox(), wxID_ANY, wxT("For"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText11->Wrap( -1 );
-	bSizer151->Add( m_staticText11, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer151->Add( m_staticText11, 0, static_cast<int>(wxALL) | static_cast<int>(wxALIGN_CENTER_VERTICAL), 5 );
 	
 	m_settleSeconds = new wxTextCtrl( sbSizer5->GetStaticBox(), wxID_ANY, wxT("10"), wxDefaultPosition, wxSize( 40,-1 ), 0 );
-	bSizer151->Add( m_settleSeconds, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer151->Add( m_settleSeconds, 0, static_cast<int>(wxALL) | static_cast<int>(wxALIGN_CENTER_VERTICAL), 5 );
 	
 	m_staticText5 = new wxStaticText( sbSizer5->GetStaticBox(), wxID_ANY, wxT("seconds"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText5->Wrap( -1 );
-	bSizer151->Add( m_staticText5, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer151->Add( m_staticText5, 0, static_cast<int>(wxALL) | static_cast<int>(wxALIGN_CENTER_VERTICAL), 5 );
 	
 	
 	bSizer19->Add( bSizer151, 1, wxEXPAND, 5 );
@@ -737,11 +737,11 @@ AnalyzeFrameBase::AnalyzeFrameBase( wxWindow* parent, wxWindowID id, const wxStr
 	
 	m_ra = new wxCheckBox( this, wxID_ANY, wxT("RA"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_ra->SetValue(true); 
-	bSizer281->Add( m_ra, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer281->Add( m_ra, 0, static_cast<int>(wxALL) | static_cast<int>(wxALIGN_CENTER_VERTICAL), 5 );
 	
 	m_dec = new wxCheckBox( this, wxID_ANY, wxT("Dec"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_dec->SetValue(true); 
-	bSizer281->Add( m_dec, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+	bSizer281->Add( m_dec, 0, static_cast<int>(wxALL) | static_cast<int>(wxALIGN_CENTER_VERTICAL), 5 );
 	
 	
 	bSizer28->Add( bSizer281, 0, wxEXPAND, 5 );

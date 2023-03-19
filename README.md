@@ -3,6 +3,15 @@ LightGuider
 
 Light Guider for LightAPT , modified from PHD2
 
+### Features
+
++ Fully open source based on GPL3, ensuring transparency and community-driven development
++ Multiple interface access, allowing for flexible and convenient control from various devices
++ Highly optimized asynchronous architecture, ensuring stable and efficient performance
++ Extensive platform support, enabling use on all mainstream operating systems
++ Device driver based on INDI and ASCOM, supporting a wide range of astronomical devices
++ Built-in guide tool (modified PHD2) and platesolving engines (asap and astrometry) for improved accuracy and precision.
+
 #### Build Guider
 
 On Ubuntu / Debian

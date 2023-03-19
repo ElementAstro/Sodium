@@ -90,6 +90,7 @@ wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(MENU_CALIBRATIONASSIST, MyFrame::OnCalibrationAssistant)
     EVT_MENU(MENU_SERVERASSIST, MyFrame::OnServerAssistant)
     EVT_MENU(MENU_SOLVERASSIST, MyFrame::OnSolverAssistant)
+    EVT_MENU(MENU_DEVICEDIALOG, MyFrame::OnDeviceDialog)
     EVT_MENU(EEGG_MANUALLOCK, MyFrame::OnEEGG)
     EVT_MENU(EEGG_STICKY_LOCK, MyFrame::OnEEGG)
     EVT_MENU(EEGG_FLIPCAL, MyFrame::OnEEGG)
@@ -508,6 +509,9 @@ void MyFrame::SetupMenuBar()
     m_cameraMenuItem = guide_menu->Append(MENU_CAM_SETTINGS, _("&Camera Settings"), _("Camera settings"));
     m_cameraMenuItem->Enable(false);
 
+    wxMenu *openapt_menu = new wxMenu;
+    openapt_menu->Append(MENU_DEVICEDIALOG, _("Full Device Control"), _("OpenAPT"));
+
     tools_menu = new wxMenu;
     tools_menu->Append(MENU_MANGUIDE, _("&Manual Guide"), _("Manual / test guide dialog"));
     m_autoSelectStarMenuItem = tools_menu->Append(MENU_AUTOSTAR, _("&Auto-select Star\tAlt-S"), _("Automatically select star"));
@@ -599,6 +603,7 @@ void MyFrame::SetupMenuBar()
 #endif
 
     Menubar->Append(tools_menu, _("&Tools"));
+    Menubar->Append(openapt_menu, _("&OpenAPT"));
     Menubar->Append(view_menu, _("&View"));
     Menubar->Append(darks_menu, _("&Darks"));
     Menubar->Append(bookmarks_menu, _("&Bookmarks"));

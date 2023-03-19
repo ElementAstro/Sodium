@@ -40,6 +40,8 @@
 #include "socket_server.h"
 #include "ao/gear_simulator.h"
 
+#include <spdlog/spdlog.h>
+
 #include <algorithm>
 #include <functional>
 
@@ -80,100 +82,119 @@ void MyFrame::OnServerMenu(wxCommandEvent &evt)
 
 bool MyFrame::StartServer(bool state)
 {
-    if (state)
-    {
-        if (SocketServer)
+    try {
+        if (state)
         {
-            Debug.AddLine("start server, server already running");
-            return false;
+            if (SocketServer)
+            {
+                Debug.AddLine("start server, server already running");
+                return false;
+            }
+            Debug.AddLine("starting server");
+            // 获取应用程序实例数
+            int instanceNumber = wxGetApp().GetInstanceNumber();
+            // 计算端口号
+            unsigned int port = 4300 + instanceNumber - 1;
+            // 创建 SocketServer 对象
+            wxIPV4address sockServerAddr;
+            sockServerAddr.Service(port);
+            SocketServer = new wxSocketServer(sockServerAddr, wxSOCKET_REUSEADDR);
+            // 判断 SocketServer 是否启动成功
+            if (!SocketServer->Ok())
+            {
+                Debug.AddLine(wxString::Format("Socket server failed to start - Could not listen at port %u", port));
+                delete SocketServer;
+                SocketServer = nullptr;
+                StatusMsg(_("Server start failed"));
+                return true;
+            }
+            // 设置 SocketServer 的事件处理程序
+            SocketServer->SetEventHandler(*this, SOCK_SERVER_ID);
+            SocketServer->SetNotify(wxSOCKET_CONNECTION_FLAG);
+            SocketServer->Notify(true);
+            // 启动事件服务器
+            if (EvtServer.EventServerStart(instanceNumber))
+            {
+                delete SocketServer;
+                SocketServer = nullptr;
+                StatusMsg(_("Server start failed"));
+                return true;
+            }
+            Debug.AddLine(wxString::Format("Socket server started at port %u", port));
+            StatusMsg(_("Server started"));
         }
-
-        Debug.AddLine("starting server");
-
-        int instanceNumber = wxGetApp().GetInstanceNumber();
-
-        // Create the SocketServer socket
-        unsigned int port = 4300 + instanceNumber - 1;
-        wxIPV4address sockServerAddr;
-        sockServerAddr.Service(port);
-        SocketServer = new wxSocketServer(sockServerAddr, wxSOCKET_REUSEADDR);
-
-        // We use Ok() here to see if the server is really listening
-        if (!SocketServer->Ok())
-        {
-            Debug.AddLine(wxString::Format("Socket server failed to start - Could not listen at port %u", port));
+        else {
+            if (!SocketServer)
+            {
+                Debug.AddLine("stop server, server already stopped");
+                return false;
+            }
+            Debug.AddLine("stopping server");
+            // 销毁所有客户端连接
+            std::for_each(s_clients.begin(), s_clients.end(), std::mem_fn(&wxSocketBase::Destroy));
+            bool isClientsEmpty = s_clients.empty();
+            // 停止事件服务器
+            EvtServer.EventServerStop();
+            // 销毁 SocketServer 对象
             delete SocketServer;
             SocketServer = nullptr;
-            StatusMsg(_("Server start failed"));
-            return true;
+            Debug.AddLine("Socket server stopped");
+            StatusMsg(_("Server stopped"));
         }
-        SocketServer->SetEventHandler(*this, SOCK_SERVER_ID);
-        SocketServer->SetNotify(wxSOCKET_CONNECTION_FLAG);
-        SocketServer->Notify(true);
-
-        // start the event server
-        if (EvtServer.EventServerStart(instanceNumber))
-        {
-            delete SocketServer;
-            SocketServer = nullptr;
-            StatusMsg(_("Server start failed"));
-            return true;
-        }
-
-        Debug.AddLine(wxString::Format("%u", port));
-        StatusMsg(_("Server started"));
+        return false;
     }
-    else {
-        if (!SocketServer)
-        {
-            Debug.AddLine("stop server, server already stopped");
-            return false;
-        }
-
-        Debug.AddLine("stopping server");
-        std::for_each(s_clients.begin(), s_clients.end(), std::mem_fn(&wxSocketBase::Destroy));
-        bool isClientsEmpty = s_clients.empty();
-        EvtServer.EventServerStop();
-        delete SocketServer;
-        SocketServer = nullptr;
-        StatusMsg(_("Server stopped"));
+    catch (std::exception& ex) {
+        Debug.AddLine(wxString::Format("Exception caught: %s", ex.what()));
+        return true;
     }
-
-    return false;
 }
 
+/*
+ * Here's what the code does:
+ * 1. Cast the socket event's socket to wxSocketServer*.
+ * 2. Check if the socket server is valid.
+ * 3. Check if the socket event is wxSOCKET_CONNECTION.
+ * 4. Accept the new client connection.
+ * 5. If accepting the connection was successful, set up the client's event handler and notification flags.
+ * 6. Add the client to the set of connected clients.
+ * 7. If any exceptions occur, log them with spdlog.
+ */
 void MyFrame::OnSockServerEvent(wxSocketEvent& event)
 {
-    wxSocketServer *server = static_cast<wxSocketServer *>(event.GetSocket());
+    try {
+        wxSocketServer *server = static_cast<wxSocketServer *>(event.GetSocket());
 
-    if (!server)
-        return;
+        if (!server) {
+            spdlog::error("Invalid socket server");
+            return;
+        }
 
-    if (event.GetSocketEvent() != wxSOCKET_CONNECTION)
-    {
-        Debug.AddLine(wxString::Format("socket server event expected %d, got %d. ignoring it.",
-            wxSOCKET_CONNECTION, event.GetSocketEvent()));
-        return;
+        if (event.GetSocketEvent() != wxSOCKET_CONNECTION) {
+            spdlog::warn("Unexpected socket server event: expected {}, got {}. Ignoring it.",
+                        wxSOCKET_CONNECTION, event.GetSocketEvent());
+            return;
+        }
+
+        wxSocketBase *client = server->Accept(false);
+
+        if (client) {
+            pFrame->StatusMsg(_("New server connection"));
+            spdlog::info("New server connection");
+        } else {
+            spdlog::error("Failed to accept new client connection");
+            return;
+        }
+
+        client->SetEventHandler(*this, SOCK_SERVER_CLIENT_ID);
+        client->SetNotify(wxSOCKET_INPUT_FLAG | wxSOCKET_LOST_FLAG);
+        client->Notify(true);
+
+        s_clients.insert(client);
+    } catch (const std::exception& e) {
+        spdlog::error("Exception caught in MyFrame::OnSockServerEvent(): {}", e.what());
+    } catch (...) {
+        spdlog::error("Unknown exception caught in MyFrame::OnSockServerEvent()");
     }
-
-    wxSocketBase *client = server->Accept(false);
-
-    if (client)
-    {
-        pFrame->StatusMsg(_("New server connection"));
-        Debug.AddLine("SOCKSVR: New connection");
-    }
-    else
-    {
-        Debug.AddLine("SOCKSVR: connection error");
-        return;
-    }
-
-    client->SetEventHandler(*this, SOCK_SERVER_CLIENT_ID);
-    client->SetNotify(wxSOCKET_INPUT_FLAG | wxSOCKET_LOST_FLAG);
-    client->Notify(true);
-
-    s_clients.insert(client);
 }
 
 double MyFrame::GetDitherAmount(int ditherType)
@@ -418,6 +439,7 @@ void MyFrame::OnSockServerClientEvent(wxSocketEvent& event)
     {
         wxSocketBase *sock = event.GetSocket();
 
+        // Make sure that SocketServer is not NULL
         if (!SocketServer)
         {
             throw ERROR_INFO("socket command when SocketServer == NULL");
@@ -426,167 +448,35 @@ void MyFrame::OnSockServerClientEvent(wxSocketEvent& event)
         // Now we process the event
         switch (event.GetSocketEvent())
         {
+            // Handle input from the client
             case wxSOCKET_INPUT:
                 HandleSockServerInput(sock);
                 break;
+
+            // Handle disconnection of the client
             case wxSOCKET_LOST:
                 Debug.AddLine("SOCKSVR: Client disconnected, deleting socket");
+                
+                // Remove the socket from the list of clients
                 size_t n;
                 n = s_clients.erase(sock);
                 assert(n > 0);
+                
+                // Destroy the socket
                 sock->Destroy();
                 break;
+
+            // Ignore other events
             default:
                 break;
         }
     }
     catch (const wxString& Msg)
     {
+        // Catch any exceptions and ignore them
         POSSIBLY_UNUSED(Msg);
     }
+    
+    // Add debug output to show that the event was processed
+    Debug.AddLine("SOCKSVR: Client event processed");
 }
-
-#ifdef NEB_SBIG
-
-// this code only works when there is a single socket connection from Nebulosity
-
-static int SocketConnections;
-static wxSocketBase *ServerEndpoint;
-
-bool ServerSendGuideCommand (int direction, int duration) {
-    // Sends a guide command to Nebulosity
-    if (!pFrame->SocketServer || !SocketConnections)
-        return true;
-
-    unsigned char cmd = MSG_GUIDE;
-    unsigned char rval = 0;
-    Debug.AddLine(wxString::Format("Sending guide: %d %d", direction, duration));
-//  cmd = 'Z';
-    ServerEndpoint->Write(&cmd, 1);
-    if (pFrame->SocketServer->Error())
-        Debug.AddLine(_T("Error sending Neb command"));
-    else {
-        Debug.AddLine(_T("Cmd done - sending data"));
-        ServerEndpoint->Write(&direction, sizeof(int));
-        ServerEndpoint->Write(&duration, sizeof(int));
-        ServerEndpoint->Read(&rval,1);
-        Debug.Write(wxString::Format("Sent guide command - returned %d\n", (int) rval));
-    }
-    return false;
-}
-
-bool ServerSendCamConnect(int& xsize, int& ysize) {
-    if (!pFrame->SocketServer || !SocketConnections)
-        return true;
-    Debug.AddLine(_T("Sending cam connect request"));
-    unsigned char cmd = MSG_CAMCONNECT;
-    unsigned char rval = 0;
-
-    ServerEndpoint->Write(&cmd, 1);
-    if (pFrame->SocketServer->Error()) {
-        Debug.AddLine(_T("Error sending Neb command"));
-        return true;
-    }
-    else {
-//      unsigned char c;
-        ServerEndpoint->Read(&rval, 1);
-        Debug.Write(wxString::Format("Cmd done - returned %d\n", (int) rval));
-    }
-    if (rval)
-        return true;
-    else {  // cam connected OK
-        // Should get x and y size back
-        ServerEndpoint->Read(&xsize,sizeof(int));
-        ServerEndpoint->Read(&ysize,sizeof(int));
-        Debug.Write(wxString::Format("Guide chip reported as %d x %d\n", xsize, ysize));
-        return false;
-    }
-}
-
-bool ServerSendCamDisconnect() {
-    if (!pFrame->SocketServer || !SocketConnections)
-        return true;
-
-    Debug.AddLine(_T("Sending cam disconnect request"));
-    unsigned char cmd = MSG_CAMDISCONNECT;
-    unsigned char rval = 0;
-
-    ServerEndpoint->Write(&cmd, 1);
-    if (pFrame->SocketServer->Error()) {
-        Debug.AddLine(_T("Error sending Neb command"));
-        return true;
-    }
-    else {
-//      unsigned char c;
-        ServerEndpoint->Read(&rval, 1);
-        Debug.Write(wxString::Format("Cmd done - returned %d\n", (int) rval));
-    }
-    if (rval)
-        return true;
-    else
-        return false;  // cam disconnected OK
-}
-
-bool ServerReqFrame(int duration, usImage& img) {
-    if (!pFrame->SocketServer || !SocketConnections)
-        return true;
-    Debug.AddLine(_T("Sending guide frame request"));
-    unsigned char cmd = MSG_REQFRAME;
-    unsigned char rval = 0;
-
-    ServerEndpoint->Write(&cmd, 1);
-    if (pFrame->SocketServer->Error()) {
-        Debug.AddLine(_T("Error sending Neb command"));
-        return true;
-    }
-    else {
-//      unsigned char c;
-        ServerEndpoint->Read(&rval, 1);
-        Debug.Write(wxString::Format("Cmd done - returned %d\n", (int) rval));
-    }
-    if (rval)
-        return true;
-    else { // grab frame data
-        // Send duration request
-        ServerEndpoint->Write(&duration,sizeof(int));
-        Debug.Write(wxString::Format("Starting %d ms frame\n", duration));
-        wxMilliSleep(duration); // might as well wait here nicely at least this long
-        Debug.Write(wxString::Format("Reading frame - looking for %u pixels (%u bytes)\n", img.NPixels, img.NPixels * 2));
-        unsigned short *dataptr;
-        dataptr = img.ImageData;
-        unsigned short buffer[512];
-        int i, xsize, ysize, pixels_left, packet_size;
-        xsize = img.Size.GetWidth();
-        ysize = img.Size.GetHeight();
-        pixels_left = img.NPixels;
-        packet_size = 256;  // # pixels to get
-        int j=0;
-        while (pixels_left > 0) {
-            ServerEndpoint->Read(&buffer,packet_size * 2);
-            pixels_left -= packet_size;
-            if ((j % 100) == 0)
-                Debug.Write(wxString::Format("%d left\n", pixels_left));
-            for (i=0; i<packet_size; i++, dataptr++)
-                *dataptr = buffer[i];
-            if (pixels_left < 256)
-                packet_size = 256;
-            ServerEndpoint->Write(&cmd,1);
-            j++;
-        }
-        int min = 9999999;
-        int max = -999999;
-        dataptr = img.ImageData;
-        for (i=0; i<(xsize * ysize); i++, dataptr++) {
-            if (*dataptr > max) max = (int) *dataptr;
-            else if (*dataptr < min) min = (int) *dataptr;
-        }
-        Debug.Write(wxString::Format("Frame received min=%d max=%d\n", min, max));
-
-//      ServerEndpoint->ReadMsg(img.ImageData,(xsize * ysize * 2));
-        Debug.AddLine("Frame read");
-    }
-
-    return false;
-}
-
-#endif // NEB_SBIG

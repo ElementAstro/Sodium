@@ -23,7 +23,7 @@ Author: Max Qian
 
 E-mail: astro_air@126.com
  
-Date: 2023-3-5
+Date: 2023-3-20
  
 Description: Main web server
  
@@ -41,8 +41,9 @@ using namespace crow::utility;
 
 crow::SimpleApp app;
 
-void run_http_server()
-{
+class HttpServer {
+public:
+    HttpServer() {
         load_url();
         // enables all log
         app.loglevel(crow::LogLevel::ERROR);
@@ -51,12 +52,29 @@ void run_http_server()
         app.port(5000)
             .server_name("LightServer")
             .timeout(100)
-            .multithreaded()
-            .run();
+            .multithreaded();
+    }
+
+    ~HttpServer() {
+        app.stop();
+    }
+
+    void run() {
+        app.run();
+    }
+
+    void stop() {
+        app.stop();
+    }
+
+};
+
+HttpServer server;
+
+void run(){
+    server.run();
 }
 
-
-int main(){
-    run_http_server();
-    return 0;
+void stop(){
+    server.stop();
 }

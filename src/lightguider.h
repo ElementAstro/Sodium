@@ -149,7 +149,7 @@ WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 #if defined (__linux__) || defined (__FreeBSD__)
 // On Linux the messages catalogs for all the applications are in the same directory
 // in /usr/share/locale, so the catalog name must be the application name.
-#define PHD_MESSAGES_CATALOG "phd2"
+#define PHD_MESSAGES_CATALOG "lightguider"
 #endif
 
 #include "lightconfig.h"
@@ -193,8 +193,6 @@ WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 #include "image/image_math.h"
 #include "image/fitsiowrap.h"
 #include "image/imagelogger.h"
-
-#include "modules/modloader.h"
 
 class wxSingleInstanceChecker;
 

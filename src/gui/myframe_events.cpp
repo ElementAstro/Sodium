@@ -44,6 +44,7 @@
 #include "Refine_DefMap.h"
 #include "starcross_test.h"
 #include "calibration_assistant.h"
+#include "LightGuiderDeviceDialog.h"
 
 #include <algorithm>
 #include <memory>

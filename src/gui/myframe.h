@@ -211,7 +211,7 @@ public:
 
     Guider *pGuider;
     wxMenuBar *Menubar;
-    wxMenu *tools_menu, *view_menu, *bookmarks_menu, *darks_menu;
+    wxMenu *tools_menu, *view_menu, *openapr_menu,*bookmarks_menu, *darks_menu;
     wxMenuItem *m_showBookmarksMenuItem;
     wxMenuItem *m_bookmarkLockPosMenuItem;
     wxAcceleratorEntry *m_showBookmarksAccel;
@@ -258,6 +258,7 @@ public:
     wxDialog *pCalibrationAssistant;
     wxDialog *pServerAssistant;
     wxDialog *pSolverAssistant;
+    wxDialog *pDeviceDialog;
     bool CaptureActive; // Is camera looping captures?
     bool m_exposurePending; // exposure scheduled and not completed
     double Stretch_gamma;
@@ -309,6 +310,7 @@ public:
     void OnCalibrationAssistant(wxCommandEvent& evt);
     void OnServerAssistant(wxCommandEvent& evt);
     void OnSolverAssistant(wxCommandEvent& evt);
+    void OnDeviceDialog(wxCommandEvent& evt);
     void OnCometTool(wxCommandEvent& evt);
     void OnGuidingAssistant(wxCommandEvent& evt);
     void OnSetupCamera(wxCommandEvent& evt);
@@ -676,6 +678,7 @@ enum {
     MENU_CALIBRATIONASSIST,
     MENU_SERVERASSIST,
     MENU_SOLVERASSIST,
+    MENU_DEVICEDIALOG,
     EEGG_RESTORECAL,
     EEGG_MANUALCAL,
     EEGG_CLEARCAL,

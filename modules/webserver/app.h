@@ -4,6 +4,7 @@
 #include "crow.h"
 
 extern crow::SimpleApp app;
-extern "C" void run_http_server();
+extern "C" void run();
+extern "C" void stop();
 
 #endif

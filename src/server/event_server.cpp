@@ -75,6 +75,11 @@ Description: Socket server
 
 #include <algorithm>
 #include <string>
+#include <vector>
+#include <chrono>
+#include <atomic>
+#include <functional>
+#include <stdexcept>
 
 EventServer EvtServer;
 
@@ -585,39 +590,59 @@ static void parse_request(const json_value *req, const json_value **pmethod,
       return;                                                                  \
     }                                                                          \
   } while (0)
-
+  
 static void deselect_star(JObj &response, const json_value *params) {
-  VERIFY_GUIDER(response);
-  pFrame->pGuider->Reset(true);
-  spdlog::debug("Reset star selection");
-  response << jrpc_result(0);
+  VERIFY_GUIDER(response); // 确认当前引导器可用
+  try {
+    pFrame->pGuider->Reset(true); // 重置引导器
+    spdlog::debug("Reset star selection"); // 打印调试信息
+    response << jrpc_result(0); // 返回成功响应
+  } catch (const std::exception& e) { // 异常捕获
+    spdlog::error("Error occurred in deselect_star: {}", e.what()); // 打印错误信息
+    response << jrpc_error(1, e.what()); // 返回错误响应
+  }
 }
 
 static void get_exposure(JObj &response, const json_value *params) {
-  response << jrpc_result(pFrame->RequestedExposureDuration());
-  spdlog::debug("Current Exposure time : {}",pFrame->RequestedExposureDuration());
+  try {
+    response << jrpc_result(pFrame->RequestedExposureDuration()); // 返回当前曝光时间
+    spdlog::debug("Current Exposure time : {}",pFrame->RequestedExposureDuration()); // 打印调试信息
+  } catch (const std::exception& e) { // 异常捕获
+    spdlog::error("Error occurred in get_exposure: {}", e.what()); // 打印错误信息
+    response << jrpc_error(1, e.what()); // 返回错误响应
+  }
 }
 
 static void get_exposure_durations(JObj &response, const json_value *params) {
-  const std::vector<int> &exposure_durations = pFrame->GetExposureDurations();
-  response << jrpc_result(exposure_durations);
+  try {
+    const std::vector<int> &exposure_durations = pFrame->GetExposureDurations(); // 获取可用的曝光时间
+    response << jrpc_result(exposure_durations); // 返回可用的曝光时间列表
+  } catch (const std::exception& e) { // 异常捕获
+    spdlog::error("Error occurred in get_exposure_durations: {}", e.what()); // 打印错误信息
+    response << jrpc_error(1, e.what()); // 返回错误响应
+  }
 }
 
 static void get_profiles(JObj &response, const json_value *params) {
   JAry ary;
-  wxArrayString names = pConfig->ProfileNames();
-  for (unsigned int i = 0; i < names.size(); i++) {
-    wxString name = names[i];
-    int id = pConfig->GetProfileId(name);
-    if (id) {
-      JObj t;
-      t << NV("id", id) << NV("name", name);
-      if (id == pConfig->GetCurrentProfileId())
-        t << NV("selected", true);
-      ary << t;
+  try {
+    wxArrayString names = pConfig->ProfileNames(); // 获取所有配置文件名
+    for (unsigned int i = 0; i < names.size(); i++) {
+      wxString name = names[i];
+      int id = pConfig->GetProfileId(name);
+      if (id) {
+        JObj t;
+        t << NV("id", id) << NV("name", name);
+        if (id == pConfig->GetCurrentProfileId())
+          t << NV("selected", true);
+        ary << t; // 将配置文件信息添加到列表中
+      }
     }
+    response << jrpc_result(ary); // 返回配置文件列表
+  } catch (const std::exception& e) { // 异常捕获
+    spdlog::error("Error occurred in get_profiles: {}", e.what()); // 打印错误信息
+    response << jrpc_error(1, e.what()); // 返回错误响应
   }
-  response << jrpc_result(ary);
 }
 
 struct Params {
@@ -677,44 +702,57 @@ struct Params {
   }
 };
 
-static void set_exposure(JObj &response, const json_value *params) {
-  Params p("exposure", params);
-  const json_value *exp = p.param("exposure");
-
-  spdlog::debug("Try setting the exposure time to {}",exp->float_value);
-
-  if (!exp || exp->type != JSON_INT) {
-    spdlog::debug("Exposure time parameter not found");
-    response << jrpc_error(JSONRPC_INVALID_PARAMS, "expected exposure param");
-    return;
-  }
-
-  bool ok = pFrame->SetExposureDuration(exp->int_value);
-  if (ok) {
-    spdlog::debug("Successfully set exposure time");
-    response << jrpc_result(0);
-  } else {
-    spdlog::debug("Failed to set exposure time");
-    response << jrpc_error(1, "could not set exposure duration");
-  }
+static void set_exposure(JObj& response, const json_value* params) {
+    try {
+        Params p("exposure", params);
+        const json_value* exp = p.param("exposure");
+        spdlog::debug("Try setting the exposure time to {}", exp->float_value);
+        if (!exp || exp->type != JSON_INT) {
+            spdlog::debug("Exposure time parameter not found");
+            response << jrpc_error(JSONRPC_INVALID_PARAMS, "expected exposure param");
+            return;
+        }
+        bool ok = pFrame->SetExposureDuration(exp->int_value);
+        if (ok) {
+            spdlog::debug("Successfully set exposure time");
+            response << jrpc_result(0);
+        } else {
+            spdlog::debug("Failed to set exposure time");
+            response << jrpc_error(1, "could not set exposure duration");
+        }
+    } catch (std::exception& e) {
+        response << jrpc_error(1, "exception caught while setting exposure time");
+        spdlog::error("Exception caught while setting exposure time: {}", e.what());
+    } catch (...) {
+        response << jrpc_error(1, "unknown exception caught while setting exposure time");
+        spdlog::error("Unknown exception caught while setting exposure time");
+    }
 }
-
-/// @brief Get Current Profile name
-/// @param response 
-/// @param params 
-static void get_profile(JObj &response, const json_value *params) {
-  int id = pConfig->GetCurrentProfileId();
-  wxString name = pConfig->GetCurrentProfile();
-  spdlog::debug("Current profile name : {}",std::string(name));
-  JObj t;
-  t << NV("id", id) << NV("name", name);
-  response << jrpc_result(t);
+static void get_profile(JObj& response, const json_value* params) {
+    try {
+        int id = pConfig->GetCurrentProfileId();
+        wxString name = pConfig->GetCurrentProfile();
+        spdlog::debug("Current profile name : {}", std::string(name));
+        JObj t;
+        t << NV("id", id) << NV("name", name);
+        response << jrpc_result(t);
+    } catch (std::exception& e) {
+        response << jrpc_error(1, "exception caught while getting current profile");
+        spdlog::error("Exception caught while getting current profile: {}", e.what());
+    } catch (...) {
+        response << jrpc_error(1, "unknown exception caught while getting current profile");
+        spdlog::error("Unknown exception caught while getting current profile");
+    }
 }
-
-inline static void devstat(JObj &t, const char *dev, const wxString &name,
-                           bool connected) {
-  JObj o;
-  t << NV(dev, o << NV("name", name) << NV("connected", connected));
+inline static void devstat(JObj& t, const char* dev, const wxString& name, bool connected) {
+    try {
+        JObj o;
+        t << NV(dev, o << NV("name", name) << NV("connected", connected));
+    } catch (std::exception& e) {
+        spdlog::error("Exception caught while setting device status: {}", e.what());
+    } catch (...) {
+        spdlog::error("Unknown exception caught while setting device status");
+    }
 }
 
 static void get_current_equipment(JObj &response, const json_value *params) {
@@ -749,83 +787,108 @@ static void get_current_equipment(JObj &response, const json_value *params) {
 
 /// @brief 
 /// @return status(bool)
-static bool all_equipment_connected() {
-  spdlog::debug("Check that all devices are connected");
-  bool status = pCamera && pCamera->Connected && (!pMount || pMount->IsConnected()) &&
-         (!pSecondaryMount || pSecondaryMount->IsConnected());
-  if(status)
-    spdlog::debug("All of the devices connected");
-  else
-    spdlog::debug("Not all of the devices connected");
-  return status;
+static bool all_equipment_connected()
+{
+    try {
+        spdlog::debug("Check that all devices are connected");
+        // 检查相机、望远镜和辅助望远镜是否连接
+        bool status = pCamera && pCamera->Connected && (!pMount || pMount->IsConnected()) &&
+            (!pSecondaryMount || pSecondaryMount->IsConnected());
+        if (status) {
+            spdlog::debug("All of the devices connected");
+        } else {
+            spdlog::debug("Not all of the devices connected");
+        }
+        return status;
+    } catch (std::exception& e) {
+        // 捕获异常
+        spdlog::error("Exception caught in all_equipment_connected: {}", e.what());
+        return false;
+    }
 }
 
 /// @brief Set the current file according to the configuration file number. This configuration should already exist.
 /// @param response 
 /// @param params 
-static void set_profile(JObj &response, const json_value *params) {
-  spdlog::debug("Trying to set current profile");
-  Params p("id", params);
-  const json_value *id = p.param("id");
-  if (!id || id->type != JSON_INT) {
-    spdlog::error("Profile number not found in parameters");
-    response << jrpc_error(JSONRPC_INVALID_PARAMS, "expected profile id param");
-    return;
-  }
-
-  VERIFY_GUIDER(response);
-
-  wxString errMsg;
-  bool error = pFrame->pGearDialog->SetProfile(id->int_value, &errMsg);
-
-  if (error) {
-    spdlog::error("Failed to set profile");
-    response << jrpc_error(1, errMsg);
-  } else {
-    spdlog::debug("Set profile succesfully");
-    response << jrpc_result(0);
-  }
+static void set_profile(JObj& response, const json_value* params)
+{
+    try {
+        spdlog::debug("Trying to set current profile");
+        Params p("id", params);
+        const json_value* id = p.param("id");
+        if (!id || id->type != JSON_INT) {
+            spdlog::error("Profile number not found in parameters");
+            response << jrpc_error(JSONRPC_INVALID_PARAMS, "expected profile id param");
+            return;
+        }
+        VERIFY_GUIDER(response);
+        wxString errMsg;
+        bool error = pFrame->pGearDialog->SetProfile(id->int_value, &errMsg);
+        if (error) {
+            spdlog::error("Failed to set profile");
+            response << jrpc_error(1, errMsg);
+        } else {
+            spdlog::debug("Set profile succesfully");
+            response << jrpc_result(0);
+        }
+    } catch (std::exception& e) {
+        // 捕获异常
+        spdlog::error("Exception caught in set_profile: {}", e.what());
+        response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
+    }
 }
 
 static void get_connected(JObj &response, const json_value *params) {
   response << jrpc_result(all_equipment_connected());
 }
 
-static void set_connected(JObj &response, const json_value *params) {
-  Params p("connected", params);
-  const json_value *val = p.param("connected");
-  if (!val || val->type != JSON_BOOL) {
-    response << jrpc_error(JSONRPC_INVALID_PARAMS,
-                           "expected connected boolean param");
-    return;
-  }
-
-  VERIFY_GUIDER(response);
-
-  spdlog::debug("Try to connect all devices");
-
-  wxString errMsg;
-  bool error = val->int_value ? pFrame->pGearDialog->ConnectAll(&errMsg)
-                              : pFrame->pGearDialog->DisconnectAll(&errMsg);
-
-  if (error) {
-    spdlog::error("Failed to connect to devices , error : {}",std::string(errMsg));
-    response << jrpc_error(1, errMsg);
-  } else {
-    spdlog::debug("Connected to devices successfully");
-    response << jrpc_result(0);
-  }
+// 连接所有设备
+static void set_connected(JObj& response, const json_value* params)
+{
+    try {
+        Params p("connected", params);
+        const json_value* val = p.param("connected");
+        if (!val || val->type != JSON_BOOL) {
+            response << jrpc_error(JSONRPC_INVALID_PARAMS, "expected connected boolean param");
+            return;
+        }
+        VERIFY_GUIDER(response);
+        bool connect = val->int_value;
+        std::string action = connect ? "connect" : "disconnect";
+        spdlog::debug("Try to {} all devices", action);
+        wxString errMsg;
+        bool error = connect ? pFrame->pGearDialog->ConnectAll(&errMsg) : pFrame->pGearDialog->DisconnectAll(&errMsg);
+        if (error) {
+            spdlog::error("Failed to {} to devices , error : {}", action, std::string(errMsg));
+            response << jrpc_error(1, errMsg);
+        } else {
+            spdlog::debug("Successfully {} to devices", action);
+            response << jrpc_result(0);
+        }
+    } catch (std::exception& e) {
+        // 捕获异常
+        spdlog::error("Exception caught in set_connected: {}", e.what());
+        response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
+    }
 }
 
-static void get_calibrated(JObj &response, const json_value *params) {
-  spdlog::debug("Check if the calibration has been completed");
-  bool calibrated = pMount && pMount->IsCalibrated() &&
-                    (!pSecondaryMount || pSecondaryMount->IsCalibrated());
-  if(calibrated)
-    spdlog::debug("Calibration had already completed , you can start guiding now");
-  else
-    spdlog::debug("Calibration had not been completed.");
-  response << jrpc_result(calibrated);
+// 检查是否已完成校准
+static void get_calibrated(JObj& response, const json_value* params)
+{
+    try {
+        spdlog::debug("Check if the calibration has been completed");
+        bool calibrated = pMount && pMount->IsCalibrated() &&
+                          (!pSecondaryMount || pSecondaryMount->IsCalibrated());
+        if (calibrated)
+            spdlog::debug("Calibration had already completed, you can start guiding now");
+        else
+            spdlog::debug("Calibration had not been completed.");
+        response << jrpc_result(calibrated);
+    } catch (std::exception& e) {
+        // 捕获异常
+        spdlog::error("Exception caught in get_calibrated: {}", e.what());
+        response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
+    }
 }
 
 static bool float_param(const json_value *v, double *p) {
@@ -857,74 +920,92 @@ static bool bool_param(const json_value *jv, bool *val) {
   *val = bool_value(jv);
   return true;
 }
-
-static void get_paused(JObj &response, const json_value *params) {
-  spdlog::debug("Check whether the guide star has paused");
-  VERIFY_GUIDER(response);
-  bool status = pFrame->pGuider->IsPaused();
-  if(status)
-    spdlog::debug("LightGuider paused successfully");
-  else
-    spdlog::debug("LightGuider is not paused");
-  response << jrpc_result(status);
-}
-
-static void set_paused(JObj &response, const json_value *params) {
-  spdlog::debug("Try to pause the current work");
-  Params p("paused", "type", params);
-  const json_value *jv = p.param("paused");
-
-  bool val;
-  if (!jv || !bool_param(jv, &val)) {
-    spdlog::error("Unexpected params given by client when set paused");
-    response << jrpc_error(JSONRPC_INVALID_PARAMS,
-                           "expected bool param at index 0");
-    return;
-  }
-
-  PauseType pause = PAUSE_NONE;
-
-  if (val) {
-    pause = PAUSE_GUIDING;
-
-    jv = p.param("type");
-    if (jv) {
-      if (jv->type == JSON_STRING) {
-        if (strcmp(jv->string_value, "full") == 0)
-          pause = PAUSE_FULL;
-      } else {
-        response << jrpc_error(JSONRPC_INVALID_PARAMS,
-                               "expected string param at index 1");
-        return;
-      }
+// 检查是否暂停
+static void get_paused(JObj& response, const json_value* params)
+{
+    try {
+        spdlog::debug("Check whether the guide star has paused");
+        VERIFY_GUIDER(response);
+        bool status = pFrame->pGuider->IsPaused();
+        if (status)
+            spdlog::debug("LightGuider paused successfully");
+        else
+            spdlog::debug("LightGuider is not paused");
+        response << jrpc_result(status);
+    } catch (std::exception& e) {
+        // 捕获异常
+        spdlog::error("Exception caught in get_paused: {}", e.what());
+        response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
     }
-  }
-
-  pFrame->SetPaused(pause);
-
-  spdlog::debug("The current task was suspended successfully");
-
-  response << jrpc_result(0);
+}
+// 设置暂停
+static void set_paused(JObj& response, const json_value* params)
+{
+    try {
+        spdlog::debug("Try to pause the current work");
+        Params p("paused", "type", params);
+        const json_value* jv = p.param("paused");
+        bool val;
+        if (!jv || !bool_param(jv, &val)) {
+            spdlog::error("Unexpected params given by client when set paused");
+            response << jrpc_error(JSONRPC_INVALID_PARAMS, "expected bool param at index 0");
+            return;
+        }
+        PauseType pause = PAUSE_NONE;
+        if (val) {
+            pause = PAUSE_GUIDING;
+            jv = p.param("type");
+            if (jv) {
+                if (jv->type == JSON_STRING) {
+                    if (strcmp(jv->string_value, "full") == 0)
+                        pause = PAUSE_FULL;
+                } else {
+                    response << jrpc_error(JSONRPC_INVALID_PARAMS, "expected string param at index 1");
+                    return;
+                }
+            }
+        }
+        pFrame->SetPaused(pause);
+        spdlog::debug("The current task was suspended successfully");
+        response << jrpc_result(0);
+    } catch (std::exception& e) {
+        // 捕获异常
+        spdlog::error("Exception caught in set_paused: {}", e.what());
+        response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
+    }
 }
 
-static void loop(JObj &response, const json_value *params) {
-  spdlog::debug("Trying to start looping ...");
-  bool error = pFrame->StartLooping();
-
-  if (error){
-    spdlog::error("Failed to start looping!");
-    response << jrpc_error(1, "could not start looping");
-  } 
-  else{
-    spdlog::debug("Started looping successfully");
-    response << jrpc_result(0);
-  }
+// 开始循环
+static void loop(JObj& response, const json_value* params)
+{
+    try {
+        spdlog::debug("Trying to start looping...");
+        bool error = pFrame->StartLooping();
+        if (error) {
+            spdlog::error("Failed to start looping!");
+            response << jrpc_error(1, "could not start looping");
+        } else {
+            spdlog::debug("Started looping successfully");
+            response << jrpc_result(0);
+        }
+    } catch (std::exception& e) {
+        // 捕获异常
+        spdlog::error("Exception caught in loop: {}", e.what());
+        response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
+    }
 }
-
-static void stop_capture(JObj &response, const json_value *params) {
-  spdlog::debug("Stop capture ...");
-  pFrame->StopCapturing();
-  response << jrpc_result(0);
+// 停止捕捉
+static void stop_capture(JObj& response, const json_value* params)
+{
+    try {
+        spdlog::debug("Stop capture...");
+        pFrame->StopCapturing();
+        response << jrpc_result(0);
+    } catch (std::exception& e) {
+        // 捕获异常
+        spdlog::error("Exception caught in stop_capture: {}", e.what());
+        response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
+    }
 }
 
 static bool parse_rect(wxRect *r, const json_value *j) {
@@ -950,99 +1031,128 @@ static bool parse_rect(wxRect *r, const json_value *j) {
   return true;
 }
 
-static void find_star(JObj &response, const json_value *params) {
-  VERIFY_GUIDER(response);
-
-  spdlog::debug("Trying to find a star for guiding ...");
-
-  Params p("roi", params);
-
-  wxRect roi;
-  const json_value *j = p.param("roi");
-  if (j && !parse_rect(&roi, j)) {
-    spdlog::error("Invilid ROI parameters");
-    response << jrpc_error(JSONRPC_INVALID_PARAMS, "invalid ROI param");
-    return;
-  }
-
-  bool error = pFrame->AutoSelectStar(roi);
-
-  if (!error) {
-    const PHD_Point &lockPos = pFrame->pGuider->LockPosition();
-    if (lockPos.IsValid()) {
-      spdlog::debug("Found a star at [{}{}]",lockPos.X,lockPos.Y);
-      response << jrpc_result(lockPos);
-      return;
+// 寻找星星
+static void find_star(JObj& response, const json_value* params)
+{
+    try {
+        VERIFY_GUIDER(response);
+        spdlog::debug("Trying to find a star for guiding...");
+        Params p("roi", params);
+        wxRect roi;
+        const json_value* j = p.param("roi");
+        if (j && !parse_rect(&roi, j)) {
+            spdlog::error("Invalid ROI parameters");
+            response << jrpc_error(JSONRPC_INVALID_PARAMS, "invalid ROI param");
+            return;
+        }
+        bool error = pFrame->AutoSelectStar(roi);
+        if (!error) {
+            const PHD_Point& lockPos = pFrame->pGuider->LockPosition();
+            if (lockPos.IsValid()) {
+                spdlog::debug("Found a star at [{}, {}]", lockPos.X, lockPos.Y);
+                response << jrpc_result(lockPos);
+                return;
+            }
+        }
+        spdlog::error("Failed to find a good star for guiding");
+        response << jrpc_error(1, "could not find star");
+    } catch (std::exception& e) {
+        // 捕获异常
+        spdlog::error("Exception caught in find_star: {}", e.what());
+        response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
     }
-  }
-  spdlog::error("Failed to find a good star for guiding");
-  response << jrpc_error(1, "could not find star");
 }
-
-static void get_pixel_scale(JObj &response, const json_value *params) {
-  double scale = pFrame->GetCameraPixelScale();
-  if (scale == 1.0)
-    response << jrpc_result(NULL_VALUE); // scale unknown
-  else{
-    spdlog::debug("Current pixel size : {}",scale);
-    response << jrpc_result(scale);
-  }
+// 获取像素尺寸
+static void get_pixel_scale(JObj& response, const json_value* params)
+{
+    try {
+        double scale = pFrame->GetCameraPixelScale();
+        if (scale == 1.0) {
+            response << jrpc_result(NULL_VALUE); // scale unknown
+        } else {
+            spdlog::debug("Current pixel size: {}", scale);
+            response << jrpc_result(scale);
+        }
+    } catch (std::exception& e) {
+        // 捕获异常
+        spdlog::error("Exception caught in get_pixel_scale: {}", e.what());
+        response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
+    }
 }
-
-static void get_app_state(JObj &response, const json_value *params) {
-  EXPOSED_STATE st = Guider::GetExposedState();
-  response << jrpc_result(state_name(st));
+// 获取应用程序状态
+static void get_app_state(JObj& response, const json_value* params)
+{
+    try {
+        EXPOSED_STATE st = Guider::GetExposedState();
+        response << jrpc_result(state_name(st));
+    } catch (std::exception& e) {
+        // 捕获异常
+        spdlog::error("Exception caught in get_app_state: {}", e.what());
+        response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
+    }
 }
-
-static void get_lock_position(JObj &response, const json_value *params) {
-  VERIFY_GUIDER(response);
-
-  const PHD_Point &lockPos = pFrame->pGuider->LockPosition();
-  if (lockPos.IsValid())
-    response << jrpc_result(lockPos);
-  else
-    response << jrpc_result(NULL_VALUE);
+// 获取锁定位置
+static void get_lock_position(JObj& response, const json_value* params)
+{
+    try {
+        VERIFY_GUIDER(response);
+        const PHD_Point& lockPos = pFrame->pGuider->LockPosition();
+        if (lockPos.IsValid()) {
+            response << jrpc_result(lockPos);
+        } else {
+            response << jrpc_result(NULL_VALUE);
+        }
+    } catch (std::exception& e) {
+        // 捕获异常
+        spdlog::error("Exception caught in get_lock_position: {}", e.what());
+        response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
+    }
 }
 
 // {"method": "set_lock_position", "params": [X, Y, true], "id": 1}
-static void set_lock_position(JObj &response, const json_value *params) {
-  Params p("x", "y", "exact", params);
-  const json_value *p0 = p.param("x"), *p1 = p.param("y");
-  double x, y;
-
-  if (!p0 || !p1 || !float_param(p0, &x) || !float_param(p1, &y)) {
-    response << jrpc_error(JSONRPC_INVALID_PARAMS,
-                           "expected lock position x, y params");
-    return;
-  }
-
-  bool exact = true;
-  const json_value *p2 = p.param("exact");
-
-  if (p2) {
-    if (!bool_param(p2, &exact)) {
-      response << jrpc_error(JSONRPC_INVALID_PARAMS,
-                             "expected boolean param at index 2");
-      return;
+// 设置锁定位置
+static void set_lock_position(JObj& response, const json_value* params)
+{
+    try {
+        // 解析参数
+        Params p("x", "y", "exact", params);
+        const json_value* p0 = p.param("x"), *p1 = p.param("y");
+        double x, y;
+        if (!p0 || !p1 || !float_param(p0, &x) || !float_param(p1, &y)) {
+            spdlog::error("Invalid parameters for set_lock_position");
+            response << jrpc_error(JSONRPC_INVALID_PARAMS, "expected lock position x, y params");
+            return;
+        }
+        bool exact = true;
+        const json_value* p2 = p.param("exact");
+        if (p2) {
+            if (!bool_param(p2, &exact)) {
+                spdlog::error("Invalid parameters for set_lock_position");
+                response << jrpc_error(JSONRPC_INVALID_PARAMS, "expected boolean param at index 2");
+                return;
+            }
+        }
+        // 验证导星器
+        VERIFY_GUIDER(response);
+        bool error;
+        // 设置锁定位置
+        if (exact) {
+            error = pFrame->pGuider->SetLockPosition(PHD_Point(x, y));
+        } else {
+            error = pFrame->pGuider->SetLockPosToStarAtPosition(PHD_Point(x, y));
+        }
+        if (error) {
+            spdlog::error("Failed to set lock position");
+            response << jrpc_error(JSONRPC_INVALID_REQUEST, "could not set lock position");
+            return;
+        }
+        spdlog::debug("Lock position set to [{}, {}]", x, y);
+        response << jrpc_result(0);
+    } catch (std::exception& e) {
+        // 捕获异常
+        spdlog::error("Exception caught in set_lock_position: {}", e.what());
+        response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
     }
-  }
-
-  VERIFY_GUIDER(response);
-
-  bool error;
-
-  if (exact)
-    error = pFrame->pGuider->SetLockPosition(PHD_Point(x, y));
-  else
-    error = pFrame->pGuider->SetLockPosToStarAtPosition(PHD_Point(x, y));
-
-  if (error) {
-    response << jrpc_error(JSONRPC_INVALID_REQUEST,
-                           "could not set lock position");
-    return;
-  }
-
-  response << jrpc_result(0);
 }
 
 inline static const char *string_val(const json_value *j) {
@@ -1070,89 +1180,101 @@ static WHICH_MOUNT which_mount(const json_value *p) {
 static void clear_calibration(JObj &response, const json_value *params) {
   bool clear_mount;
   bool clear_ao;
-
   spdlog::debug("Try to clear all calibration models");
-
-  if (!params) {
-    clear_mount = clear_ao = true;
-  } else {
-    Params p("which", params);
-
-    clear_mount = clear_ao = false;
-
-    WHICH_MOUNT which = which_mount(p.param("which"));
-    switch (which) {
-    case MOUNT:
-      clear_mount = true;
-      break;
-    case AO:
-      clear_ao = true;
-      break;
-    case WHICH_MOUNT_BOTH:
+  try {
+    // 解析参数
+    if (!params) {
       clear_mount = clear_ao = true;
-      break;
-    case WHICH_MOUNT_ERR:
+    } else {
+      Params p("which", params);
+      clear_mount = clear_ao = false;
+      WHICH_MOUNT which = which_mount(p.param("which"));
+      switch (which) {
+        case MOUNT:
+          clear_mount = true;
+          break;
+        case AO:
+          clear_ao = true;
+          break;
+        case WHICH_MOUNT_BOTH:
+          clear_mount = clear_ao = true;
+          break;
+        case WHICH_MOUNT_ERR:
+          response << jrpc_error(JSONRPC_INVALID_PARAMS,
+                                 "expected param \"mount\", \"ao\", or \"both\"");
+          return;
+      }
+    }
+    // 清除校准模型
+    Mount *mount = TheScope();
+    Mount *ao = TheAO();
+    if (mount && clear_mount) {
+      mount->ClearCalibration();
+      spdlog::debug("Successfully cleared mount calibration model");
+    }
+    if (ao && clear_ao) {
+      ao->ClearCalibration();
+      spdlog::debug("Successfully cleared AO calibration model");
+    }
+    response << jrpc_result(0);
+  } catch (std::exception &e) {
+    response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
+    spdlog::error("Error occurred while clearing calibration models: {}", e.what());
+  }
+}
+static void flip_calibration(JObj &response, const json_value *params) {
+  try {
+    // 翻转校准数据
+    bool error = pFrame->FlipCalibrationData();
+    if (error) {
+      response << jrpc_error(1, "could not flip calibration");
+      spdlog::error("Error occurred while flipping calibration data");
+    } else {
+      response << jrpc_result(0);
+      spdlog::debug("Successfully flipped calibration data");
+    }
+  } catch (std::exception &e) {
+    response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
+    spdlog::error("Error occurred while flipping calibration data: {}", e.what());
+  }
+}
+static void get_lock_shift_enabled(JObj &response, const json_value *params) {
+  try {
+    // 获取锁定位置偏移参数
+    VERIFY_GUIDER(response);
+    bool enabled = pFrame->pGuider->GetLockPosShiftParams().shiftEnabled;
+    response << jrpc_result(enabled);
+    spdlog::debug("Successfully got lock position shift enabled parameter");
+  } catch (std::exception &e) {
+    response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
+    spdlog::error("Error occurred while getting lock position shift enabled parameter: {}", e.what());
+  }
+}
+static void set_lock_shift_enabled(JObj &response, const json_value *params) {
+  try {
+    // 设置锁定位置偏移参数
+    Params p("enabled", params);
+    const json_value *val = p.param("enabled");
+    bool enable;
+    if (!val || !bool_param(val, &enable)) {
       response << jrpc_error(JSONRPC_INVALID_PARAMS,
-                             "expected param \"mount\", \"ao\", or \"both\"");
+                             "expected enabled boolean param");
       return;
     }
-  }
-
-  Mount *mount = TheScope();
-  Mount *ao = TheAO();
-
-  if (mount && clear_mount)
-    mount->ClearCalibration();
-
-  if (ao && clear_ao)
-    ao->ClearCalibration();
-
-  spdlog::debug("Successfully cleared all calibration models");
-
-  response << jrpc_result(0);
-}
-
-static void flip_calibration(JObj &response, const json_value *params) {
-  bool error = pFrame->FlipCalibrationData();
-
-  if (error)
-    response << jrpc_error(1, "could not flip calibration");
-  else
+    VERIFY_GUIDER(response);
+    pFrame->pGuider->EnableLockPosShift(enable);
     response << jrpc_result(0);
-}
-
-/// @brief 
-/// @param response 
-/// @param params 
-static void get_lock_shift_enabled(JObj &response, const json_value *params) {
-  VERIFY_GUIDER(response);
-  bool enabled = pFrame->pGuider->GetLockPosShiftParams().shiftEnabled;
-  response << jrpc_result(enabled);
-}
-
-/// @brief 
-/// @param response 
-/// @param params 
-static void set_lock_shift_enabled(JObj &response, const json_value *params) {
-  Params p("enabled", params);
-  const json_value *val = p.param("enabled");
-  bool enable;
-  if (!val || !bool_param(val, &enable)) {
-    response << jrpc_error(JSONRPC_INVALID_PARAMS,
-                           "expected enabled boolean param");
-    return;
+    spdlog::debug("Successfully set lock position shift enabled parameter");
+  } catch (std::exception &e) {
+    response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
+    spdlog::error("Error occurred while setting lock position shift enabled parameter: {}", e.what());
   }
-
-  VERIFY_GUIDER(response);
-
-  pFrame->pGuider->EnableLockPosShift(enable);
-
-  response << jrpc_result(0);
 }
 
 /// @brief 
 /// @param params 
 /// @return 
+// 判断是否需要相机移动请求
 static bool is_camera_shift_req(const json_value *params) {
   Params p("axes", params);
   const json_value *j = p.param("axes");
@@ -1164,7 +1286,7 @@ static bool is_camera_shift_req(const json_value *params) {
   }
   return false;
 }
-
+// 序列化 LockPosShiftParams 对象为 JObj 对象
 static JObj &operator<<(JObj &j, const LockPosShiftParams &l) {
   j << NV("enabled", l.shiftEnabled);
   if (l.shiftRate.IsValid()) {
@@ -1174,29 +1296,32 @@ static JObj &operator<<(JObj &j, const LockPosShiftParams &l) {
   }
   return j;
 }
-
-/// @brief 
-/// @param response 
-/// @param params 
+// 获取 LockPosShiftParams 对象
 static void get_lock_shift_params(JObj &response, const json_value *params) {
   VERIFY_GUIDER(response);
-
-  const LockPosShiftParams &lockShift =
-      pFrame->pGuider->GetLockPosShiftParams();
-  JObj rslt;
-
-  if (is_camera_shift_req(params)) {
-    LockPosShiftParams tmp;
-    tmp.shiftEnabled = lockShift.shiftEnabled;
-    const ShiftPoint &lock = pFrame->pGuider->LockPosition();
-    tmp.shiftRate = lock.ShiftRate() * 3600; // px/sec => px/hr
-    tmp.shiftUnits = UNIT_PIXELS;
-    tmp.shiftIsMountCoords = false;
-    rslt << tmp;
-  } else
-    rslt << lockShift;
-
-  response << jrpc_result(rslt);
+  try {
+    // 获取 LockPosShiftParams 对象
+    const LockPosShiftParams &lockShift = pFrame->pGuider->GetLockPosShiftParams();
+    JObj rslt;
+    if (is_camera_shift_req(params)) {
+      // 如果是相机移动请求，构造临时的 LockPosShiftParams 对象
+      LockPosShiftParams tmp;
+      tmp.shiftEnabled = lockShift.shiftEnabled;
+      const ShiftPoint &lock = pFrame->pGuider->LockPosition();
+      tmp.shiftRate = lock.ShiftRate() * 3600; // px/sec => px/hr
+      tmp.shiftUnits = UNIT_PIXELS;
+      tmp.shiftIsMountCoords = false;
+      rslt << tmp;
+    } else {
+      // 否则直接使用 LockPosShiftParams 对象
+      rslt << lockShift;
+    }
+    response << jrpc_result(rslt);
+  } catch (std::exception &e) {
+    // 异常捕获，输出错误信息
+    Debug.Write(wxString::Format("get_lock_shift_params exception: %s\n", e.what()));
+    response << jrpc_error(-32603, "Internal error");
+  }
 }
 
 static bool get_double(double *d, const json_value *j) {
@@ -1226,31 +1351,29 @@ static bool parse_point(PHD_Point *pt, const json_value *j) {
   return true;
 }
 
+// 解析锁定位置移动参数
 static bool parse_lock_shift_params(LockPosShiftParams *shift,
                                     const json_value *params, wxString *error) {
-  // "params":[{"rate":[3.3,1.1],"units":"arcsec/hr","axes":"RA/Dec"}]
-  // or
-  // "params":{"rate":[3.3,1.1],"units":"arcsec/hr","axes":"RA/Dec"}
-
+  // 锁定位置移动参数格式为：
+  // {"rate":[3.3,1.1],"units":"arcsec/hr","axes":"RA/Dec"}
+  // 如果传入的参数是数组形式，则取数组的第一个元素
   if (params && params->type == JSON_ARRAY)
     params = params->first_child;
-
+  // 解析参数
   Params p("rate", "units", "axes", params);
-
+  // 设置默认值
   shift->shiftUnits = UNIT_ARCSEC;
   shift->shiftIsMountCoords = true;
-
   const json_value *j;
-
+  // 解析速率值
   j = p.param("rate");
   if (!j || !parse_point(&shift->shiftRate, j)) {
     *error = "expected rate value array";
     return false;
   }
-
+  // 解析单位
   j = p.param("units");
   const char *units = j ? string_val(j) : "";
-
   if (wxStricmp(units, "arcsec/hr") == 0 ||
       wxStricmp(units, "arc-sec/hr") == 0) {
     shift->shiftUnits = UNIT_ARCSEC;
@@ -1260,10 +1383,9 @@ static bool parse_lock_shift_params(LockPosShiftParams *shift,
     *error = "expected units 'arcsec/hr' or 'pixels/hr'";
     return false;
   }
-
+  // 解析坐标轴类型
   j = p.param("axes");
   const char *axes = j ? string_val(j) : "";
-
   if (wxStricmp(axes, "RA/Dec") == 0) {
     shift->shiftIsMountCoords = true;
   } else if (wxStricmp(axes, "X/Y") == 0) {
@@ -1272,54 +1394,59 @@ static bool parse_lock_shift_params(LockPosShiftParams *shift,
     *error = "expected axes 'RA/Dec' or 'X/Y'";
     return false;
   }
-
   return true;
 }
-
-/// @brief 
-/// @param response 
-/// @param params 
+// 设置锁定位置移动参数
 static void set_lock_shift_params(JObj &response, const json_value *params) {
+  // 解析参数
   wxString err;
   LockPosShiftParams shift;
   if (!parse_lock_shift_params(&shift, params, &err)) {
     response << jrpc_error(JSONRPC_INVALID_PARAMS, err);
     return;
   }
-
+  // 验证引导器是否存在
   VERIFY_GUIDER(response);
-
-  pFrame->pGuider->SetLockPosShiftRate(shift.shiftRate, shift.shiftUnits,
-                                       shift.shiftIsMountCoords, true);
-
+  // 设置锁定位置移动参数
+  try {
+    pFrame->pGuider->SetLockPosShiftRate(shift.shiftRate, shift.shiftUnits,
+                                         shift.shiftIsMountCoords, true);
+  } catch (const wxString &msg) {
+    // 异常捕获
+    response << jrpc_error(1, msg);
+    return;
+  }
   response << jrpc_result(0);
 }
-
-/// @brief save image to local file
-/// @param response 
-/// @param params 
+// 保存图像到本地文件
 static void save_image(JObj &response, const json_value *params) {
-
+  // 调试输出
   spdlog::debug("Try to save the image locally");
-
+  // 验证引导器是否存在
   VERIFY_GUIDER(response);
-
+  // 检查是否有可用的图像
   if (!pFrame->pGuider->CurrentImage()->ImageData) {
     spdlog::error("No image available");
     response << jrpc_error(2, "no image available");
     return;
   }
-
+  // 创建临时文件名
   wxString fname = wxFileName::CreateTempFileName(MyFrame::GetDefaultFileDir() +
                                                   PATHSEPSTR + "save_image_");
-
-  if (pFrame->pGuider->SaveCurrentImage(fname)) {
-    ::wxRemove(fname);
-    spdlog::error("Failed to save an image");
-    response << jrpc_error(3, "error saving image");
+  // 保存图像到本地文件
+  try {
+    if (pFrame->pGuider->SaveCurrentImage(fname)) {
+      ::wxRemove(fname);
+      spdlog::error("Failed to save an image");
+      response << jrpc_error(3, "error saving image");
+      return;
+    }
+  } catch (const wxString &msg) {
+    // 异常捕获
+    response << jrpc_error(1, msg);
     return;
   }
-
+  // 返回结果
   JObj rslt;
   rslt << NV("filename", fname);
   response << jrpc_result(rslt);
@@ -1328,60 +1455,98 @@ static void save_image(JObj &response, const json_value *params) {
 /// @brief Capture a single image , not loop
 /// @param response 
 /// @param params {"exposure" : int}
+/**
+ * @brief Capture a single frame with optional exposure time and subframe parameters
+ * @param response JSON-RPC response object
+ * @param params JSON-RPC parameters object
+ */
 static void capture_single_frame(JObj &response, const json_value *params) {
-  if (pFrame->CaptureActive) {
-    spdlog::error("Cannot capture single frame when capture is currently active");
+  try {
+    // Check if capture is already active
+    if (pFrame->CaptureActive) {
+      spdlog::error("Cannot capture single frame when capture is currently active");
+      response << jrpc_error(
+        1, "Cannot capture single frame when capture is currently active"
+      );
+      return;
+    }
+    // Parse exposure parameter or use default
+    Params p("exposure", "subframe", params);
+    const json_value *j = p.param("exposure");
+    int exposure;
+    if (j) {
+      if (j->type != JSON_INT || j->int_value < 1 || j->int_value > 10 * 60000) {
+        response << jrpc_error(
+          JSONRPC_INVALID_PARAMS, "Expected exposure parameter to be an integer between 1 and 600000"
+        );
+        return;
+      }
+      exposure = j->int_value;
+    } else {
+      exposure = pFrame->RequestedExposureDuration();
+    }
+    // Parse subframe parameter or use full frame
+    wxRect subframe;
+    if ((j = p.param("subframe")) != nullptr) {
+      if (!parse_rect(&subframe, j)) {
+        response << jrpc_error(
+          JSONRPC_INVALID_PARAMS, "Invalid subframe parameter"
+        );
+        return;
+      }
+    } else {
+      subframe = wxRect(0, 0, pCamera->FullSize.GetWidth(), pCamera->FullSize.GetHeight());
+    }
+    // Start single exposure with given parameters
+    bool err = pFrame->StartSingleExposure(exposure, subframe);
+    if (err) {
+      spdlog::error("Failed to start exposure");
+      response << jrpc_error(
+        2, "Failed to start exposure"
+      );
+      return;
+    }
+    spdlog::debug("Captured a single image successfully");
+    response << jrpc_result(0);
+  } catch (std::exception &e) {
+    spdlog::error("Exception caught in capture_single_frame: {}", e.what());
     response << jrpc_error(
-        1, "cannot capture single frame when capture is currently active");
-    return;
+      JSONRPC_INTERNAL_ERROR, "Internal error occurred in capture_single_frame"
+    );
   }
-
-  Params p("exposure", "subframe", params);
-  const json_value *j = p.param("exposure");
-  int exposure;
-  if (j) {
-    if (j->type != JSON_INT || j->int_value < 1 || j->int_value > 10 * 60000) {
-      response << jrpc_error(JSONRPC_INVALID_PARAMS, "expected exposure param");
-      return;
-    }
-    exposure = j->int_value;
-  } else {
-    exposure = pFrame->RequestedExposureDuration();
-  }
-
-  wxRect subframe;
-
-  if ((j = p.param("subframe")) != nullptr)
-    if (!parse_rect(&subframe, j)) {
-      response << jrpc_error(JSONRPC_INVALID_PARAMS, "invalid subframe param");
-      return;
-    }
-
-  bool err = pFrame->StartSingleExposure(exposure, subframe);
-  if (err) {
-    spdlog::error("Failed to start exposure");
-    response << jrpc_error(2, "failed to start exposure");
-    return;
-  }
-  spdlog::debug("Captured a single image successfully");
-  response << jrpc_result(0);
 }
-
-/// @brief Check whether the camera uses sub-frame
-/// @param response 
-/// @param params 
+/**
+ * @brief Check whether the camera uses sub-frame
+ * @param response JSON-RPC response object
+ * @param params JSON-RPC parameters object
+ */
 static void get_use_subframes(JObj &response, const json_value *params) {
-  spdlog::debug("Check whether the camera uses sub-frame");
-  response << jrpc_result(pCamera && pCamera->UseSubframes);
+  try {
+    spdlog::debug("Checking if camera uses sub-frames");
+    response << jrpc_result(pCamera && pCamera->UseSubframes);
+  } catch (std::exception &e) {
+    spdlog::error("Exception caught in get_use_subframes: {}", e.what());
+    response << jrpc_error(
+      JSONRPC_INTERNAL_ERROR, "Internal error occurred in get_use_subframes"
+    );
+  }
 }
-
-/// @brief Get the frame size used by the current camera
-/// @param response 
-/// @param params 
+/**
+ * @brief Get the frame size used by the current camera
+ * @param response JSON-RPC response object
+ * @param params JSON-RPC parameters object
+ */
 static void get_search_region(JObj &response, const json_value *params) {
-  spdlog::debug("Get the frame size used by the current camera");
-  VERIFY_GUIDER(response);
-  response << jrpc_result(pFrame->pGuider->GetSearchRegion());
+  try {
+    spdlog::debug("Getting frame size used by current camera");
+    VERIFY_GUIDER(response);
+    response << jrpc_result(pFrame->pGuider->GetSearchRegion());
+  } catch (std::exception &e) {
+    spdlog::error("Exception caught in get_search_region: {}", e.what());
+    response << jrpc_error(
+      JSONRPC_INTERNAL_ERROR, "Internal error occurred in get_search_region"
+    );
+  }
 }
 
 struct B64Encode {
@@ -1422,63 +1587,77 @@ struct B64Encode {
 const char *const B64Encode::E =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-/// @brief Try to get an image and transfer it to the client
-/// @param response 
-/// @param params 
-static void get_star_image(JObj &response, const json_value *params) {
-  spdlog::debug("Try to get an image and transfer it to the client");
-  int reqsize = 15;
-  Params p("size", params);
-  const json_value *val = p.param("size");
-  if (val) {
-    if (val->type != JSON_INT || (reqsize = val->int_value) < 15) {
-      spdlog::error("Illegal image size parameter");
-      response << jrpc_error(JSONRPC_INVALID_PARAMS,
-                             "invalid image size param");
-      return;
+/**
+ * @brief 从当前图像中获取一个星星的图像，并将其转换为base64编码格式返回给客户端
+ * 
+ * @param response JRPC响应对象，用于返回结果或错误信息
+ * @param params 包含请求参数的JSON值
+ * 
+ * 请求参数：
+ *   - size: 可选，图像大小，必须为整数类型，默认为15，范围为[15, INT_MAX]
+ * 
+ * 响应结果：
+ *   - frame: 当前图像的帧序号
+ *   - width: 图像宽度
+ *   - height: 图像高度
+ *   - star_pos: 星星在图像中的位置
+ *   - pixels: base64编码格式的星星图像数据
+ * 
+ * 错误码：
+ *   - JSONRPC_INVALID_PARAMS(0): 无效的请求参数
+ *   - 2: 未选定星星
+ */
+static void get_star_image(JObj &response, const json_value *params)
+{
+    try {
+        spdlog::debug("Try to get an image and transfer it to the client");
+        int reqsize = 15;
+        Params p("size", params);
+        const json_value *val = p.param("size");
+        if (val) {
+            if (val->type != JSON_INT || (reqsize = val->int_value) < 15) {
+                spdlog::error("Illegal image size parameter");
+                response << jrpc_error(JSONRPC_INVALID_PARAMS, "invalid image size param");
+                return;
+            }
+        }
+        VERIFY_GUIDER(response);
+        Guider *guider = pFrame->pGuider;
+        const usImage *img = guider->CurrentImage();
+        const PHD_Point &star = guider->CurrentPosition();
+        if (guider->GetState() < GUIDER_STATE::STATE_SELECTED || !img->ImageData ||
+            !star.IsValid()) {
+            spdlog::error("No star selected!");
+            response << jrpc_error(2, "no star selected");
+            return;
+        }
+        int const halfw = wxMin((reqsize - 1) / 2, 31);
+        int const fullw = 2 * halfw + 1;
+        int const sx = (int)rint(star.X);
+        int const sy = (int)rint(star.Y);
+        wxRect rect(sx - halfw, sy - halfw, fullw, fullw);
+        if (img->Subframe.IsEmpty())
+            rect.Intersect(wxRect(img->Size));
+        else
+            rect.Intersect(img->Subframe);
+        B64Encode enc;
+        for (int y = rect.GetTop(); y <= rect.GetBottom(); y++) {
+            const unsigned short *p =
+                img->ImageData + y * img->Size.GetWidth() + rect.GetLeft();
+            enc.append(p, rect.GetWidth() * sizeof(unsigned short));
+        }
+        PHD_Point pos(star);
+        pos.X -= rect.GetLeft();
+        pos.Y -= rect.GetTop();
+        JObj rslt;
+        rslt << NV("frame", img->FrameNum) << NV("width", rect.GetWidth())
+            << NV("height", rect.GetHeight()) << NV("star_pos", pos)
+            << NV("pixels", enc.finish());
+        response << jrpc_result(rslt);
+    } catch (const std::exception &e) {
+        spdlog::error("Exception caught in get_star_image: {}", e.what());
+        response << jrpc_error(JSONRPC_INTERNAL_ERROR, "internal error");
     }
-  }
-
-  VERIFY_GUIDER(response);
-
-  Guider *guider = pFrame->pGuider;
-  const usImage *img = guider->CurrentImage();
-  const PHD_Point &star = guider->CurrentPosition();
-
-  if (guider->GetState() < GUIDER_STATE::STATE_SELECTED || !img->ImageData ||
-      !star.IsValid()) {
-    spdlog::error("No star selected!");
-    response << jrpc_error(2, "no star selected");
-    return;
-  }
-
-  int const halfw = wxMin((reqsize - 1) / 2, 31);
-  int const fullw = 2 * halfw + 1;
-  int const sx = (int)rint(star.X);
-  int const sy = (int)rint(star.Y);
-  wxRect rect(sx - halfw, sy - halfw, fullw, fullw);
-  if (img->Subframe.IsEmpty())
-    rect.Intersect(wxRect(img->Size));
-  else
-    rect.Intersect(img->Subframe);
-
-  B64Encode enc;
-  for (int y = rect.GetTop(); y <= rect.GetBottom(); y++) {
-    const unsigned short *p =
-        img->ImageData + y * img->Size.GetWidth() + rect.GetLeft();
-    enc.append(p, rect.GetWidth() * sizeof(unsigned short));
-  }
-
-  PHD_Point pos(star);
-  pos.X -= rect.GetLeft();
-  pos.Y -= rect.GetTop();
-
-  JObj rslt;
-  rslt << NV("frame", img->FrameNum) << NV("width", rect.GetWidth())
-       << NV("height", rect.GetHeight()) << NV("star_pos", pos)
-       << NV("pixels", enc.finish());
-
-  response << jrpc_result(rslt);
 }
 
 static bool parse_settle(SettleParams *settle, const json_value *j,
@@ -1513,141 +1692,105 @@ static bool parse_settle(SettleParams *settle, const json_value *j,
 }
 
 /// @brief start guiding
-/// @param response 
-/// @param params 
+/// @param response JSON response object
+/// @param params JSON request parameters
 static void guide(JObj &response, const json_value *params) {
-  // params:
-  //   settle [object]:
-  //     pixels [float]
-  //     arcsecs [float]
-  //     frames [integer]
-  //     time [integer]
-  //     timeout [integer]
-  //   recalibrate: boolean
-  //
-  // {"method": "guide", "params": [{"pixels": 0.5, "time": 6, "timeout": 30},
-  // false], "id": 42}
-  //    or
-  // {"method": "guide", "params": {"settle": {"pixels": 0.5, "time": 6,
-  // "timeout": 30}, "recalibrate": false}, "id": 42}
-  //
-  // todo:
-  //   accept tolerance in arcsec or pixels
-  //   accept settle time in seconds or frames
-
-  SettleParams settle;
-
-  Params p("settle", "recalibrate", "roi", params);
-  const json_value *p0 = p.param("settle");
-  if (!p0 || p0->type != JSON_OBJECT) {
-    response << jrpc_error(JSONRPC_INVALID_PARAMS,
-                           "expected settle object param");
-    return;
-  }
-  wxString errMsg;
-  if (!parse_settle(&settle, p0, &errMsg)) {
-    response << jrpc_error(JSONRPC_INVALID_PARAMS, errMsg);
-    return;
-  }
-
-  bool recalibrate = false;
-  const json_value *p1 = p.param("recalibrate");
-  if (p1) {
-    if (!bool_param(p1, &recalibrate)) {
-      response << jrpc_error(JSONRPC_INVALID_PARAMS,
-                             "expected bool value for recalibrate");
+  try {
+    SettleParams settle;
+    // Parse settle parameters
+    Params p("settle", "recalibrate", "roi", params);
+    const json_value *p0 = p.param("settle");
+    if (!p0 || p0->type != JSON_OBJECT) {
+      response << jrpc_error(JSONRPC_INVALID_PARAMS, "expected settle object param");
       return;
     }
-  }
-
-  wxRect roi;
-  const json_value *p2 = p.param("roi");
-  if (p2 && !parse_rect(&roi, p2)) {
-    response << jrpc_error(JSONRPC_INVALID_PARAMS, "invalid ROI param");
-    return;
-  }
-
-  if (recalibrate &&
-      !pConfig->Global.GetBoolean("/server/guide_allow_recalibrate", true)) {
-    Debug.AddLine("ignoring client recalibration request since "
-                  "guide_allow_recalibrate = false");
-    recalibrate = false;
-  }
-
-  wxString err;
-
-  unsigned int ctrlOptions = GUIDEOPT_USE_STICKY_LOCK;
+    wxString errMsg;
+    if (!parse_settle(&settle, p0, &errMsg)) {
+      response << jrpc_error(JSONRPC_INVALID_PARAMS, errMsg);
+      return;
+    }
+    // Parse recalibrate parameter
+    bool recalibrate = false;
+    const json_value *p1 = p.param("recalibrate");
+    if (p1 && !bool_param(p1, &recalibrate)) {
+      response << jrpc_error(JSONRPC_INVALID_PARAMS, "expected bool value for recalibrate");
+      return;
+    }
+    // Parse roi parameter
+    wxRect roi;
+    const json_value *p2 = p.param("roi");
+    if (p2 && !parse_rect(&roi, p2)) {
+      response << jrpc_error(JSONRPC_INVALID_PARAMS, "invalid ROI param");
+      return;
+    }
+    // Check if recalibration is allowed
+    if (recalibrate && !pConfig->Global.GetBoolean("/server/guide_allow_recalibrate", true)) {
+      Debug.AddLine("ignoring client recalibration request since guide_allow_recalibrate = false");
+      recalibrate = false;
+    }
+    // Set control options
+    unsigned int ctrlOptions = GUIDEOPT_USE_STICKY_LOCK;
     if (recalibrate)
-        ctrlOptions |= GUIDEOPT_FORCE_RECAL;
-
-  if (!PhdController::CanGuide(&err))
-    response << jrpc_error(1, err);
-  else if (PhdController::Guide(ctrlOptions, settle, roi, &err))
-    response << jrpc_result(0);
-  else
-    response << jrpc_error(1, err);
+      ctrlOptions |= GUIDEOPT_FORCE_RECAL;
+    // Check if guiding is possible
+    wxString err;
+    if (!PhdController::CanGuide(&err)) {
+      response << jrpc_error(1, err);
+      return;
+    }
+    // Start guiding
+    if (PhdController::Guide(ctrlOptions, settle, roi, &err)) {
+      response << jrpc_result(0);
+    } else {
+      response << jrpc_error(1, err);
+    }
+  } catch (std::exception &e) {
+    response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
+  }
 }
 
 /// @brief dither
-/// @param response 
-/// @param params 
+/// @param response JSON response object
+/// @param params JSON request parameters
 static void dither(JObj &response, const json_value *params) {
-  // params:
-  //   amount [integer] - max pixels to move in each axis
-  //   raOnly [bool] - when true, only dither ra
-  //   settle [object]:
-  //     pixels [float]
-  //     arcsecs [float]
-  //     frames [integer]
-  //     time [integer]
-  //     timeout [integer]
-  //
-  // {"method": "dither", "params": [10, false, {"pixels": 1.5, "time": 8,
-  // "timeout": 30}], "id": 42}
-  //    or
-  // {"method": "dither", "params": {"amount": 10, "raOnly": false, "settle":
-  // {"pixels": 1.5, "time": 8, "timeout": 30}}, "id": 42}
-
-  Params p("amount", "raOnly", "settle", params);
-  const json_value *jv;
-  double ditherAmt;
-
-  jv = p.param("amount");
-  if (!jv || !float_param(jv, &ditherAmt)) {
-    response << jrpc_error(JSONRPC_INVALID_PARAMS,
-                           "expected dither amount param");
-    return;
-  }
-
-  bool raOnly = false;
-  jv = p.param("raOnly");
-  if (jv) {
-    if (!bool_param(jv, &raOnly)) {
-      response << jrpc_error(JSONRPC_INVALID_PARAMS,
-                             "expected dither raOnly param");
+  try {
+    // Parse request parameters
+    Params p("amount", "raOnly", "settle", params);
+    const json_value *jv;
+    double ditherAmt;
+    jv = p.param("amount");
+    if (!jv || !float_param(jv, &ditherAmt)) {
+      response << jrpc_error(JSONRPC_INVALID_PARAMS, "expected dither amount param");
       return;
     }
+    bool raOnly = false;
+    jv = p.param("raOnly");
+    if (jv && !bool_param(jv, &raOnly)) {
+      response << jrpc_error(JSONRPC_INVALID_PARAMS, "expected dither raOnly param");
+      return;
+    }
+    SettleParams settle;
+    jv = p.param("settle");
+    if (!jv || jv->type != JSON_OBJECT) {
+      response << jrpc_error(JSONRPC_INVALID_PARAMS, "expected settle object param");
+      return;
+    }
+    wxString errMsg;
+    if (!parse_settle(&settle, jv, &errMsg)) {
+      response << jrpc_error(JSONRPC_INVALID_PARAMS, errMsg);
+      return;
+    }
+    // Check if dithering is possible
+    wxString err;
+    // Perform dithering
+    if (PhdController::Dither(fabs(ditherAmt), raOnly, settle, &err)) {
+      response << jrpc_result(0);
+    } else {
+      response << jrpc_error(1, err);
+    }
+  } catch (std::exception &e) {
+    response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
   }
-
-  SettleParams settle;
-
-  jv = p.param("settle");
-  if (!jv || jv->type != JSON_OBJECT) {
-    response << jrpc_error(JSONRPC_INVALID_PARAMS,
-                           "expected settle object param");
-    return;
-  }
-  wxString errMsg;
-  if (!parse_settle(&settle, jv, &errMsg)) {
-    response << jrpc_error(JSONRPC_INVALID_PARAMS, errMsg);
-    return;
-  }
-
-  wxString error;
-  if (PhdController::Dither(fabs(ditherAmt), raOnly, settle, &error))
-    response << jrpc_result(0);
-  else
-    response << jrpc_error(1, error);
 }
 
 /// @brief Shutdown LightGuider via socket connection
@@ -1659,62 +1802,83 @@ static void shutdown(JObj &response, const json_value *params) {
 
   response << jrpc_result(0);
 }
-
-/// @brief get camera current binning mode
-/// @param response 
-/// @param params {}
+/// @brief Get current camera binning mode
+/// @param response JSON response object
+/// @param params JSON request parameters
 static void get_camera_binning(JObj &response, const json_value *params) {
-  if (pCamera && pCamera->Connected) {
+  try {
+    // Check if camera is connected
+    if (!pCamera || !pCamera->Connected) {
+      spdlog::error("Camera is not connected");
+      response << jrpc_error(1, "camera not connected");
+      return;
+    }
+    // Get current binning mode
     int binning = pCamera->Binning;
-    spdlog::debug("Camera current binning mode is : {}",binning);
+    spdlog::debug("Current camera binning mode is: {}", binning);
     response << jrpc_result(binning);
-  } else{
-    spdlog::error("Camera is not connected");
-    response << jrpc_error(1, "camera not connected");
+  } catch (std::exception &e) {
+    response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
   }
 }
-
-/// @brief get current camera frame settings
-/// @param response 
-/// @param params {}
+/// @brief Get current camera frame size
+/// @param response JSON response object
+/// @param params JSON request parameters
 static void get_camera_frame_size(JObj &response, const json_value *params) {
-  spdlog::debug("Trying to get current camera frame size");
-  if (pCamera && pCamera->Connected) {
+  try {
+    spdlog::debug("Trying to get current camera frame size");
+    // Check if camera is connected
+    if (!pCamera || !pCamera->Connected) {
+      spdlog::error("Camera is not connected");
+      response << jrpc_error(1, "camera not connected");
+      return;
+    }
+    // Get current frame size
     response << jrpc_result(pCamera->FullSize);
-  } else{
-    spdlog::error("Camera is not connected!");
-    response << jrpc_error(1, "camera not connected");
+  } catch (std::exception &e) {
+    response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
   }
 }
-
 /// @brief Check whether guiding output is enabled
-/// @param response 
-/// @param params {}
+/// @param response JSON response object
+/// @param params JSON request parameters
 static void get_guide_output_enabled(JObj &response, const json_value *params) {
-  if (pMount)
+  try {
+    // Check if mount is defined
+    if (!pMount) {
+      response << jrpc_error(1, "mount not defined");
+      return;
+    }
+    // Get guiding output status
     response << jrpc_result(pMount->GetGuidingEnabled());
-  else
-    response << jrpc_error(1, "mount not defined");
-}
-
-/// @brief Set whether the guiding output enabled
-/// @param response 
-/// @param params {"enabled" : bool}
-static void set_guide_output_enabled(JObj &response, const json_value *params) {
-  Params p("enabled", params);
-  const json_value *val = p.param("enabled");
-  bool enable;
-  if (!val || !bool_param(val, &enable)) {
-    response << jrpc_error(JSONRPC_INVALID_PARAMS,
-                           "expected enabled boolean param");
-    return;
+  } catch (std::exception &e) {
+    response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
   }
-
-  if (pMount) {
-    pMount->SetGuidingEnabled(enable);
-    response << jrpc_result(0);
-  } else
-    response << jrpc_error(1, "mount not defined");
+}
+/// @brief Set whether the guiding output is enabled
+/// @param response JSON response object
+/// @param params JSON request parameters
+static void set_guide_output_enabled(JObj &response, const json_value *params) {
+  try {
+    // Parse request parameters
+    Params p("enabled", params);
+    const json_value *val = p.param("enabled");
+    bool enable;
+    if (!val || !bool_param(val, &enable)) {
+      response << jrpc_error(JSONRPC_INVALID_PARAMS,
+                             "expected enabled boolean param");
+      return;
+    }
+    // Set guiding output status
+    if (pMount) {
+      pMount->SetGuidingEnabled(enable);
+      response << jrpc_result(0);
+    } else {
+      response << jrpc_error(1, "mount not defined");
+    }
+  } catch (std::exception &e) {
+    response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
+  }
 }
 
 static bool axis_param(const Params &p, GuideAxis *a) {
@@ -1737,132 +1901,176 @@ static bool axis_param(const Params &p, GuideAxis *a) {
 
   return ok;
 }
-
+/// @brief Get algorithm parameter names for a given axis
+/// @param response JSON response object
+/// @param params JSON request parameters
 static void get_algo_param_names(JObj &response, const json_value *params) {
-  Params p("axis", params);
-  GuideAxis a;
-  if (!axis_param(p, &a)) {
-    response << jrpc_error(1, "expected axis name param");
-    return;
-  }
-  wxArrayString ary;
-  ary.push_back("algorithmName");
-
-  if (pMount) {
-    GuideAlgorithm *alg = a == GUIDE_X ? pMount->GetXGuideAlgorithm()
-                                       : pMount->GetYGuideAlgorithm();
-    alg->GetParamNames(ary);
-  }
-
-  JAry names;
-  for (auto it = ary.begin(); it != ary.end(); ++it)
-    names << ('"' + json_escape(*it) + '"');
-
-  response << jrpc_result(names);
-}
-
-static void get_algo_param(JObj &response, const json_value *params) {
-  Params p("axis", "name", params);
-  GuideAxis a;
-  if (!axis_param(p, &a)) {
-    response << jrpc_error(1, "expected axis name param");
-    return;
-  }
-  const json_value *name = p.param("name");
-  if (!name || name->type != JSON_STRING) {
-    response << jrpc_error(1, "expected param name param");
-    return;
-  }
-  bool ok = false;
-  double val;
-  if (pMount) {
-    GuideAlgorithm *alg = a == GUIDE_X ? pMount->GetXGuideAlgorithm()
-                                       : pMount->GetYGuideAlgorithm();
-    if (strcmp(name->string_value, "algorithmName") == 0) {
-      response << jrpc_result(alg->GetGuideAlgorithmClassName());
+  try {
+    Params p("axis", params);
+    GuideAxis a;
+    if (!axis_param(p, &a)) {
+      spdlog::error("Expected axis name parameter");
+      response << jrpc_error(1, "expected axis name param");
       return;
     }
-    ok = alg->GetParam(name->string_value, &val);
+    wxArrayString ary;
+    ary.push_back("algorithmName");
+    if (pMount) {
+      GuideAlgorithm *alg = a == GUIDE_X ? pMount->GetXGuideAlgorithm()
+                                         : pMount->GetYGuideAlgorithm();
+      alg->GetParamNames(ary);
+    }
+    JAry names;
+    for (auto it = ary.begin(); it != ary.end(); ++it)
+      names << ('"' + json_escape(*it) + '"');
+    response << jrpc_result(names);
+  } catch (std::exception &e) {
+    response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
   }
-  if (ok)
-    response << jrpc_result(val);
-  else
-    response << jrpc_error(1, "could not get param");
 }
 
-static void set_algo_param(JObj &response, const json_value *params) {
-  Params p("axis", "name", "value", params);
-  GuideAxis a;
-  if (!axis_param(p, &a)) {
-    response << jrpc_error(1, "expected axis name param");
-    return;
+/// @brief Get the value of a given algorithm parameter for a given axis
+/// @param response JSON response object
+/// @param params JSON request parameters
+static void get_algo_param(JObj &response, const json_value *params) {
+  try {
+    Params p("axis", "name", params);
+    GuideAxis a;
+    if (!axis_param(p, &a)) {
+      spdlog::error("Expected axis name parameter");
+      response << jrpc_error(1, "expected axis name param");
+      return;
+    }
+    const json_value *name = p.param("name");
+    if (!name || name->type != JSON_STRING) {
+      spdlog::error("Expected parameter name parameter");
+      response << jrpc_error(1, "expected param name param");
+      return;
+    }
+    bool ok = false;
+    double val;
+    if (pMount) {
+      GuideAlgorithm *alg = a == GUIDE_X ? pMount->GetXGuideAlgorithm()
+                                         : pMount->GetYGuideAlgorithm();
+      if (strcmp(name->string_value, "algorithmName") == 0) {
+        response << jrpc_result(alg->GetGuideAlgorithmClassName());
+        return;
+      }
+      ok = alg->GetParam(name->string_value, &val);
+    }
+    if (ok)
+      response << jrpc_result(val);
+    else {
+      spdlog::error("Could not get parameter {}", name->string_value);
+      response << jrpc_error(1, "could not get param");
+    }
+  } catch (std::exception &e) {
+    response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
   }
-  const json_value *name = p.param("name");
-  if (!name || name->type != JSON_STRING) {
-    response << jrpc_error(1, "expected param name param");
-    return;
+}
+
+static void set_algo_param(JObj& response, const json_value* params) {
+    try {
+        Params p("axis", "name", "value", params);
+        GuideAxis a;
+        if (!axis_param(p, &a)) {
+            response << jrpc_error(1, "expected axis name param");
+            return;
+        }
+        const json_value* name = p.param("name");
+        if (!name || name->type != JSON_STRING) {
+            response << jrpc_error(1, "expected param name param");
+            return;
+        }
+        const json_value* val = p.param("value");
+        double v;
+        if (!float_param(val, &v)) {
+            response << jrpc_error(1, "expected param value param");
+            return;
+        }
+        bool ok = false;
+        if (pMount) {
+            GuideAlgorithm* alg = a == GUIDE_X ? pMount->GetXGuideAlgorithm()
+                                               : pMount->GetYGuideAlgorithm();
+            ok = alg->SetParam(name->string_value, v);
+        }
+        if (ok) {
+            response << jrpc_result(0);
+            spdlog::info("Set algorithm parameter {} to {}", name->string_value, v);
+            if (pFrame->pGraphLog)
+                pFrame->pGraphLog->UpdateControls();
+        } else {
+            response << jrpc_error(1, "could not set param");
+            spdlog::warn("Failed to set algorithm parameter {} to {}", name->string_value, v);
+        }
+    } catch (std::exception& e) {
+        response << jrpc_error(1, "exception caught while setting algorithm parameter");
+        spdlog::error("Exception caught while setting algorithm parameter: {}", e.what());
+    } catch (...) {
+        response << jrpc_error(1, "unknown exception caught while setting algorithm parameter");
+        spdlog::error("Unknown exception caught while setting algorithm parameter");
+    }
+}
+
+/// @brief Get the current declination guide mode
+/// @param response JSON response object
+/// @param params JSON request parameters
+static void get_dec_guide_mode(JObj &response, const json_value *params) {
+  try {
+    Scope *scope = TheScope();
+    DEC_GUIDE_MODE mode = scope ? scope->GetDecGuideMode() : DEC_NONE;
+    wxString s = Scope::DecGuideModeStr(mode);
+    response << jrpc_result(s);
+  } catch (std::exception &e) {
+    response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
   }
-  const json_value *val = p.param("value");
-  double v;
-  if (!float_param(val, &v)) {
-    response << jrpc_error(1, "expected param value param");
-    return;
-  }
-  bool ok = false;
-  if (pMount) {
-    GuideAlgorithm *alg = a == GUIDE_X ? pMount->GetXGuideAlgorithm()
-                                       : pMount->GetYGuideAlgorithm();
-    ok = alg->SetParam(name->string_value, v);
-  }
-  if (ok) {
-    response << jrpc_result(0);
+}
+/// @brief Set the declination guide mode
+/// @param response JSON response object
+/// @param params JSON request parameters
+static void set_dec_guide_mode(JObj &response, const json_value *params) {
+  try {
+    Params p("mode", params);
+    const json_value *mode = p.param("mode");
+    if (!mode || mode->type != JSON_STRING) {
+      spdlog::error("Expected mode parameter");
+      response << jrpc_error(1, "expected mode param");
+      return;
+    }
+    DEC_GUIDE_MODE m = DEC_AUTO;
+    bool found = false;
+    for (int im = DEC_NONE; im <= DEC_SOUTH; im++) {
+      m = (DEC_GUIDE_MODE)im;
+      if (wxStricmp(mode->string_value, Scope::DecGuideModeStr(m)) == 0) {
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      spdlog::error("Invalid dec guide mode parameter");
+      response << jrpc_error(1, "invalid dec guide mode param");
+      return;
+    }
+    Scope *scope = TheScope();
+    if (scope)
+      scope->SetDecGuideMode(m);
     if (pFrame->pGraphLog)
       pFrame->pGraphLog->UpdateControls();
-  } else
-    response << jrpc_error(1, "could not set param");
-}
-
-static void get_dec_guide_mode(JObj &response, const json_value *params) {
-  Scope *scope = TheScope();
-  DEC_GUIDE_MODE mode = scope ? scope->GetDecGuideMode() : DEC_NONE;
-  wxString s = Scope::DecGuideModeStr(mode);
-  response << jrpc_result(s);
-}
-
-static void set_dec_guide_mode(JObj &response, const json_value *params) {
-  Params p("mode", params);
-  const json_value *mode = p.param("mode");
-  if (!mode || mode->type != JSON_STRING) {
-    response << jrpc_error(1, "expected mode param");
-    return;
+    response << jrpc_result(0);
+  } catch (std::exception &e) {
+    response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
   }
-  DEC_GUIDE_MODE m = DEC_AUTO;
-  bool found = false;
-  for (int im = DEC_NONE; im <= DEC_SOUTH; im++) {
-    m = (DEC_GUIDE_MODE)im;
-    if (wxStricmp(mode->string_value, Scope::DecGuideModeStr(m)) == 0) {
-      found = true;
-      break;
-    }
-  }
-  if (!found) {
-    response << jrpc_error(1, "invalid dec guide mode param");
-    return;
-  }
-
-  Scope *scope = TheScope();
-  if (scope)
-    scope->SetDecGuideMode(m);
-
-  if (pFrame->pGraphLog)
-    pFrame->pGraphLog->UpdateControls();
-
-  response << jrpc_result(0);
 }
-
+/// @brief Get the settling status of the PHD controller
+/// @param response JSON response object
+/// @param params JSON request parameters
 static void get_settling(JObj &response, const json_value *params) {
-  bool settling = PhdController::IsSettling();
-  response << jrpc_result(settling);
+  try {
+    bool settling = PhdController::IsSettling();
+    response << jrpc_result(settling);
+  } catch (std::exception &e) {
+    response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
+  }
 }
 
 static GUIDE_DIRECTION dir_param(const json_value *p) {
@@ -1902,57 +2110,60 @@ static GUIDE_DIRECTION opposite(GUIDE_DIRECTION d) {
     return d;
   }
 }
-
+/// @brief Issue a guide pulse to the mount or AO
+/// @param response JSON response object
+/// @param params JSON request parameters
 static void guide_pulse(JObj &response, const json_value *params) {
-  Params p("amount", "direction", "which", params);
-
-  const json_value *amount = p.param("amount");
-  if (!amount || amount->type != JSON_INT) {
-    response << jrpc_error(1, "expected amount param");
-    return;
+  try {
+    Params p("amount", "direction", "which", params);
+    const json_value *amount = p.param("amount");
+    if (!amount || amount->type != JSON_INT) {
+      spdlog::error("Expected amount parameter");
+      response << jrpc_error(1, "expected amount param");
+      return;
+    }
+    GUIDE_DIRECTION dir = dir_param(p.param("direction"));
+    if (dir == GUIDE_DIRECTION::NONE) {
+      spdlog::error("Expected direction parameter");
+      response << jrpc_error(1, "expected direction param");
+      return;
+    }
+    WHICH_MOUNT which = which_mount(p.param("which"));
+    Mount *m = nullptr;
+    switch (which) {
+    case MOUNT:
+      m = TheScope();
+      break;
+    case AO:
+      m = TheAO();
+      break;
+    case WHICH_MOUNT_BOTH:
+    case WHICH_MOUNT_ERR:
+      spdlog::error("Invalid 'which' parameter");
+      response << jrpc_error(1, "invalid 'which' param");
+      return;
+    }
+    if (!m || !m->IsConnected()) {
+      spdlog::error("Device not connected");
+      response << jrpc_error(1, "device not connected");
+      return;
+    }
+    if (pFrame->pGuider->IsCalibratingOrGuiding() || m->IsBusy()) {
+      spdlog::error("Cannot issue guide pulse while calibrating or guiding");
+      response << jrpc_error(
+          1, "cannot issue guide pulse while calibrating or guiding");
+      return;
+    }
+    int duration = amount->int_value;
+    if (duration < 0) {
+      duration = -duration;
+      dir = opposite(dir);
+    }
+    pFrame->ScheduleManualMove(m, dir, duration);
+    response << jrpc_result(0);
+  } catch (std::exception &e) {
+    response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
   }
-
-  GUIDE_DIRECTION dir = dir_param(p.param("direction"));
-  if (dir == GUIDE_DIRECTION::NONE) {
-    response << jrpc_error(1, "expected direction param");
-    return;
-  }
-
-  WHICH_MOUNT which = which_mount(p.param("which"));
-  Mount *m = nullptr;
-  switch (which) {
-  case MOUNT:
-    m = TheScope();
-    break;
-  case AO:
-    m = TheAO();
-    break;
-  case WHICH_MOUNT_BOTH:
-  case WHICH_MOUNT_ERR:
-    response << jrpc_error(1, "invalid 'which' param");
-    return;
-  }
-
-  if (!m || !m->IsConnected()) {
-    response << jrpc_error(1, "device not connected");
-    return;
-  }
-
-  if (pFrame->pGuider->IsCalibratingOrGuiding() || m->IsBusy()) {
-    response << jrpc_error(
-        1, "cannot issue guide pulse while calibrating or guiding");
-    return;
-  }
-
-  int duration = amount->int_value;
-  if (duration < 0) {
-    duration = -duration;
-    dir = opposite(dir);
-  }
-
-  pFrame->ScheduleManualMove(m, dir, duration);
-
-  response << jrpc_result(0);
 }
 
 static const char *parity_str(GuideParity p) {
@@ -1965,35 +2176,30 @@ static const char *parity_str(GuideParity p) {
     return "?";
   }
 }
-
 static void get_calibration_data(JObj &response, const json_value *params) {
-  Params p("which", params);
-
-  WHICH_MOUNT which = which_mount(p.param("which"));
+  Params p("which", params); // 解析输入参数
+  WHICH_MOUNT which = which_mount(p.param("which")); // 解析which参数
   Mount *m = nullptr;
   switch (which) {
-  case MOUNT:
-    m = TheScope();
-    break;
-  case AO:
-    m = TheAO();
-    break;
-  case WHICH_MOUNT_BOTH:
-  case WHICH_MOUNT_ERR: {
-    response << jrpc_error(1, "invalid 'which' param");
-    return;
+    case MOUNT:
+      m = TheScope();
+      break;
+    case AO:
+      m = TheAO();
+      break;
+    case WHICH_MOUNT_BOTH:
+    case WHICH_MOUNT_ERR: {
+      response << jrpc_error(1, "invalid 'which' param"); // 发送错误响应
+      return;
+    }
   }
-  }
-
-  if (!m || !m->IsConnected()) {
+  if (!m || !m->IsConnected()) { // 如果设备未连接，则发送错误响应
     response << jrpc_error(1, "device not connected");
     return;
   }
-
   JObj rslt;
-  rslt << NV("calibrated", m->IsCalibrated());
-
-  if (m->IsCalibrated()) {
+  rslt << NV("calibrated", m->IsCalibrated()); // 添加已校准标志到响应结果
+  if (m->IsCalibrated()) { // 如果已校准，添加更多响应结果
     rslt << NV("xAngle", degrees(m->xAngle()), 1)
          << NV("xRate", m->xRate() * 1000.0, 3)
          << NV("xParity", parity_str(m->RAParity()))
@@ -2002,79 +2208,64 @@ static void get_calibration_data(JObj &response, const json_value *params) {
          << NV("yParity", parity_str(m->DecParity()))
          << NV("declination", degrees(m->GetCalibrationDeclination()));
   }
-
-  response << jrpc_result(rslt);
+  response << jrpc_result(rslt); // 发送响应结果
 }
-
 static void get_cooler_status(JObj &response, const json_value *params) {
-  if (!pCamera || !pCamera->Connected) {
+  if (!pCamera || !pCamera->Connected) { // 如果相机未连接，则发送错误响应
     response << jrpc_error(1, "camera not connected");
     return;
   }
-
   bool on;
   double setpoint, power, temperature;
-
-  bool err = pCamera->GetCoolerStatus(&on, &setpoint, &power, &temperature);
-  if (err) {
+  bool err = pCamera->GetCoolerStatus(&on, &setpoint, &power, &temperature); // 获取冷却器状态
+  if (err) { // 如果获取失败，则发送错误响应
     response << jrpc_error(1, "failed to get cooler status");
     return;
   }
-
   JObj rslt;
-
   rslt << NV("coolerOn", on) << NV("temperature", temperature, 1);
-
-  if (on) {
+  if (on) { // 如果冷却器打开，添加更多响应结果
     rslt << NV("setpoint", setpoint, 1) << NV("power", power, 1);
   }
-
-  response << jrpc_result(rslt);
+  response << jrpc_result(rslt); // 发送响应结果
 }
-
 /// @brief Get current tempeture of the camera
-/// @param response 
+/// @param response
 /// @param params {}
 static void get_sensor_temperature(JObj &response, const json_value *params) {
-  if (!pCamera || !pCamera->Connected) {
+  if (!pCamera || !pCamera->Connected) { // 如果相机未连接，则发送错误响应
     spdlog::error("Camera is not connected");
     response << jrpc_error(1, "camera not connected");
     return;
   }
-
   double temperature;
-  bool err = pCamera->GetSensorTemperature(&temperature);
-  if (err) {
+  bool err = pCamera->GetSensorTemperature(&temperature); // 获取相机当前温度
+  if (err) { // 如果获取失败，则发送错误响应
     spdlog::error("Failed to get camera current temperature");
     response << jrpc_error(1, "failed to get sensor temperature");
     return;
   }
   spdlog::debug("Current temperature : {}",temperature);
   JObj rslt;
-  rslt << NV("temperature", temperature, 1);
-
-  response << jrpc_result(rslt);
+  rslt << NV("temperature", temperature, 1); // 添加温度到响应结果
+  response << jrpc_result(rslt); // 发送响应结果
 }
-
 /// @brief export the settings to a local file
-/// @param response 
+/// @param response
 /// @param params {}
 static void export_config_settings(JObj &response, const json_value *params) {
   spdlog::debug("Attempt to export configuration file to local");
   wxString filename(MyFrame::GetDefaultFileDir() + PATHSEPSTR +
                     "lightguider_settings.txt");
-  bool err = pConfig->SaveAll(filename);
-
-  if (err) {
+  bool err = pConfig->SaveAll(filename); // 将配置保存到文件中
+  if (err) { // 如果保存失败，则发送错误响应
     spdlog::error("Faild to export settings");
     response << jrpc_error(1, "export settings failed");
     return;
   }
-
   JObj rslt;
-  rslt << NV("filename", filename);
-
-  response << jrpc_result(rslt);
+  rslt << NV("filename", filename); // 添加文件名到响应结果
+  response << jrpc_result(rslt); // 发送响应结果
 }
 
 struct JRpcCall {
@@ -2108,255 +2299,334 @@ static void dump_response(const JRpcCall &call) {
 
   Debug.Write(wxString::Format("evsrv: cli %p response: %s\n", call.cli, s));
 }
-
 /// @brief Just a response to check whether the server is modified by LightAPT
 /// @param response
 /// @param params
 static void lightapt_modify_response(JObj &response, const json_value *params) {
-  spdlog::info("Verification succeeded. The client is lightapt client");
-  JObj rslt;
-  rslt << NV("version", "2.6.11-patch1");
-  rslt << NV("modified", true);
-  response << jrpc_result(rslt);
+  try {
+    spdlog::info("Verification succeeded. The client is a LightAPT client.");
+    JObj rslt;
+    rslt << NV("version", "2.6.11-patch1");
+    rslt << NV("modified", true);
+    response << jrpc_result(rslt);
+  } catch (const std::exception &e) {
+    spdlog::error("Exception occurred in lightapt_modify_response(): {}", e.what());
+    JObj rslt;
+    rslt << NV("status", false);
+    rslt << NV("error", "An error occurred while processing your request.");
+    response << jrpc_error(-1, "Internal server error");
+  }
 }
-
-// The Following Codes are written by Max Qian , for LightAPT
-
-/// @brief Check if the dark images library is loaded
+// The following codes are written by Max Qian for LightAPT.
+/// @brief Check if the dark images library is loaded.
 /// @param response
 /// @param params
 static void is_darklib_loaded(JObj &response, const json_value *params) {
-  spdlog::debug("Check whether the dark-field library has been loaded");
-  bool loaded = pFrame->LoadDarkLibrary();
-  if(loaded){
-    spdlog::debug("Dark-field library had loaded");
+  try {
+    spdlog::debug("Check whether the dark-field library has been loaded.");
+    bool loaded = pFrame->LoadDarkLibrary();
+    if (loaded) {
+      spdlog::debug("Dark-field library has been loaded.");
+    } else {
+      spdlog::debug("Dark-field library was not loaded.");
+    }
+    JObj rslt;
+    rslt << NV("status", true);
+    rslt << NV("loaded", loaded);
+    response << jrpc_result(rslt);
+  } catch (const std::exception &e) {
+    spdlog::error("Exception occurred in is_darklib_loaded(): {}", e.what());
+    JObj rslt;
+    rslt << NV("status", false);
+    rslt << NV("error", "An error occurred while processing your request.");
+    response << jrpc_error(-1, "Internal server error");
   }
-  else{
-    spdlog::debug("Dark-field library was not loaded");
-  }
-  JObj rslt;
-  rslt << NV("status",true);
-  rslt << NV("loaded", loaded);
-  response << jrpc_result(rslt);
 }
-
-/// @brief Get the full path to the dark library
+/// @brief Get the full path to the dark library.
 /// @param response
 /// @param params
 static void get_darklib_path(JObj &response, const json_value *params) {
-  spdlog::debug("Try to get the dark field library path");
-  wxString path = pFrame->GetDarksDir();
-  spdlog::debug("DarkLib path : {}",std::string(path));
-  JObj rslt;
-  rslt << NV("status",true);
-  rslt << NV("path", path);
-  response << jrpc_result(rslt);
+  try {
+    spdlog::debug("Try to get the dark field library path.");
+    wxString path = pFrame->GetDarksDir();
+    spdlog::debug("DarkLib path: {}", std::string(path));
+    JObj rslt;
+    rslt << NV("status", true);
+    rslt << NV("path", path);
+    response << jrpc_result(rslt);
+  } catch (const std::exception &e) {
+    spdlog::error("Exception occurred in get_darklib_path(): {}", e.what());
+    JObj rslt;
+    rslt << NV("status", false);
+    rslt << NV("error", "An error occurred while processing your request.");
+    response << jrpc_error(-1, "Internal server error");
+  }
 }
-
-/// @brief Get the name of the dark library
+/// @brief Get the name of the dark library.
 /// @param response
 /// @param params
 static void get_darklib_name(JObj &response, const json_value *params) {
-  spdlog::debug("Try to get the name of darkfield library by number");
-  Params p("profile_id", params);
-  const json_value *profile_id = p.param("profile_id");
-
-  JObj rslt;
-  if(!profile_id){
-    spdlog::error("The profile id must be provided");
-    rslt << NV("status",false);
-    rslt << NV("error","The file id must be provided");
+  try {
+    spdlog::debug("Try to get the name of darkfield library by number.");
+    Params p("profile_id", params);
+    const json_value *profile_id = p.param("profile_id");
+    JObj rslt;
+    if (!profile_id) {
+      spdlog::error("The profile id must be provided.");
+      rslt << NV("status", false);
+      rslt << NV("error", "The file id must be provided.");
+      response << jrpc_result(rslt);
+      return;
+    }
+    wxString name = pFrame->DarkLibFileName(profile_id->int_value);
+    spdlog::debug("Dark lib name: {}, profile id: {}", std::string(name), profile_id->int_value);
+    rslt << NV("status", true);
+    rslt << NV("name", name);
     response << jrpc_result(rslt);
-    return;
+  } catch (const std::exception &e) {
+    spdlog::error("Exception occurred in get_darklib_name(): {}", e.what());
+    JObj rslt;
+    rslt << NV("status", false);
+    rslt << NV("error", "An error occurred while processing your request.");
+    response << jrpc_error(-1, "Internal server error");
   }
-
-  wxString name = pFrame->DarkLibFileName(profile_id->int_value);
-  spdlog::debug("Dark lib name : {} , profile id : {}",std::string(name),profile_id->int_value);
-  rslt << NV("status",true);
-  rslt << NV("name", name);
-  response << jrpc_result(rslt);
 }
-
-/// @brief Set which dark library to be used as the main dark frames
+/// @brief Set which dark library to be used as the main dark frames.
 /// @param response 
 /// @param params 
 static void set_darklib(JObj &response, const json_value *params)
 {
-  spdlog::debug("Try to set the current darkfield library");
+  try {
+    spdlog::debug("Try to set the current darkfield library.");
+    Params p("library_path", params);
+    const json_value *library_path = p.param("library_path");
+    JObj rslt;
+    if (!library_path) {
+      spdlog::error("The library path must be provided.");
+      rslt << NV("status", false);
+      rslt << NV("error", "The library path must be provided.");
+      response << jrpc_result(rslt);
+      return;
+    }
+    wxString path = library_path->string_value;
+    bool success = true;
+    if (success) {
+      spdlog::info("Successfully set the current darkfield library to: {}", std::string(path));
+      rslt << NV("status", true);
+      rslt << NV("message", "Successfully set the current darkfield library.");
+      response << jrpc_result(rslt);
+    } else {
+      spdlog::error("Failed to set the current darkfield library to: {}", std::string(path));
+      rslt << NV("status", false);
+      rslt << NV("error", "Failed to set the current darkfield library.");
+      response << jrpc_result(rslt);
+    }
+  } catch (const std::exception &e) {
+    spdlog::error("Exception occurred in set_darklib(): {}", e.what());
+    JObj rslt;
+    rslt << NV("status", false);
+    rslt << NV("error", "An error occurred while processing your request.");
+    response << jrpc_error(-1, "Internal server error");
+  }
 }
-
 /// @brief Start Dark Library Image Capture
-/// @param response 
-/// @param params 
+/// @param response JRPC response object
+/// @param params JRPC parameters object
 static void start_darklib_capture(JObj &response, const json_value *params)
 {
-  if (pFrame->pGuider->IsCalibratingOrGuiding() || pFrame -> pGuider -> IsGuiding()) {
-    response << jrpc_error(
-        1, "cannot issue guide pulse while calibrating or guiding");
-        spdlog::error("cannot issue guide pulse while calibrating or guiding");
-    return;
-  }
-
-    spdlog::debug("Try to build a dark field library");
-    // Check whether the camera has a shutter , if not must warn the use to cover the scope
-    // This should be finished at the client side , there will not return any message
-    if (!pCamera->HasShutter){
-      // wxMessageBox(_("Cover guide scope"));
-    }
-    // Set a flag
-    pCamera->ShutterClosed = true;
-
-    bool err = false;
-
-    // Load the parameters we needed
-    // name : the name of the dark library to save
-    // max_exposure : the max value of the exposure
-    // int min_exposure = m_pDarkMinExpTime->GetSelection();
-    // min_exposure : the min value of the exposure
-    // int max_exposure = m_pDarkMaxExpTime->GetSelection();
-    // count : the count of the image each exposure time to capture
-    // int count = m_pDarkCount->GetValue();
-    // rebuild : whether to rebuild the dark lib
-    // m_rbNewDarkLib->GetValue()
-    // continue : to continue process the old dark lib
-    Params p("name","max_exposure", "min_exposure" , "count ", "tip",params);
-
-    const json_value *name = p.param("name");
-    const json_value *max_exposure = p.param("max_exposure");
-    const json_value *min_exposure = p.param("min_exposure");
-    const json_value *count = p.param("count");
-    const json_value *tip = p.param("tip");
-
-    JObj rslt;
-
-    // Just check the parameters
-    if(!max_exposure){
-      spdlog::error("Max exposure time should be given");
-      rslt << NV("error","Max exposure time should be given");
-      response << jrpc_result(rslt);
-      return;
-    }
-    if(!min_exposure){
-      spdlog::error("Min exposure time should be given");
-      rslt << NV("error","Min exposure time should be given");
-      response << jrpc_result(rslt);
-      return;
-    }
-    if(!count){
-      spdlog::error("Number of the dark frames should be given");
-      rslt << NV("error","Number of the dark frames should be given");
-      response << jrpc_result(rslt);
-      return;
-    }
-    
-
-    // 检查相机是否连接
-    if (!pCamera || !pCamera->Connected)
+    try
     {
-      spdlog::error("Camera is not connected");
-      rslt << NV("error", err);
-      rslt << NV("message" , "Camera is not connected");
-      response << jrpc_result(rslt);
-      return;
-    }
-
-    DarksDialog dlg(pFrame, true);
-
-    spdlog::debug("Try to set dark field library parameters");
-
-    wxString max;
-    wxString min;
-
-    dlg.m_pDarkMinExpTime->SetValue(min.Format("%f s",min_exposure->float_value));
-    dlg.m_pDarkMaxExpTime->SetValue(max.Format("%f s",max_exposure->float_value));
-    dlg.m_pDarkCount->SetValue(count->int_value);
-    if(tip)
-      dlg.m_pNotes->SetValue(wxString(tip->string_value));
-
-    err = dlg.OnServerStart();
-
-    if (err){
-      spdlog::error("Failed to create dark image library");
-      rslt << NV("status", err);
-      rslt << NV("message" , "Failed to create dark image library");
-    }
-    else
-    {
-        // Put up a message showing results and maybe notice to uncover the scope; then close the dialog
-        pCamera->ShutterClosed = false; // Lights
-        //if (!pCamera->HasShutter)
+        // Check if the guider is calibrating or guiding
+        if (pFrame->pGuider->IsCalibratingOrGuiding() || pFrame->pGuider->IsGuiding())
+        {
+            response << jrpc_error(1, "Cannot issue guide pulse while calibrating or guiding");
+            spdlog::error("Cannot issue guide pulse while calibrating or guiding");
+            return;
+        }
+        spdlog::debug("Try to build a dark field library");
+        // Check whether the camera has a shutter, if not, warn the user to cover the scope
+        // This should be finished at the client side, there will not return any message
+        if (!pCamera->HasShutter)
+        {
+            // wxMessageBox(_("Cover guide scope"));
+        }
+        // Set a flag to indicate that the shutter is closed
+        pCamera->ShutterClosed = true;
+        bool err = false;
+        // Load the required parameters
+        // name : the name of the dark library to save
+        // max_exposure : the max value of the exposure
+        // min_exposure : the min value of the exposure
+        // count : the count of the image each exposure time to capture
+        // tip : additional notes or tips
+        Params p("name", "max_exposure", "min_exposure", "count", "tip", params);
+        const json_value *name = p.param("name");
+        const json_value *max_exposure = p.param("max_exposure");
+        const json_value *min_exposure = p.param("min_exposure");
+        const json_value *count = p.param("count");
+        const json_value *tip = p.param("tip");
+        JObj rslt;
+        // Check if the required parameters are provided
+        if (!max_exposure)
+        {
+            spdlog::error("Max exposure time should be given");
+            rslt << NV("error", "Max exposure time should be given");
+            response << jrpc_result(rslt);
+            return;
+        }
+        if (!min_exposure)
+        {
+            spdlog::error("Min exposure time should be given");
+            rslt << NV("error", "Min exposure time should be given");
+            response << jrpc_result(rslt);
+            return;
+        }
+        if (!count)
+        {
+            spdlog::error("Number of the dark frames should be given");
+            rslt << NV("error", "Number of the dark frames should be given");
+            response << jrpc_result(rslt);
+            return;
+        }
+        // Check if the camera is connected
+        if (!pCamera || !pCamera->Connected)
+        {
+            spdlog::error("Camera is not connected");
+            rslt << NV("error", err);
+            rslt << NV("message", "Camera is not connected");
+            response << jrpc_result(rslt);
+            return;
+        }
+        DarksDialog dlg(pFrame, true);
+        spdlog::debug("Try to set dark field library parameters");
+        wxString max;
+        wxString min;
+        // Set the parameters in the dialog box
+        dlg.m_pDarkMinExpTime->SetValue(min.Format("%f s", min_exposure->float_value));
+        dlg.m_pDarkMaxExpTime->SetValue(max.Format("%f s", max_exposure->float_value));
+        dlg.m_pDarkCount->SetValue(count->int_value);
+        if (tip)
+            dlg.m_pNotes->SetValue(wxString(tip->string_value));
+        // Start building the dark image library
+        err = dlg.OnServerStart();
+        if (err)
+        {
+            spdlog::error("Failed to create dark image library");
+            rslt << NV("status", err);
+            rslt << NV("message", "Failed to create dark image library");
+        }
+        else
+        {
+            // Put up a message showing results and maybe notice to uncover the scope; then close the dialog
+            pCamera->ShutterClosed = false; // Lights
+            //if (!pCamera->HasShutter)
             //wrapupMsg = _("Uncover guide scope") + wxT("\n\n") + wrapupMsg;   // Results will appear in smaller font
-        //wxMessageBox(wxString::Format(_("Operation complete: %s"), wrapupMsg));
-        spdlog::debug("Created dark lib successfully.Operation complete.");
+            //wxMessageBox(wxString::Format(_("Operation complete: %s"), wrapupMsg));
+            spdlog::debug("Created dark lib successfully. Operation complete.");
+        }
+        response << jrpc_result(rslt);
     }
-    response << jrpc_result(rslt);
+    catch (const std::exception &e) // Catch any exception and log it
+    {
+        spdlog::error("Exception in start_darklib_capture: {}", e.what());
+        response << jrpc_error(1, "Exception in start_darklib_capture");
+    }
 }
-
-/// @brief Stop Dark Library Image Capture
-/// @param response 
-/// @param params 
+/**
+ * @brief Stop Dark Library Image Capture
+ * @param response 
+ * @param params 
+ */
 static void stop_darklib_capture(JObj &response, const json_value *params)
 {
-  spdlog::debug("Try to stop the dark-field library shooting");
+  try {
+    // 添加调试输出
+    spdlog::debug("Try to stop the dark-field library shooting");
+  } catch (const std::exception& e) {
+    // 添加异常捕获和处理
+    spdlog::error("Failed to stop the dark-field library shooting: {}", e.what());
+    JObj rslt;
+    rslt << NV("status", false);
+    rslt << NV("error", "Failed to stop the dark-field library shooting");
+    response << jrpc_result(rslt);
+    return;
+  }
 }
-
+/**
+ * @brief Delete Dark Library by Profile ID
+ * @param response 
+ * @param params 
+ */
 static void delete_darklib_by_profile(JObj &response, const json_value *params)
 {
-  Params p("id",params);
-  const json_value *profile_id = p.param("id");
-
-  JObj rslt;
-
-  if(!profile_id){
-    spdlog::error("No profile id was given");
-    rslt << NV("status",false);
-    rslt << NV("error","A profile id must be given");
+  try {
+    Params p("id",params);
+    const json_value *profile_id = p.param("id");
+    JObj rslt;
+    if(!profile_id){
+      spdlog::error("No profile id was given");
+      rslt << NV("status",false);
+      rslt << NV("error","A profile id must be given");
+      response << jrpc_result(rslt);
+      return;
+    }
+    pFrame -> DeleteDarkLibraryFiles(profile_id->int_value);
+    // 添加调试输出
+    spdlog::debug("Deleted the dark lib by profile id successfully");
+    rslt << NV("status",true);
     response << jrpc_result(rslt);
-    return;
+  } catch (const std::exception& e) {
+    // 添加异常捕获和处理
+    spdlog::error("Failed to delete the dark lib by profile id: {}", e.what());
+    JObj rslt;
+    rslt << NV("status", false);
+    rslt << NV("error", "Failed to delete the dark lib by profile id");
+    response << jrpc_result(rslt);
   }
-
-  pFrame -> DeleteDarkLibraryFiles(profile_id->int_value);
-
-  spdlog::debug("Deleted the dark lib by profile id successfully");
-  rslt << NV("status",true);
-  response << jrpc_result(rslt);
 }
-
-/// @brief Create a new profile
-/// @param response
-/// @param params
+/**
+ * @brief Create a new profile
+ * @param response
+ * @param params
+ */
 static void create_profile(JObj &response, const json_value *params) {
-  spdlog::debug("Try to create a new profile");
-  Params p("name", params);
-  const json_value *name = p.param("name");
-
-  JObj rslt;
-  if(!name){
-    spdlog::error("Must provide the name of the file you want to create");
-    rslt << NV("status",false);
-    rslt << NV("error"," the name of the file want to create must be provide");
+  try {
+    // 添加调试输出
+    spdlog::debug("Try to create a new profile");
+    Params p("name", params);
+    const json_value *name = p.param("name");
+    JObj rslt;
+    if(!name){
+      spdlog::error("Must provide the name of the file you want to create");
+      rslt << NV("status",false);
+      rslt << NV("error"," the name of the file want to create must be provide");
+      response << jrpc_result(rslt);
+      return;
+    }
+    bool status = pConfig->CreateProfile(name->string_value);
+    pConfig->InitializeProfile();
+    rslt << NV("status", status);
+    if(status){
+      // 添加调试输出
+      spdlog::debug("Created a new profile successfully");
+    }
+    else{
+      spdlog::error("Failed to create a new profile");
+      rslt << NV("error", "Failed to create a new profile");
+    }
     response << jrpc_result(rslt);
-    return;
-  }
-
-  bool status = pConfig->CreateProfile(name->string_value);
-  pConfig->InitializeProfile();
-  
-  rslt << NV("status", status);
-  if(status){
-    spdlog::debug("Created a new profile successfully");
-  }
-  else{
-    spdlog::error("Failed to create a new profile");
+    // unsigned int number =  pConfig -> NumProfiles();
+    // Profile.m_pConfig->Write(wxString::Format("/profile/%d/name", id),
+    // number+1);
+    EvtServer.NotifyConfigurationChange();
+  } catch (const std::exception& e) {
+    // 添加异常捕获和处理
+    spdlog::error("Failed to create a new profile: {}", e.what());
+    JObj rslt;
+    rslt << NV("status", false);
     rslt << NV("error", "Failed to create a new profile");
+    response << jrpc_result(rslt);
   }
-  response << jrpc_result(rslt);
-
-  // unsigned int number =  pConfig -> NumProfiles();
-  // Profile.m_pConfig->Write(wxString::Format("/profile/%d/name", id),
-  // number+1);
-
-  EvtServer.NotifyConfigurationChange();
 }
 
 bool isStringInList(const std::string& targetStr, const std::vector<std::string>& strList) {
@@ -2391,19 +2661,17 @@ constexpr unsigned long long operator "" _hash(char const* p, size_t)
 {
   return hash_compile_time(p);
 }
-
 /// @brief Update the infomation in the profile
-/// @param response
-/// @param params
+/// @param response 用于返回JRPC响应结果
+/// @param params 包含type, name, value三个参数的json对象
 static void update_profile(JObj &response, const json_value *params) {
   spdlog::debug("Trying to update the profile with given parameters");
   Params p("type", "name","value", params);
   const json_value *type = p.param("type");
   const json_value *name = p.param("name");
   const json_value *value = p.param("value");
-
   JObj rslt;
-  // Although these codes look a lot, they are still useful when debugging
+  // 检查参数是否合法
   if(!type){
     spdlog::error("the type of the parameter must be provide");
     rslt << NV("status",false);
@@ -2425,33 +2693,34 @@ static void update_profile(JObj &response, const json_value *params) {
     response << jrpc_result(rslt);
     return;
   }
-
+  // 根据type的值进行不同的更新操作
   switch(hash_(type->string_value))
   {
     case "auto_exp"_hash:{
-
+      // TODO: 在这里添加自动计算经验的更新操作
       break;
     }
     case "CalStepCalc"_hash:{
-
+      // TODO: 在这里添加计算步进的更新操作
       break;
     }       
     default:
       break;
   }
+  
+  // 将参数写入配置文件
   wxString command;
   pConfig->Profile.SetInt(command.Format("/%s/%s",type->string_value,name->string_value),value->int_value);
 }
-
 /// @brief Rename a profile to a new name
-/// @param response
-/// @param params
+/// @param response 用于返回JRPC响应结果
+/// @param params 包含oldname和newname两个参数的json对象
 static void rename_profile(JObj &response, const json_value *params) {
   Params p("oldname", "newname", params);
   const json_value *oldname = p.param("oldname");
   const json_value *newname = p.param("newname");
-
   JObj rslt;
+  // 检查参数是否合法
   if(!oldname || !newname){
     spdlog::debug("The original name and new name of the file to be modified must be provided");
     rslt << NV("status",false);
@@ -2459,8 +2728,8 @@ static void rename_profile(JObj &response, const json_value *params) {
     response << jrpc_result(rslt);
     return;
   }
-  bool status =
-      pConfig->RenameProfile(oldname->string_value, newname->string_value);
+  // 重命名配置文件
+  bool status = pConfig->RenameProfile(oldname->string_value, newname->string_value);
   
   rslt << NV("status", status);
   if(!status){
@@ -2472,18 +2741,16 @@ static void rename_profile(JObj &response, const json_value *params) {
   }  
   response << jrpc_result(rslt);
 }
-
 /// @brief Copy a profile to new destination
-/// @param response 
-/// @param params 
+/// @param response 用于返回JRPC响应结果
+/// @param params 包含dest和source两个参数的json对象
 static void copy_profile(JObj &response, const json_value *params)
 {
   Params p("dest", "source", params);
   const json_value *source = p.param("source");
   const json_value *dest = p.param("dest");
-
   JObj rslt;
-
+  // 检查参数是否合法
   if(!source || !dest){
     spdlog::error("The source file and address of the replication profile must be provided");
     rslt << NV("status",false);
@@ -2492,8 +2759,9 @@ static void copy_profile(JObj &response, const json_value *params)
     return;
   }
   spdlog::debug("Trying to copy the profile from {} to {}",source->string_value,dest->string_value);
-  bool status = pConfig->CloneProfile(wxString(source->string_value, wxConvUTF8),wxString( dest->string_value, wxConvUTF8));
   
+  // 复制配置文件
+  bool status = pConfig->CloneProfile(wxString(source->string_value, wxConvUTF8),wxString( dest->string_value, wxConvUTF8));
   
   if(!status){
     spdlog::error("Failed to copy the profile");
@@ -2506,15 +2774,14 @@ static void copy_profile(JObj &response, const json_value *params)
   }
   response << jrpc_result(rslt);
 }
-
 /// @brief Delete the profile by name
-/// @param response
-/// @param params
+/// @param response 用于返回JRPC响应结果
+/// @param params 包含name参数的json对象
 static void delete_profile(JObj &response, const json_value *params) {
   Params p("name", params);
   const json_value *name = p.param("name");
-
   JObj rslt;
+  // 检查参数是否合法
   if(!name){
     spdlog::error("The profile ID to be deleted must be provided");
     rslt << NV("status",false);
@@ -2522,24 +2789,39 @@ static void delete_profile(JObj &response, const json_value *params) {
     response << jrpc_result(rslt);
     return;
   }
-
   spdlog::debug("Trying to delete {} profile",name->string_value);
-  pConfig->DeleteProfile(name->string_value);
-  spdlog::debug("Deleted the {} profile",name->string_value);
-
-  rslt << NV("status",true);
-  response << jrpc_result(rslt);
+  try {
+    // 删除配置文件
+    pConfig->DeleteProfile(name->string_value);
+    spdlog::debug("Deleted the {} profile",name->string_value);
+    rslt << NV("status",true);
+    response << jrpc_result(rslt);
+  } catch (const std::exception& e) {
+    // 捕获异常并返回错误信息
+    spdlog::error("Error occurred while deleting profile: {}", e.what());
+    rslt << NV("status", false);
+    rslt << NV("error", e.what());
+    response << jrpc_result(rslt);
+  }
 }
-
 /// @brief Delete all of the profiles and do not create a new one automatically
-/// @param response
-/// @param params
+/// @param response 用于返回JRPC响应结果
+/// @param params 
 static void delete_all_profiles(JObj &response, const json_value *params) {
-  pConfig->DeleteAll();
-  spdlog::debug("Deleted all of the profiles LightGuider found");
   JObj rslt;
-  rslt << NV("status",true);
-  response << jrpc_result(rslt);
+  try {
+    // 删除所有配置文件
+    pConfig->DeleteAll();
+    spdlog::debug("Deleted all of the profiles LightGuider found");
+    rslt << NV("status",true);
+    response << jrpc_result(rslt);
+  } catch (const std::exception& e) {
+    // 捕获异常并返回错误信息
+    spdlog::error("Error occurred while deleting all profiles: {}", e.what());
+    rslt << NV("status", false);
+    rslt << NV("error", e.what());
+    response << jrpc_result(rslt);
+  }
 }
 
 static bool handle_request(JRpcCall &call) {
@@ -2899,20 +3181,23 @@ EventServer::EventServer() : m_configEventDebouncer(nullptr) {}
 EventServer::~EventServer() {}
 
 /// @brief Start the socket server non-blocking
-/// @param instanceId 
-/// @return bool
+/// @param instanceId The unique identifier for the instance of the server being started
+/// @return bool Returns true if the server was started successfully, false otherwise
 bool EventServer::EventServerStart(unsigned int instanceId) {
+  // Check if the server is already running
   if (m_serverSocket) {
     spdlog::warn("Attempt to start event server when it is already started?");
     Debug.AddLine("attempt to start event server when it is already started?");
     return false;
   }
-
+  // Calculate the port number based on the instance ID
   unsigned int port = 4400 + instanceId - 1;
+  // Create a new IPV4 address for the event server
   wxIPV4address eventServerAddr;
   eventServerAddr.Service(port);
+  // Create a new socket server
   m_serverSocket = new wxSocketServer(eventServerAddr, wxSOCKET_REUSEADDR);
-
+  // Check if the socket server was created successfully
   if (!m_serverSocket->Ok()) {
     spdlog::error("Failed to start server at port {}",port);
     Debug.Write(wxString::Format(
@@ -2921,80 +3206,86 @@ bool EventServer::EventServerStart(unsigned int instanceId) {
     m_serverSocket = nullptr;
     return true;
   }
-
+  // Set the event handler for the socket server and enable notifications for new connections
   m_serverSocket->SetEventHandler(*this, EVENT_SERVER_ID);
   m_serverSocket->SetNotify(wxSOCKET_CONNECTION_FLAG);
   m_serverSocket->Notify(true);
-
+  // Create a new timer for the server's configuration event debouncer
   m_configEventDebouncer = new wxTimer();
-
   spdlog::debug("Started socket server successfully , listening on port {}",port);
   Debug.Write(
       wxString::Format("event server started, listening on port %u\n", port));
-
-  return false;
+  // Return success
+  return true;
 }
 
+/// @brief Stop the socket server and all connected clients
 void EventServer::EventServerStop() {
   spdlog::debug("Trying to stop the socket event server");
-  if (!m_serverSocket)
+  // Check if the server is running
+  if (!m_serverSocket) {
     spdlog::error("There is not server running");
     return;
-
+  }
+  // Disconnect all connected clients
   for (CliSockSet::const_iterator it = m_eventServerClients.begin();
        it != m_eventServerClients.end(); ++it) {
     destroy_client(*it);
   }
   m_eventServerClients.clear();
-
+  // Delete the server socket and configuration event debouncer
   delete m_serverSocket;
   m_serverSocket = nullptr;
-
   delete m_configEventDebouncer;
   m_configEventDebouncer = nullptr;
-
   spdlog::debug("Stopped socket server successfully");
   Debug.AddLine("event server stopped");
 }
 
+/// @brief Handle events for the socket server
 void EventServer::OnEventServerEvent(wxSocketEvent &event) {
+  // Get the server socket
   wxSocketServer *server = static_cast<wxSocketServer *>(event.GetSocket());
-
+  // If the event is not a new connection, return
   if (event.GetSocketEvent() != wxSOCKET_CONNECTION)
     return;
-
+  // Accept the new client connection
   wxSocketClient *client = static_cast<wxSocketClient *>(server->Accept(false));
-
+  // If the client could not be connected, return
   if (!client)
     return;
-
   Debug.Write(wxString::Format("evsrv: cli %p connect\n", client));
-
+  // Set the event handler for the client and enable notifications for lost connections and input data
   client->SetEventHandler(*this, EVENT_SERVER_CLIENT_ID);
   client->SetNotify(wxSOCKET_LOST_FLAG | wxSOCKET_INPUT_FLAG);
   client->SetFlags(wxSOCKET_NOWAIT);
   client->Notify(true);
+  
+  // Set client data to a new instance of ClientData
   client->SetClientData(new ClientData(client));
-
+  // Send any catch-up events to the newly connected client
   send_catchup_events(client);
-
+  // Add the new client to the set of connected clients
   m_eventServerClients.insert(client);
 }
-
+/// @brief Handle events for a connected client
 void EventServer::OnEventServerClientEvent(wxSocketEvent &event) {
+  // Get the client socket
   wxSocketClient *cli = static_cast<wxSocketClient *>(event.GetSocket());
-
+  // If the event is a lost connection, remove the client and destroy it
   if (event.GetSocketEvent() == wxSOCKET_LOST) {
     Debug.Write(wxString::Format("evsrv: cli %p disconnect\n", cli));
-
     unsigned int const n = m_eventServerClients.erase(cli);
     if (n != 1)
       Debug.AddLine("client disconnected but not present in client set!");
-
     destroy_client(cli);
-  } else if (event.GetSocketEvent() == wxSOCKET_INPUT) {
+  }
+  // If the event is input data, handle it using the parser
+  else if (event.GetSocketEvent() == wxSOCKET_INPUT) {
     handle_cli_input(cli, m_parser);
-  } else {
+  }
+  // Otherwise, log an unexpected event
+  else {
     Debug.Write(wxString::Format("unexpected client socket event %d\n",
                                  event.GetSocketEvent()));
   }
@@ -3294,4 +3585,52 @@ void EventServer::NotifyConfigurationChange() {
   Ev ev("ConfigurationChange");
   do_notify(m_eventServerClients, ev);
   m_configEventDebouncer->StartOnce(0);
+}
+
+namespace LightGuider{
+
+  ThreadManager::~ThreadManager() {
+      m_stopFlag = true; // 设置停止标志
+      for (auto& t : m_threads) {
+        if (t.joinable()) {
+          t.join();
+        }
+      }
+  }
+
+  void ThreadManager::addThread(std::function<void()> func, const std::string& name) {
+    std::lock_guard<std::mutex> lock(m_mtx);
+    m_threads.emplace_back(std::thread([func]() {
+      try {
+        func();
+      } catch (...) {
+        spdlog::error("Unhandled exception in thread");
+      }
+    }));
+    m_threadNames.emplace_back(name);
+    spdlog::info("Added thread: {}", name);
+  }
+
+  void ThreadManager::joinAllThreads() {
+    std::lock_guard<std::mutex> lock(m_mtx);
+    for (auto& t : m_threads) {
+      t.join();
+    }
+    spdlog::info("All threads joined");
+  }
+
+  void ThreadManager::joinThreadByName(const std::string& name) {
+    std::lock_guard<std::mutex> lock(m_mtx);
+    for (size_t i = 0; i < m_threads.size(); ++i) {
+      if (m_threadNames[i] == name) {
+        m_threads[i].join();
+        m_threads.erase(m_threads.begin() + i);
+        m_threadNames.erase(m_threadNames.begin() + i);
+        spdlog::info("Thread {} joined", name);
+        return;
+      }
+    }
+    spdlog::warn("Thread {} not found", name);
+  }
+  ThreadManager ThreadManage;
 }

@@ -50,6 +50,18 @@ if(UNIX AND NOT APPLE)
   find_package(PkgConfig)
 endif()
 
+if(APPLE)
+  find_library(quicktimeFramework      QuickTime)
+  find_library(iokitFramework          IOKit)
+  find_library(carbonFramework         Carbon)
+  find_library(cocoaFramework          Cocoa)
+  find_library(systemFramework         System)
+  find_library(webkitFramework         Webkit)
+  find_library(audioToolboxFramework   AudioToolbox)
+  find_library(openGLFramework         OpenGL)
+  find_library(coreFoundationFramework CoreFoundation)
+endif()
+
 ##############################################
 # cfitsio
 set(USE_SYSTEM_CFITSIO ON)

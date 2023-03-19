@@ -34,6 +34,7 @@
 
 #include "lightguider.h"
 #include "phdupdate.h"
+#include "modules/modloader.h"
 
 #include <spdlog/spdlog.h>
 
@@ -692,6 +693,8 @@ int PhdApp::OnExit()
     delete m_instanceChecker;
     m_instanceChecker = nullptr;
 
+    LightGuider::ThreadManage.joinAllThreads();
+
     spdlog::debug("Shutdown by user , good bye!");
 
     return wxApp::OnExit();
@@ -746,25 +749,16 @@ bool PhdApp::OnCmdLineParsed(wxCmdLineParser& parser)
 
     if (parser.Found("w")){
         if (!LightGuider::module_loader.LoadModule("./libserver.so","server")) {
-            return 1;
+            ::exit(1);
         }
-        typedef void (*RunHttpServerFunc)();
-        void* handle = LightGuider::module_loader.GetHandle("server");
-        RunHttpServerFunc run_http_server = (RunHttpServerFunc) dlsym(handle, "run_http_server");
-        if (!run_http_server) {
-            spdlog::error("Failed to load function: {}", dlerror());
-            return 1;
-        }
-        std::thread http_server(run_http_server);
-        http_server.detach();
+        LightGuider::module_loader.LoadAndRunFunction<void>("server", "run", "webserver");
         spdlog::info("Started web server successfully");
     }
 
     if (parser.Found("g")){
         spdlog::debug("Trying to start websocket server for LightGuider");
         int port = 4444;
-        std::thread ws_server(&LightGuider::Event_WS_Server::run,&LightGuider::Evt_WS_Server,port); // 调用函数
-        ws_server.detach();
+        LightGuider::ThreadManage.addThread(std::bind(&LightGuider::Event_WS_Server::run,&LightGuider::Evt_WS_Server,port), "websocketserver");
     }
     
     m_resetConfig = parser.Found("R");

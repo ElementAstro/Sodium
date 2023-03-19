@@ -44,6 +44,7 @@
 #include "comet_tool.h"
 #include "guiding_assistant.h"
 #include "calibration_assistant.h"
+#include "LightGuiderDeviceDialog.h"
 
 #include <spdlog/spdlog.h>
 
@@ -262,6 +263,14 @@ void MyFrame::OnSolverAssistant(wxCommandEvent& WXUNUSED(evt))
     }
     spdlog::debug("Open solver assistant ...");
     pSolverAssistant->Show();
+}
+
+void MyFrame::OnDeviceDialog(wxCommandEvent& WXUNUSED(evt))
+{
+    if (!pDeviceDialog){
+        pDeviceDialog = LightGuiderDeviceDialogFactory::MakeDeviceDialog();
+    }
+    pDeviceDialog->Show();
 }
 
 

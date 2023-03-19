@@ -252,6 +252,13 @@ set(guiding_SRC
 source_group(Guiding FILES ${guiding_SRC})
 
 set(gui_src
+
+  ${lightguider_src_dir}/src/gui/LightGuiderDeviceDialogBase.cpp
+  ${lightguider_src_dir}/src/gui/LightGuiderDeviceDialogBase.h
+
+  ${lightguider_src_dir}/src/gui/LightGuiderDeviceDialog.cpp
+  ${lightguider_src_dir}/src/gui/LightGuiderDeviceDialog.h
+
   ${lightguider_src_dir}/src/gui/about_dialog.cpp
   ${lightguider_src_dir}/src/gui/about_dialog.h
 
@@ -517,12 +524,41 @@ if(UNIX)
    ${lightguider_SRC}
    )
 
+  target_precompile_headers(lightguider PUBLIC ${lightguider_src_dir}/src/lightguider.h)
+
+  # 查找 Python 库
+  find_package(Python REQUIRED COMPONENTS Development)
+
+  # 判断 Python 是否存在
+  if(Python_FOUND)
+      message(STATUS "Python found: ${Python_EXECUTABLE}")
+      message(STATUS "Python version: ${Python_VERSION}")
+  else()
+      message(SEND_ERROR "Python not found.")
+  endif()
+
+  # 添加 Python 头文件和库路径
+  include_directories(${Python_INCLUDE_DIRS})
+  link_directories(${Python_LIBRARY_DIRS})
+
+  # 编译器标志
+  add_definitions(${Python_DEFINITIONS})
+
+  # 链接 Python 库
+  target_link_libraries(lightguider ${Python_LIBRARIES})
+
+
   target_link_libraries(lightguider X11)
+
   target_link_libraries(lightguider lua)
 
   find_package(OpenSSL REQUIRED)
-  target_link_libraries(lightguider ${OPENSSL_LIBRARIES})
-  message("-- Using OpenSSL ${OPENSSL_VERSION}")
+  if(OpenSSL_FOUND)
+    target_link_libraries(lightguider ${OPENSSL_LIBRARIES})
+    message("-- Using OpenSSL ${OPENSSL_VERSION}")
+  else()
+    message("-- OpenSSL Not Found")
+  endif()
 
   find_package(spdlog REQUIRED)
   target_link_libraries(lightguider spdlog::spdlog_header_only)
