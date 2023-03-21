@@ -37,11 +37,9 @@ Description: Chai Script Loader and Lua Script Loader
 
 #include <vector>
 #include <unordered_map>
+#include <dlfcn.h>
 
 #include <spdlog/spdlog.h>
-
-#include "chaiscript/chaiscript.hpp"
-#include "chaiscript/chaiscript_stdlib.hpp"
 
 namespace LightGuider{
 
@@ -206,22 +204,11 @@ namespace LightGuider{
                 static const std::vector<std::string> emptyList;
                 return emptyList;
             }
-
-        protected:
-
-            // 获取函数和变量列表
-            const std::unordered_map<std::string, std::variant<chaiscript::Type_Info, chaiscript::Boxed_Value>>& get_functions_and_variables() const {
-                return chai_functions_;
-            }
             
         private:
             std::unordered_map<std::string, void*> handles_;
             std::unordered_map<std::string, std::vector<std::string>> lua_modules_;
             lua_State* L_;
-
-            std::unique_ptr<chaiscript::ChaiScript> chai_modules_;
-            // chai_functions_用于存储函数和变量列表
-            std::unordered_map<std::string, std::variant<chaiscript::Type_Info, chaiscript::Boxed_Value>> chai_functions_;
 
             std::unordered_map<std::string, PyObject*> python_modules_;
     };

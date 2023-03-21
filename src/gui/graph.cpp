@@ -764,12 +764,12 @@ GraphLogClientWindow::GraphLogClientWindow(wxWindow *parent) :
 
     if (!m_raOrDxColor.Set(pConfig->Global.GetString("/graph/RAColor", wxEmptyString)))
     {
-        m_raOrDxColor  = wxColour(100,100,255);
+        m_raOrDxColor  = wxColour(39,117,182);
         pConfig->Global.SetString("/graph/RAColor", m_raOrDxColor.GetAsString(wxC2S_HTML_SYNTAX));
     }
     if (!m_decOrDyColor.Set(pConfig->Global.GetString("/graph/DecColor", wxEmptyString)))
     {
-        m_decOrDyColor = wxColour(255,0,0);
+        m_decOrDyColor = wxColour(243,71,24);
         pConfig->Global.SetString("/graph/DecColor", m_decOrDyColor.GetAsString(wxC2S_HTML_SYNTAX));
     }
 

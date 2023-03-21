@@ -99,17 +99,6 @@ namespace LightGuider{
         luaL_openlibs(L_);
         spdlog::info("Lua script manager loaded successfully.");
         
-        try{
-            // 初始化chai_modules_，使用std::make_unique创建unique_ptr
-            chai_modules_ = std::make_unique<chaiscript::ChaiScript>();
-            // 将标准库添加到chai_modules_中
-            chaiscript::ModulePtr stdlib = chaiscript::Std_Lib::library();
-            chai_modules_->add(stdlib);
-            spdlog::info("Chai script manager loaded successfully.");
-        }catch (const chaiscript::exception::eval_error& e) {
-            spdlog::error("Failed to init the chaiscript loader");
-        }
-
         Py_Initialize();
         spdlog::info("Python script manager loaded successfully.");
     }
@@ -144,8 +133,6 @@ namespace LightGuider{
         handles_[name] = handle;
         return true;
     }
-
-    
 
     /**
      * @brief 加载Lua模块
@@ -192,19 +179,6 @@ namespace LightGuider{
             spdlog::error("Failed to load module {}: {}", moduleName, e.what());
             return false;
         }
-    }
-
-    // 加载脚本，返回值表示是否加载成功
-    bool ModuleLoader::LoadChaiScript(const std::string& filename) {
-         try {
-            // 读取并执行脚本文件
-            chai_modules_->eval_file(filename);
-            // 更新函数和变量列表
-        } catch (const chaiscript::exception::eval_error& e) {
-            spdlog::error("Failed to load script: {}", e.what());
-            return false;
-        }
-        return true;
     }
 
     /**

@@ -105,9 +105,19 @@ namespace LightGuider{
             void joinAllThreads();
             // 结束指定名称的线程
             void joinThreadByName(const std::string& name);
+
+            bool sleepThreadByName(const std::string& name, int seconds);
+
+            bool isThreadRunning(const std::string& name);
         private:
+
+            bool isThreadNameExist(const std::string& name) const {
+                return std::find(m_threadNames.begin(), m_threadNames.end(), name) != m_threadNames.end();
+            }
+
             std::vector<std::thread> m_threads;  // 线程列表
             std::vector<std::string> m_threadNames;  // 线程名称列表
+            std::vector<bool> m_sleepFlags;
             std::mutex m_mtx;  // 互斥量，保护线程列表
             std::atomic<bool> m_stopFlag{ false };
     };

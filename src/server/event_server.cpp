@@ -482,11 +482,19 @@ inline static void simple_notify_ev(const EventServer::CliSockSet &cli,
 #define SIMPLE_NOTIFY(s) simple_notify(m_eventServerClients, s)
 #define SIMPLE_NOTIFY_EV(ev) simple_notify_ev(m_eventServerClients, ev)
 
+/**
+ * @brief 向服务器发送应用程序当前状态的通知事件
+ *
+ * @param cli 指向客户端套接字对象的指针，用于向服务器发送数据
+ */
 static void send_catchup_events(wxSocketClient *cli) {
+  // 获取应用程序的当前暴露状态
   EXPOSED_STATE st = Guider::GetExposedState();
 
+  // 发送消息版本号通知事件
   do_notify1(cli, ev_message_version());
 
+  // 如果当前存在 Guider 对象，则发送锁定位置和当前星位置通知事件
   if (pFrame->pGuider) {
     if (pFrame->pGuider->LockPosition().IsValid())
       do_notify1(cli, ev_set_lock_position(pFrame->pGuider->LockPosition()));
@@ -495,12 +503,15 @@ static void send_catchup_events(wxSocketClient *cli) {
       do_notify1(cli, ev_star_selected(pFrame->pGuider->CurrentPosition()));
   }
 
+  // 如果已经完成了主天文望远镜的校准，则发送校准完成通知事件
   if (pMount && pMount->IsCalibrated())
     do_notify1(cli, ev_calibration_complete(pMount));
 
+  // 如果已经完成了辅助天文望远镜的校准，则发送校准完成通知事件
   if (pSecondaryMount && pSecondaryMount->IsCalibrated())
     do_notify1(cli, ev_calibration_complete(pSecondaryMount));
 
+  // 根据应用程序的当前状态发送相应的通知事件
   if (st == EXPOSED_STATE_GUIDING_LOCKED) {
     do_notify1(cli, ev_start_guiding());
   } else if (st == EXPOSED_STATE_CALIBRATING) {
@@ -512,6 +523,7 @@ static void send_catchup_events(wxSocketClient *cli) {
     do_notify1(cli, ev_paused());
   }
 
+  // 发送应用程序当前状态通知事件
   do_notify1(cli, ev_app_state());
 }
 
@@ -564,18 +576,31 @@ static wxString parser_error(const JsonParser &parser) {
                           parser.ErrorPos());
 }
 
+/**
+ * @brief 解析 JSON 对象，提取其中的方法、参数以及请求 ID
+ * 
+ * @param req 指向要解析的 JSON 对象的指针
+ * @param pmethod 指向方法名的指针，如果解析成功，则存储方法对象
+ * @param pparams 指向参数列表的指针，如果解析成功，则存储参数对象
+ * @param pid 指向请求 ID 的指针，如果解析成功，则存储请求 ID 对象
+ */
 static void parse_request(const json_value *req, const json_value **pmethod,
                           const json_value **pparams, const json_value **pid) {
+  // 初始化输出结果的指针变量
   *pmethod = *pparams = *pid = 0;
 
+  // 如果输入的 JSON 对象存在，则遍历其所有成员
   if (req) {
     json_for_each(t, req) {
       if (t->name) {
         if (t->type == JSON_STRING && strcmp(t->name, "method") == 0)
+          // 如果成员名称为 "method"，则将其保存到 *pmethod 指向的变量中
           *pmethod = t;
         else if (strcmp(t->name, "params") == 0)
+          // 如果成员名称为 "params"，则将其保存到 *pparams 指向的变量中
           *pparams = t;
         else if (strcmp(t->name, "id") == 0)
+          // 如果成员名称为 "id"，则将其保存到 *pid 指向的变量中
           *pid = t;
       }
     }
@@ -591,59 +616,86 @@ static void parse_request(const json_value *req, const json_value **pmethod,
     }                                                                          \
   } while (0)
   
+/**
+ * @brief 取消当前的星选中状态
+ * 
+ * @param response 存储响应结果的 JObj 对象
+ * @param params 代表参数的 JSON 对象的指针，本函数没有使用
+ */
 static void deselect_star(JObj &response, const json_value *params) {
-  VERIFY_GUIDER(response); // 确认当前引导器可用
+  VERIFY_GUIDER(response); // 确认当前引导器可用（宏定义）
+
   try {
-    pFrame->pGuider->Reset(true); // 重置引导器
+    pFrame->pGuider->Reset(true); // 重置当前引导器，取消星的选中状态
     spdlog::debug("Reset star selection"); // 打印调试信息
-    response << jrpc_result(0); // 返回成功响应
+    response << jrpc_result(0); // 返回响应结果为成功（值为 0）的 JSON 对象
   } catch (const std::exception& e) { // 异常捕获
     spdlog::error("Error occurred in deselect_star: {}", e.what()); // 打印错误信息
-    response << jrpc_error(1, e.what()); // 返回错误响应
+    response << jrpc_error(1, e.what()); // 返回响应结果为错误（代号为 1），并包含错误信息的 JSON 对象
   }
 }
 
+/**
+ * @brief 获取当前曝光时间
+ * 
+ * @param response 存储响应结果的 JObj 对象
+ * @param params 代表参数的 JSON 对象的指针，本函数没有使用
+ */
 static void get_exposure(JObj &response, const json_value *params) {
   try {
-    response << jrpc_result(pFrame->RequestedExposureDuration()); // 返回当前曝光时间
+    response << jrpc_result(pFrame->RequestedExposureDuration()); // 返回响应结果为当前曝光时间的 JSON 对象
     spdlog::debug("Current Exposure time : {}",pFrame->RequestedExposureDuration()); // 打印调试信息
   } catch (const std::exception& e) { // 异常捕获
     spdlog::error("Error occurred in get_exposure: {}", e.what()); // 打印错误信息
-    response << jrpc_error(1, e.what()); // 返回错误响应
+    response << jrpc_error(1, e.what()); // 返回响应结果为错误（代号为 1），并包含错误信息的 JSON 对象
   }
 }
 
+/**
+ * @brief 获取当前可用的曝光时间列表
+ * 
+ * @param response 存储响应结果的 JObj 对象
+ * @param params 代表参数的 JSON 对象的指针，本函数没有使用
+ */
 static void get_exposure_durations(JObj &response, const json_value *params) {
   try {
-    const std::vector<int> &exposure_durations = pFrame->GetExposureDurations(); // 获取可用的曝光时间
-    response << jrpc_result(exposure_durations); // 返回可用的曝光时间列表
+    const std::vector<int> &exposure_durations = pFrame->GetExposureDurations(); // 获取当前可用的曝光时间列表
+    response << jrpc_result(exposure_durations); // 返回响应结果为曝光时间列表的 JSON 对象
   } catch (const std::exception& e) { // 异常捕获
     spdlog::error("Error occurred in get_exposure_durations: {}", e.what()); // 打印错误信息
-    response << jrpc_error(1, e.what()); // 返回错误响应
+    response << jrpc_error(1, e.what()); // 返回响应结果为错误（代号为 1），并包含错误信息的 JSON 对象
   }
 }
 
+/**
+ * @brief 获取所有可用的配置文件列表
+ * 
+ * @param response 存储响应结果的 JObj 对象
+ * @param params 代表参数的 JSON 对象的指针，本函数没有使用
+ */
 static void get_profiles(JObj &response, const json_value *params) {
-  JAry ary;
+  JAry ary; // 定义一个空的 JSON 数组，用于存储所有配置文件信息
   try {
-    wxArrayString names = pConfig->ProfileNames(); // 获取所有配置文件名
+    wxArrayString names = pConfig->ProfileNames(); // 获取所有可用的配置文件名
     for (unsigned int i = 0; i < names.size(); i++) {
-      wxString name = names[i];
-      int id = pConfig->GetProfileId(name);
-      if (id) {
-        JObj t;
+      wxString name = names[i]; // 获取当前配置文件名
+      int id = pConfig->GetProfileId(name); // 获取当前配置文件 ID
+      if (id) { // 如果 ID 非零，则表示该配置文件可用
+        JObj t; // 定义一个空的 JSON 对象，用于存储当前配置文件信息
+        // 向 t 中添加表示配置文件 ID、名称和是否被选中等信息的键值对
         t << NV("id", id) << NV("name", name);
         if (id == pConfig->GetCurrentProfileId())
           t << NV("selected", true);
-        ary << t; // 将配置文件信息添加到列表中
+        ary << t; // 将当前配置文件信息添加到数组中
       }
     }
-    response << jrpc_result(ary); // 返回配置文件列表
+    response << jrpc_result(ary); // 返回响应结果为配置文件列表的 JSON 对象
   } catch (const std::exception& e) { // 异常捕获
     spdlog::error("Error occurred in get_profiles: {}", e.what()); // 打印错误信息
-    response << jrpc_error(1, e.what()); // 返回错误响应
+    response << jrpc_error(1, e.what()); // 返回响应结果为错误（代号为 1），并包含错误信息的 JSON 对象
   }
 }
+
 
 struct Params {
   std::map<std::string, const json_value *> dict;
@@ -3589,48 +3641,89 @@ void EventServer::NotifyConfigurationChange() {
 
 namespace LightGuider{
 
+  // 析构函数，停止所有线程并销毁 ThreadManager 对象
   ThreadManager::~ThreadManager() {
-      m_stopFlag = true; // 设置停止标志
+    joinAllThreads();
+  }
+
+  // 添加一个新线程，并指定线程名称
+  // func：要执行的函数
+  // name：线程名称
+  void ThreadManager::addThread(std::function<void()> func, const std::string& name) {
+    std::lock_guard<std::mutex> lock(m_mtx); // 线程锁
+    m_threads.emplace_back(std::thread([func]() { // 添加线程
+      try {
+        func(); // 执行函数
+      } catch (...) {
+        spdlog::error("Unhandled exception in thread"); // 异常处理
+      }
+    }));
+    m_threadNames.emplace_back(name); // 添加线程名
+    m_sleepFlags.push_back(false); // 初始化睡眠标志
+    spdlog::info("Added thread: {}", name); // 日志输出
+  }
+
+  // 等待所有线程完成并销毁 ThreadManager 对象
+  void ThreadManager::joinAllThreads() {
+    m_stopFlag = true; // 设置停止标志
+    if (!m_threads.empty()) { // 如果 m_threads 不为空
       for (auto& t : m_threads) {
         if (t.joinable()) {
           t.join();
         }
       }
-  }
-
-  void ThreadManager::addThread(std::function<void()> func, const std::string& name) {
-    std::lock_guard<std::mutex> lock(m_mtx);
-    m_threads.emplace_back(std::thread([func]() {
-      try {
-        func();
-      } catch (...) {
-        spdlog::error("Unhandled exception in thread");
-      }
-    }));
-    m_threadNames.emplace_back(name);
-    spdlog::info("Added thread: {}", name);
-  }
-
-  void ThreadManager::joinAllThreads() {
-    std::lock_guard<std::mutex> lock(m_mtx);
-    for (auto& t : m_threads) {
-      t.join();
     }
-    spdlog::info("All threads joined");
+    spdlog::info("All threads joined"); // 日志输出
   }
 
+  // 等待指定名称的线程完成，并从 ThreadManager 中移除该线程
+  // name：线程名称
   void ThreadManager::joinThreadByName(const std::string& name) {
-    std::lock_guard<std::mutex> lock(m_mtx);
+    std::lock_guard<std::mutex> lock(m_mtx); // 线程锁
     for (size_t i = 0; i < m_threads.size(); ++i) {
-      if (m_threadNames[i] == name) {
-        m_threads[i].join();
-        m_threads.erase(m_threads.begin() + i);
-        m_threadNames.erase(m_threadNames.begin() + i);
-        spdlog::info("Thread {} joined", name);
+      if (m_threadNames[i] == name) { // 找到要加入的线程
+        m_threads[i].join(); // 加入线程
+        m_threads.erase(m_threads.begin() + i); // 从容器中移除线程
+        m_threadNames.erase(m_threadNames.begin() + i); // 从容器中移除线程名称
+        spdlog::info("Thread {} joined", name); // 日志输出
         return;
       }
     }
-    spdlog::warn("Thread {} not found", name);
+    spdlog::warn("Thread {} not found", name); // 日志输出
   }
+
+  // 让指定名称的线程休眠指定时间
+  // name：线程名称
+  // seconds：休眠时间（秒）
+  // 返回值：如果找到了该线程，则返回 true；否则返回 false
+  bool ThreadManager::sleepThreadByName(const std::string& name, int seconds) {
+    std::lock_guard<std::mutex> lock(m_mtx); // 线程锁
+    for (size_t i = 0; i < m_threads.size(); ++i) {
+      if (m_threadNames[i] == name) { // 找到要休眠的线程
+        m_sleepFlags[i] = true; // 设置睡眠标志
+        std::this_thread::sleep_for(std::chrono::seconds(seconds)); // 让线程休眠
+        m_sleepFlags[i] = false; // 取消睡眠标志
+        spdlog::info("Thread {} slept for {} seconds", name, seconds); // 日志输出
+        return true;
+      }
+    }
+    spdlog::warn("Thread {} not found", name); // 日志输出
+    return false;
+  }
+
+  // 检查指定名称的线程是否在运行
+  // name：线程名称
+  // 返回值：如果找到了该线程，则返回 true，表示该线程在运行；否则返回 false，表示该线程未找到
+  bool ThreadManager::isThreadRunning(const std::string& name) {
+    std::lock_guard<std::mutex> lock(m_mtx); // 线程锁
+    for (size_t i = 0; i < m_threads.size(); ++i) {
+      if (m_threadNames[i] == name) { // 找到要检查的线程
+        return !m_sleepFlags[i]; // 返回线程是否在运行
+      }
+    }
+    spdlog::warn("Thread {} not found", name); // 日志输出
+    return false;
+  }
+
   ThreadManager ThreadManage;
 }

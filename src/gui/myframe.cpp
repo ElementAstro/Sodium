@@ -603,7 +603,7 @@ void MyFrame::SetupMenuBar()
 #endif
 
     Menubar->Append(tools_menu, _("&Tools"));
-    Menubar->Append(openapt_menu, _("&OpenAPT"));
+    //Menubar->Append(openapt_menu, _("&OpenAPT"));
     Menubar->Append(view_menu, _("&View"));
     Menubar->Append(darks_menu, _("&Darks"));
     Menubar->Append(bookmarks_menu, _("&Bookmarks"));

@@ -1243,7 +1243,7 @@ void GuiderMultiStar::OnPaint(wxPaintEvent& event)
         {
             // locked and guiding
             if (FoundStar)
-                dc.SetPen(wxPen(wxColour(32,196,32), 1, wxPENSTYLE_SOLID));  // Draw the box around the star
+                dc.SetPen(wxPen(wxColour(64,160,112), 1, wxPENSTYLE_SOLID));  // Draw the box around the star
             else
                 dc.SetPen(wxPen(wxColour(230,130,30), 1, wxPENSTYLE_DOT));
             DrawBox(dc, m_primaryStar, m_searchRegion, m_scaleFactor);

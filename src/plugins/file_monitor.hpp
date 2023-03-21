@@ -40,6 +40,7 @@ Description: File Monitor
 #include <cerrno>
 #include <unistd.h>
 #include <sys/inotify.h>
+#include <fstream>
 
 class FileMonitor {
     public:

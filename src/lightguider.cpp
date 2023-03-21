@@ -36,6 +36,8 @@
 #include "phdupdate.h"
 #include "modules/modloader.h"
 
+#include "gui/splash.hpp"
+
 #include <spdlog/spdlog.h>
 
 #include <curl/curl.h>
@@ -513,7 +515,6 @@ struct EarlyLogger : public wxLog
 
 bool PhdApp::OnInit()
 {
-
     spdlog::set_pattern("[%Y-%m-%d %H:%M:%S %z][%l][process %P][thread %t] %v");
 
     spdlog::info("Preparing to load LightGuider");
@@ -548,6 +549,9 @@ bool PhdApp::OnInit()
         m_instanceChecker = 0;
         return false;
     }
+
+    //MySplashScreen* splashScreen = new MySplashScreen("assets/texture/splash.png", "正在加载，请稍候...", 3);
+    //splashScreen->Show();
 
     spdlog::debug("Passed instance check");
 
@@ -692,8 +696,6 @@ int PhdApp::OnExit()
 
     delete m_instanceChecker;
     m_instanceChecker = nullptr;
-
-    LightGuider::ThreadManage.joinAllThreads();
 
     spdlog::debug("Shutdown by user , good bye!");
 

@@ -76,7 +76,7 @@ LightGuider在PHD2原有API的基础上添加一些函数，使之功能更加�
 
 #### `start_darklib_capture` ####
 
-开始暗场库拍摄，此处默认为覆盖老的暗场库
+开始暗场库拍摄任务。需要输入name，也就是暗场库的名称，max_exposure和min_exposure，分别表示最长曝光时间和最短曝光时间，count表示要拍摄的暗场张数。
 
 | Input | Type | Description |
 |:----------|:-----|:------------|
@@ -84,7 +84,7 @@ LightGuider在PHD2原有API的基础上添加一些函数，使之功能更加�
 | `max_exposure` | float | 最长曝光时间 |
 | `min_exposure` | float | 最短曝光时间 |
 | `count` | int | 暗场张数 |
-
+| `tip` | string | 给出一些提示（吃饱了撑的） |
 
 | Attribute | Type | Description |
 |:----------|:-----|:------------|

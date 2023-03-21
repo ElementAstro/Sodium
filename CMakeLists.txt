@@ -531,7 +531,6 @@ if(UNIX)
 
   # 判断 Python 是否存在
   if(Python_FOUND)
-      message(STATUS "Python found: ${Python_EXECUTABLE}")
       message(STATUS "Python version: ${Python_VERSION}")
   else()
       message(SEND_ERROR "Python not found.")
