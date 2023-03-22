@@ -32,6 +32,7 @@ Description: Main web server
 #include "app.h"
 #include "url.h"
 #include "ws.h"
+#include "http.h"
 
 #include <boost/lexical_cast.hpp>
 
@@ -45,6 +46,7 @@ class HttpServer {
 public:
     HttpServer() {
         load_url();
+        load_http();
         // enables all log
         app.loglevel(crow::LogLevel::ERROR);
         //crow::logger::setHandler(std::make_shared<ExampleLogHandler>());

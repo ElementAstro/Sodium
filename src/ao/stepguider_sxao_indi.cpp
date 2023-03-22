@@ -37,13 +37,13 @@
 #ifdef STEPGUIDER_SXAO_INDI
 
 #include "stepguider_sxao_indi.h"
-#include "phdindiclient.h"
+#include "indi/indiclient.h"
 #include "gui/config_indi.h"
 
 #include <libindi/basedevice.h>
 #include <libindi/indiproperty.h>
 
-class StepGuiderSxAoINDI : public StepGuider, public PhdIndiClient
+class StepGuiderSxAoINDI : public StepGuider, public LightIndiClient
 {
 private:
     // INDI parts

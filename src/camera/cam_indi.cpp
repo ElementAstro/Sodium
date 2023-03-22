@@ -43,7 +43,7 @@
 #include "gui/config_indi.h"
 #include "image/image_math.h"
 #include "gui/indi_gui.h"
-#include "phdindiclient.h"
+#include "indi/indiclient.h"
 
 #include <libindi/basedevice.h>
 #include <libindi/indiproperty.h>
@@ -81,7 +81,7 @@ public:
     }
 };
 
-class CameraINDI : public GuideCamera, public PhdIndiClient
+class CameraINDI : public GuideCamera, public LightIndiClient
 {
 private:
     ISwitchVectorProperty *connection_prop;

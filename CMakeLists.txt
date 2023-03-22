@@ -171,6 +171,9 @@ source_group(Server FILES ${server_SRC})
 set(modloader_SRC
   ${lightguider_src_dir}/src/modules/modloader.cpp
   ${lightguider_src_dir}/src/modules/modloader.h
+
+  ${lightguider_src_dir}/src/plugins/thread.cpp
+  ${lightguider_src_dir}/src/plugins/thread.hpp
 )
 
 source_group(ModLoader FILES ${modloader_SRC})
@@ -422,8 +425,8 @@ set(lightguider_SRC
   ${lightguider_src_dir}/src/lightconfig.h
   ${lightguider_src_dir}/src/lightcontrol.cpp
   ${lightguider_src_dir}/src/lightcontrol.h
-  ${lightguider_src_dir}/src/phdindiclient.cpp
-  ${lightguider_src_dir}/src/phdindiclient.h
+  ${lightguider_src_dir}/src/indi/indiclient.cpp
+  ${lightguider_src_dir}/src/indi/indiclient.h
   ${lightguider_src_dir}/src/phdupdate.cpp
   ${lightguider_src_dir}/src/phdupdate.h
   

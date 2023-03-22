@@ -37,6 +37,7 @@
 #include "modules/modloader.h"
 
 #include "gui/splash.hpp"
+#include "plugins/thread.hpp"
 
 #include <spdlog/spdlog.h>
 
@@ -750,7 +751,7 @@ bool PhdApp::OnCmdLineParsed(wxCmdLineParser& parser)
     }
 
     if (parser.Found("w")){
-        if (!LightGuider::module_loader.LoadModule("./libserver.so","server")) {
+        if (!LightGuider::module_loader.LoadModule("./modules/webserver/libserver.so","server")) {
             ::exit(1);
         }
         LightGuider::module_loader.LoadAndRunFunction<void>("server", "run", "webserver");

@@ -39,7 +39,7 @@
 #ifdef GUIDE_INDI
 
 #include "gui/config_indi.h"
-#include "phdindiclient.h"
+#include "indi/indiclient.h"
 
 #ifdef LIBNOVA
 # include <libnova/sidereal_time.h>
@@ -51,7 +51,7 @@
 
 class RunInBg;
 
-class ScopeINDI : public Scope, public PhdIndiClient
+class ScopeINDI : public Scope, public LightIndiClient
 {
 private:
     ISwitchVectorProperty *connection_prop;

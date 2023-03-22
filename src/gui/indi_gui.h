@@ -28,7 +28,7 @@
 #ifndef _INDIGUI_H_
 #define _INDIGUI_H_
 
-#include "phdindiclient.h"
+#include "indi/indiclient.h"
 #include <libindi/basedevice.h>
 #include <libindi/indiproperty.h>
 
@@ -54,7 +54,7 @@ class IndiProp;
 /*
  *  INDI gui windows
  */
-class IndiGui : public wxDialog , public PhdIndiClient
+class IndiGui : public wxDialog , public LightIndiClient
 {
 
 private:

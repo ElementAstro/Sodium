@@ -40,7 +40,7 @@
 #ifndef _CONFIG_INDI_H_
 #define _CONFIG_INDI_H_
 
-#include "phdindiclient.h"
+#include "indi/indiclient.h"
 #include <libindi/basedevice.h>
 #include <libindi/indiproperty.h>
 # include <libindi/indibasetypes.h>
@@ -55,7 +55,7 @@ enum IndiDevType
     INDI_TYPE_AO,
 };
 
-class INDIConfig : public wxDialog, public PhdIndiClient
+class INDIConfig : public wxDialog, public LightIndiClient
 {
     static bool s_verbose;
 

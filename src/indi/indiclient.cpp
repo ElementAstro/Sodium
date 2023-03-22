@@ -32,35 +32,35 @@
  *
  */
 
-#include "phdindiclient.h"
+#include "indiclient.h"
 
-PhdIndiClient::PhdIndiClient()
+LightIndiClient::LightIndiClient()
     :
     m_disconnecting(false)
 {
 }
 
-PhdIndiClient::~PhdIndiClient()
+LightIndiClient::~LightIndiClient()
 {
 }
 
-void PhdIndiClient::serverDisconnected(int exit_code)
+void LightIndiClient::serverDisconnected(int exit_code)
 {
     m_disconnecting = true;
     IndiServerDisconnected(exit_code);
     m_disconnecting = false;
 }
 
-void PhdIndiClient::serverConnected()
+void LightIndiClient::serverConnected()
 {
     // nothing to do yet
     // for INDI Core 1.9.9, 2.0.0, the function is called before requesting to retrieve device information.
     // If the function implementation waits for information, a deadlock occurs.
     //
-    // see PhdIndiClient::connectServer override function below
+    // see LightIndiClient::connectServer override function below
 }
 
-bool PhdIndiClient::connectServer()
+bool LightIndiClient::connectServer()
 {
     // Call the original function.
     bool ok = INDI::BaseClient::connectServer();
@@ -78,7 +78,7 @@ bool PhdIndiClient::connectServer()
     return ok;
 }
 
-bool PhdIndiClient::DisconnectIndiServer()
+bool LightIndiClient::DisconnectIndiServer()
 {
     // suppress any attempt to call disconnectServer from the
     // serverDisconnected callback.  Some serverDisconnected callbacks

@@ -37,13 +37,13 @@
 #include <libindi/baseclient.h>
 #include <libindi/basedevice.h>
 
-class PhdIndiClient : public INDI::BaseClient
+class LightIndiClient : public INDI::BaseClient
 {
     bool m_disconnecting;
 
 public:
-    PhdIndiClient();
-    ~PhdIndiClient();
+    LightIndiClient();
+    ~LightIndiClient();
 
 public:
     bool connectServer()

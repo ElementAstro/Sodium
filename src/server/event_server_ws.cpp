@@ -151,7 +151,23 @@ namespace LightGuider
     void Event_WS_Server::JsonParser(std::string message)
     {
         configor::json::value j = configor::json::parse(message);
-
+        std::string message_str = j["message"];
+        
+        switch(hash_(message_str.c_str()))
+        {
+            /*返回服务器版本号*/
+            case "RemoteSetDashboardMode"_hash:
+                break;
+            /*返回当前目录下的文件*/
+            case "RemoteGetAstroAirProfiles"_hash:
+                break;
+            /*设置新的配置文件*/
+            case "RemoteSetProfile"_hash:{
+                break;
+            }
+            default:
+                break;
+        }
     }
 
     /*

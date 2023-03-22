@@ -42,12 +42,12 @@
 
 #include "stepguider_sbigao_indi.h"
 #include "gui/config_indi.h"
-#include "phdindiclient.h"
+#include "indi/indiclient.h"
 
 #include <libindi/basedevice.h>
 #include <libindi/indiproperty.h>
 
-class StepGuiderSbigAoINDI : public StepGuider, public PhdIndiClient
+class StepGuiderSbigAoINDI : public StepGuider, public LightIndiClient
 {
     private:
         // INDI parts
