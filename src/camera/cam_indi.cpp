@@ -1,6 +1,6 @@
 /*
  *  cam_indi.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Geoffrey Hausheer.
  *  Copyright (c) 2009 Geoffrey Hausheer
@@ -843,7 +843,7 @@ bool CameraINDI::ReadFITS(CapturedFrame *frame, usImage& img, bool takeSubframe,
     if (fits_get_hdu_type(fptr, &hdutype, &status) || hdutype != IMAGE_HDU)
     {
         pFrame->Alert(_("FITS file is not of an image"));
-        PHD_fits_close_file(fptr);
+        LGuider_fits_close_file(fptr);
         return true;
     }
 
@@ -862,7 +862,7 @@ bool CameraINDI::ReadFITS(CapturedFrame *frame, usImage& img, bool takeSubframe,
     if (nhdus != 1 || naxis != 2)
     {
         pFrame->Alert(_("Unsupported type or read error loading FITS file"));
-        PHD_fits_close_file(fptr);
+        LGuider_fits_close_file(fptr);
         return true;
     }
 
@@ -875,13 +875,13 @@ bool CameraINDI::ReadFITS(CapturedFrame *frame, usImage& img, bool takeSubframe,
             // should never happen since we arranged not to take a subframe
             // unless full frame size is known
             Debug.Write("internal error: taking subframe before full frame\n");
-            PHD_fits_close_file(fptr);
+            LGuider_fits_close_file(fptr);
             return true;
         }
         if (img.Init(FullSize))
         {
             pFrame->Alert(_("Memory allocation error"));
-            PHD_fits_close_file(fptr);
+            LGuider_fits_close_file(fptr);
             return true;
         }
 
@@ -893,7 +893,7 @@ bool CameraINDI::ReadFITS(CapturedFrame *frame, usImage& img, bool takeSubframe,
         if (fits_read_pix(fptr, TUSHORT, fpixel, xsize * ysize, nullptr, rawdata, nullptr, &status))
         {
             pFrame->Alert(_("Error reading data"));
-            PHD_fits_close_file(fptr);
+            LGuider_fits_close_file(fptr);
             delete[] rawdata;
             return true;
         }
@@ -915,7 +915,7 @@ bool CameraINDI::ReadFITS(CapturedFrame *frame, usImage& img, bool takeSubframe,
         if (img.Init(FullSize))
         {
             pFrame->Alert(_("Memory allocation error"));
-            PHD_fits_close_file(fptr);
+            LGuider_fits_close_file(fptr);
             return true;
         }
 
@@ -923,12 +923,12 @@ bool CameraINDI::ReadFITS(CapturedFrame *frame, usImage& img, bool takeSubframe,
         if (fits_read_pix(fptr, TUSHORT, fpixel, xsize * ysize, nullptr, img.ImageData, nullptr, &status))
         {
             pFrame->Alert(_("Error reading data"));
-            PHD_fits_close_file(fptr);
+            LGuider_fits_close_file(fptr);
             return true;
         }
     }
 
-    PHD_fits_close_file(fptr);
+    LGuider_fits_close_file(fptr);
     return false;
 }
 

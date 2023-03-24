@@ -1,6 +1,6 @@
 /*
  *  log_uploader.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2017 Andy Galasso
@@ -14,7 +14,7 @@
  *    Redistributions in binary form must reproduce the above copyright notice,
  *     this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *    Neither the name of Open PHD Guiding, openphdguiding.org, nor the names of its
+ *    Neither the name of Open LGuider Guiding, openphdguiding.org, nor the names of its
  *     contributors may be used to endorse or promote products derived from
  *     this software without specific prior written permission.
  *

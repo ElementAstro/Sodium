@@ -1,6 +1,6 @@
 /*
  *  guider.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee
@@ -99,7 +99,7 @@ enum PauseType
 struct LockPosShiftParams
 {
     bool shiftEnabled;
-    PHD_Point shiftRate;
+    LGuider_Point shiftRate;
     GRAPH_UNITS shiftUnits;
     bool shiftIsMountCoords;
 };
@@ -131,8 +131,8 @@ public:
 
 struct GuiderOffset
 {
-    PHD_Point cameraOfs;
-    PHD_Point mountOfs;
+    LGuider_Point cameraOfs;
+    LGuider_Point mountOfs;
 };
 
 class Guider : public wxWindow
@@ -143,12 +143,12 @@ class Guider : public wxWindow
     const DefectMap *m_defectMapPreview;
     double m_polarAlignCircleRadius;
     double m_polarAlignCircleCorrection;
-    PHD_Point m_polarAlignCircleCenter;
+    LGuider_Point m_polarAlignCircleCenter;
     PauseType m_paused;
     ShiftPoint m_lockPosition;
-    PHD_Point m_ditherRecenterStep;
+    LGuider_Point m_ditherRecenterStep;
     wxPoint m_ditherRecenterDir;
-    PHD_Point m_ditherRecenterRemaining;
+    LGuider_Point m_ditherRecenterRemaining;
     time_t m_starFoundTimestamp;  // timestamp when star was last found
     double m_avgDistance;         // averaged distance for distance reporting
     double m_avgDistanceRA;       // averaged distance, RA only
@@ -221,12 +221,12 @@ public:
     void OnErase(wxEraseEvent& evt);
     void UpdateImageDisplay(usImage *pImage = nullptr);
 
-    bool MoveLockPosition(const PHD_Point& mountDelta);
-    virtual bool SetLockPosition(const PHD_Point& position);
-    bool SetLockPosToStarAtPosition(const PHD_Point& starPositionHint);
+    bool MoveLockPosition(const LGuider_Point& mountDelta);
+    virtual bool SetLockPosition(const LGuider_Point& position);
+    bool SetLockPosToStarAtPosition(const LGuider_Point& starPositionHint);
     bool ShiftLockPosition();
     void EnableLockPosShift(bool enable);
-    void SetLockPosShiftRate(const PHD_Point& rate, GRAPH_UNITS units, bool isMountCoords, bool updateToolWin);
+    void SetLockPosShiftRate(const LGuider_Point& rate, GRAPH_UNITS units, bool isMountCoords, bool updateToolWin);
     bool LockPosShiftEnabled() const { return m_lockPosShift.shiftEnabled; }
     void SetLockPosIsSticky(bool isSticky) { m_lockPosIsSticky = isSticky; }
     bool LockPosIsSticky() const { return m_lockPosIsSticky; }
@@ -239,7 +239,7 @@ public:
     void GetOverlaySlitCoords(wxPoint *center, wxSize *size, int *angle);
     void SetOverlaySlitCoords(const wxPoint& center, const wxSize& size, int angle);
     void SetDefectMapPreview(const DefectMap *preview);
-    void SetPolarAlignCircle(const PHD_Point& center, double radius);
+    void SetPolarAlignCircle(const LGuider_Point& center, double radius);
     void SetPolarAlignCircleCorrection(double val);
     double GetPolarAlignCircleCorrection() const;
     bool SaveCurrentImage(const wxString& fileName);
@@ -285,11 +285,11 @@ public:
 
     // pure virtual functions -- these MUST be overridden by a subclass
 public:
-    virtual bool IsValidLockPosition(const PHD_Point& pt) = 0;
+    virtual bool IsValidLockPosition(const LGuider_Point& pt) = 0;
     virtual void InvalidateCurrentPosition(bool fullReset = false) = 0;
 private:
     virtual bool UpdateCurrentPosition(const usImage *pImage, GuiderOffset *ofs, FrameDroppedInfo *errorInfo) = 0;
-    virtual bool SetCurrentPosition(const usImage *pImage, const PHD_Point& position) = 0;
+    virtual bool SetCurrentPosition(const usImage *pImage, const LGuider_Point& position) = 0;
 
 public:
     virtual void OnPaint(wxPaintEvent& evt) = 0;
@@ -297,7 +297,7 @@ public:
     virtual bool IsLocked() const = 0;
     virtual bool AutoSelect(const wxRect& roi = wxRect()) = 0;
 
-    virtual const PHD_Point& CurrentPosition() const = 0;
+    virtual const LGuider_Point& CurrentPosition() const = 0;
     virtual wxRect GetBoundingBox() const = 0;
     virtual int GetMaxMovePixels() const = 0;
 

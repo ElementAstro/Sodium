@@ -1,6 +1,6 @@
 /*
  *  scope_manual_pointing.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Andy Galasso.
  *  Copyright (c) 2016 openphdguiding.org

@@ -1,6 +1,6 @@
 /*
  *  drift_tool.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2013 Andy Galasso

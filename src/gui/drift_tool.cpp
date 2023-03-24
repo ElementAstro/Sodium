@@ -1,6 +1,6 @@
 /*
  *  drift_tool.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2013-2014 Andy Galasso
@@ -82,7 +82,7 @@ struct DriftToolWin : public wxFrame
 
     bool m_can_slew;
     bool m_slewing;
-    PHD_Point m_siteLatLong;
+    LGuider_Point m_siteLatLong;
 
     wxStaticBitmap *m_bmp;
     wxBitmap *m_azArrowBmp;
@@ -825,7 +825,7 @@ wxWindow *DriftTool::CreateDriftToolWindow()
     if (pFrame->GetCameraPixelScale() == 1.0)
     {
         bool confirmed = ConfirmDialog::Confirm(_(
-            "The Drift Align tool is most effective when PHD2 knows your guide\n"
+            "The Drift Align tool is most effective when LGuider2 knows your guide\n"
             "scope focal length and camera pixel size.\n"
             "\n"
             "Enter your guide scope focal length on the Global tab in the Brain.\n"

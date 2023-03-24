@@ -1,6 +1,6 @@
 /*
  *  scope_indi.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Ported by Hans Lambermont in 2014 from tele_INDI.cpp which has Copyright (c) 2009 Geoffrey Hausheer.
  *  All rights reserved.

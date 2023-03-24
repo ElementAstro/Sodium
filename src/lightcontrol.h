@@ -1,6 +1,6 @@
 /*
  *  lightcontrol.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2013 Andy Galasso
@@ -32,8 +32,8 @@
  *
  */
 
-#ifndef PHDCONTROL_H
-#define PHDCONTROL_H
+#ifndef LGuiderCONTROL_H
+#define LGuiderCONTROL_H
 
 struct SettleParams
 {

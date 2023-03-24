@@ -1,6 +1,6 @@
 /*
  *  lightguider.h
- *  PHD2 Guiding
+ *  LGuider2 Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -32,8 +32,8 @@
  *
  */
 
-#ifndef PHD_H_INCLUDED
-#define PHD_H_INCLUDED
+#ifndef LGuider_H_INCLUDED
+#define LGuider_H_INCLUDED
 
 #if defined(_WINDOWS)
 // ensure that windows.h does not include winsock.h which is
@@ -79,9 +79,9 @@
 
 #define APPNAME _T("Light Guider")
 #define LGVERSION _T("1.0.0")
-#define PHDVERSION _T("2.6.11")
-#define PHDSUBVER _T("patch1")
-#define FULLVER LGVERSION PHDSUBVER
+#define LGuiderVERSION _T("2.6.11")
+#define LGuiderSUBVER _T("patch1")
+#define FULLVER LGVERSION LGuiderSUBVER
 
 #if defined (__WINDOWS__)
 # pragma warning(disable:4189)
@@ -98,19 +98,19 @@ WX_DEFINE_ARRAY_INT(int, ArrayOfInts);
 WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 
 #if defined (__WINDOWS__)
-#define PHD_OSNAME _T("Windows")
+#define LGuider_OSNAME _T("Windows")
 #define PATHSEPCH '\\'
 #define PATHSEPSTR "\\"
 #endif
 
 #if defined (__APPLE__)
-#define PHD_OSNAME _T("OSX")
+#define LGuider_OSNAME _T("OSX")
 #define PATHSEPCH '/'
 #define PATHSEPSTR "/"
 #endif
 
 #if defined (__WXGTK__)
-#define PHD_OSNAME _T("Linux")
+#define LGuider_OSNAME _T("Linux")
 #define PATHSEPCH '/'
 #define PATHSEPSTR _T("/")
 #endif
@@ -139,17 +139,17 @@ WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 #define ERROR_INFO(s) (Debug.AddLine(wxString(THROW_INFO_BASE("Error thrown from", __FILE__, __LINE__) "->" s)))
 
 #if defined (__WINDOWS__)
-#define PHD_MESSAGES_CATALOG "messages"
+#define LGuider_MESSAGES_CATALOG "messages"
 #endif
 
 #if defined (__APPLE__)
-#define PHD_MESSAGES_CATALOG "messages"
+#define LGuider_MESSAGES_CATALOG "messages"
 #endif
 
 #if defined (__linux__) || defined (__FreeBSD__)
 // On Linux the messages catalogs for all the applications are in the same directory
 // in /usr/share/locale, so the catalog name must be the application name.
-#define PHD_MESSAGES_CATALOG "lightguider"
+#define LGuider_MESSAGES_CATALOG "lightguider"
 #endif
 
 #include "lightconfig.h"
@@ -241,7 +241,7 @@ public:
     virtual bool Yield(bool onlyIfNeeded = false);
     static void ExecInMainThread(std::function<void()> func);
     int GetInstanceNumber() const { return m_instanceNumber; }
-    const wxString& GetPHDResourcesDir() const { return m_resourcesDir; }
+    const wxString& GetLGuiderResourcesDir() const { return m_resourcesDir; }
     wxString GetLocalesDir() const;
     const wxLocale& GetLocale() const { return m_locale; }
     const wxDateTime& GetLogFileTime() const { return m_logFileTime; }
@@ -253,4 +253,4 @@ public:
 
 wxDECLARE_APP(PhdApp);
 
-#endif // PHD_H_INCLUDED
+#endif // LGuider_H_INCLUDED

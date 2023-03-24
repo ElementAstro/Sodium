@@ -1,6 +1,6 @@
 /*
  *  event_server.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2013 Andy Galasso
@@ -66,7 +66,7 @@ public:
     void NotifyCalibrationDataFlipped(const Mount *mount);
     void NotifyLooping(unsigned int exposure, const Star *star, const FrameDroppedInfo *info);
     void NotifyLoopingStopped();
-    void NotifyStarSelected(const PHD_Point& pos);
+    void NotifyStarSelected(const LGuider_Point& pos);
     void NotifyStarLost(const FrameDroppedInfo& info);
     void NotifyGuidingStarted();
     void NotifyGuidingStopped();
@@ -74,7 +74,7 @@ public:
     void NotifyResumed();
     void NotifyGuideStep(const GuideStepInfo& info);
     void NotifyGuidingDithered(double dx, double dy);
-    void NotifySetLockPosition(const PHD_Point& xy);
+    void NotifySetLockPosition(const LGuider_Point& xy);
     void NotifyLockPositionLost();
     void NotifyLockShiftLimitReached();
     void NotifyAppState();

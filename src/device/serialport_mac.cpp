@@ -1,6 +1,6 @@
 /*
  *  serialport_mac.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark on 4/17/13.
  *  Copyright (c) 2013 Craig Stark.

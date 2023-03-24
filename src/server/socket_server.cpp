@@ -1,6 +1,6 @@
 /*
  *  socket_server.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2008-2010 Craig Stark.
@@ -318,7 +318,7 @@ void MyFrame::HandleSockServerInput(wxSocketBase *sock)
                 sock->Read(&y, 2);
                 sock->Discard();  // Clean out anything else
 
-                if (!pFrame->pGuider->SetLockPosToStarAtPosition(PHD_Point(x,y)))
+                if (!pFrame->pGuider->SetLockPosToStarAtPosition(LGuider_Point(x,y)))
                 {
                     Debug.Write(wxString::Format("processing socket request SETLOCKPOSITION for (%d, %d) succeeded\n", x, y));
                     pFrame->StatusMsg(wxString::Format(_("Lock set to %d,%d"), x, y));

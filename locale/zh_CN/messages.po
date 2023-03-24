@@ -1,5 +1,5 @@
 # fr\messages.po
-# PHD Guiding
+# LGuider Guiding
 # 
 # Created by Sylvain Girard
 # Copyright (c) 2013 Sylvain Girard
@@ -254,21 +254,21 @@ msgstr ", 64位版本"
 
 #: src/phdupdate.cpp:683
 #, c-format
-msgid "PHD2 version %s is available at %s"
+msgid "LGuider2 version %s is available at %s"
 msgstr ""
 
 #: src/phdupdate.cpp:688
 #, c-format
-msgid "PHD2 version %s is ready to install. Update and restart PHD2 now?"
+msgid "LGuider2 version %s is ready to install. Update and restart LGuider2 now?"
 msgstr ""
 
 #: src/phdupdate.cpp:728
 #, c-format
-msgid "Downloading PHD2 version %s"
+msgid "Downloading LGuider2 version %s"
 msgstr ""
 
 #: src/phdupdate.cpp:748
-msgid "PHD2 Update"
+msgid "LGuider2 Update"
 msgstr ""
 
 #: src/phdupdate.cpp:748
@@ -276,7 +276,7 @@ msgid "Checking for updates"
 msgstr "检查更新"
 
 #: src/phdupdate.cpp:775
-msgid "PHD2 Update Available"
+msgid "LGuider2 Update Available"
 msgstr ""
 
 #: src/phdupdate.cpp:793
@@ -306,7 +306,7 @@ msgid "Closing in %d seconds"
 msgstr "在 %d 秒后关闭"
 
 #: src/phdupdate.cpp:947
-msgid "PHD2 is up to date"
+msgid "LGuider2 is up to date"
 msgstr ""
 
 #: src/phdupdate.cpp:947 src/phdupdate.cpp:953 src/gui/myframe.cpp:3047
@@ -867,8 +867,8 @@ msgstr ""
 "的“故障排除”部分。"
 
 #: src/camera/camera.cpp:1496
-msgid "PHD will make several attempts to re-connect the camera."
-msgstr "PHD会多次尝试重新连接相机。"
+msgid "LGuider will make several attempts to re-connect the camera."
+msgstr "LGuider会多次尝试重新连接相机。"
 
 #: src/camera/camera.cpp:1501
 msgid ""
@@ -1337,9 +1337,9 @@ msgstr "较大翻转时采用快速切换"
 #: src/algorithm/guide_algorithm_resistswitch.cpp:322
 msgid ""
 "Ordinarily the Resist Switch algortithm waits several frames before "
-"switching direction. With Fast Switch enabled PHD2 will switch direction "
+"switching direction. With Fast Switch enabled LGuider2 will switch direction "
 "immediately if it sees a very large deflection. Enable this option if your "
-"mount has a substantial amount of backlash and PHD2 sometimes overcorrects."
+"mount has a substantial amount of backlash and LGuider2 sometimes overcorrects."
 msgstr ""
 
 #: src/algorithm/guide_algorithm_zfilter.cpp:273
@@ -1458,12 +1458,12 @@ msgstr "启用"
 
 #: src/algorithm/guider_multistar.cpp:1371
 msgid ""
-"Check to enable star mass change detection. When enabled, PHD skips frames "
+"Check to enable star mass change detection. When enabled, LGuider skips frames "
 "when the guide star mass changes by an amount greater than the setting for "
 "'tolerance'."
 msgstr ""
 "勾选表示启用星点质心变化检测。 启用后，当被导星质心变化量大于“容差”设置时，"
-"PHD会跳过帧。"
+"LGuider会跳过帧。"
 
 #: src/algorithm/guider_multistar.cpp:1380
 msgid "Tolerance"
@@ -1491,7 +1491,7 @@ msgstr "最小星点HFD（像素）"
 #: src/algorithm/guider_multistar.cpp:1394
 msgid ""
 "The minimum star HFD (size) that will be used for identifying a guide star. "
-"This setting can be used to prevent PHD2 from guiding on a hot pixel. Use "
+"This setting can be used to prevent LGuider2 from guiding on a hot pixel. Use "
 "the Star Profile Tool to measure the HFD of a hot pixel and set the min HFD "
 "threshold a bit higher. When the HFD falls below this level, the hot pixel "
 "will be ignored."
@@ -1539,7 +1539,7 @@ msgstr "使用自动寻找被导星时的最小信噪比SNR"
 #: src/algorithm/guider_multistar.cpp:1417
 msgid ""
 "The minimum star SNR that will be used for auto-selecting guide stars. This "
-"setting can be used to discourage PHD2 from choosing a guide star you know "
+"setting can be used to discourage LGuider2 from choosing a guide star you know "
 "will be too faint for sustained guiding. This setting applies to both the "
 "primary guide star and candidate secondary stars in multi-star guiding. If "
 "this constraint cannot be met, a saturated or near-saturated star may be "
@@ -2474,7 +2474,7 @@ msgstr "校准"
 
 #: src/gui/calibration_assistant.cpp:241
 msgid ""
-"Start the PHD2 calibration.  The Calibration Assistant window will remain "
+"Start the LGuider2 calibration.  The Calibration Assistant window will remain "
 "open to monitor and assess results"
 msgstr ""
 
@@ -2498,7 +2498,7 @@ msgstr ""
 msgid ""
 "Your mount guide speed is too slow for effective calibration and guiding. "
 "Use the hand-controller or mount driver to increase the guide speed to at "
-"least 0.5x sidereal. Then click the 'Recal' button so PHD2 can compute a "
+"least 0.5x sidereal. Then click the 'Recal' button so LGuider2 can compute a "
 "correct calibration step-size."
 msgstr ""
 
@@ -2506,7 +2506,7 @@ msgstr ""
 msgid ""
 "Your mount guide speed is below the minimum recommended value of 0.5x "
 "sidereal. Use the hand-controller or mount driver to increase the guide "
-"speed to at least 0.5x sidereal. Then click the 'Recal' button so PHD2 can "
+"speed to at least 0.5x sidereal. Then click the 'Recal' button so LGuider2 can "
 "compute a correct calibration step-size."
 msgstr ""
 
@@ -2768,7 +2768,7 @@ msgstr ""
 
 #: src/gui/calibration_assistant.cpp:1216
 msgid ""
-"The mount is wandering off-target on one axis while PHD2 is measuring "
+"The mount is wandering off-target on one axis while LGuider2 is measuring "
 "movement on the other axis. This can be caused by large periodic error in RA "
 "or polar alignment > 10 arc-min. If the orthogonality error is very large, "
 "the mount is probably not guiding correctly."
@@ -2795,7 +2795,7 @@ msgid ""
 "If you saw an alert saying the guide star did not move enough, the mount may "
 "not be receiving or handling guide commands. If you are using an ST-4 guide "
 "cable, try replacing it. Otherwise, use the Star-Cross and Manual Guide "
-"tools in PHD2 to help isolate the mechanical problem."
+"tools in LGuider2 to help isolate the mechanical problem."
 msgstr ""
 
 #: src/gui/calreview_dialog.cpp:47 src/gui/statswindow.cpp:304
@@ -3430,7 +3430,7 @@ msgid "Verbose logging"
 msgstr "详细日志"
 
 #: src/gui/config_indi.cpp:162
-msgid "Enable more detailed INDI information in the PHD2 Debug Log."
+msgid "Enable more detailed INDI information in the LGuider2 Debug Log."
 msgstr ""
 
 #: src/gui/config_indi.cpp:190
@@ -3816,7 +3816,7 @@ msgstr "请先连接相机。"
 
 #: src/gui/drift_tool.cpp:828
 msgid ""
-"The Drift Align tool is most effective when PHD2 knows your guide\n"
+"The Drift Align tool is most effective when LGuider2 knows your guide\n"
 "scope focal length and camera pixel size.\n"
 "\n"
 "Enter your guide scope focal length on the Global tab in the Brain.\n"
@@ -3857,14 +3857,14 @@ msgstr "赤道仪没有当前的校准数据 - 您应该进行一次全新的校
 
 #: src/gui/eegg.cpp:175
 msgid ""
-"This is unnecessary because PHD2 has pointing info from the mount.  If you "
+"This is unnecessary because LGuider2 has pointing info from the mount.  If you "
 "are seeing run-away Dec guiding after a meridian flip, use Help and look in "
 "the index for 'Reverse Dec output'."
 msgstr ""
 
 #: src/gui/eegg.cpp:183
 msgid ""
-"Failed to flip calibration - please upload debug log file to PHD2 forum for "
+"Failed to flip calibration - please upload debug log file to LGuider2 forum for "
 "assistance."
 msgstr ""
 
@@ -3898,11 +3898,11 @@ msgstr "设备配置文件"
 
 #: src/gui/gear_dialog.cpp:217
 msgid ""
-"Select the Equipment Profile you would like to use. PHD stores all of your "
+"Select the Equipment Profile you would like to use. LGuider stores all of your "
 "settings and equipment selections in an Equipment Profile. You can create "
 "multiple profiles and switch back and forth between them."
 msgstr ""
-"选择一个你喜欢的设备配置文件。PHD在设备配置文件中存储了所有的设置和设备的选"
+"选择一个你喜欢的设备配置文件。LGuider在设备配置文件中存储了所有的设置和设备的选"
 "择。你可以创建多个设备配置文件并可以来回切换。"
 
 #: src/gui/gear_dialog.cpp:223
@@ -4216,8 +4216,8 @@ msgid "Enter the name of the new equipment profile"
 msgstr "输入新建的设备配置文件名"
 
 #: src/gui/gear_dialog.cpp:2098
-msgid "PHD Defaults"
-msgstr "PHD缺省值"
+msgid "LGuider Defaults"
+msgstr "LGuider缺省值"
 
 #: src/gui/gear_dialog.cpp:2101
 msgid "Profile initial settings"
@@ -4225,10 +4225,10 @@ msgstr "配置初始设置"
 
 #: src/gui/gear_dialog.cpp:2104
 msgid ""
-"Select PHD Defaults to create a profile with default PHD settings, or select "
+"Select LGuider Defaults to create a profile with default LGuider settings, or select "
 "an existing Equipment Profile to copy its settings into your new profile."
 msgstr ""
-"选择\"PHD缺省值\"，创建一个包含PHD缺省设置的配置文件。或者从一个已经存在的配"
+"选择\"LGuider缺省值\"，创建一个包含LGuider缺省设置的配置文件。或者从一个已经存在的配"
 "置文件创建你的新配置文件。"
 
 #: src/gui/gear_dialog.cpp:2128
@@ -4269,12 +4269,12 @@ msgid "Could not rename profile"
 msgstr "不能重命名配置文件"
 
 #: src/gui/gear_dialog.cpp:2209
-msgid "Import PHD Equipment Profiles"
-msgstr "导入PHD设备配置文件"
+msgid "Import LGuider Equipment Profiles"
+msgstr "导入LGuider设备配置文件"
 
 #: src/gui/gear_dialog.cpp:2242
-msgid "Export PHD Equipment Profile"
-msgstr "导出PHD设备配置文件"
+msgid "Export LGuider Equipment Profile"
+msgstr "导出LGuider设备配置文件"
 
 #: src/gui/graph-stepguider.cpp:86 src/gui/myframe.cpp:341
 #: src/gui/myframe.cpp:414
@@ -4572,7 +4572,7 @@ msgstr "测量赤纬回差"
 
 #: src/gui/guiding_assistant.cpp:526
 msgid ""
-"PHD2 will move the guide star a considerable distance north, then south to "
+"LGuider2 will move the guide star a considerable distance north, then south to "
 "measure backlash. Be sure the selected star has plenty of room to move in "
 "the north direction.  If the guide star is lost, increase the size of the "
 "search region to at least 20 px"
@@ -4596,7 +4596,7 @@ msgstr "停止测量并重新开始导星"
 
 #: src/gui/guiding_assistant.cpp:628
 msgid ""
-"Signal-to-noise ratio; a measure of how well PHD2 can isolate the star from "
+"Signal-to-noise ratio; a measure of how well LGuider2 can isolate the star from "
 "the sky/noise background"
 msgstr ""
 
@@ -5109,7 +5109,7 @@ msgid "Enable Server"
 msgstr "启用服务器模式"
 
 #: src/gui/myframe.cpp:535
-msgid "Enable PHD2 server capability"
+msgid "Enable LGuider2 server capability"
 msgstr ""
 
 #: src/gui/myframe.cpp:536 src/gui/nudge_lock.cpp:158
@@ -5321,7 +5321,7 @@ msgid "&Check for updates"
 msgstr "检查更新"
 
 #: src/gui/myframe.cpp:583
-msgid "Check for PHD2 software updates"
+msgid "Check for LGuider2 software updates"
 msgstr ""
 
 #: src/gui/myframe.cpp:584
@@ -5329,7 +5329,7 @@ msgid "Online Support"
 msgstr "在线支持"
 
 #: src/gui/myframe.cpp:584
-msgid "Ask for help in the PHD2 Forum"
+msgid "Ask for help in the LGuider2 Forum"
 msgstr ""
 
 #: src/gui/myframe.cpp:585
@@ -5434,7 +5434,7 @@ msgid "Auto-select Star. Shift-click to de-select star."
 msgstr "自动选星：Shift+左键 用来取消选择星点。"
 
 #: src/gui/myframe.cpp:1015
-msgid "Begin guiding (PHD). Shift-click to force calibration."
+msgid "Begin guiding (LGuider). Shift-click to force calibration."
 msgstr "开始导星。按住Shift并点击可进行强制校准。"
 
 #: src/gui/myframe.cpp:1018
@@ -5590,7 +5590,7 @@ msgstr "重置所有设置"
 #: src/gui/myframe.cpp:3006
 msgid ""
 "Reset all configuration and program settings to fresh install status. This "
-"will require restarting PHD2"
+"will require restarting LGuider2"
 msgstr ""
 
 #: src/gui/myframe.cpp:3007
@@ -5625,11 +5625,11 @@ msgstr "延时 (毫秒)"
 
 #: src/gui/myframe.cpp:3027
 msgid ""
-"How long should PHD wait between guide frames? Default = 0ms, useful when "
+"How long should LGuider wait between guide frames? Default = 0ms, useful when "
 "using very short exposures (e.g., using a video camera) but wanting to send "
 "guide commands less frequently"
 msgstr ""
-"PHD 应该在导星帧之间等待多长时间？ 默认值 = 0 毫秒，在使用非常短曝光的相机"
+"LGuider 应该在导星帧之间等待多长时间？ 默认值 = 0 毫秒，在使用非常短曝光的相机"
 "（例如，使用视频像机）但希望发送导星命令的频率较低时很有用"
 
 #: src/gui/myframe.cpp:3034
@@ -5648,15 +5648,15 @@ msgstr "语言"
 
 #: src/gui/myframe.cpp:3042
 #, c-format
-msgid "%s Language. You'll have to restart PHD to take effect."
-msgstr "%s 语言。 你需要重启PHD，用于生效该选项。"
+msgid "%s Language. You'll have to restart LGuider to take effect."
+msgstr "%s 语言。 你需要重启LGuider，用于生效该选项。"
 
 #: src/gui/myframe.cpp:3048
 msgid "Automatically check for updates"
 msgstr "自动检查更新"
 
 #: src/gui/myframe.cpp:3049
-msgid "Check for software updates when PHD2 starts (recommended)"
+msgid "Check for software updates when LGuider2 starts (recommended)"
 msgstr ""
 
 #: src/gui/myframe.cpp:3051
@@ -5869,7 +5869,7 @@ msgstr "可变曝光延迟（仅限带高精度编码器的赤道仪）"
 
 #: src/gui/myframe.cpp:3284
 msgid ""
-"This will reset all PHD2 configuration values and restart the program.  Are "
+"This will reset all LGuider2 configuration values and restart the program.  Are "
 "you sure?"
 msgstr ""
 
@@ -5878,13 +5878,13 @@ msgid "Confirmation"
 msgstr "确认"
 
 #: src/gui/myframe.cpp:3315
-msgid "Restart PHD2"
+msgid "Restart LGuider2"
 msgstr ""
 
 #: src/gui/myframe.cpp:3316
 msgid ""
-"You must restart PHD2 for the language change to take effect.\n"
-"Would you like to restart PHD2 now?"
+"You must restart LGuider2 for the language change to take effect.\n"
+"Would you like to restart LGuider2 now?"
 msgstr ""
 
 #: src/gui/myframe_events.cpp:80
@@ -5897,9 +5897,9 @@ msgstr "编辑自定义曝光时间"
 
 #: src/gui/myframe_events.cpp:178
 msgid ""
-"Welcome to PHD2 (Push Here Dummy, Gen2) Guiding\n"
+"Welcome to LGuider2 (Push Here Dummy, Gen2) Guiding\n"
 "\n"
-" Basic operation is quite simple (hence the 'PHD')\n"
+" Basic operation is quite simple (hence the 'LGuider')\n"
 "\n"
 "   1) Press the green 'USB' button, select your camera and mount, click on "
 "'Connect All'\n"
@@ -5909,7 +5909,7 @@ msgid ""
 "   4) Click on a star away from the edge or use Alt-S to auto-select a star\n"
 "   5) Press the guide (green target) icon\n"
 "\n"
-" PHD2 will then calibrate itself and begin guiding.  That's it!\n"
+" LGuider2 will then calibrate itself and begin guiding.  That's it!\n"
 "\n"
 " To stop guiding, simply press the 'Loop' or 'Stop' buttons. If you need "
 "to \n"
@@ -5981,7 +5981,7 @@ msgstr "已停止。"
 
 #: src/gui/myframe_events.cpp:432
 msgid ""
-"For refining the Bad-pixel Map PHD2 is now displaying raw camera data "
+"For refining the Bad-pixel Map LGuider2 is now displaying raw camera data "
 "frames, which are a different size from ordinary guide frames for this "
 "camera."
 msgstr ""
@@ -6036,10 +6036,10 @@ msgstr "导星相机"
 #: src/gui/myframe_events.cpp:967
 msgid ""
 "For best results, use a Dark Library or a Bad-pixel Map while guiding. This "
-"will help prevent PHD from locking on to a hot pixel. Use the Darks menu to "
+"will help prevent LGuider from locking on to a hot pixel. Use the Darks menu to "
 "build a Dark Library or Bad-pixel Map."
 msgstr ""
-"为获得最佳效果，请在导星时使用暗场库或坏点图。 这有助于防止PHD锁定到热噪点。 "
+"为获得最佳效果，请在导星时使用暗场库或坏点图。 这有助于防止LGuider锁定到热噪点。 "
 "使用”暗场“菜单构建暗场库或坏点图。"
 
 #: src/gui/myframe_events.cpp:984
@@ -6088,7 +6088,7 @@ msgstr "中天翻转校准工具"
 
 #: src/gui/myframe_events.cpp:1183
 msgid ""
-"With your current setting for Dec guide mode, this version of PHD2 will "
+"With your current setting for Dec guide mode, this version of LGuider2 will "
 "dither in Declination. To restore the old behavior you can set the RA-only "
 "option in the Dither Settings of the Advanced Dialog."
 msgstr ""
@@ -6327,7 +6327,7 @@ msgstr ""
 
 #: src/gui/polardrift_toolwin.cpp:65
 msgid ""
-"The Polar Drift Align tool is most effective when PHD2 knows your guide\n"
+"The Polar Drift Align tool is most effective when LGuider2 knows your guide\n"
 "scope focal length and camera pixel size.\n"
 "\n"
 "Enter your guide scope focal length on the Global tab in the Brain.\n"
@@ -6567,10 +6567,10 @@ msgstr "前进到下一个页面"
 msgid ""
 "This short sequence of steps will help you identify the equipment you want "
 "to use for guiding and will associate it with a profile name of your choice. "
-"This profile will then be available any time you run PHD2.  At a minimum, "
+"This profile will then be available any time you run LGuider2.  At a minimum, "
 "you will need to choose both the guide camera and the mount interface that "
-"PHD2 will use for guiding.  You will also enter some information about the "
-"optical characteristics of your setup. PHD2 will use this to create a good "
+"LGuider2 will use for guiding.  You will also enter some information about the "
+"optical characteristics of your setup. LGuider2 will use this to create a good "
 "'starter set' of guiding and calibration parameters. If you are a new user, "
 "please review the 'Basic Use' section of the 'Help' guide after the wizard "
 "dialog has finished."
@@ -6578,9 +6578,9 @@ msgstr ""
 
 #: src/gui/profile_wizard.cpp:392
 msgid ""
-"Select your guide camera from the list.  All cameras supported by PHD2 and "
+"Select your guide camera from the list.  All cameras supported by LGuider2 and "
 "all installed ASCOM cameras are shown. If your camera is not shown, it is "
-"either not supported by PHD2 or its camera driver is not installed.  PHD2 "
+"either not supported by LGuider2 or its camera driver is not installed.  LGuider2 "
 "needs to know the camera pixel size and guide scope focal length in order to "
 "compute reasonable guiding parameters.  When you choose a camera, you'll be "
 "given the option to connect to it immediately to get the pixel-size "
@@ -6591,15 +6591,15 @@ msgstr ""
 #: src/gui/profile_wizard.cpp:399
 #, c-format
 msgid ""
-"Select your mount interface from the list.  This determines how PHD2 will "
+"Select your mount interface from the list.  This determines how LGuider2 will "
 "send guide commands to the mount. For most modern mounts, the ASCOM "
 "interface is a good choice if you are running MS Windows.  The other "
 "interfaces are available for cases where ASCOM isn't available or isn't well "
 "supported by mount firmware.  If you know the mount guide speed, you can "
-"specify it  so PHD2 can calibrate more efficiently.  If you don't know the "
+"specify it  so LGuider2 can calibrate more efficiently.  If you don't know the "
 "mount guide speed, you can just use the default value of %0.1fx.  When you "
 "choose a  mount, you'll usually be given the option to connect to it "
-"immediately so PHD2 can read the guide speed for you."
+"immediately so LGuider2 can read the guide speed for you."
 msgstr ""
 
 #: src/gui/profile_wizard.cpp:406 src/gui/profile_wizard.cpp:700
@@ -6609,7 +6609,7 @@ msgstr "模拟器"
 #: src/gui/profile_wizard.cpp:408
 msgid ""
 "The 'simulator' camera/mount interface doesn't provide pointing information, "
-"so PHD2 will not be able to automatically adjust guiding for side-of-pier "
+"so LGuider2 will not be able to automatically adjust guiding for side-of-pier "
 "and declination. You can enable these features by choosing an 'Aux Mount' "
 "connection that does provide pointing information."
 msgstr ""
@@ -6617,7 +6617,7 @@ msgstr ""
 #: src/gui/profile_wizard.cpp:414
 msgid ""
 "The mount interface you chose in the previous step doesn't provide pointing "
-"information, so PHD2 will not be able to automatically adjust guiding for "
+"information, so LGuider2 will not be able to automatically adjust guiding for "
 "side-of-pier and declination. You can enable these features by choosing an "
 "'Aux Mount' connection that does provide pointing information.  The Aux "
 "Mount interface will be used only for that purpose and not for sending guide "
@@ -6637,9 +6637,9 @@ msgstr ""
 #: src/gui/profile_wizard.cpp:424
 msgid ""
 "If you have an ASCOM or INDI-compatible rotator device, you can select it "
-"here.  This will allow PHD2 to automatically adjust calibration when the "
+"here.  This will allow LGuider2 to automatically adjust calibration when the "
 "rotator is moved. Otherwise, any change in rotator position will require a "
-"re-calibration in PHD2"
+"re-calibration in LGuider2"
 msgstr ""
 
 #: src/gui/profile_wizard.cpp:428
@@ -6648,7 +6648,7 @@ msgid ""
 "build a dark-frame library for it. This is strongly recommended for best "
 "results. If your setup is stable from one night to the next, you can choose "
 "to automatically re-use the last calibration when you load this profile. If "
-"you are new to PHD2 or encounter problems, please use the 'Help' function "
+"you are new to LGuider2 or encounter problems, please use the 'Help' function "
 "for assistance."
 msgstr ""
 
@@ -6658,9 +6658,9 @@ msgstr "配置建议"
 
 #: src/gui/profile_wizard.cpp:481
 msgid ""
-"This configuration doesn't provide PHD2 with any information about the "
+"This configuration doesn't provide LGuider2 with any information about the "
 "scope's pointing position.  This means you will need to recalibrate\n"
-"whenever the scope is slewed, and some PHD2 features will be disabled.  You "
+"whenever the scope is slewed, and some LGuider2 features will be disabled.  You "
 "should choose an ASCOM or INDI mount connection\n"
 "for either 'mount' or 'aux-mount' unless there are no drivers available for "
 "your mount.\n"
@@ -6669,7 +6669,7 @@ msgstr ""
 
 #: src/gui/profile_wizard.cpp:487
 msgid ""
-"Please make sure the EQMOD ASCOM settings are configured for PHD2 according "
+"Please make sure the EQMOD ASCOM settings are configured for LGuider2 according "
 "to this document: \n"
 msgstr ""
 
@@ -6708,7 +6708,7 @@ msgid ""
 msgstr "已经有相同的配置文件名，请使用不同的名称。"
 
 #: src/gui/profile_wizard.cpp:677
-msgid "Welcome to the PHD2 'first light' wizard"
+msgid "Welcome to the LGuider2 'first light' wizard"
 msgstr ""
 
 #: src/gui/profile_wizard.cpp:682
@@ -6801,7 +6801,7 @@ msgstr "为你的配置文件起个名字，并可选进行创建暗场库。"
 
 #: src/gui/profile_wizard.cpp:837
 msgid ""
-"PHD2 could not connect to the camera so you may want to deal with that "
+"LGuider2 could not connect to the camera so you may want to deal with that "
 "later. In the meantime, you can just enter the pixel-size manually along "
 "with the focal length and binning levels."
 msgstr ""
@@ -6828,7 +6828,7 @@ msgstr "正在连接赤道仪 …"
 #: src/gui/profile_wizard.cpp:1137
 #, c-format
 msgid ""
-"PHD2 could not connect to the mount, so you'll probably want to deal with "
+"LGuider2 could not connect to the mount, so you'll probably want to deal with "
 "that later.  In the meantime, if you know the mount guide speed setting, you "
 "can enter it manually.  Otherwise, you can just leave it at the default "
 "value of %0.1fx"
@@ -6862,7 +6862,7 @@ msgstr "询问关于连接设备"
 
 #: src/gui/profile_wizard.cpp:1283
 msgid ""
-"Is the camera already connected to the PC?   If so, PHD2 can usually "
+"Is the camera already connected to the PC?   If so, LGuider2 can usually "
 "determine the camera pixel-size automatically.  If the camera isn't "
 "connected or its driver doesn't report the pixel-size, you can enter the "
 "value yourself using information in the camera manual or online. "
@@ -6875,8 +6875,8 @@ msgstr "相机已经连接？"
 #: src/gui/profile_wizard.cpp:1290
 #, c-format
 msgid ""
-"Is the mount already connected and set up to communicate with PHD2?  If so, "
-"PHD2 can determine the mount guide speed automatically.  If not, you can "
+"Is the mount already connected and set up to communicate with LGuider2?  If so, "
+"LGuider2 can determine the mount guide speed automatically.  If not, you can "
 "enter the guide-speed manually.  If you don't know what it is, just leave "
 "the setting at the default value of %0.1fx."
 msgstr ""
@@ -6888,8 +6888,8 @@ msgstr "赤道仪是否已连接？"
 #: src/gui/profile_wizard.cpp:1297
 #, c-format
 msgid ""
-"Is the aux-mount already connected and set up to communicate with PHD2?  If "
-"so, PHD2 can determine the mount guide speed automatically.  If not, you can "
+"Is the aux-mount already connected and set up to communicate with LGuider2?  If "
+"so, LGuider2 can determine the mount guide speed automatically.  If not, you can "
 "enter it manually.  If you don't know what it is, just leave the setting at "
 "the default value of %0.1fx.  If the guide speed on the previous page "
 "doesn't match what is read from the mount, the mount value will be used."
@@ -6930,7 +6930,7 @@ msgstr ""
 #: src/gui/server_dialog_base.cpp:65
 msgid ""
 "Start socket server on specific host and port , default host is 0.0.0.0 "
-"which allow all ips to connect to server ,and port is 4400 the same as PHD2."
+"which allow all ips to connect to server ,and port is 4400 the same as LGuider2."
 msgstr ""
 
 #: src/gui/server_dialog_base.cpp:71
@@ -7278,7 +7278,7 @@ msgstr "隐藏详细信息"
 
 #: src/gui/staticpa_toolwin.cpp:108
 msgid ""
-"The Static Align tool is most effective when PHD2 knows your guide\n"
+"The Static Align tool is most effective when LGuider2 knows your guide\n"
 "scope focal length and camera pixel size.\n"
 "\n"
 "Enter your guide scope focal length on the Global tab in the Brain.\n"
@@ -7597,17 +7597,17 @@ msgstr "MOVE5 (+/- 5.0)"
 #: src/gui/testguide.cpp:116
 msgid ""
 "Select the dither amount type. Imaging applications have the option of "
-"sending each of these dither amounts to PHD."
-msgstr "选择抖动量类型。 成像应用程序可以选择将这些抖动量发送到 PHD。"
+"sending each of these dither amounts to LGuider."
+msgstr "选择抖动量类型。 成像应用程序可以选择将这些抖动量发送到 LGuider。"
 
 #: src/gui/testguide.cpp:124
 msgid ""
 "Scale factor for dithering. The dither amount type is multiplied by this "
 "value to get the actual dither amount. Changing the value here affects both "
-"manual dithering and dithering from imaging applications connected to PHD."
+"manual dithering and dithering from imaging applications connected to LGuider."
 msgstr ""
 "抖动的比例因子。 抖动量类型乘以该值以获得实际抖动量。 在此处更改值会同时手动"
-"抖动，以及连接到PHD的拍摄应用程序的抖动。"
+"抖动，以及连接到LGuider的拍摄应用程序的抖动。"
 
 #: src/gui/testguide.cpp:127
 msgid "RA Only"
@@ -7616,7 +7616,7 @@ msgstr "仅赤经"
 #: src/gui/testguide.cpp:130
 msgid ""
 "Dither on RA axis only. Changing the value here affects both manual "
-"dithering and dithering from imaging applications connected to PHD."
+"dithering and dithering from imaging applications connected to LGuider."
 msgstr ""
 "仅在赤经轴抖动。修改此项会影响人工抖动，以及其他连接到LightGuider的其他应用程"
 "序。"
@@ -7736,7 +7736,7 @@ msgstr "上传日志文件 - 上传失败"
 
 #: src/logger/log_uploader.cpp:660
 msgid ""
-"When asking for help in the PHD2 Forum it is important to include your PHD2 "
+"When asking for help in the LGuider2 Forum it is important to include your LGuider2 "
 "logs. This tool will help you upload your log files so they can be seen in "
 "the forum.\n"
 "The first step is to select which files to upload.\n"
@@ -7820,7 +7820,7 @@ msgstr "日志文件已经上传，您可以通过这个链接来访问："
 
 #: src/logger/log_uploader.cpp:1285
 msgid ""
-"You can share your log files in the <a href=\"forum\">PHD2 Forum</a> by "
+"You can share your log files in the <a href=\"forum\">LGuider2 Forum</a> by "
 "posting a message that includes the link. Copy and paste the link into your "
 "forum post."
 msgstr ""
@@ -7831,20 +7831,20 @@ msgstr "复制链接到剪贴板"
 
 #: src/logger/log_uploader.cpp:1303
 msgid ""
-"PHD2 was unable to upload the log files due to an internal error. Please "
-"report the error in the PHD2 Forum."
+"LGuider2 was unable to upload the log files due to an internal error. Please "
+"report the error in the LGuider2 Forum."
 msgstr ""
 
 #: src/logger/log_uploader.cpp:1306
 msgid ""
-"PHD2 was unable to upload the log files. The service may be temproarily "
+"LGuider2 was unable to upload the log files. The service may be temproarily "
 "unavailable. You can try again later or you can try another file sharing "
 "service such as Dropbox or Google Drive."
 msgstr ""
 
 #: src/logger/log_uploader.cpp:1310
 msgid ""
-"PHD2 encountered an error while compressing the log files. Please make sure "
+"LGuider2 encountered an error while compressing the log files. Please make sure "
 "the selected logs are available and try again."
 msgstr ""
 
@@ -8009,7 +8009,7 @@ msgstr ""
 
 #: src/telescope/mount.cpp:1275
 msgid ""
-"Current calibration did not have side-of-pier information, so PHD2 can't "
+"Current calibration did not have side-of-pier information, so LGuider2 can't "
 "automatically correct for meridian flips. You should do a fresh calibration "
 "to correct this problem."
 msgstr ""
@@ -8044,21 +8044,21 @@ msgstr "INDI赤道仪[%s]"
 
 #: src/telescope/scope.cpp:636
 msgid ""
-"PHD2 is not able to make sufficient corrections in RA.  Check for cable "
+"LGuider2 is not able to make sufficient corrections in RA.  Check for cable "
 "snags, try re-doing your calibration, and check for problems with the mount "
 "mechanics."
 msgstr ""
 
 #: src/telescope/scope.cpp:641
 msgid ""
-"PHD2 is not able to make sufficient corrections in RA.  Check for cable "
+"LGuider2 is not able to make sufficient corrections in RA.  Check for cable "
 "snags, try re-doing your calibration, and confirm the ST-4 cable is working "
 "properly."
 msgstr ""
 
 #: src/telescope/scope.cpp:649
 msgid ""
-"PHD2 is not able to make sufficient corrections in Dec.  If you have just "
+"LGuider2 is not able to make sufficient corrections in Dec.  If you have just "
 "done a meridian flip, check to see if the 'Reverse Dec output option' on the "
 "Advanced Dialog guiding tab is wrong.  Otherwise, check for cable snags, try "
 "re-doing your calibration, and check for problems with the mount mechanics."
@@ -8066,7 +8066,7 @@ msgstr ""
 
 #: src/telescope/scope.cpp:655
 msgid ""
-"PHD2 is not able to make sufficient corrections in Dec.  Check for cable "
+"LGuider2 is not able to make sufficient corrections in Dec.  Check for cable "
 "snags, try re-doing your calibration and confirm the ST-4 cable is working "
 "properly."
 msgstr ""
@@ -8082,15 +8082,15 @@ msgstr "赤纬脉冲最大时长设置"
 #: src/telescope/scope.cpp:665
 #, c-format
 msgid ""
-"Your %s is preventing PHD from making adequate corrections to keep the guide "
-"star locked. Try restoring %s to its default value to allow PHD2 to make "
+"Your %s is preventing LGuider from making adequate corrections to keep the guide "
+"star locked. Try restoring %s to its default value to allow LGuider2 to make "
 "larger corrections."
 msgstr ""
 
 #: src/telescope/scope.cpp:674
 #, c-format
 msgid ""
-"Even using the maximum moves, PHD2 can't properly correct for the large "
+"Even using the maximum moves, LGuider2 can't properly correct for the large "
 "guide star movements in %s. Guiding will be impaired until you can eliminate "
 "the source of these problems."
 msgstr ""
@@ -8261,7 +8261,7 @@ msgid "Stop guiding when mount slews"
 msgstr "当赤道仪Goto时自动停止导星"
 
 #: src/telescope/scope.cpp:1944
-msgid "When checked, PHD will stop guiding if the mount starts slewing"
+msgid "When checked, LGuider will stop guiding if the mount starts slewing"
 msgstr "如果选中该项，LightGuider会在赤道仪开始Goto时停止导星。"
 
 #: src/telescope/scope.cpp:1950
@@ -8464,7 +8464,7 @@ msgstr "不明情况"
 
 #: src/telescope/scope_manual_pointing.cpp:102
 msgid ""
-"Select Unspecified if you do not want PHD2 to flip your calibration data for "
+"Select Unspecified if you do not want LGuider2 to flip your calibration data for "
 "side of pier changes"
 msgstr ""
 
@@ -8675,7 +8675,7 @@ msgstr "自定义端口地址："
 #~ msgstr "使用Amp"
 
 #~ msgid "Defaults"
-#~ msgstr "PHD缺省值"
+#~ msgstr "LGuider缺省值"
 
 #~ msgid "Webcam settings"
 #~ msgstr "摄像头设置"
@@ -9070,7 +9070,7 @@ msgstr "自定义端口地址："
 #~ msgid ""
 #~ "Welcome to LightGuider (Push Here Dummy, Gen2) Guiding\n"
 #~ "\n"
-#~ " Basic operation is quite simple (hence the 'PHD')\n"
+#~ " Basic operation is quite simple (hence the 'LGuider')\n"
 #~ "\n"
 #~ "   1) Press the green 'USB' button, select your camera and mount, click "
 #~ "on 'Connect All'\n"
@@ -9091,9 +9091,9 @@ msgstr "自定义端口地址："
 #~ "have\n"
 #~ " problems, read the 'Best Practices' document and the help files! "
 #~ msgstr ""
-#~ "欢迎使用PHD二代导星程序\n"
+#~ "欢迎使用LGuider二代导星程序\n"
 #~ "\n"
-#~ " 基本操作非常简单，就像PHD一代那样\n"
+#~ " 基本操作非常简单，就像LGuider一代那样\n"
 #~ "\n"
 #~ " 1) 点击绿色的“USB图标”，选择你的导星相机和赤道仪，点击“连接所有设备”按"
 #~ "钮。\n"
@@ -9406,11 +9406,11 @@ msgstr "自定义端口地址："
 
 #, c-format
 #~ msgid ""
-#~ "Your %s is preventing PHD from making adequate corrections to keep the "
+#~ "Your %s is preventing LGuider from making adequate corrections to keep the "
 #~ "guide star locked. Try restoring %s to its default value to allow "
 #~ "LightGuider to make larger corrections."
 #~ msgstr ""
-#~ "你的 %s 正在阻止 PHD 进行足够的修正以保持导星锁定。 尝试将 %s 恢复为其默认"
+#~ "你的 %s 正在阻止 LGuider 进行足够的修正以保持导星锁定。 尝试将 %s 恢复为其默认"
 #~ "值以允许 LightGuider 进行更大的修正。"
 
 #, c-format
@@ -10003,7 +10003,7 @@ msgstr "自定义端口地址："
 #~ msgid ""
 #~ "Welcome to LightGuider (Push Here Dummy, Gen2) Guiding\n"
 #~ "\n"
-#~ " Operation is quite simple (hence the 'PHD')\n"
+#~ " Operation is quite simple (hence the 'LGuider')\n"
 #~ "\n"
 #~ "   1) Press the 'Camera' button, select your camera and mount, click on "
 #~ "'Connect All'\n"
@@ -10011,7 +10011,7 @@ msgstr "自定义端口地址："
 #~ "   3) Hit the 'Loop' button, adjust your focus if necessary\n"
 #~ "   4) Click on a star away from the edge or use Alt-S to auto-select a "
 #~ "star\n"
-#~ "   5) Press the PHD (archery target) icon\n"
+#~ "   5) Press the LGuider (archery target) icon\n"
 #~ "\n"
 #~ " LightGuider will then calibrate itself and begin guiding.  That's it!\n"
 #~ "\n"
@@ -10025,13 +10025,13 @@ msgstr "自定义端口地址："
 #~ msgstr ""
 #~ "欢迎使用LightGuider (Linkage 汉化版)\n"
 #~ "\n"
-#~ "操作相当的简单(这就是“PHD”)\n"
+#~ "操作相当的简单(这就是“LGuider”)\n"
 #~ "\n"
 #~ " 1) 点击\"相机\"按钮，选择你的相机以及赤道仪，点击\"连接所有设备\"按钮\n"
 #~ " 2) 从下拉列表框中选择一个合适的曝光时间。\n"
 #~ " 3) 点击“连续曝光”按钮，调整焦距。(如果已合焦，请忽略该步骤)\n"
 #~ " 4) 选择一颗远离边缘的星点，或者使用Alt+S“自动选星”功能.\n"
-#~ " 5) 点击PHD按钮(“箭靶”图标)\n"
+#~ " 5) 点击LGuider按钮(“箭靶”图标)\n"
 #~ "\n"
 #~ " LightGuider将自动进行校准并开始导星。 就是这么简单！！！\n"
 #~ "\n"
@@ -10243,11 +10243,11 @@ msgstr "自定义端口地址："
 #~ msgstr "星点质心变化检测"
 
 #~ msgid ""
-#~ "Check to enable star mass change detection. When enabled, PHD skips "
+#~ "Check to enable star mass change detection. When enabled, LGuider skips "
 #~ "frames when the guide star mass changes by an amount greater than the "
 #~ "Star mass tolerance setting."
 #~ msgstr ""
-#~ "*Check to enable star mass change detection. When enabled, PHD skips "
+#~ "*Check to enable star mass change detection. When enabled, LGuider skips "
 #~ "frames when the guide star mass changes by an amount greater than the "
 #~ "Star mass tolerance setting.*"
 
@@ -10325,7 +10325,7 @@ msgstr "自定义端口地址："
 #~ msgid "Dither scale"
 #~ msgstr "抖动幅度"
 
-#~ msgid "You must restart PHD for the language change to take effect."
+#~ msgid "You must restart LGuider for the language change to take effect."
 #~ msgstr "修改语言必须重启LightGuider后生效。"
 
 #~ msgid ""
@@ -10387,7 +10387,7 @@ msgstr "自定义端口地址："
 
 #, fuzzy
 #~ msgid "Import profile"
-#~ msgstr "导入PHD设备配置文件"
+#~ msgstr "导入LGuider设备配置文件"
 
 #~ msgid "Restore window positions"
 #~ msgstr "恢复窗口位置"
@@ -10475,9 +10475,9 @@ msgstr "自定义端口地址："
 #~ msgid "RA angle (e.g. 0.5):"
 #~ msgstr "赤经角度(例如：0.5)："
 
-#~ msgid "Check to clear any previous calibration and force PHD to recalibrate"
+#~ msgid "Check to clear any previous calibration and force LGuider to recalibrate"
 #~ msgstr ""
-#~ "*Check to clear any previous calibration and force PHD to recalibrate"
+#~ "*Check to clear any previous calibration and force LGuider to recalibrate"
 
 #~ msgid "No Cam"
 #~ msgstr "无相机"
@@ -10524,8 +10524,8 @@ msgstr "自定义端口地址："
 #~ msgid "Take Dark"
 #~ msgstr "拍摄暗场"
 
-#~ msgid "Begin guiding (PHD)"
-#~ msgstr "Begin guiding (PHD)"
+#~ msgid "Begin guiding (LGuider)"
+#~ msgstr "Begin guiding (LGuider)"
 
 #~ msgid "You haven't captured any dark frames - nothing to save"
 #~ msgstr "*You haven't captured any dark frames - nothing to save"

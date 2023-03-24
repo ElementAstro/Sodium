@@ -1,6 +1,6 @@
 /*
  *  star.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Refactored by Bret McKee
@@ -40,7 +40,7 @@
 
 #include "point.h"
 
-class Star : public PHD_Point
+class Star : public LGuider_Point
 {
 public:
     enum FindMode
@@ -75,7 +75,7 @@ public:
     Star();
 
     /*
-     * Note: contrary to most boolean PHD functions, the star find functions return
+     * Note: contrary to most boolean LGuider functions, the star find functions return
      *       a boolean indicating success instead of a boolean indicating an
      *       error
      */
@@ -100,7 +100,7 @@ inline Star::FindResult Star::GetError() const
 class GuideStar : public Star
 {
 public:
-    PHD_Point referencePoint;
+    LGuider_Point referencePoint;
     unsigned int missCount;
     unsigned int zeroCount;
     unsigned int lostCount;

@@ -1,5 +1,5 @@
 /**
- * PHD2 Guiding
+ * LGuider2 Guiding
  *
  * @file
  * @date      2014-2017
@@ -318,14 +318,14 @@ public:
 };
 
 //
-// GPDebug abstract interface to allow logging to the PHD2 Debug Log when
-// GaussianProcessGuider is built in the context of the PHD2 application
+// GPDebug abstract interface to allow logging to the LGuider2 Debug Log when
+// GaussianProcessGuider is built in the context of the LGuider2 application
 //
-// Add code like this to record debug info in the PHD2 debug log (with newline appended)
+// Add code like this to record debug info in the LGuider2 debug log (with newline appended)
 //
 //   GPDebug->Log("input: %.2f SNR: %.1f time_step: %.1f", input, SNR, time_step);
 //
-// Outside of PHD2, like in the test framework, these calls will not produce any output
+// Outside of LGuider2, like in the test framework, these calls will not produce any output
 //
 class GPDebug
 {

@@ -1,6 +1,6 @@
 /*
  *  Refine_DefMap.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bruce Waddington in collaboration with Andy Galasso and David Ault
  *  Copyright (c) 2014 Bruce Waddington

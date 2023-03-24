@@ -1,6 +1,6 @@
 /*
  *  lightguider.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -71,9 +71,9 @@ int YWinSize = 512;
 static const wxCmdLineEntryDesc cmdLineDesc[] =
 {
     { wxCMD_LINE_SWITCH, "v", "version", "Show the version of the LightGuider" },
-    { wxCMD_LINE_OPTION, "i", "instanceNumber", "sets the PHD2 instance number (default = 1)", wxCMD_LINE_VAL_NUMBER, wxCMD_LINE_PARAM_OPTIONAL},
+    { wxCMD_LINE_OPTION, "i", "instanceNumber", "sets the LGuider2 instance number (default = 1)", wxCMD_LINE_VAL_NUMBER, wxCMD_LINE_PARAM_OPTIONAL},
     { wxCMD_LINE_OPTION, "l", "load", "load settings from file and exit", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
-    { wxCMD_LINE_SWITCH, "R", "Reset", "Reset all PHD2 settings to default values" },
+    { wxCMD_LINE_SWITCH, "R", "Reset", "Reset all LGuider2 settings to default values" },
     { wxCMD_LINE_SWITCH, "w", "web", "Start the http server" },
     { wxCMD_LINE_SWITCH, "g", "websocket", "Start the websocket server" },
     { wxCMD_LINE_OPTION, "s", "save", "save settings to file and exit", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
@@ -107,7 +107,7 @@ static void DisableOSXAppNap()
         if (err.GetCount() > 0 || (out.GetCount() > 0 && out[0].Contains("0"))) // it's not there or disabled
         {
             wxExecute("defaults write " APPKEY " NSAppSleepDisabled -bool YES");
-            wxMessageBox("OSX 10.9's App Nap feature causes problems.  Please quit and relaunch PHD to finish disabling App Nap.");
+            wxMessageBox("OSX 10.9's App Nap feature causes problems.  Please quit and relaunch LGuider to finish disabling App Nap.");
         }
     }
 # undef APPKEY
@@ -432,7 +432,7 @@ static void OpenLogs(bool rollover)
     bool forceDebugOpen = rollover ? true : false;
     Debug.InitDebugLog(debugEnabled, forceDebugOpen);
 
-    Debug.Write(wxString::Format("PHD2 version %s %s execution with:\n", FULLVER,
+    Debug.Write(wxString::Format("LGuider2 version %s %s execution with:\n", FULLVER,
                                  rollover ? "continues" : "begins"));
     Debug.Write(wxString::Format("   %s\n", GetOsDescription()));
 #if defined(__linux__)
@@ -545,7 +545,7 @@ bool PhdApp::OnInit()
     m_instanceChecker = new wxSingleInstanceChecker(wxString::Format("%s.%ld", GetAppName(), m_instanceNumber));
     if (m_instanceChecker->IsAnotherRunning())
     {
-        spdlog::error("PHD2 instance %ld is already running. Use the -i INSTANCE_NUM command-line option to start a different instance.", m_instanceNumber);
+        spdlog::error("LGuider2 instance %ld is already running. Use the -i INSTANCE_NUM command-line option to start a different instance.", m_instanceNumber);
         delete m_instanceChecker; // OnExit() won't be called if we return false
         m_instanceChecker = 0;
         return false;
@@ -565,7 +565,7 @@ bool PhdApp::OnInit()
     SetVendorName(_T("StarkLabs"));
     // use SetAppName() to ensure the local data directory is found even if the name of the executable is changed
 #ifdef __APPLE__
-    SetAppName(_T("PHD2"));
+    SetAppName(_T("LGuider2"));
 #else
     SetAppName(_T("phd2"));
 #endif
@@ -633,10 +633,10 @@ bool PhdApp::OnInit()
     int langid = pConfig->Global.GetInt("/wxLanguage", wxLANGUAGE_DEFAULT);
     bool ok = m_locale.Init(langid);
     Debug.Write(wxString::Format("locale: initialized with lang id %d (r=%d)\n", langid, ok));
-    if (!m_locale.AddCatalog(PHD_MESSAGES_CATALOG))
+    if (!m_locale.AddCatalog(LGuider_MESSAGES_CATALOG))
     {
-        spdlog::debug(std::string(wxString::Format("locale: AddCatalog(%s) failed\n", PHD_MESSAGES_CATALOG)));
-        Debug.Write(wxString::Format("locale: AddCatalog(%s) failed\n", PHD_MESSAGES_CATALOG));
+        spdlog::debug(std::string(wxString::Format("locale: AddCatalog(%s) failed\n", LGuider_MESSAGES_CATALOG)));
+        Debug.Write(wxString::Format("locale: AddCatalog(%s) failed\n", LGuider_MESSAGES_CATALOG));
     }
     wxSetlocale(LC_NUMERIC, "C");
 
@@ -675,7 +675,7 @@ bool PhdApp::OnInit()
 
     spdlog::debug("Start checking for updates");
 
-    PHD2Updater::InitUpdater();
+    LGuider2Updater::InitUpdater();
 
     return true;
 }
@@ -722,7 +722,7 @@ bool PhdApp::OnCmdLineParsed(wxCmdLineParser& parser)
     spdlog::debug("LightGuider is running on {}",std::string(wxGetCwd()));
 
     if (parser.Found("v")){
-        spdlog::info("LightGuider version : {} , based on PHD2 : {}","1.0.0-indev","2.6.11-dev5");
+        spdlog::info("LightGuider version : {} , based on LGuider2 : {}","1.0.0-indev","2.6.11-dev5");
         ::exit(1);
     }
 
@@ -827,7 +827,7 @@ void PhdApp::CheckLogRollover()
 
 wxString PhdApp::UserAgent() const
 {
-    return _T("phd2/") FULLVER _T(" (") PHD_OSNAME _T(")");
+    return _T("phd2/") FULLVER _T(" (") LGuider_OSNAME _T(")");
 }
 
 void PhdApp::ResetConfiguration()

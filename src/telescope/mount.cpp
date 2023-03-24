@@ -1,6 +1,6 @@
 /*
  *  mount.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee
@@ -678,7 +678,7 @@ static GuideAlgorithm *MakeGaussianProcessGuideAlgo(Mount *mount, GuideAxis axis
     static bool s_gp_debug_inited;
     if (!s_gp_debug_inited)
     {
-        class PHD2DebugLogger : public GPDebug {
+        class LGuider2DebugLogger : public GPDebug {
             void Log(const char *format, ...) {
                 va_list ap;
                 va_start(ap, format);
@@ -686,7 +686,7 @@ static GuideAlgorithm *MakeGaussianProcessGuideAlgo(Mount *mount, GuideAxis axis
                 va_end(ap);
             }
         };
-        GPDebug::SetGPDebug(new PHD2DebugLogger());
+        GPDebug::SetGPDebug(new LGuider2DebugLogger());
         s_gp_debug_inited = true;
     }
     return new GuideAlgorithmGaussianProcess(mount, axis);
@@ -782,13 +782,13 @@ void Mount::TestTransforms()
                     double cameraAngle = ((double)i) * M_PI/12.0;
                     cameraAngle = atan2(sin(cameraAngle), cos(cameraAngle));
 
-                    PHD_Point p0(cos(cameraAngle), sin(cameraAngle));
+                    LGuider_Point p0(cos(cameraAngle), sin(cameraAngle));
                     assert(fabs((p0.X*p0.X + p0.Y*p0.Y) - 1.00) < 0.01);
 
                     double p0Angle = p0.Angle();
                     assert(fabs(cameraAngle - p0Angle) < 0.01);
 
-                    PHD_Point p1, p2;
+                    LGuider_Point p1, p2;
 
                     if (TransformCameraCoordinatesToMountCoordinates(p0, p1))
                     {
@@ -1086,7 +1086,7 @@ Mount::MOVE_RESULT Mount::MoveOffset(GuiderOffset *ofs, unsigned int moveOptions
  * started and stopped.  Looking at the coordinates of the start and stop point, we
  * can compute the angle and the speed.
  *
- * The original PHD code used cos() against both the angles, but that code had issues
+ * The original LGuider code used cos() against both the angles, but that code had issues
  * with sign reversal for some of the reverse transforms.  I spent some time looking
  * at that code (OK, a lot of time) and I never managed to get it to work, so I
  * rewrote it.
@@ -1116,8 +1116,8 @@ Mount::MOVE_RESULT Mount::MoveOffset(GuiderOffset *ofs, unsigned int moveOptions
  *
  */
 
-bool Mount::TransformCameraCoordinatesToMountCoordinates(const PHD_Point& cameraVectorEndpoint,
-                                                         PHD_Point& mountVectorEndpoint, bool logged)
+bool Mount::TransformCameraCoordinatesToMountCoordinates(const LGuider_Point& cameraVectorEndpoint,
+                                                         LGuider_Point& mountVectorEndpoint, bool logged)
 {
     bool bError = false;
 
@@ -1162,8 +1162,8 @@ bool Mount::TransformCameraCoordinatesToMountCoordinates(const PHD_Point& camera
     return bError;
 }
 
-bool Mount::TransformMountCoordinatesToCameraCoordinates(const PHD_Point& mountVectorEndpoint,
-                                                        PHD_Point& cameraVectorEndpoint, bool logged)
+bool Mount::TransformMountCoordinatesToCameraCoordinates(const LGuider_Point& mountVectorEndpoint,
+                                                        LGuider_Point& cameraVectorEndpoint, bool logged)
 {
     bool bError = false;
 
@@ -1272,7 +1272,7 @@ void Mount::AdjustCalibrationForScopePointing()
 
     if (newPierSide != PIER_SIDE_UNKNOWN && m_cal.pierSide == PIER_SIDE_UNKNOWN)
     {
-        pFrame->Alert(_("Current calibration did not have side-of-pier information, so PHD2 can't automatically correct for meridian flips. "
+        pFrame->Alert(_("Current calibration did not have side-of-pier information, so LGuider2 can't automatically correct for meridian flips. "
             "You should do a fresh calibration to correct this problem."));
     }
 
@@ -1682,8 +1682,8 @@ void Mount::NotifyGuidingDithered(double dx, double dy, bool mountCoords)
 
     if (!mountCoords)
     {
-        PHD_Point cam(dx, dy);
-        PHD_Point mnt;
+        LGuider_Point cam(dx, dy);
+        LGuider_Point mnt;
         bool err = TransformCameraCoordinatesToMountCoordinates(cam, mnt, false);
         if (!err)
         {
@@ -1708,7 +1708,7 @@ void Mount::NotifyGuidingDitherSettleDone(bool success)
         m_pYGuideAlgorithm->GuidingDitherSettleDone(success);
 }
 
-void Mount::NotifyDirectMove(const PHD_Point& dist)
+void Mount::NotifyDirectMove(const LGuider_Point& dist)
 {
     Debug.Write(wxString::Format("Mount: notify direct move %.2f,%.2f\n", dist.X, dist.Y));
     if (m_pXGuideAlgorithm)

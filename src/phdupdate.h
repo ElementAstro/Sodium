@@ -1,6 +1,6 @@
 /*
  *  phdupdate.h
- *  Open PHD Guiding
+ *  Open LGuider Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2017 Andy Galasso.
@@ -32,8 +32,8 @@
  *
  */
 
-#ifndef PHDUPDATE_INCLUDED
-#define PHDUPDATE_INCLUDED
+#ifndef LGuiderUPDATE_INCLUDED
+#define LGuiderUPDATE_INCLUDED
 
 enum UpdateSeries
 {
@@ -47,7 +47,7 @@ struct UpdaterSettings
     UpdateSeries series;
 };
 
-class PHD2Updater
+class LGuider2Updater
 {
 public:
 

@@ -138,7 +138,7 @@ class HelpDialogBase : public wxDialog
 	
 	public:
 		
-		HelpDialogBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("PHD Log Viewer Quick Help"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 567,523 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
+		HelpDialogBase( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("LGuider Log Viewer Quick Help"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 567,523 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER ); 
 		~HelpDialogBase();
 	
 };

@@ -1,6 +1,6 @@
 /*
  *  Refine_DefMap.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bruce Waddington in collaboration with Andy Galasso and David Ault
  *  Copyright(c) 2014 Bruce Waddington
@@ -427,7 +427,7 @@ void RefineDefMap::OnColdChange(wxScrollEvent& evt)
 // Manually add a bad pixel to the currently loaded (in-memory) defect map - does NOT affect any future map generations
 void RefineDefMap::OnAddDefect(wxCommandEvent& evt)
 {
-    PHD_Point pixelLoc = pFrame->pGuider->CurrentPosition();
+    LGuider_Point pixelLoc = pFrame->pGuider->CurrentPosition();
 
     if (pFrame->pGuider->IsLocked())
     {

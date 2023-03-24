@@ -1,6 +1,6 @@
 /*
  *  staticpa_tool.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Ken Self
  *  Copyright (c) 2017 Ken Self

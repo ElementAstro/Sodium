@@ -1,6 +1,6 @@
 /*
  *  frame_events.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -176,14 +176,14 @@ void MyFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 
 void MyFrame::OnInstructions(wxCommandEvent& WXUNUSED(event))
 {
-    wxMessageBox(wxString::Format(_("Welcome to PHD2 (Push Here Dummy, Gen2) Guiding\n\n \
-Basic operation is quite simple (hence the 'PHD')\n\n \
+    wxMessageBox(wxString::Format(_("Welcome to LGuider2 (Push Here Dummy, Gen2) Guiding\n\n \
+Basic operation is quite simple (hence the 'LGuider')\n\n \
   1) Press the green 'USB' button, select your camera and mount, click on 'Connect All'\n \
   2) Pick an exposure duration from the drop-down list. Try 2 seconds to start.\n \
   3) Hit the 'Loop' button, adjust your focus if necessary\n \
   4) Click on a star away from the edge or use Alt-S to auto-select a star\n \
   5) Press the guide (green target) icon\n\n \
-PHD2 will then calibrate itself and begin guiding.  That's it!\n\n \
+LGuider2 will then calibrate itself and begin guiding.  That's it!\n\n \
 To stop guiding, simply press the 'Loop' or 'Stop' buttons. If you need to \n \
 tweak any options, click on the 'Brain' button to bring up the 'Advanced' \n \
 panel. Use the 'View' menu to watch your guiding performance. If you have\n \
@@ -408,7 +408,7 @@ void MyFrame::FinishStop(void)
     m_singleExposure.enabled = false;
     EvtServer.NotifyLoopingStopped();
     // when looping resumes, start with at least one full frame. This enables applications
-    // controlling PHD to auto-select a new star if the star is lost while looping was stopped.
+    // controlling LGuider to auto-select a new star if the star is lost while looping was stopped.
     pGuider->ForceFullFrame();
     ResetAutoExposure();
     UpdateButtonsStatus();
@@ -430,7 +430,7 @@ static void WarnRawImageMode(void)
 {
     if (pCamera->FullSize != pCamera->DarkFrameSize())
     {
-        pFrame->SuppressableAlert(RawModeWarningKey(), _("For refining the Bad-pixel Map PHD2 is now displaying raw camera data frames, which are a different size from ordinary guide frames for this camera."),
+        pFrame->SuppressableAlert(RawModeWarningKey(), _("For refining the Bad-pixel Map LGuider2 is now displaying raw camera data frames, which are a different size from ordinary guide frames for this camera."),
             SuppressRawModeWarning, 0);
     }
 }
@@ -966,7 +966,7 @@ static void ValidateDarksLoaded(void)
     {
         pFrame->SuppressableAlert(DarksWarningEnabledKey(),
             _("For best results, use a Dark Library or a Bad-pixel Map "
-            "while guiding. This will help prevent PHD from locking on to a hot pixel. "
+            "while guiding. This will help prevent LGuider from locking on to a hot pixel. "
             "Use the Darks menu to build a Dark Library or Bad-pixel Map."), SuppressDarksAlert, 0);
     }
 }
@@ -1181,7 +1181,7 @@ static void CheckDecGuideModeAlert()
 
             if ((dgm == DEC_NORTH || dgm == DEC_SOUTH) && !pFrame->GetDitherRaOnly())
             {
-                wxString msg = _("With your current setting for Dec guide mode, this version of PHD2 will "
+                wxString msg = _("With your current setting for Dec guide mode, this version of LGuider2 will "
                                  "dither in Declination. To restore the old behavior you can set the RA-only "
                                  "option in the Dither Settings of the Advanced Dialog.");
                 pFrame->Alert(msg, 0,

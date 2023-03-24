@@ -1,6 +1,6 @@
 /*
  *  gear_dialog.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2013 Bret McKee

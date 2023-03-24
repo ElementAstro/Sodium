@@ -1,6 +1,6 @@
 /*
  *  config_indi.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark
  *  Copyright (c) 2006, 2007, 2008, 2009 Craig Stark.
@@ -159,7 +159,7 @@ INDIConfig::INDIConfig(wxWindow *parent, const wxString& title, IndiDevType devt
 
     ++pos;
     wxCheckBox *cb = new wxCheckBox(this, VERBOSE, _("Verbose logging"));
-    cb->SetToolTip(_("Enable more detailed INDI information in the PHD2 Debug Log."));
+    cb->SetToolTip(_("Enable more detailed INDI information in the LGuider2 Debug Log."));
     cb->SetValue(INDIConfig::Verbose());
     gbs->Add(cb, POS(pos, 0), SPAN(1, 2), sizerTextFlags, border);
 

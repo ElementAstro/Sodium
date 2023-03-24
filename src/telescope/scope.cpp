@@ -1,6 +1,6 @@
 /*
  *  scope.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -633,12 +633,12 @@ void Scope::AlertLimitReached(int duration, GuideAxis axis)
             {
                 if (CanPulseGuide())
                 {
-                    msg = _("PHD2 is not able to make sufficient corrections in RA.  Check for cable snags, try re-doing your calibration, and "
+                    msg = _("LGuider2 is not able to make sufficient corrections in RA.  Check for cable snags, try re-doing your calibration, and "
                             "check for problems with the mount mechanics.");
                 }
                 else
                 {
-                    msg = _("PHD2 is not able to make sufficient corrections in RA.  Check for cable snags, try re-doing your calibration, and "
+                    msg = _("LGuider2 is not able to make sufficient corrections in RA.  Check for cable snags, try re-doing your calibration, and "
                             "confirm the ST-4 cable is working properly.");
                 }
             }
@@ -646,13 +646,13 @@ void Scope::AlertLimitReached(int duration, GuideAxis axis)
             {
                 if (CanPulseGuide())
                 {
-                    msg = _("PHD2 is not able to make sufficient corrections in Dec.  If you have just done a meridian flip, "
+                    msg = _("LGuider2 is not able to make sufficient corrections in Dec.  If you have just done a meridian flip, "
                             "check to see if the 'Reverse Dec output option' on the Advanced Dialog guiding tab is wrong.  Otherwise, "
                             "check for cable snags, try re-doing your calibration, and check for problems with the mount mechanics.");
                 }
                 else
                 {
-                    msg = _("PHD2 is not able to make sufficient corrections in Dec.  Check for cable snags, try re-doing your calibration and "
+                    msg = _("LGuider2 is not able to make sufficient corrections in Dec.  Check for cable snags, try re-doing your calibration and "
                             "confirm the ST-4 cable is working properly.");
                 }
             }
@@ -662,8 +662,8 @@ void Scope::AlertLimitReached(int duration, GuideAxis axis)
         {
             wxString s = axis == GUIDE_RA ? _("Max RA Duration setting") : _("Max Dec Duration setting");
             pFrame->SuppressableAlert(LimitReachedWarningKey(axis),
-                wxString::Format(_("Your %s is preventing PHD from making adequate corrections to keep the guide star locked. "
-                                   "Try restoring %s to its default value to allow PHD2 to make larger corrections."), s, s),
+                wxString::Format(_("Your %s is preventing LGuider from making adequate corrections to keep the guide star locked. "
+                                   "Try restoring %s to its default value to allow LGuider2 to make larger corrections."), s, s),
                     SuppressLimitReachedWarning, axis, false, wxICON_INFORMATION);
         }
     }
@@ -671,7 +671,7 @@ void Scope::AlertLimitReached(int duration, GuideAxis axis)
     {
         wxString which_axis = axis == GUIDE_RA ? _("RA") : _("Dec");
         pFrame->SuppressableAlert(LimitReachedWarningKey(axis),
-            wxString::Format(_("Even using the maximum moves, PHD2 can't properly correct for the large guide star movements in %s. "
+            wxString::Format(_("Even using the maximum moves, LGuider2 can't properly correct for the large guide star movements in %s. "
                 "Guiding will be impaired until you can eliminate the source of these problems."), which_axis),
             SuppressLimitReachedWarning, axis, false, wxICON_INFORMATION);
     }
@@ -1011,7 +1011,7 @@ void Scope::CheckCalibrationDuration(int currDuration)
     SetCalibrationDuration(rslt);
 }
 
-bool Scope::BeginCalibration(const PHD_Point& currentLocation)
+bool Scope::BeginCalibration(const LGuider_Point& currentLocation)
 {
     bool bError = false;
 
@@ -1123,17 +1123,17 @@ int Scope::CalibrationTotDistance()
 }
 
 // Convert camera coords to mount coords
-static PHD_Point MountCoords(const PHD_Point& cameraVector, double xCalibAngle, double yCalibAngle)
+static LGuider_Point MountCoords(const LGuider_Point& cameraVector, double xCalibAngle, double yCalibAngle)
 {
     double hyp = cameraVector.Distance();
     double cameraTheta = cameraVector.Angle();
     double yAngleError = norm_angle((xCalibAngle - yCalibAngle) + M_PI / 2);
     double xAngle = cameraTheta - xCalibAngle;
     double yAngle = cameraTheta - (xCalibAngle + yAngleError);
-    return PHD_Point(hyp * cos(xAngle), hyp * sin(yAngle));
+    return LGuider_Point(hyp * cos(xAngle), hyp * sin(yAngle));
 }
 
-static void GetRADecCoordinates(PHD_Point *coords)
+static void GetRADecCoordinates(LGuider_Point *coords)
 {
     double ra, dec, lst;
     bool err = pPointingSource->GetCoordinates(&ra, &dec, &lst);
@@ -1161,7 +1161,7 @@ static void CalibrationStatus(CalibrationStepInfo& info, const wxString& msg)
     EvtServer.NotifyCalibrationStep(info);
 }
 
-bool Scope::UpdateCalibrationState(const PHD_Point& currentLocation)
+bool Scope::UpdateCalibrationState(const LGuider_Point& currentLocation)
 {
     bool bError = false;
 
@@ -1230,7 +1230,7 @@ bool Scope::UpdateCalibrationState(const PHD_Point& currentLocation)
                 m_calibration.raGuideParity = GUIDE_PARITY_UNKNOWN;
                 if (m_calibrationStartingCoords.IsValid())
                 {
-                    PHD_Point endingCoords;
+                    LGuider_Point endingCoords;
                     GetRADecCoordinates(&endingCoords);
                     if (endingCoords.IsValid())
                     {
@@ -1414,7 +1414,7 @@ bool Scope::UpdateCalibrationState(const PHD_Point& currentLocation)
                         // Used up all our attempts - might be ok or not
                         if (blCumDelta >= BL_MIN_CLEARING_DISTANCE)
                         {
-                            // Exhausted all the clearing pulses without reaching the goal - but we did move the mount > 3 px (same as PHD1)
+                            // Exhausted all the clearing pulses without reaching the goal - but we did move the mount > 3 px (same as LGuider1)
                             m_calibrationSteps = 0;
                             m_calibrationStartingLocation = currentLocation;
                             dX = 0;
@@ -1510,7 +1510,7 @@ bool Scope::UpdateCalibrationState(const PHD_Point& currentLocation)
                 m_calibration.decGuideParity = GUIDE_PARITY_UNKNOWN;
                 if (m_calibrationStartingCoords.IsValid())
                 {
-                    PHD_Point endingCoords;
+                    LGuider_Point endingCoords;
                     GetRADecCoordinates(&endingCoords);
                     if (endingCoords.IsValid())
                     {
@@ -1941,7 +1941,7 @@ ScopeConfigDialogCtrlSet::ScopeConfigDialogCtrlSet(wxWindow *pParent, Scope *pSc
     {
         m_pStopGuidingWhenSlewing = new wxCheckBox(GetParentWindow(AD_cbSlewDetection), wxID_ANY, _("Stop guiding when mount slews"));
         AddCtrl(CtrlMap, AD_cbSlewDetection, m_pStopGuidingWhenSlewing,
-            _("When checked, PHD will stop guiding if the mount starts slewing"));
+            _("When checked, LGuider will stop guiding if the mount starts slewing"));
     }
     else
         m_pStopGuidingWhenSlewing = 0;

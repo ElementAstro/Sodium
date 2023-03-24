@@ -1,6 +1,6 @@
 /*
  *  nudge_lock_tool.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2014 Andy Galasso

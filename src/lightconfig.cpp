@@ -1,6 +1,6 @@
 /*
  *  config.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -664,7 +664,7 @@ bool PhdConfig::ReadProfile(const wxString& filename)
     wxTextInputStream tis(is, wxS("\t"), wxMBConvUTF8());
 
     wxString s = tis.ReadLine();
-    if (s != "PHD Profile " PROFILE_STREAM_VERSION)
+    if (s != "LGuider Profile " PROFILE_STREAM_VERSION)
     {
         Debug.Write(wxString::Format("invalid profile file '%s'\n", filename));
         return true;
@@ -767,7 +767,7 @@ bool PhdConfig::WriteProfile(const wxString& filename)
     }
     wxTextOutputStream tos(os, wxEOL_NATIVE, wxMBConvUTF8());
 
-    tos.WriteString("PHD Profile " PROFILE_STREAM_VERSION "\n");
+    tos.WriteString("LGuider Profile " PROFILE_STREAM_VERSION "\n");
     wxString profile = wxString::Format("/profile/%d", m_currentProfileId);
     WriteGroup(tos, Profile.m_pConfig, profile, profile);
 
@@ -783,7 +783,7 @@ bool PhdConfig::SaveAll(const wxString& filename)
     }
     wxTextOutputStream tos(os, wxEOL_NATIVE, wxMBConvUTF8());
 
-    tos.WriteString("PHD Config " PROFILE_STREAM_VERSION "\n");
+    tos.WriteString("LGuider Config " PROFILE_STREAM_VERSION "\n");
     WriteGroup(tos, Global.m_pConfig, wxEmptyString, wxEmptyString);
 
     return false;
@@ -800,7 +800,7 @@ bool PhdConfig::RestoreAll(const wxString& filename)
     wxTextInputStream tis(is, wxS("\t"), wxMBConvUTF8());
 
     wxString s = tis.ReadLine();
-    if (s != "PHD Config " PROFILE_STREAM_VERSION)
+    if (s != "LGuider Config " PROFILE_STREAM_VERSION)
     {
         Debug.Write(wxString::Format("invalid config file '%s'\n", filename));
         return true;

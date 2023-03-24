@@ -1,6 +1,6 @@
 /*
 *  calibration_assistant.h
-*  PHD Guiding
+*  LGuider Guiding
 *
 *  Created by Bruce Waddington
 *  Copyright (c) 2023 Bruce Waddington

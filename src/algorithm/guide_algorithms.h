@@ -1,6 +1,6 @@
 /*
  *  guide_algorithms.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee

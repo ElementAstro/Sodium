@@ -1,6 +1,6 @@
 /*
 *  backlash_comp.cpp
-*  PHD Guiding
+*  LGuider Guiding
 *
 *  Created by Bruce Waddington
 *  Copyright (c) 2015 Bruce Waddington and Andy Galasso
@@ -882,12 +882,12 @@ BacklashTool::MeasurementResults BacklashTool::ComputeBacklashPx(double* bltPx, 
     return rslt;
 }
 
-void BacklashTool::DecMeasurementStep(const PHD_Point& currentCamLoc)
+void BacklashTool::DecMeasurementStep(const LGuider_Point& currentCamLoc)
 {
     double decDelta = 0.;
     double amt = 0;
     // double fakeDeltas []= {0, -5, -2, 2, 4, 5, 5, 5, 5 };
-    PHD_Point currMountLocation;
+    LGuider_Point currMountLocation;
     double tol;
     try
     {

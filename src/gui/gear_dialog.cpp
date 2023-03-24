@@ -1,6 +1,6 @@
 /*
  *  gear_dialog.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2013 Bret McKee
@@ -214,7 +214,7 @@ void GearDialog::Initialize()
     wxBoxSizer *profilesSizer = new wxBoxSizer(wxHORIZONTAL);
     profilesSizer->Add(new wxStaticText(this, wxID_ANY, _("Equipment profile")), sizerLabelFlags);
     m_profiles = new wxChoice(this, GEAR_PROFILES, wxDefaultPosition, wxDefaultSize, pConfig->ProfileNames());
-    m_profiles->SetToolTip(_("Select the Equipment Profile you would like to use. PHD stores all of your settings and equipment selections in an Equipment Profile. "
+    m_profiles->SetToolTip(_("Select the Equipment Profile you would like to use. LGuider stores all of your settings and equipment selections in an Equipment Profile. "
                              "You can create multiple profiles and switch back and forth between them."));
     m_profiles->SetStringSelection(pConfig->GetCurrentProfile());
     profilesSizer->Add(m_profiles, sizerButtonFlags);
@@ -2095,13 +2095,13 @@ NewProfileDialog::NewProfileDialog(wxWindow *parent)
     sizer1->Add(m_name, sizerTextFlags);
 
     wxArrayString choices = pConfig->ProfileNames();
-    choices.Insert(_("PHD Defaults"), 0);
+    choices.Insert(_("LGuider Defaults"), 0);
 
     wxSizer *sizer2 = new wxBoxSizer(wxHORIZONTAL);
     sizer2->Add(new wxStaticText(this, wxID_ANY, _("Profile initial settings"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL), sizerLabelFlags);
     m_copyFrom = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, choices);
     m_copyFrom->SetSelection(0);
-    m_copyFrom->SetToolTip(_("Select PHD Defaults to create a profile with default PHD settings, or select an existing Equipment Profile to copy its settings into your new profile."));
+    m_copyFrom->SetToolTip(_("Select LGuider Defaults to create a profile with default LGuider settings, or select an existing Equipment Profile to copy its settings into your new profile."));
     sizer2->Add(m_copyFrom, sizerTextFlags);
 
     wxSizer *sizer3 = new wxBoxSizer(wxVERTICAL);
@@ -2206,8 +2206,8 @@ void GearDialog::OnProfileLoad(wxCommandEvent& event)
 {
     wxString default_path = pConfig->Global.GetString("/profileFilePath", wxEmptyString);
 
-    wxFileDialog dlg(this, _("Import PHD Equipment Profiles"), default_path, wxEmptyString,
-                     wxT("PHD profile files (*.phd)|*.phd"), wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE);
+    wxFileDialog dlg(this, _("Import LGuider Equipment Profiles"), default_path, wxEmptyString,
+                     wxT("LGuider profile files (*.phd)|*.phd"), wxFD_OPEN | wxFD_FILE_MUST_EXIST | wxFD_MULTIPLE);
 
     if (dlg.ShowModal() == wxID_CANCEL)
     {
@@ -2239,9 +2239,9 @@ void GearDialog::OnProfileLoad(wxCommandEvent& event)
 void GearDialog::OnProfileSave(wxCommandEvent& event)
 {
     wxString default_path = pConfig->Global.GetString("/profileFilePath", wxEmptyString);
-    wxString fname = wxFileSelector(_("Export PHD Equipment Profile"), default_path,
+    wxString fname = wxFileSelector(_("Export LGuider Equipment Profile"), default_path,
                                     pConfig->GetCurrentProfile() + wxT(".phd"), wxT("phd"),
-                                    wxT("PHD profile files (*.phd)|*.phd"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
+                                    wxT("LGuider profile files (*.phd)|*.phd"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT, this);
 
     if (fname.IsEmpty())
     {

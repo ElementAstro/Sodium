@@ -1,6 +1,6 @@
 /*
  *  scope.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee
@@ -100,19 +100,19 @@ class Scope : public Mount
     int m_calibrationDistance;
     int m_recenterRemaining;
     int m_recenterDuration;
-    PHD_Point m_calibrationInitialLocation;   // initial position of guide star
-    PHD_Point m_calibrationStartingLocation;  // position of guide star at start of calibration measurement (after clear backlash etc.)
-    PHD_Point m_calibrationStartingCoords;    // ra,dec coordinates at start of calibration measurement
-    PHD_Point m_southStartingLocation;        // Needed to be sure nudging is in south-only direction
-    PHD_Point m_eastStartingLocation;         // For basic sanity check that east moves worked at all
-    PHD_Point m_lastLocation;
+    LGuider_Point m_calibrationInitialLocation;   // initial position of guide star
+    LGuider_Point m_calibrationStartingLocation;  // position of guide star at start of calibration measurement (after clear backlash etc.)
+    LGuider_Point m_calibrationStartingCoords;    // ra,dec coordinates at start of calibration measurement
+    LGuider_Point m_southStartingLocation;        // Needed to be sure nudging is in south-only direction
+    LGuider_Point m_eastStartingLocation;         // For basic sanity check that east moves worked at all
+    LGuider_Point m_lastLocation;
     double m_totalSouthAmt;
     double m_northDirCosX;
     double m_northDirCosY;
     bool m_eastAlertShown;
 
     // backlash-related variables
-    PHD_Point m_blMarkerPoint;
+    LGuider_Point m_blMarkerPoint;
     double m_blExpectedBacklashStep;
     double m_blLastCumDistance;
     int m_blAcceptedMoves;
@@ -228,8 +228,8 @@ public:
     void SetCalibrationDetails(const CalibrationDetails& calDetails, double xAngle, double yAngle, double binning);
     virtual void FlagCalibrationIssue(const CalibrationDetails& calDetails, CalibrationIssueType issue);
     bool IsCalibrated() const override;
-    bool BeginCalibration(const PHD_Point& currentLocation) override;
-    bool UpdateCalibrationState(const PHD_Point& currentLocation) override;
+    bool BeginCalibration(const LGuider_Point& currentLocation) override;
+    bool UpdateCalibrationState(const LGuider_Point& currentLocation) override;
 
     static const double DEC_COMP_LIMIT; // declination compensation limit
     static const double DEFAULT_MOUNT_GUIDE_SPEED;              // Presumptive mount guide speed if no usable mount connection

@@ -1,6 +1,6 @@
 /*
 *  fitsiowrap.cpp
-*  PHD Guiding
+*  LGuider Guiding
 *
 *  Created by Andy Galasso
 *  Copyright (c) 2014 Andy Galasso
@@ -105,17 +105,17 @@ FitsFname::FitsFname(const wxString& path, bool create, bool clobber)
 }
 
 
-int PHD_fits_open_diskfile(fitsfile **fptr, const wxString& filename, int iomode, int *status)
+int LGuider_fits_open_diskfile(fitsfile **fptr, const wxString& filename, int iomode, int *status)
 {
     return fits_open_diskfile(fptr, FitsFname(filename, false, false), iomode, status);
 }
 
-int PHD_fits_create_file(fitsfile **fptr, const wxString& filename, bool clobber, int *status)
+int LGuider_fits_create_file(fitsfile **fptr, const wxString& filename, bool clobber, int *status)
 {
     return fits_create_file(fptr, FitsFname(filename, true, clobber), status);
 }
 
-void PHD_fits_close_file(fitsfile *fptr)
+void LGuider_fits_close_file(fitsfile *fptr)
 {
     int status = 0;
     fits_close_file(fptr, &status);

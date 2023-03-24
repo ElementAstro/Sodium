@@ -1,6 +1,6 @@
 /*
 *  cam_zwo.h
-*  PHD Guiding
+*  LGuider Guiding
 *
 *  Created by Robin Glover.
 *  Copyright (c) 2014 Robin Glover

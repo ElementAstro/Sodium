@@ -1,7 +1,7 @@
 LightGuider
 ===========
 
-LightGuider是基于PHD2修改之后为LightAPT提供的导星模块，变更情况请见LightGuider.pdf
+LightGuider是基于LGuider2修改之后为LightAPT提供的导星模块，变更情况请见LightGuider.pdf
 
 ## API 
 
@@ -24,11 +24,11 @@ LightGuider是基于PHD2修改之后为LightAPT提供的导星模块，变更情
 
 #### LightGuider添加事件描述 ####
 
-LightGuider在PHD2原有API的基础上添加一些函数，使之功能更加丰富
+LightGuider在LGuider2原有API的基础上添加一些函数，使之功能更加丰富
 
 #### `lightapt_modify_response` ####
 
-检查此服务器是否为LightGuider，在某些情况下，可能会与原版PHD2混用，所以做一个验证
+检查此服务器是否为LightGuider，在某些情况下，可能会与原版LGuider2混用，所以做一个验证
 
 | Attribute | Type | Description |
 |:----------|:-----|:------------|
@@ -155,7 +155,7 @@ LightGuider在PHD2原有API的基础上添加一些函数，使之功能更加�
 | Attribute | Type | Description |
 |:----------|:-----|:------------|
 
-#### PHD2隐藏事件描述 ####
+#### LGuider2隐藏事件描述 ####
 
 #### `deselect_star` ####
 
@@ -177,7 +177,7 @@ LightGuider在PHD2原有API的基础上添加一些函数，使之功能更加�
 | Attribute | Type | Description |
 |:----------|:-----|:------------|
 
-#### PHD2原有事件描述 ####
+#### LGuider2原有事件描述 ####
 
 #### `Version` ####
 
@@ -185,14 +185,14 @@ LightGuider在PHD2原有API的基础上添加一些函数，使之功能更加�
 
 | Attribute | Type | Description |
 |:----------|:-----|:------------|
-| `PHDVersion` | string | the PHD version number |
-| `PHDSubver` | string | the PHD sub-version number |
+| `LGuiderVersion` | string | the LGuider version number |
+| `LGuiderSubver` | string | the LGuider sub-version number |
 | `MsgVersion` | number | the version number of the event message protocol. The current version is 1. We will bump this number if the message protocol changes. |
-| `OverlapSupport` | boolean | true if PHD support receiving RPC order while previous order has not been completed (default for latest version) |
+| `OverlapSupport` | boolean | true if LGuider support receiving RPC order while previous order has not been completed (default for latest version) |
 
 Example
 ```
-{"Event":"Version","Timestamp":1372082668.897,"Host":"AGALASSO","Inst":1,"PHDVersion":"2.0.4","PHDSubver":"a","MsgVersion":1}
+{"Event":"Version","Timestamp":1372082668.897,"Host":"AGALASSO","Inst":1,"LGuiderVersion":"2.0.4","LGuiderSubver":"a","MsgVersion":1}
 ```
 
 ### `LockPositionSet` ###
@@ -261,21 +261,21 @@ Calibration begins.
 
 | Attribute | Type | Description |
 |:----------|:-----|:------------|
-| State     | string | the current state of PHD |
+| State     | string | the current state of LGuider |
 
 The state attribute can be one of the following:
 
 | State | Description |
 |:------|:------------|
-| Stopped | PHD is idle |
-| Selected | A star is selected but PHD is neither looping exposures, calibrating, or guiding |
-| Calibrating | PHD is calibrating |
-| Guiding | PHD is guiding |
-| LostLock  | PHD is guiding, but the frame was dropped |
-| Paused | PHD is paused |
-| Looping | PHD is looping exposures |
+| Stopped | LGuider is idle |
+| Selected | A star is selected but LGuider is neither looping exposures, calibrating, or guiding |
+| Calibrating | LGuider is calibrating |
+| Guiding | LGuider is guiding |
+| LostLock  | LGuider is guiding, but the frame was dropped |
+| Paused | LGuider is paused |
+| Looping | LGuider is looping exposures |
 
-The `AppState` notification is only sent when the client first connects to PHD2 (see [#Initial\_Messages](#initial-event-messages)). If an application would like to maintain an up-to-date `AppState` status, it will need to update its notion of `AppState` by handling individual notification events as follows:
+The `AppState` notification is only sent when the client first connects to LGuider2 (see [#Initial\_Messages](#initial-event-messages)). If an application would like to maintain an up-to-date `AppState` status, it will need to update its notion of `AppState` by handling individual notification events as follows:
 
 | Event | New AppState |
 |:------|:------------|
@@ -373,13 +373,13 @@ Guiding has stopped.
 
 ### `Resumed` ###
 
-PHD has been resumed after having been paused.
+LGuider has been resumed after having been paused.
 
 (no attributes)
 
 ### `GuideStep` ###
 
-This event corresponds to a line in the PHD Guide Log. The event is sent for each frame while guiding.
+This event corresponds to a line in the LGuider Guide Log. The event is sent for each frame while guiding.
 
 | Attribute | Type | Description |
 |:----------|:-----|:------------|
@@ -421,7 +421,7 @@ The lock position has been lost.
 
 ### `Alert` ###
 
-An alert message was displayed in PHD2.
+An alert message was displayed in LGuider2.
 
 | Attribute | Type | Description |
 |:----------|:-----|:------------|
@@ -439,27 +439,27 @@ A guiding parameter has been changed.
 
 ### `ConfigurationChange` ###
 
-Notification sent when any settings are changed -- allows a client to keep in sync with PHD2 configuration settings by exporting settings only when required.
+Notification sent when any settings are changed -- allows a client to keep in sync with LGuider2 configuration settings by exporting settings only when required.
 
 (no event attributes)
 
 ## Initial Event Messages ##
 
-When a client first connects, PHD sends a series of event messages to the client. The first event is
+When a client first connects, LGuider sends a series of event messages to the client. The first event is
   * `Version`
 Then, one or more of
   * `LockPositionSet`
   * `StarSelected`
   * `CalibrationComplete`
   * `StartGuiding`, `StartCalibration`, or `Paused`
-depending on the state of PHD.
+depending on the state of LGuider.
 
-Finally, PHD will send
+Finally, LGuider will send
   * `AppState`
 
-# PHD Server method invocation #
+# LGuider Server method invocation #
 
-PHD2 provides an RPC (remote procedure call) interface for event server clients. The message protocol is [JSON RPC 2.0](http://www.jsonrpc.org/specification).
+LGuider2 provides an RPC (remote procedure call) interface for event server clients. The message protocol is [JSON RPC 2.0](http://www.jsonrpc.org/specification).
 
 Requests are sent as a single line of text, terminated by `CR LF`. Responses from the server are also a single line of text terminated by `CR LF`.
 
@@ -488,7 +488,7 @@ Set camera exposure (error):
 |**Method**|**params**|**result**|**Description**|
 |:---------|:---------|:---------|:--------------|
 |`capture_single_frame`|exposure: exposure duration milliseconds (optional), subframe: array [x,y,width,height] (optional)| integer(0) | captures a singe frame; guiding and looping must be stopped first |
-|`clear_calibration`|string: "mount" or "ao" or "both"| integer (0) | if parameter is omitted, will clear both mount and AO. Clearing calibration causes PHD2 to recalibrate next time guiding starts.|
+|`clear_calibration`|string: "mount" or "ao" or "both"| integer (0) | if parameter is omitted, will clear both mount and AO. Clearing calibration causes LGuider2 to recalibrate next time guiding starts.|
 |`dither`  | `amount`:float, amount in pixels<br>`raOnly`: boolean, default=false;<br>`settle`: object | integer (0) | See below     |
 |`find_star`|`roi`: [x,y,width,height], optional, default = use full frame      | on success: returns the lock position of the selected star, otherwise returns an error object | Auto-select a star |
 |`flip_calibration`|none      | integer (0) |               |
@@ -517,7 +517,7 @@ Set camera exposure (error):
 |`get_star_image`|integer: size (optional)      |frame: the frame number, width: the width of the image (pixels), height: height of the image (pixels), star\_pos: the star centroid position within the image, pixels: the image data, 16 bits per pixel, row-major order, base64 encoded | Returns an error if a star is not currently selected; The size parameter, if given, must be >= 15.The actual image size returned may be smaller than the requested image size (but will never be larger). The default image size is 15 pixels. |
 |`get_use_subframes`|none |boolean:subframes_in_use|  |
 |`guide`   | `settle`: object;<br>`recalibrate`: boolean, optional, default = false;<br>`roi`: array [x,y,width,height], optional, default = full frame | integer (0) | See below     |
-|`guide_pulse`| integer: amount (pulse duration in milliseconds, or ao step count), string: direction ("N"/"S"/"E"/"W"/"Up"/"Down"/"Left"/"Right"), string (optional): which ("AO" or "Mount" [default]) | integer (0) | Returns an error if PHD2 is currently calibrating or guiding
+|`guide_pulse`| integer: amount (pulse duration in milliseconds, or ao step count), string: direction ("N"/"S"/"E"/"W"/"Up"/"Down"/"Left"/"Right"), string (optional): which ("AO" or "Mount" [default]) | integer (0) | Returns an error if LGuider2 is currently calibrating or guiding
 |`loop`    |none      |integer (0)|start capturing, or, if guiding, stop guiding but continue capturing|
 |`save_image`|none      |` {"filename":"full_path_to_FITS_image_file"} `| save the current image. The client should remove the file when done with it. |
 |`set_algo_param`|string: axis, string: name, float: value    | integer(0)  | set a guide algorithm parameter on an axis |
@@ -530,12 +530,12 @@ Set camera exposure (error):
 |`set_lock_shift_params`|` {"rate":[XRATE,YRATE],"units":UNITS,"axes":AXES} `|integer (0)| UNITS = "arcsec/hr" or "pixels/hr"; AXES = "RA/Dec" or "X/Y"|
 |`set_paused`|PAUSED: boolean, FULL: string (optional) |integer (0)| When setting paused to `true`, an optional second parameter with value `"full"` can be provided to fully pause phd, including pausing looping exposures. Otherwise, exposures continue to loop, and only guide output is paused. Example: `{"method":"set_paused","params":[true,"full"],"id":42}` |
 |`set_profile`|integer: profile id| integer (0) | Select an equipment profile. All equipment must be disconnected before switching profiles. |
-|`shutdown`| | integer (0) | Close PHD2 |
+|`shutdown`| | integer (0) | Close LGuider2 |
 |`stop_capture`|none      |integer (0)|Stop capturing (and stop guiding)|
 
 ### Settle parameter ###
 
-The `SETTLE` parameter is used by the `guide` and `dither` commands to specify when PHD2 should consider guiding to be stable enough for imaging. `SETTLE` is an object with the following attributes:
+The `SETTLE` parameter is used by the `guide` and `dither` commands to specify when LGuider2 should consider guiding to be stable enough for imaging. `SETTLE` is an object with the following attributes:
   * `pixels` - maximum guide distance for guiding to be considered stable or "in-range"
   * `time` - minimum time to be in-range before considering guiding to be stable
   * `timeout` - time limit before settling is considered to have failed
@@ -547,9 +547,9 @@ So, for example, to request settling at less than 1.5 pixels for at least 10 sec
 
 ### Guide Method ###
 
-The `guide` method allows a client to request PHD2 to do whatever it needs to start guiding and to report when guiding is settled and stable.
+The `guide` method allows a client to request LGuider2 to do whatever it needs to start guiding and to report when guiding is settled and stable.
 
-When the `guide` method command is received, PHD2 will respond immediately indicating that the `guide` sequence has started. The `guide` method will return an error status if equipment is not connected. PHD will then:
+When the `guide` method command is received, LGuider2 will respond immediately indicating that the `guide` sequence has started. The `guide` method will return an error status if equipment is not connected. LGuider will then:
 
   * start capturing if necessary
   * auto-select a guide star if one is not already selected. It the optional ROI parameter is present, star selection will be confined to the specified region of interest.
@@ -560,7 +560,7 @@ When the `guide` method command is received, PHD2 will respond immediately indic
   * report progress of settling for each exposure (send `Settling` events)
   * report success or failure by sending a `SettleDone` event.
 
-If the `guide` command is accepted, PHD is guaranteed to send a `SettleDone` event some time later indicating the success or failure of the guide sequence.  Note: if PHD2 is already guiding, the 'guide' RPC will only trigger another settling period - it will not stop and restart guiding.  To "start fresh" with guiding, first transmit the 'stop_capture' RPC, then transmit the 'guide' RPC.
+If the `guide` command is accepted, LGuider is guaranteed to send a `SettleDone` event some time later indicating the success or failure of the guide sequence.  Note: if LGuider2 is already guiding, the 'guide' RPC will only trigger another settling period - it will not stop and restart guiding.  To "start fresh" with guiding, first transmit the 'stop_capture' RPC, then transmit the 'guide' RPC.
 
 Example
 ```
@@ -576,7 +576,7 @@ Example showing optional `recalibrate` and `roi` params
 
 The `dither` method allows the client to request a random shift of the lock position by +/- PIXELS on each of the RA and Dec axes. If the RA\_ONLY parameter is true, or if the Dither RA Only option is set in the Brain, the dither will only be on the RA axis. The PIXELS parameter is multiplied by the Dither Scale value in the Brain.
 
-Like the `guide` method, the `dither` method takes a `SETTLE` object parameter. PHD will send `Settling` and `SettleDone` events to indicate when guiding has stabilized after the dither.
+Like the `guide` method, the `dither` method takes a `SETTLE` object parameter. LGuider will send `Settling` and `SettleDone` events to indicate when guiding has stabilized after the dither.
 
 Example
 ```
@@ -585,7 +585,7 @@ Example
 
 # Application Notes #
 
-1. Any of the PHD2 RPC commands that include a settling parameter can trigger long-running 
+1. Any of the LGuider2 RPC commands that include a settling parameter can trigger long-running 
 
 operations.  For example, a 'guide' command may result in an extended sequence of looping, 
 
@@ -597,13 +597,13 @@ message about "re-entrancy".  For example, issuing a command like 'dither' while
 
 settling event is still ongoing will result in an error return, and the dither will not be done.  It is the 
 
-responsibility of the application to monitor the PHD2 events and state-changes after starting one 
+responsibility of the application to monitor the LGuider2 events and state-changes after starting one 
 
 of these long-running operations.  The best practice is to wait until the 'SettleDone' message has 
 
 been received, at which point the long-running operation has completed.  
 
-2. Although the available RPC commands permit a fine-grained control over PHD2 operations, it is 
+2. Although the available RPC commands permit a fine-grained control over LGuider2 operations, it is 
 
 generally a poor practice to "micro-manage" the application.  For example, forcing calibrations or 
 

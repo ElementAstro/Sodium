@@ -1,6 +1,6 @@
 /*
 *  calreview_dialog.h
-*  PHD Guiding
+*  LGuider Guiding
 *
 *  Created by Bruce Waddington
 *  Copyright (c) 2015 Bruce Waddington

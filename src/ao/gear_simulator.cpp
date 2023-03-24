@@ -1,9 +1,9 @@
 /*
  *  gear_simulator.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
- *  Reimplemented for PHD2 by Andy Galasso.
+ *  Reimplemented for LGuider2 by Andy Galasso.
  *  Copyright (c) 2006-2010 Craig Stark
  *  Copyright (c) 2015-2018 Andy Galasso
  *  All rights reserved.
@@ -678,14 +678,14 @@ bool SimCamState::ReadNextImage(usImage& img, const wxRect& subframe)
     fitsfile *fptr;  // FITS file pointer
     int status = 0;  // CFITSIO status value MUST be initialized to zero!
 
-    if (PHD_fits_open_diskfile(&fptr, wxFileName(dir.GetName(), filename).GetFullPath(), READONLY, &status))
+    if (LGuider_fits_open_diskfile(&fptr, wxFileName(dir.GetName(), filename).GetFullPath(), READONLY, &status))
         return true;
 
     int hdutype;
     if (fits_get_hdu_type(fptr, &hdutype, &status) || hdutype != IMAGE_HDU)
     {
         pFrame->Alert(_("FITS file is not of an image"));
-        PHD_fits_close_file(fptr);
+        LGuider_fits_close_file(fptr);
         return true;
     }
 
@@ -696,7 +696,7 @@ bool SimCamState::ReadNextImage(usImage& img, const wxRect& subframe)
     fits_get_num_hdus(fptr, &nhdus, &status);
     if ((nhdus != 1) || (naxis != 2)) {
         pFrame->Alert(_("Unsupported type or read error loading FITS file"));
-        PHD_fits_close_file(fptr);
+        LGuider_fits_close_file(fptr);
         return true;
     }
 
@@ -708,7 +708,7 @@ bool SimCamState::ReadNextImage(usImage& img, const wxRect& subframe)
 
     if (img.Init(xsize, ysize)) {
         pFrame->Alert(_("Memory allocation error"));
-        PHD_fits_close_file(fptr);
+        LGuider_fits_close_file(fptr);
         return true;
     }
 
@@ -726,7 +726,7 @@ bool SimCamState::ReadNextImage(usImage& img, const wxRect& subframe)
     if (fits_read_subset(fptr, TUSHORT, fpixel, lpixel, inc, nullptr, buf, nullptr, &status))
     {
         pFrame->Alert(_("Error reading data"));
-        PHD_fits_close_file(fptr);
+        LGuider_fits_close_file(fptr);
         return true;
     }
 
@@ -753,7 +753,7 @@ bool SimCamState::ReadNextImage(usImage& img, const wxRect& subframe)
 
     delete[] buf;
 
-    PHD_fits_close_file(fptr);
+    LGuider_fits_close_file(fptr);
 
     return false;
 }
@@ -1290,7 +1290,7 @@ bool CameraSimulator::Capture(int duration, usImage& img, int options, const wxR
     unsigned short *dataptr;
     unsigned char *imgptr;
 
-    bool retval = disk_image.LoadFile("/Users/stark/dev/PHD/simimage.bmp");
+    bool retval = disk_image.LoadFile("/Users/stark/dev/LGuider/simimage.bmp");
     if (!retval) {
         pFrame->Alert(_("Cannot load simulated image"));
         return true;
@@ -1533,12 +1533,12 @@ bool CameraSimulator::Capture(int duration, usImage& img, int options, const wxR
     static int frame = 0;
     static int step = 1;
     char fname[256];
-    sprintf(fname,"/Users/stark/dev/PHD/simimg/DriftSim_%d.fit",frame);
-    if (!PHD_fits_open_diskfile(&fptr, fname, READONLY, &status))
+    sprintf(fname,"/Users/stark/dev/LGuider/simimg/DriftSim_%d.fit",frame);
+    if (!LGuider_fits_open_diskfile(&fptr, fname, READONLY, &status))
     {
         if (fits_get_hdu_type(fptr, &hdutype, &status) || hdutype != IMAGE_HDU) {
             pFrame->Alert(_("FITS file is not of an image"));
-            PHD_fits_close_file(fptr);
+            LGuider_fits_close_file(fptr);
             return true;
         }
 
@@ -1550,20 +1550,20 @@ bool CameraSimulator::Capture(int duration, usImage& img, int options, const wxR
         fits_get_num_hdus(fptr,&nhdus,&status);
         if ((nhdus != 1) || (naxis != 2)) {
             pFrame->Alert(wxString::Format(_("Unsupported type or read error loading FITS file %d %d"),nhdus,naxis));
-            PHD_fits_close_file(fptr);
+            LGuider_fits_close_file(fptr);
             return true;
         }
         if (img.Init(xsize,ysize)) {
             pFrame->Alert(_("Memory allocation error"));
-            PHD_fits_close_file(fptr);
+            LGuider_fits_close_file(fptr);
             return true;
         }
         if (fits_read_pix(fptr, TUSHORT, fpixel, xsize*ysize, nullptr, img.ImageData, nullptr, &status) ) { // Read image
             pFrame->Alert(_("Error reading data"));
-            PHD_fits_close_file(fptr);
+            LGuider_fits_close_file(fptr);
             return true;
         }
-        PHD_fits_close_file(fptr);
+        LGuider_fits_close_file(fptr);
         frame = frame + step;
         if (frame > 440) {
             step = -1;

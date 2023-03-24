@@ -1,6 +1,6 @@
 /*
 *  aui_controls.h
-*  PHD Guiding
+*  LGuider Guiding
 *
 *  Created by Bruce Waddington
 *  Copyright (c) 2016-2017 Bruce Waddington and Andy Galasso
@@ -42,7 +42,7 @@ class SBStarIndicators;
 class SBGuideIndicators;
 
 // Child of normal status bar - used for status bar with color-coded messages and state indicators
-class PHDStatusBar : public wxStatusBar
+class LGuiderStatusBar : public wxStatusBar
 {
     SBPanel *m_ctrlPanel;
     SBStateIndicators *m_StateIndicators;
@@ -50,11 +50,11 @@ class PHDStatusBar : public wxStatusBar
     SBGuideIndicators *m_GuideIndicators;
     wxStaticText *m_Msg1;
 
-    PHDStatusBar(wxWindow *parent, long style = wxSTB_DEFAULT_STYLE);
-    virtual ~PHDStatusBar();
+    LGuiderStatusBar(wxWindow *parent, long style = wxSTB_DEFAULT_STYLE);
+    virtual ~LGuiderStatusBar();
 
 public:
-    static PHDStatusBar *CreateInstance(wxWindow *parent, long style = wxSTB_DEFAULT_STYLE);
+    static LGuiderStatusBar *CreateInstance(wxWindow *parent, long style = wxSTB_DEFAULT_STYLE);
 
     void StatusMsg(const wxString& text);
 
@@ -79,10 +79,10 @@ private:
 };
 
 // Minor subclass to force the toolbar background to be what we want
-class PHDToolBarArt : public wxAuiDefaultToolBarArt
+class LGuiderToolBarArt : public wxAuiDefaultToolBarArt
 {
     virtual void DrawBackground(wxDC& dc, wxWindow *parent, const wxRect& rect);
-    virtual wxAuiToolBarArt *Clone() { return new PHDToolBarArt(*this); }
+    virtual wxAuiToolBarArt *Clone() { return new LGuiderToolBarArt(*this); }
 };
 
 #endif      // AUI_CONTROLS_H

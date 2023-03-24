@@ -1,6 +1,6 @@
 /*
  *  scope_manual_pointing.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Andy Galasso.
  *  Copyright (c) 2016 openphdguiding.org
@@ -99,7 +99,7 @@ ScopePointingDlg::ScopePointingDlg(wxWindow* parent, wxWindowID id, const wxStri
     sbSizer4->Add(m_radioBtnEast, 0, wxALL, 5);
 
     m_radioBtnUnspecified = new wxRadioButton(sbSizer4->GetStaticBox(), wxID_ANY, _("Unspecified"), wxDefaultPosition, wxDefaultSize, 0);
-    m_radioBtnUnspecified->SetToolTip(_("Select Unspecified if you do not want PHD2 to flip your calibration data for side of pier changes"));
+    m_radioBtnUnspecified->SetToolTip(_("Select Unspecified if you do not want LGuider2 to flip your calibration data for side of pier changes"));
 
     sbSizer4->Add(m_radioBtnUnspecified, 0, wxALL, 5);
 

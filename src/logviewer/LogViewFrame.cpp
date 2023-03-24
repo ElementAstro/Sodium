@@ -52,7 +52,7 @@
 #define DECEL 0.03
 #define MIN_SHOW 25
 
-#define APP_NAME "PHD2 Log Viewer"
+#define APP_NAME "LGuider2 Log Viewer"
 #define APP_VERSION_STR "0.6.4"
 
 PointArray s_tmp;
@@ -420,7 +420,7 @@ void LogViewFrame::OpenLog(const wxString& filename)
     }
 
     if (!s_log.phd_version.empty())
-        SetTitle(wxString::Format(APP_NAME " - %s - PHD2 %s", fn.GetFullName(), s_log.phd_version.c_str()));
+        SetTitle(wxString::Format(APP_NAME " - %s - LGuider2 %s", fn.GetFullName(), s_log.phd_version.c_str()));
 
     // load the grid
     m_sessions->BeginBatch();
@@ -482,10 +482,10 @@ void LogViewFrame::OnFileExit(wxCommandEvent& event)
 
 void LogViewFrame::OnFileOpen(wxCommandEvent& event)
 {
-    wxFileDialog openFileDialog(this, _("Open PHD2 Guide Log"),
+    wxFileDialog openFileDialog(this, _("Open LGuider2 Guide Log"),
         Config->Read("/FileOpenDir", wxEmptyString),
         wxEmptyString,
-        "PHD2 Guide Logs (*PHD2_GuideLog*.txt)|*PHD2_GuideLog*.txt|"
+        "LGuider2 Guide Logs (*LGuider2_GuideLog*.txt)|*LGuider2_GuideLog*.txt|"
         "Text files (*.txt)|*.txt", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
     if (openFileDialog.ShowModal() == wxID_CANCEL)
@@ -712,7 +712,7 @@ void LogViewFrame::OnHelpAbout(wxCommandEvent& event)
 
     aboutInfo.SetName(APP_NAME);
     aboutInfo.SetVersion(APP_VERSION_STR);
-    aboutInfo.SetDescription(_("A tool for visualizing PHD2 guide log data"));
+    aboutInfo.SetDescription(_("A tool for visualizing LGuider2 guide log data"));
     aboutInfo.SetCopyright("(C) 2018-2020 Andy Galasso <andy.galasso@gmail.com>");
     aboutInfo.SetWebSite("http://adgsoftware.com/phd2utils");
     aboutInfo.AddDeveloper("Andy Galasso");
@@ -735,7 +735,7 @@ HelpDialog::HelpDialog(wxWindow *parent) : HelpDialogBase(parent)
     wxString s;
     s << "<html>"
         << "<h3>Opening a guide log</h3>"
-        << "There are three ways to open a PHD2 Log File:" << BR
+        << "There are three ways to open a LGuider2 Log File:" << BR
         << "1. Menu: File => Open" << BR
         << "2. Drag and drop from Windows explorer" << BR
         << "3. As an argument on the command-line" << BR

@@ -1,6 +1,6 @@
 /*
  *  eegg.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2007-2010 Craig Stark.
@@ -173,7 +173,7 @@ void MyFrame::OnEEGG(wxCommandEvent& evt)
                     lastCal.pierSide != PIER_SIDE_UNKNOWN)
                 {
                     pFrame->SuppressableAlert(FlipCalEnabledKey(),
-                        _("This is unnecessary because PHD2 has pointing info from the mount.  If you are seeing run-away Dec guiding "
+                        _("This is unnecessary because LGuider2 has pointing info from the mount.  If you are seeing run-away Dec guiding "
                         "after a meridian flip, use Help and look in the index for 'Reverse Dec output'."),
                         SuppressFlipCalAlert, 0, true);
                 }
@@ -181,7 +181,7 @@ void MyFrame::OnEEGG(wxCommandEvent& evt)
                 {
                     if (FlipCalibrationData())
                     {
-                        wxMessageBox(_("Failed to flip calibration - please upload debug log file to PHD2 forum for assistance."));
+                        wxMessageBox(_("Failed to flip calibration - please upload debug log file to LGuider2 forum for assistance."));
                     }
                     else
                     {

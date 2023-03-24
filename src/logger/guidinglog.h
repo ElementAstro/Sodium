@@ -1,6 +1,6 @@
 /*
  *  guidinglog.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012-2013 Bret McKee
@@ -49,12 +49,12 @@ struct CalibrationStepInfo
     int stepNumber;
     double dx;
     double dy;
-    PHD_Point pos;
+    LGuider_Point pos;
     double dist;
     wxString msg;
 
     CalibrationStepInfo(Mount *mount_, const wxString& dir_, int stepNumber_, double dx_,
-        double dy_, const PHD_Point& pos_, double dist_, const wxString& msg_ = wxEmptyString)
+        double dy_, const LGuider_Point& pos_, double dist_, const wxString& msg_ = wxEmptyString)
         : mount(mount_), direction(dir_), stepNumber(stepNumber_), dx(dx_), dy(dy_), pos(pos_),
         dist(dist_), msg(msg_) { }
 };
@@ -65,8 +65,8 @@ struct GuideStepInfo
     unsigned int moveOptions;
     int frameNumber;
     double time;
-    PHD_Point cameraOffset;
-    PHD_Point mountOffset;
+    LGuider_Point cameraOffset;
+    LGuider_Point mountOffset;
     double guideDistanceRA;
     double guideDistanceDec;
     int durationRA;
@@ -156,7 +156,7 @@ public:
     void ServerCommand(Guider *guider, const wxString& cmd);
     void NotifyGuidingDithered(Guider *guider, double dx, double dy);
     void NotifySetLockPosition(Guider *guider);
-    void NotifyLockShiftParams(const LockPosShiftParams& shiftParams, const PHD_Point& cameraRate);
+    void NotifyLockShiftParams(const LockPosShiftParams& shiftParams, const LGuider_Point& cameraRate);
     void NotifySettlingStateChange(const wxString& msg);
     void NotifyGACompleted();
     void NotifyGAResult(const wxString& msg);

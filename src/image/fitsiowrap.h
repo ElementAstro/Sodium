@@ -1,6 +1,6 @@
 /*
 *  fitsiowrap.h
-*  PHD Guiding
+*  LGuider Guiding
 *
 *  Created by Andy Galasso
 *  Copyright (c) 2014 Andy Galasso
@@ -38,9 +38,9 @@
 
 #include "fitsio.h"
 
-extern int PHD_fits_open_diskfile(fitsfile **fptr, const wxString& filename, int iomode, int *status);
-extern int PHD_fits_create_file(fitsfile **fptr, const wxString& filename, bool clobber, int *status);
-extern void PHD_fits_close_file(fitsfile *fptr);
+extern int LGuider_fits_open_diskfile(fitsfile **fptr, const wxString& filename, int iomode, int *status);
+extern int LGuider_fits_create_file(fitsfile **fptr, const wxString& filename, bool clobber, int *status);
+extern void LGuider_fits_close_file(fitsfile *fptr);
 
 class FITSHdrWriter
 {

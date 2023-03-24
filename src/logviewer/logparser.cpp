@@ -26,7 +26,7 @@
 #include <wx/wfstream.h>
 #include <wx/regex.h>
 
-static std::string VERSION_PREFIX("PHD2 version ");
+static std::string VERSION_PREFIX("LGuider2 version ");
 static std::string GUIDING_BEGINS("Guiding Begins at ");
 static std::string GUIDING_HEADING("Frame,Time,mount");
 static std::string MOUNT_KEY("Mount = ");

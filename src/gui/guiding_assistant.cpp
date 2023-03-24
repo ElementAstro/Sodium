@@ -1,6 +1,6 @@
 /*
 *  guiding_assistant.cpp
-*  PHD Guiding
+*  LGuider Guiding
 *
 *  Created by Andy Galasso and Bruce Waddington
 *  Copyright (c) 2015 Andy Galasso and Bruce Waddington
@@ -223,7 +223,7 @@ struct GuidingAsstWin : public wxDialog
     bool m_measuring;
     wxLongLong_t m_startTime;
     long m_elapsedSecs;
-    PHD_Point m_startPos;
+    LGuider_Point m_startPos;
     wxString startStr;
     DescriptiveStats m_hpfRAStats;
     DescriptiveStats m_lpfRAStats;
@@ -293,7 +293,7 @@ struct GuidingAsstWin : public wxDialog
     void MakeRecommendations();
     void DisplayStaticRecommendations(const GADetails& details);
     void LogResults();
-    void BacklashStep(const PHD_Point& camLoc);
+    void BacklashStep(const LGuider_Point& camLoc);
     void EndBacklashTest(bool completed);
     void BacklashError();
     void StatsReset();
@@ -523,7 +523,7 @@ GuidingAsstWin::GuidingAsstWin()
     // End of recommendations
 
     m_backlashCB = new wxCheckBox(this, wxID_ANY, _("Measure Declination Backlash"));
-    m_backlashCB->SetToolTip(_("PHD2 will move the guide star a considerable distance north, then south to measure backlash. Be sure the selected star has "
+    m_backlashCB->SetToolTip(_("LGuider2 will move the guide star a considerable distance north, then south to measure backlash. Be sure the selected star has "
         "plenty of room to move in the north direction.  If the guide star is lost, increase the size of the search region to at least 20 px"));
     if (TheScope())
     {
@@ -625,7 +625,7 @@ static bool GetGridToolTip(int gridNum, const wxGridCellCoords& coords, wxString
         case 101:
         {
             if (col == 0)
-                *s = _("Signal-to-noise ratio; a measure of how well PHD2 can isolate the star from the sky/noise background");
+                *s = _("Signal-to-noise ratio; a measure of how well LGuider2 can isolate the star from the sky/noise background");
             else
                 *s = _("Measure of overall star brightness. Consider using 'Auto-select Star' (Alt-S) to choose the star.");
             break;
@@ -695,7 +695,7 @@ void GuidingAsstWin::FillInstructions(DialogState eState)
     m_instructions->Layout();
 }
 
-void GuidingAsstWin::BacklashStep(const PHD_Point& camLoc)
+void GuidingAsstWin::BacklashStep(const LGuider_Point& camLoc)
 {
     BacklashTool::MeasurementResults qual;
     m_backlashTool->DecMeasurementStep(camLoc);
@@ -1841,7 +1841,7 @@ void GuidingAsstWin::UpdateInfo(const GuideStepInfo& info)
     double dec = info.mountOffset.Y;
     if (pMount->IsStepGuider())
     {
-        PHD_Point mountLoc;
+        LGuider_Point mountLoc;
         TheScope()->TransformCameraCoordinatesToMountCoordinates(info.cameraOffset, mountLoc);
         ra = mountLoc.X;
         dec = mountLoc.Y;
@@ -1967,7 +1967,7 @@ void GuidingAssistant::NotifyFrameDropped(const FrameDroppedInfo& info)
     }
 }
 
-void GuidingAssistant::NotifyBacklashStep(const PHD_Point& camLoc)
+void GuidingAssistant::NotifyBacklashStep(const LGuider_Point& camLoc)
 {
     if (pFrame && pFrame->pGuidingAssistant)
     {

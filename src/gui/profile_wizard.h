@@ -1,5 +1,5 @@
 /*  profile_wizard.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bruce Waddington
  *  Copyright (c) 2014 Bruce Waddington

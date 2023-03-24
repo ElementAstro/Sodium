@@ -1,6 +1,6 @@
 /*
  *  worker_thread.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee
@@ -39,7 +39,7 @@
 class MyFrame;
 
 /*
- * There are two worker threads in PHD.  The primary thread handles all exposure requests,
+ * There are two worker threads in LGuider.  The primary thread handles all exposure requests,
  * and move requests for the first mount.  The secondary thread handles move requests for the
  * second mount, so that on systems with two mounts (probably an AO and a telescope), the
  * second mount can be moving while we image and guide with the first mount.

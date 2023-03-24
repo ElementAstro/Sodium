@@ -1,6 +1,6 @@
 /*
  *  usimage.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -281,7 +281,7 @@ bool usImage::Save(const wxString& fname, const wxString& hdrNote) const
         fitsfile *fptr;  // FITS file pointer
         int status = 0;  // CFITSIO status value MUST be initialized to zero!
 
-        PHD_fits_create_file(&fptr, fname, true, &status);
+        LGuider_fits_create_file(&fptr, fname, true, &status);
 
         long fsize[] = {
             (long) Size.GetWidth(),
@@ -303,7 +303,7 @@ bool usImage::Save(const wxString& fname, const wxString& hdrNote) const
         hdr.write("DATE", wxDateTime::UNow(), wxDateTime::UTC, "file creation time, UTC");
         hdr.write("DATE-OBS", ImgStartTime, wxDateTime::UTC, "Image capture start time, UTC");
         hdr.write("CREATOR", wxString(APPNAME _T(" ") FULLVER).c_str(), "Capture software");
-        hdr.write("PHDPROFI", pConfig->GetCurrentProfile().c_str(), "PHD2 Equipment Profile");
+        hdr.write("LGuiderPROFI", pConfig->GetCurrentProfile().c_str(), "LGuider2 Equipment Profile");
 
         if (pCamera)
         {
@@ -317,7 +317,7 @@ bool usImage::Save(const wxString& fname, const wxString& hdrNote) const
             hdr.write("XPIXSZ", sz, "pixel size in microns (with binning)");
             hdr.write("YPIXSZ", sz, "pixel size in microns (with binning)");
             unsigned int g = (unsigned int) pCamera->GuideCameraGain;
-            hdr.write("GAIN", g, "PHD Gain Value (0-100)");
+            hdr.write("GAIN", g, "LGuider Gain Value (0-100)");
             unsigned int bpp = pCamera->BitsPerPixel();
             hdr.write("CAMBPP", bpp, "Camera resolution, bits per pixel");
         }
@@ -365,25 +365,25 @@ bool usImage::Save(const wxString& fname, const wxString& hdrNote) const
         hdr.write("PEDESTAL", (unsigned int) Pedestal, "dark subtraction bias value");
         hdr.write("SATURATE", (1U << BitsPerPixel) - 1, "Data value at which saturation occurs");
 
-        const PHD_Point& lockPos = pFrame->pGuider->LockPosition();
+        const LGuider_Point& lockPos = pFrame->pGuider->LockPosition();
         if (lockPos.IsValid())
         {
-            hdr.write("PHDLOCKX", (float) lockPos.X, "PHD2 lock position x");
-            hdr.write("PHDLOCKY", (float) lockPos.Y, "PHD2 lock position y");
+            hdr.write("LGuiderLOCKX", (float) lockPos.X, "LGuider2 lock position x");
+            hdr.write("LGuiderLOCKY", (float) lockPos.Y, "LGuider2 lock position y");
         }
 
         if (!Subframe.IsEmpty())
         {
-            hdr.write("PHDSUBFX", (unsigned int) Subframe.x, "PHD2 subframe x");
-            hdr.write("PHDSUBFY", (unsigned int) Subframe.y, "PHD2 subframe y");
-            hdr.write("PHDSUBFW", (unsigned int) Subframe.width, "PHD2 subframe width");
-            hdr.write("PHDSUBFH", (unsigned int) Subframe.height, "PHD2 subframe height");
+            hdr.write("LGuiderSUBFX", (unsigned int) Subframe.x, "LGuider2 subframe x");
+            hdr.write("LGuiderSUBFY", (unsigned int) Subframe.y, "LGuider2 subframe y");
+            hdr.write("LGuiderSUBFW", (unsigned int) Subframe.width, "LGuider2 subframe width");
+            hdr.write("LGuiderSUBFH", (unsigned int) Subframe.height, "LGuider2 subframe height");
         }
 
         long fpixel[3] = { 1, 1, 1 };
         fits_write_pix(fptr, TUSHORT, fpixel, NPixels, ImageData, &status);
 
-        PHD_fits_close_file(fptr);
+        LGuider_fits_close_file(fptr);
 
         bError = status ? true : false;
     }
@@ -418,7 +418,7 @@ bool usImage::Load(const wxString& fname)
 
         int status = 0;  // CFITSIO status value MUST be initialized to zero!
         fitsfile *fptr;  // FITS file pointer
-        if (!PHD_fits_open_diskfile(&fptr, fname, READONLY, &status))
+        if (!LGuider_fits_open_diskfile(&fptr, fname, READONLY, &status))
         {
             int hdutype;
             if (fits_get_hdu_type(fptr, &hdutype, &status) || hdutype != IMAGE_HDU)
@@ -469,13 +469,13 @@ bool usImage::Load(const wxString& fname)
                 BitsPerPixel = saturate > 255 ? 16 : 8;
 
             wxRect subf;
-            bool ok = fhdr_int(fptr, "PHDSUBFX", &subf.x);
-            if (ok) ok = fhdr_int(fptr, "PHDSUBFY", &subf.y);
-            if (ok) ok = fhdr_int(fptr, "PHDSUBFW", &subf.width);
-            if (ok) ok = fhdr_int(fptr, "PHDSUBFH", &subf.height);
+            bool ok = fhdr_int(fptr, "LGuiderSUBFX", &subf.x);
+            if (ok) ok = fhdr_int(fptr, "LGuiderSUBFY", &subf.y);
+            if (ok) ok = fhdr_int(fptr, "LGuiderSUBFW", &subf.width);
+            if (ok) ok = fhdr_int(fptr, "LGuiderSUBFH", &subf.height);
             if (ok) Subframe = subf;
 
-            PHD_fits_close_file(fptr);
+            LGuider_fits_close_file(fptr);
 
             CalcStats();
         }

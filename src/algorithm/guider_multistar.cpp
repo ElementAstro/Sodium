@@ -1,6 +1,6 @@
 /*
  *  guider_multistar.cpp
- *  PHD Guiding
+ *  LGuider Guiding
 
  *  Original guider_onestar Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -367,7 +367,7 @@ bool GuiderMultiStar::SetSearchRegion(int searchRegion)
     return bError;
 }
 
-bool GuiderMultiStar::SetCurrentPosition(const usImage *pImage, const PHD_Point& position)
+bool GuiderMultiStar::SetCurrentPosition(const usImage *pImage, const LGuider_Point& position)
 {
     bool bError = true;
 
@@ -531,7 +531,7 @@ bool GuiderMultiStar::AutoSelect(const wxRect& roi)
     return error;
 }
 
-inline static wxRect SubframeRect(const PHD_Point& pos, int halfwidth)
+inline static wxRect SubframeRect(const LGuider_Point& pos, int halfwidth)
 {
     return wxRect(ROUND(pos.X) - halfwidth,
                   ROUND(pos.Y) - halfwidth,
@@ -546,7 +546,7 @@ wxRect GuiderMultiStar::GetBoundingBox() const
     GUIDER_STATE state = GetState();
 
     bool subframe;
-    PHD_Point pos;
+    LGuider_Point pos;
 
     switch (state) {
     case STATE_SELECTED:
@@ -971,7 +971,7 @@ bool GuiderMultiStar::UpdateCurrentPosition(const usImage *pImage, GuiderOffset 
             }
         }
 
-        const PHD_Point& lockPos = LockPosition();
+        const LGuider_Point& lockPos = LockPosition();
         double distance;
         bool raOnly = MyFrame::GuidingRAOnly();
         if (lockPos.IsValid())
@@ -1040,7 +1040,7 @@ bool GuiderMultiStar::UpdateCurrentPosition(const usImage *pImage, GuiderOffset 
     return bError;
 }
 
-bool GuiderMultiStar::SetLockPosition(const PHD_Point& position)
+bool GuiderMultiStar::SetLockPosition(const LGuider_Point& position)
 {
     if (!Guider::SetLockPosition(position))
     {
@@ -1056,7 +1056,7 @@ bool GuiderMultiStar::SetLockPosition(const PHD_Point& position)
         return true;
 }
 
-bool GuiderMultiStar::IsValidLockPosition(const PHD_Point& pt)
+bool GuiderMultiStar::IsValidLockPosition(const LGuider_Point& pt)
 {
     const usImage *pImage = CurrentImage();
     if (!pImage)
@@ -1117,7 +1117,7 @@ void GuiderMultiStar::OnLClick(wxMouseEvent &mevent)
             double StarX = (double) mevent.m_x / scaleFactor;
             double StarY = (double) mevent.m_y / scaleFactor;
 
-            SetCurrentPosition(pImage, PHD_Point(StarX, StarY));
+            SetCurrentPosition(pImage, LGuider_Point(StarX, StarY));
 
             if (!m_primaryStar.IsValid())
             {
@@ -1151,7 +1151,7 @@ void GuiderMultiStar::OnLClick(wxMouseEvent &mevent)
     }
 }
 
-inline static void DrawBox(wxDC& dc, const PHD_Point& star, int halfW, double scale)
+inline static void DrawBox(wxDC& dc, const LGuider_Point& star, int halfW, double scale)
 {
     dc.SetBrush(*wxTRANSPARENT_BRUSH);
     double w = ROUND((halfW * 2 + 1) * scale);
@@ -1279,15 +1279,15 @@ void GuiderMultiStar::SaveStarFITS()
             *usptr = *(pImage->ImageData + (y + start_y)*width + (x + start_x));
     }
 
-    imgLogDirectory = Debug.GetLogDir() + PATHSEPSTR + "PHD2_Stars";
+    imgLogDirectory = Debug.GetLogDir() + PATHSEPSTR + "LGuider2_Stars";
     if (!wxDirExists(imgLogDirectory))
         wxFileName::Mkdir(imgLogDirectory, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
-    wxString fname = imgLogDirectory + PATHSEPSTR + "PHD_GuideStar" + wxDateTime::Now().Format(_T("_%j_%H%M%S")) + ".fit";
+    wxString fname = imgLogDirectory + PATHSEPSTR + "LGuider_GuideStar" + wxDateTime::Now().Format(_T("_%j_%H%M%S")) + ".fit";
 
     fitsfile *fptr;  // FITS file pointer
     int status = 0;  // CFITSIO status value MUST be initialized to zero!
 
-    PHD_fits_create_file(&fptr, fname, false, &status);
+    LGuider_fits_create_file(&fptr, fname, false, &status);
 
     if (!status)
     {
@@ -1311,7 +1311,7 @@ void GuiderMultiStar::SaveStarFITS()
         }
     }
 
-    PHD_fits_close_file(fptr);
+    LGuider_fits_close_file(fptr);
 }
 
 wxString GuiderMultiStar::GetSettingsSummary() const
@@ -1369,7 +1369,7 @@ GuiderMultiStarConfigDialogCtrlSet::GuiderMultiStarConfigDialogCtrlSet(wxWindow 
     wxStaticBoxSizer *pStarMass = new wxStaticBoxSizer(wxHORIZONTAL, GetParentWindow(AD_szStarTracking), _("Star Mass Detection"));
     m_pEnableStarMassChangeThresh = new wxCheckBox(GetParentWindow(AD_szStarTracking), STAR_MASS_ENABLE, _("Enable"));
     m_pEnableStarMassChangeThresh->SetToolTip(_("Check to enable star mass change detection. When enabled, "
-        "PHD skips frames when the guide star mass changes by an amount greater than the setting for 'tolerance'."));
+        "LGuider skips frames when the guide star mass changes by an amount greater than the setting for 'tolerance'."));
 
     GetParentWindow(AD_szStarTracking)->Bind(wxEVT_COMMAND_CHECKBOX_CLICKED, &GuiderMultiStarConfigDialogCtrlSet::OnStarMassEnableChecked, this, STAR_MASS_ENABLE);
 
@@ -1392,7 +1392,7 @@ GuiderMultiStarConfigDialogCtrlSet::GuiderMultiStarConfigDialogCtrlSet(wxWindow 
     m_MinHFD->SetDigits(1);
     wxSizer *pHFD = MakeLabeledControl(AD_szStarTracking, _("Minimum star HFD (pixels)"), m_MinHFD,
         _("The minimum star HFD (size) that will be used for identifying a guide star. "
-          "This setting can be used to prevent PHD2 from guiding on a hot pixel. "
+          "This setting can be used to prevent LGuider2 from guiding on a hot pixel. "
           "Use the Star Profile Tool to measure the HFD of a hot pixel and set the min HFD threshold "
           "a bit higher. When the HFD falls below this level, the hot pixel will be ignored."));
 
@@ -1415,7 +1415,7 @@ GuiderMultiStarConfigDialogCtrlSet::GuiderMultiStarConfigDialogCtrlSet(wxWindow 
     m_MinSNR->SetDigits(0);
     wxSizer *pSNR = MakeLabeledControl(AD_szStarTracking, _("Minimum star SNR for AutoFind"), m_MinSNR,
         _("The minimum star SNR that will be used for auto-selecting guide stars. "
-        "This setting can be used to discourage PHD2 from choosing a guide star you know will be too faint for sustained guiding. "
+        "This setting can be used to discourage LGuider2 from choosing a guide star you know will be too faint for sustained guiding. "
         "This setting applies to both the primary guide star and candidate secondary stars in multi-star guiding. "
         "If this constraint cannot be met, a saturated or near-saturated star may be selected."));
 

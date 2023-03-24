@@ -1,6 +1,6 @@
 /*
  *  camera.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -1493,7 +1493,7 @@ void GuideCamera::DisconnectWithAlert(const wxString& msg, ReconnectType reconne
 
     if (reconnect == RECONNECT)
     {
-        pFrame->Alert(msg + "\n" + _("PHD will make several attempts to re-connect the camera."));
+        pFrame->Alert(msg + "\n" + _("LGuider will make several attempts to re-connect the camera."));
         InitiateReconnect();
     }
     else

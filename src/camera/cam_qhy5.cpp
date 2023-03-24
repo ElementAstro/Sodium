@@ -1,6 +1,6 @@
 /*
  *  cam_qhy5.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2012 Craig Stark.

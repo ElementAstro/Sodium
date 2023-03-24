@@ -1,6 +1,6 @@
 /*
  *    indi_gui.cpp
- *    PHD Guiding
+ *    LGuider Guiding
  *
  *    Copyright(c) 2009 Geoffrey Hausheer. All rights reserved.
  *

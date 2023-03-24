@@ -1,6 +1,6 @@
 /*
  *  socket_server.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark on 9/20/08.
  *  Copyright (c) 2008-2010 Craig Stark.

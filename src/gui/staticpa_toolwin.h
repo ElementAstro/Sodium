@@ -1,6 +1,6 @@
 /*
  *  staticpa_toolwin.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Ken Self
  *  Copyright (c) 2017 Ken Self
@@ -136,13 +136,13 @@ struct StaticPaToolWin : public wxFrame
     int m_nStep;            // Number of steps taken so far
 
     double m_raPos[3];      // RA readings at each point
-    PHD_Point m_pxPos[3];   // Alignment points - in pixels
-    PHD_Point m_pxCentre;   // Centre of Rotation in pixels
+    LGuider_Point m_pxPos[3];   // Alignment points - in pixels
+    LGuider_Point m_pxCentre;   // Centre of Rotation in pixels
     double m_radius;        // Radius of centre of rotation to reference star
 
     double m_dispSz[2];     // Display size (dynamic)
-    PHD_Point m_AzCorr, m_AltCorr; // Calculated Alt and Az corrections
-    PHD_Point m_ConeCorr, m_DecCorr;  //Calculated Dec and Cone offsets
+    LGuider_Point m_AzCorr, m_AltCorr; // Calculated Alt and Az corrections
+    LGuider_Point m_ConeCorr, m_DecCorr;  //Calculated Dec and Cone offsets
 
     void FillPanel();
 
@@ -178,8 +178,8 @@ struct StaticPaToolWin : public wxFrame
     void UnsetState(int ipos) { m_state = m_state & ~(1 << ipos) & 15; }
     void ClearState() { m_state = 0; }
     void PaintHelper(wxAutoBufferedPaintDCBase& dc, double scale);
-    PHD_Point Radec2Px(const PHD_Point& radec);
-    PHD_Point J2000Now(const PHD_Point& radec);
+    LGuider_Point Radec2Px(const LGuider_Point& radec);
+    LGuider_Point J2000Now(const LGuider_Point& radec);
 
     DECLARE_EVENT_TABLE()
 };

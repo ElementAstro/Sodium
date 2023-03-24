@@ -1,6 +1,6 @@
 /*
  *  starcross_test.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bruce Waddington
  *  Copyright (c) 2016 Bruce Waddington

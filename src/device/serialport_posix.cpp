@@ -1,6 +1,6 @@
 /*
  *  serialport_posix.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Hans Lambermont
  *  Copyright (c) 2016 Hans Lambermont

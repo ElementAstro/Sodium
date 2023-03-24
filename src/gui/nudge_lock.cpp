@@ -1,6 +1,6 @@
 /*
  *  nudge_lock.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2014 Andy Galasso
@@ -224,7 +224,7 @@ void NudgeLockDialog::UpdateSliderLabel()
 
 void NudgeLockDialog::UpdateLockPosCtrls()
 {
-    const PHD_Point& pos = pFrame->pGuider->LockPosition();
+    const LGuider_Point& pos = pFrame->pGuider->LockPosition();
     lockPosIsValid = pos.IsValid();
     if (lockPosIsValid)
     {
@@ -245,7 +245,7 @@ void NudgeLockDialog::UpdateLockPosCtrls()
     stickyLockPos->SetValue(pFrame->pGuider->LockPosIsSticky());
 }
 
-static bool UpdateLockPos(const PHD_Point& newPos)
+static bool UpdateLockPos(const LGuider_Point& newPos)
 {
     if (pFrame->pGuider->IsValidLockPosition(newPos))
     {
@@ -259,7 +259,7 @@ static bool UpdateLockPos(const PHD_Point& newPos)
 
 static void DoMove(double dx, double dy)
 {
-    PHD_Point newPos = pFrame->pGuider->LockPosition();
+    LGuider_Point newPos = pFrame->pGuider->LockPosition();
     newPos.X += dx;
     newPos.Y += dy;
     UpdateLockPos(newPos);
@@ -319,7 +319,7 @@ void NudgeLockDialog::OnStickyChecked(wxCommandEvent& evt)
 void NudgeLockDialog::OnSetLockPosClicked(wxCommandEvent& evt)
 {
     TransferDataFromWindow();
-    PHD_Point newPos(lockPosX, lockPosY);
+    LGuider_Point newPos(lockPosX, lockPosY);
     if (!UpdateLockPos(newPos))
     {
         UpdateLockPosCtrls();
@@ -328,7 +328,7 @@ void NudgeLockDialog::OnSetLockPosClicked(wxCommandEvent& evt)
 
 void NudgeLockDialog::OnSaveLockPosClicked(wxCommandEvent& evt)
 {
-    const PHD_Point& pos = pFrame->pGuider->LockPosition();
+    const LGuider_Point& pos = pFrame->pGuider->LockPosition();
     if (pos.IsValid())
     {
         pConfig->Profile.SetDouble("/NudgeLock/SavedLockPosX", pos.X);
@@ -346,7 +346,7 @@ void NudgeLockDialog::OnRestoreLockPosClicked(wxCommandEvent& evt)
     if (ConfirmDialog::Confirm(wxString::Format(_("Set lock position to saved value (%.2f,%.2f)?"), x, y),
         "/RestoreSavedLockPosOK", _("Restore saved Lock Pos")))
     {
-        UpdateLockPos(PHD_Point(x, y));
+        UpdateLockPos(LGuider_Point(x, y));
     }
 }
 

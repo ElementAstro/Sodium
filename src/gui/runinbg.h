@@ -1,6 +1,6 @@
 /*
  *  runinbg.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Andy Galasso.
  *  Copyright (c) 2014-2017 Andy Galasso

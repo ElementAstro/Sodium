@@ -1,6 +1,6 @@
 /*
  *  mount.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee
@@ -272,11 +272,11 @@ public:
 
     virtual MOVE_RESULT MoveOffset(GuiderOffset *guiderOffset, unsigned int moveOptions);
 
-    bool TransformCameraCoordinatesToMountCoordinates(const PHD_Point& cameraVectorEndpoint,
-                                                      PHD_Point& mountVectorEndpoint, bool logged = true);
+    bool TransformCameraCoordinatesToMountCoordinates(const LGuider_Point& cameraVectorEndpoint,
+                                                      LGuider_Point& mountVectorEndpoint, bool logged = true);
 
-    bool TransformMountCoordinatesToCameraCoordinates(const PHD_Point& mountVectorEndpoint,
-                                                      PHD_Point& cameraVectorEndpoint, bool logged = true);
+    bool TransformMountCoordinatesToCameraCoordinates(const LGuider_Point& mountVectorEndpoint,
+                                                      LGuider_Point& cameraVectorEndpoint, bool logged = true);
 
     void LogGuideStepInfo();
 
@@ -311,8 +311,8 @@ public:
     virtual int CalibrationTotDistance() = 0;
 
     // Calibration related routines
-    virtual bool BeginCalibration(const PHD_Point &currentLocation) = 0;
-    virtual bool UpdateCalibrationState(const PHD_Point &currentLocation) = 0;
+    virtual bool BeginCalibration(const LGuider_Point &currentLocation) = 0;
+    virtual bool UpdateCalibrationState(const LGuider_Point &currentLocation) = 0;
 
     virtual void NotifyGuidingStarted();
     virtual void NotifyGuidingStopped();
@@ -320,7 +320,7 @@ public:
     virtual void NotifyGuidingResumed();
     virtual void NotifyGuidingDithered(double dx, double dy, bool mountCoords);
     virtual void NotifyGuidingDitherSettleDone(bool success);
-    virtual void NotifyDirectMove(const PHD_Point& dist);
+    virtual void NotifyDirectMove(const LGuider_Point& dist);
 
     virtual MountConfigDialogPane *GetConfigDialogPane(wxWindow *pParent) = 0;
     virtual MountConfigDialogCtrlSet *GetConfigDialogCtrlSet(wxWindow *pParent, Mount *pMount, AdvancedDialog *pAdvancedDialog, BrainCtrlIdMap& CtrlMap) = 0;

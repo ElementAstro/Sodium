@@ -1,6 +1,6 @@
 /*
  *  guider_multistar.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Original guider_onestar Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -122,10 +122,10 @@ public:
 
     void OnPaint(wxPaintEvent& evt) override;
 
-    virtual bool SetLockPosition(const PHD_Point& position) override;
+    virtual bool SetLockPosition(const LGuider_Point& position) override;
     bool IsLocked() const override;
     bool AutoSelect(const wxRect& roi) override;
-    const PHD_Point& CurrentPosition() const override;
+    const LGuider_Point& CurrentPosition() const override;
     wxRect GetBoundingBox() const override;
     int GetMaxMovePixels() const override;
     const Star& PrimaryStar() const override;
@@ -141,10 +141,10 @@ public:
     void LoadProfileSettings() override;
 
 private:
-    bool IsValidLockPosition(const PHD_Point& pt) final;
+    bool IsValidLockPosition(const LGuider_Point& pt) final;
     void InvalidateCurrentPosition(bool fullReset = false) final;
     bool UpdateCurrentPosition(const usImage *pImage, GuiderOffset *ofs, FrameDroppedInfo *errorInfo) final;
-    bool SetCurrentPosition(const usImage *pImage, const PHD_Point& position) final;
+    bool SetCurrentPosition(const usImage *pImage, const LGuider_Point& position) final;
 
     void OnLClick(wxMouseEvent& evt);
 
@@ -177,7 +177,7 @@ GuiderMultiStar::IsLocked() const
     return m_primaryStar.WasFound();
 }
 
-inline const PHD_Point&
+inline const LGuider_Point&
 GuiderMultiStar::CurrentPosition() const
 {
     return m_primaryStar;

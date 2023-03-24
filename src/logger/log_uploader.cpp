@@ -1,6 +1,6 @@
 /*
  *  log_uploader.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2018 Andy Galasso
@@ -14,7 +14,7 @@
  *    Redistributions in binary form must reproduce the above copyright notice,
  *     this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *    Neither the name of Open PHD Guiding, openphdguiding.org, nor the names of its
+ *    Neither the name of Open LGuider Guiding, openphdguiding.org, nor the names of its
  *     contributors may be used to endorse or promote products derived from
  *     this software without specific prior written permission.
  *
@@ -143,12 +143,12 @@ void LogScanner::Init(wxGrid *grid)
 
 static wxString DebugLogName(const Session& session)
 {
-    return "PHD2_DebugLog_" + session.timestamp + ".txt";
+    return "LGuider2_DebugLog_" + session.timestamp + ".txt";
 }
 
 static wxString GuideLogName(const Session& session)
 {
-    return "PHD2_GuideLog_" + session.timestamp + ".txt";
+    return "LGuider2_GuideLog_" + session.timestamp + ".txt";
 }
 
 static wxString FormatTimeSpan(const wxTimeSpan& dt)
@@ -499,9 +499,9 @@ static void LoadGrid(wxGrid *grid)
     wxArrayString a;
     int nr = wxDir::GetAllFiles(logDir, &a, "*.txt", wxDIR_FILES);
 
-    // PHD2_GuideLog_2017-12-09_044510.txt
+    // LGuider2_GuideLog_2017-12-09_044510.txt
     {
-        wxRegEx re("PHD2_GuideLog_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{6}\\.txt$");
+        wxRegEx re("LGuider2_GuideLog_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{6}\\.txt$");
         for (int i = 0; i < nr; i++)
         {
             const wxString& l = a[i];
@@ -536,9 +536,9 @@ static void LoadGrid(wxGrid *grid)
         }
     }
 
-    // PHD2_DebugLog_2017-12-09_044510.txt
+    // LGuider2_DebugLog_2017-12-09_044510.txt
     {
-        wxRegEx re("PHD2_DebugLog_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{6}\\.txt$");
+        wxRegEx re("LGuider2_DebugLog_[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{6}\\.txt$");
         for (int i = 0; i < nr; i++)
         {
             const wxString& l = a[i];
@@ -657,7 +657,7 @@ static void SaveUploadInfo(const wxString& url, const wxDateTime& time)
 #define STEP3_TITLE_FAIL _("Upload Log Files - Upload not completed")
 
 #define STEP1_MESSAGE _( \
-  "When asking for help in the PHD2 Forum it is important to include your PHD2 logs. This tool will " \
+  "When asking for help in the LGuider2 Forum it is important to include your LGuider2 logs. This tool will " \
   "help you upload your log files so they can be seen in the forum.\n" \
   "The first step is to select which files to upload.\n" \
 )
@@ -1055,7 +1055,7 @@ bool BgUpload::Entry()
     AutoChdir cd(logDir);
     wxLogNull nolog;
 
-    wxString zipfile("PHD2_upload.zip");
+    wxString zipfile("LGuider2_upload.zip");
     ::wxRemove(zipfile);
 
     wxFFileOutputStream out(zipfile);
@@ -1282,7 +1282,7 @@ void LogUploadDialog::ExecUpload()
         wxString msg = wxString::Format(_("The log files have been uploaded and can be accessed at this link:") + "<br>"
             "<br>"
             "<font size=-1>%s</font><br><br>" +
-            _("You can share your log files in the <a href=\"forum\">PHD2 Forum</a> by posting a message that includes the link. "
+            _("You can share your log files in the <a href=\"forum\">LGuider2 Forum</a> by posting a message that includes the link. "
               "Copy and paste the link into your forum post.") + "<br><br>" +
               wxString::Format("<a href=\"copy.%u\">", (unsigned int)(s_recent.size() - 1)) + _("Copy link to clipboard"), url);
         WindowUpdateLocker noUpdates(this);
@@ -1300,14 +1300,14 @@ void LogUploadDialog::ExecUpload()
     {
     default:
     case UPL_INTERNAL_ERROR:
-        msg = _("PHD2 was unable to upload the log files due to an internal error. Please report the error in the PHD2 Forum.");
+        msg = _("LGuider2 was unable to upload the log files due to an internal error. Please report the error in the LGuider2 Forum.");
         break;
     case UPL_CONNECTION_ERROR:
-        msg = _("PHD2 was unable to upload the log files. The service may be temproarily unavailable. "
+        msg = _("LGuider2 was unable to upload the log files. The service may be temproarily unavailable. "
                 "You can try again later or you can try another file sharing service such as Dropbox or Google Drive.");
         break;
     case UPL_COMPRESS_ERROR:
-        msg = _("PHD2 encountered an error while compressing the log files. Please make sure the selected logs are "
+        msg = _("LGuider2 encountered an error while compressing the log files. Please make sure the selected logs are "
                 "available and try again.");
         break;
     case UPL_SIZE_ERROR:

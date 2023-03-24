@@ -1,6 +1,6 @@
 /*
  *  stepguider_sxao_indi.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Hans Lambermont
  *  Copyright (c) 2016 Hans Lambermont

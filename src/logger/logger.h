@@ -1,6 +1,6 @@
 /*
  *  logger.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bruce Waddington
  *  Copyright (c) 2013 Bruce Waddington

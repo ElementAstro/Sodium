@@ -1,6 +1,6 @@
 /*
 *  guide_algorithm_resistswitch.cpp
-*  PHD Guiding
+*  LGuider Guiding
 *
 *  Created by Bret McKee
 *  Copyright (c) 2012 Bret McKee
@@ -319,7 +319,7 @@ GuideAlgorithmResistSwitch::
         "If camera is binned, this is a fraction of the binned pixel size. Default = %.2f"), DefaultMinMove));
 
     m_pFastSwitch = new wxCheckBox(pParent, wxID_ANY, _("Fast switch for large deflections"));
-    DoAdd(m_pFastSwitch, _("Ordinarily the Resist Switch algortithm waits several frames before switching direction. With Fast Switch enabled PHD2 will switch direction immediately if it sees a very large deflection. Enable this option if your mount has a substantial amount of backlash and PHD2 sometimes overcorrects."));
+    DoAdd(m_pFastSwitch, _("Ordinarily the Resist Switch algortithm waits several frames before switching direction. With Fast Switch enabled LGuider2 will switch direction immediately if it sees a very large deflection. Enable this option if your mount has a substantial amount of backlash and LGuider2 sometimes overcorrects."));
 }
 
 GuideAlgorithmResistSwitch::

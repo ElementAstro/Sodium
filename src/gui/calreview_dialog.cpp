@@ -1,6 +1,6 @@
 /*
 *  calreview_dialog.cpp
-*  PHD Guiding
+*  LGuider Guiding
 *
 *  Created by Bruce Waddington
 *  Copyright (c) 2015 Bruce Waddington
@@ -463,7 +463,7 @@ wxBitmap CalReviewDialog::CreateGraph(bool AO)
             }
             memDC.DrawCircle(IntPoint(calDetails.raSteps.at(i), scaleFactor), ptRadius);
         }
-        // Show the line PHD2 will use for the rate
+        // Show the line LGuider2 will use for the rate
         memDC.SetPen(raPen);
         if ((int)calDetails.raSteps.size() > calDetails.raStepCount)         // New calib, includes return values
             memDC.DrawLine(IntPoint(calDetails.raSteps.at(0), scaleFactor), IntPoint(calDetails.raSteps.at(calDetails.raStepCount), scaleFactor));
@@ -490,7 +490,7 @@ wxBitmap CalReviewDialog::CreateGraph(bool AO)
             }
             memDC.DrawCircle(IntPoint(calDetails.decSteps.at(i), scaleFactor), ptRadius);
         }
-        // Show the line PHD2 will use for the rate
+        // Show the line LGuider2 will use for the rate
         memDC.SetPen(decPen);
         if ((int)calDetails.decSteps.size() > calDetails.decStepCount)         // New calib, includes return values
             memDC.DrawLine(IntPoint(calDetails.decSteps.at(0), scaleFactor), IntPoint(calDetails.decSteps.at(calDetails.decStepCount), scaleFactor));

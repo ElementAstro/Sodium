@@ -1,6 +1,6 @@
 /*
  *  precompiled_header.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee
@@ -34,7 +34,7 @@
 
 /*
  * this file's only purpose is for use with MSCV precompiled headers.  I don't generally like precompiled
- * headers, but for PHD is speeds up compile times by more that 5X on my machine, so here it is.
+ * headers, but for LGuider is speeds up compile times by more that 5X on my machine, so here it is.
  *
  * If you are not using MSVC, you don't need to include this file in your build
  */

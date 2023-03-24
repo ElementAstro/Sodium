@@ -1,6 +1,6 @@
 /*
  *  darks_dialog.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bruce Waddington in collaboration with David Ault and Andy Galasso
  *  Copyright (c) 2014 Bruce Waddington

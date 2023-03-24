@@ -41,8 +41,8 @@ endif()
 
 
 # root directory of the project
-set(PHD_PROJECT_ROOT_DIR ${CMAKE_SOURCE_DIR})
-set(lightguider_src_dir ${PHD_PROJECT_ROOT_DIR})
+set(LGuider_PROJECT_ROOT_DIR ${CMAKE_SOURCE_DIR})
+set(lightguider_src_dir ${LGuider_PROJECT_ROOT_DIR})
 
 add_custom_target(CmakeAdditionalFiles
   SOURCES
@@ -59,7 +59,7 @@ add_custom_target(CmakeAdditionalFiles
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake_modules/")
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake_modules/")
 
-#message(${PHD_PROJECT_ROOT_DIR})
+#message(${LGuider_PROJECT_ROOT_DIR})
 # Additional files in the workspace, To improve maintainability
 
 add_subdirectory(src/logviewer)
@@ -115,7 +115,7 @@ add_subdirectory(modules)
 #################################################################################
 #
 # generates the documentation targets. Part of those targets define the
-# zip files PHD2GuideHelp.zip. In order to include them in the main build
+# zip files LGuider2GuideHelp.zip. In order to include them in the main build
 # we need to declare them here. Those targets should not depend on any source file
 # but may require thirdparty (gettext etc).
 generate_doc_targets(
@@ -585,15 +585,15 @@ if(APPLE AND NOT APPLE32)
 endif()
 target_include_directories(lightguider PRIVATE ${wxWidgets_INCLUDE_DIRS})
 
-if (PHD_LINK_EXTERNAL_RELEASE)
-  target_link_libraries(lightguider optimized ${PHD_LINK_EXTERNAL_RELEASE})
+if (LGuider_LINK_EXTERNAL_RELEASE)
+  target_link_libraries(lightguider optimized ${LGuider_LINK_EXTERNAL_RELEASE})
 endif()
-if (PHD_LINK_EXTERNAL_DEBUG)
-  target_link_libraries(lightguider debug ${PHD_LINK_EXTERNAL_DEBUG})
+if (LGuider_LINK_EXTERNAL_DEBUG)
+  target_link_libraries(lightguider debug ${LGuider_LINK_EXTERNAL_DEBUG})
 endif()
 target_link_libraries(lightguider
                       MPIIS_GP GPGuider # GP Guider
-                      ${PHD_LINK_EXTERNAL})
+                      ${LGuider_LINK_EXTERNAL})
 
 
 

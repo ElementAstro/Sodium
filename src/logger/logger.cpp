@@ -1,6 +1,6 @@
 /*
  *  logger.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bruce Waddington
  *  Copyright (c) 2013 Bruce Waddington
@@ -55,11 +55,11 @@ bool Logger::ChangeDirLog(const wxString& newdir)
 }
 
 // Return a valid default directory location for log files.  On
-// Windows, this will normally be "My Documents\PHD2"
+// Windows, this will normally be "My Documents\LGuider2"
 static wxString DefaultDir()
 {
     wxStandardPathsBase& stdpath = wxStandardPaths::Get();
-    wxString rslt = stdpath.GetDocumentsDir() + PATHSEPSTR + "PHD2";
+    wxString rslt = stdpath.GetDocumentsDir() + PATHSEPSTR + "LGuider2";
 
     if (!wxDirExists(rslt))
         if (!wxFileName::Mkdir(rslt, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL))
@@ -137,7 +137,7 @@ bool Logger::SetLogDir(const wxString& dir)
 }
 
 // Clean up old log files in the directory.  Caller gives us the file
-// glob - like PHD2_DebugLog*.txt - and the retention period.  Files
+// glob - like LGuider2_DebugLog*.txt - and the retention period.  Files
 // older than that are removed.
 void Logger::RemoveMatchingFiles(const wxString& filePattern, int DaysOld)
 {

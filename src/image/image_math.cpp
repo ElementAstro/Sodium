@@ -1,6 +1,6 @@
 /*
  *  image_math.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -800,7 +800,7 @@ static wxString DefectMapMasterPath(int profileId)
 {
     int inst = wxGetApp().GetInstanceNumber();
     return MyFrame::GetDarksDir() + PATHSEPSTR +
-        wxString::Format("PHD2_defect_map_master%s_%d.fit", inst > 1 ? wxString::Format("_%d", inst) : "", profileId);
+        wxString::Format("LGuider2_defect_map_master%s_%d.fit", inst > 1 ? wxString::Format("_%d", inst) : "", profileId);
 }
 static wxString DefectMapMasterPath()
 {
@@ -811,7 +811,7 @@ static wxString DefectMapFilterPath(int profileId)
 {
     int inst = wxGetApp().GetInstanceNumber();
     return MyFrame::GetDarksDir() + PATHSEPSTR +
-        wxString::Format("PHD2_defect_map_master_filt%s_%d.fit", inst > 1 ? wxString::Format("_%d", inst) : "", profileId);
+        wxString::Format("LGuider2_defect_map_master_filt%s_%d.fit", inst > 1 ? wxString::Format("_%d", inst) : "", profileId);
 }
 
 static wxString DefectMapFilterPath()
@@ -1082,7 +1082,7 @@ wxString DefectMap::DefectMapFileName(int profileId)
 {
     int inst = wxGetApp().GetInstanceNumber();
     return MyFrame::GetDarksDir() + PATHSEPSTR +
-        wxString::Format("PHD2_defect_map%s_%d.txt", inst > 1 ? wxString::Format("_%d", inst) : "", profileId);
+        wxString::Format("LGuider2_defect_map%s_%d.txt", inst > 1 ? wxString::Format("_%d", inst) : "", profileId);
 }
 
 bool DefectMap::ImportFromProfile(int srcId, int destId)
@@ -1136,7 +1136,7 @@ bool DefectMap::DefectMapExists(int profileId, bool showAlert)
             fitsfile *fptr;
             int status = 0;  // CFITSIO status value MUST be initialized to zero!
 
-            if (PHD_fits_open_diskfile(&fptr, fName, READONLY, &status) == 0)
+            if (LGuider_fits_open_diskfile(&fptr, fName, READONLY, &status) == 0)
             {
                 long fsize[2];
                 fits_get_img_size(fptr, 2, fsize, &status);
@@ -1150,7 +1150,7 @@ bool DefectMap::DefectMapExists(int profileId, bool showAlert)
                         pFrame->Alert(_("Bad-pixel map does not match the camera in this profile - it needs to be replaced."));
                 }
 
-                PHD_fits_close_file(fptr);
+                LGuider_fits_close_file(fptr);
             }
             else
                 Debug.AddLine(wxString::Format("BPM check: fitsio error on open_diskfile = %d", status));
@@ -1172,7 +1172,7 @@ void DefectMap::Save(const wxArrayString& info) const
         return;
     }
 
-    outText << "# PHD2 Defect Map v1\n";
+    outText << "# LGuider2 Defect Map v1\n";
 
     for (wxArrayString::const_iterator it = info.begin(); it != info.end(); ++it)
     {

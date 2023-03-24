@@ -1,6 +1,6 @@
 /*
  *  myframe.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -536,7 +536,7 @@ void MyFrame::SetupMenuBar()
     tools_menu->Append(MENU_POLARDRIFTTOOL, _("&Polar Drift Align"), _("Align by analysing star drift near the celestial pole (Simple)"));
     tools_menu->Append(MENU_STATICPATOOL, _("&Static Polar Align"), _("Align by measuring the RA axis offset from the celestial pole (Fast)"));
     tools_menu->AppendSeparator();
-    tools_menu->AppendCheckItem(MENU_SERVER,_("Enable Server"),_("Enable PHD2 server capability"));
+    tools_menu->AppendCheckItem(MENU_SERVER,_("Enable Server"),_("Enable LGuider2 server capability"));
     tools_menu->AppendCheckItem(EEGG_STICKY_LOCK,_("Sticky Lock Position"),_("Keep the same lock position when guiding starts"));
 
     view_menu = new wxMenu();
@@ -584,8 +584,8 @@ void MyFrame::SetupMenuBar()
 
     wxMenu *help_menu = new wxMenu;
     help_menu->Append(wxID_ABOUT, _("&About..."), wxString::Format(_("About %s"), APPNAME));
-    m_upgradeMenuItem = help_menu->Append(MENU_HELP_UPGRADE, _("&Check for updates"), _("Check for PHD2 software updates"));
-    help_menu->Append(MENU_HELP_ONLINE,_("Online Support"),_("Ask for help in the PHD2 Forum"));
+    m_upgradeMenuItem = help_menu->Append(MENU_HELP_UPGRADE, _("&Check for updates"), _("Check for LGuider2 software updates"));
+    help_menu->Append(MENU_HELP_ONLINE,_("Online Support"),_("Ask for help in the LGuider2 Forum"));
     help_menu->Append(MENU_HELP_LOG_FOLDER, _("Open Log Folder"), _("Open the log folder"));
     help_menu->Append(MENU_HELP_UPLOAD_LOGS, _("Upload Log Files..."), _("Upload log files for review"));
     help_menu->Append(wxID_HELP_CONTENTS,_("&Contents...\tF1"),_("Full help"));
@@ -1017,7 +1017,7 @@ void MyFrame::SetupToolBar()
 
     //MainToolbar->AddTool(BUTTON_MULTISTARS, multi_stars_bmp,auto_select_disabled_bmp, true, 0, _("Multi Stars Guiding Mode"));
 
-    MainToolbar->AddTool(BUTTON_GUIDE, guide_bmp, guide_bmp_disabled, false, 0, _("Begin guiding (PHD). Shift-click to force calibration."));
+    MainToolbar->AddTool(BUTTON_GUIDE, guide_bmp, guide_bmp_disabled, false, 0, _("Begin guiding (LGuider). Shift-click to force calibration."));
     MainToolbar->AddTool(BUTTON_STOP, stop_bmp, stop_bmp_disabled, false, 0, _("Stop looping and guiding"));
     MainToolbar->AddSeparator();
     MainToolbar->AddControl(Dur_Choice, _("Exposure duration"));
@@ -1032,12 +1032,12 @@ void MyFrame::SetupToolBar()
     MainToolbar->EnableTool(BUTTON_STOP, false);
     MainToolbar->Realize();
 
-    MainToolbar->SetArtProvider(new PHDToolBarArt);             // Get the custom background we want
+    MainToolbar->SetArtProvider(new LGuiderToolBarArt);             // Get the custom background we want
 }
 
 void MyFrame::SetupStatusBar()
 {
-    m_statusbar = PHDStatusBar::CreateInstance(this, wxSTB_DEFAULT_STYLE);
+    m_statusbar = LGuiderStatusBar::CreateInstance(this, wxSTB_DEFAULT_STYLE);
     SetStatusBar(m_statusbar);
     PositionStatusBar();
     UpdateStatusBarCalibrationStatus();
@@ -1060,9 +1060,9 @@ void MyFrame::SetupKeyboardShortcuts()
     SetAcceleratorTable(accel);
 }
 
-struct PHDHelpController : public wxHtmlHelpController
+struct LGuiderHelpController : public wxHtmlHelpController
 {
-    PHDHelpController()
+    LGuiderHelpController()
     {
         UseConfig(pConfig->Global.GetWxConfig(), "/help");
     }
@@ -1077,19 +1077,19 @@ void MyFrame::SetupHelpFile()
     // first try to find locale-specific help file
     wxString filename = wxGetApp().GetLocalesDir() + wxFILE_SEP_PATH
         + wxLocale::GetLanguageCanonicalName(langid) + wxFILE_SEP_PATH
-        + _T("PHD2GuideHelp.zip");
+        + _T("LGuider2GuideHelp.zip");
 
     Debug.Write(wxString::Format("SetupHelpFile: langid=%d, locale-specific help = %s\n", langid, filename));
 
     if (!wxFileExists(filename))
     {
-        filename = wxGetApp().GetPHDResourcesDir() + wxFILE_SEP_PATH
-            + _T("PHD2GuideHelp.zip");
+        filename = wxGetApp().GetLGuiderResourcesDir() + wxFILE_SEP_PATH
+            + _T("LGuider2GuideHelp.zip");
 
         Debug.Write(wxString::Format("SetupHelpFile: using default help %s\n", filename));
     }
 
-    help = new PHDHelpController();
+    help = new LGuiderHelpController();
 
     if (!help->AddBook(filename))
     {
@@ -1426,7 +1426,7 @@ static void StartStatusBarTimer(wxTimer& timer)
     timer.Start(DISPLAY_MS, wxTIMER_ONE_SHOT);
 }
 
-static void SetStatusMsg(PHDStatusBar *statusbar, const wxString& text)
+static void SetStatusMsg(LGuiderStatusBar *statusbar, const wxString& text)
 {
     Debug.Write(wxString::Format("Status Line: %s\n", text));
     statusbar->StatusMsg(text);
@@ -1558,7 +1558,7 @@ void MyFrame::ClearStatusBarGuiderInfo()
 
 void MyFrame::OnUpgrade(wxCommandEvent& evt)
 {
-    PHD2Updater::CheckNow();
+    LGuider2Updater::CheckNow();
 }
 
 void MyFrame::NotifyUpdaterStateChanged()
@@ -1569,7 +1569,7 @@ void MyFrame::NotifyUpdaterStateChanged()
 
 void MyFrame::OnUpdaterStateChanged(wxThreadEvent& event)
 {
-    PHD2Updater::OnUpdaterStateChanged();
+    LGuider2Updater::OnUpdaterStateChanged();
 }
 
 bool MyFrame::StartWorkerThread(WorkerThread*& pWorkerThread)
@@ -2080,7 +2080,7 @@ bool MyFrame::Dither(double amount, bool raOnly)
 
         Debug.Write(wxString::Format("dither: size=%.2f, dRA=%.2f dDec=%.2f\n", amount, dRa, dDec));
 
-        bool err = pGuider->MoveLockPosition(PHD_Point(dRa, dDec));
+        bool err = pGuider->MoveLockPosition(LGuider_Point(dRa, dDec));
         if (err)
         {
             throw ERROR_INFO("move lock failed");
@@ -2154,7 +2154,7 @@ void MyFrame::OnClose(wxCloseEvent& event)
     // disconnect all gear
     pGearDialog->Shutdown(killed);
 
-    PHD2Updater::StopUpdater();
+    LGuider2Updater::StopUpdater();
 
     // stop the socket server and event server
     StartServer(false);
@@ -2336,7 +2336,7 @@ static bool save_multi_darks(const ExposureImgMap& darks, const wxString& fname,
         fitsfile *fptr;  // FITS file pointer
         int status = 0;  // CFITSIO status value MUST be initialized to zero!
 
-        PHD_fits_create_file(&fptr, fname, true, &status);
+        LGuider_fits_create_file(&fptr, fname, true, &status);
         if (status)
             throw ERROR_INFO("fits_create_file failed");
 
@@ -2370,7 +2370,7 @@ static bool save_multi_darks(const ExposureImgMap& darks, const wxString& fname,
             Debug.Write(wxString::Format("saving dark frame exposure = %d\n", img->ImgExpDur));
         }
 
-        PHD_fits_close_file(fptr);
+        LGuider_fits_close_file(fptr);
         bError = status ? true : false;
     }
     catch (const wxString& Msg)
@@ -2396,7 +2396,7 @@ static bool load_multi_darks(GuideCamera *camera, const wxString& fname)
             throw ERROR_INFO("File does not exist");
         }
 
-        if (PHD_fits_open_diskfile(&fptr, fname, READONLY, &status) == 0)
+        if (LGuider_fits_open_diskfile(&fptr, fname, READONLY, &status) == 0)
         {
             int nhdus = 0;
             fits_get_num_hdus(fptr, &nhdus, &status);
@@ -2488,7 +2488,7 @@ static bool load_multi_darks(GuideCamera *camera, const wxString& fname)
 
     if (fptr)
     {
-        PHD_fits_close_file(fptr);
+        LGuider_fits_close_file(fptr);
     }
 
     return bError;
@@ -2507,7 +2507,7 @@ wxString MyFrame::DarkLibFileName(int profileId)
 {
     int inst = wxGetApp().GetInstanceNumber();
     return MyFrame::GetDarksDir() + PATHSEPSTR +
-        wxString::Format("PHD2_dark_lib%s_%d.fit", inst > 1 ? wxString::Format("_%d", inst) : "", profileId);
+        wxString::Format("LGuider2_dark_lib%s_%d.fit", inst > 1 ? wxString::Format("_%d", inst) : "", profileId);
 }
 
 bool MyFrame::DarkLibExists(int profileId, bool showAlert)
@@ -2528,7 +2528,7 @@ bool MyFrame::DarkLibExists(int profileId, bool showAlert)
             fitsfile *fptr;
             int status = 0;  // CFITSIO status value MUST be initialized to zero!
 
-            if (PHD_fits_open_diskfile(&fptr, fileName, READONLY, &status) == 0)
+            if (LGuider_fits_open_diskfile(&fptr, fileName, READONLY, &status) == 0)
             {
                 long fsize[2];
                 fits_get_img_size(fptr, 2, fsize, &status);
@@ -2544,7 +2544,7 @@ bool MyFrame::DarkLibExists(int profileId, bool showAlert)
                         "connected to the camera you want to use for guiding."));
                 }
 
-                PHD_fits_close_file(fptr);
+                LGuider_fits_close_file(fptr);
             }
             else
                 Debug.Write(wxString::Format("DarkLib check: fitsio error on open_diskfile = %d\n", status));
@@ -2925,7 +2925,7 @@ static wxString TranslateStrToLang(const wxString& s, int langid)
         langid = wxLocale::GetSystemLanguage();
     if (langid == wxLANGUAGE_ENGLISH_US)
         return s;
-    for (const auto& tr : wxTranslations::Get()->GetAvailableTranslations(PHD_MESSAGES_CATALOG))
+    for (const auto& tr : wxTranslations::Get()->GetAvailableTranslations(LGuider_MESSAGES_CATALOG))
     {
         const wxLanguageInfo *info = wxLocale::FindLanguageInfo(tr);
         if (info && info->Language == langid)
@@ -2952,7 +2952,7 @@ class AvailableLanguages
     void Init()
     {
         wxArrayString availableTranslations =
-                wxTranslations::Get()->GetAvailableTranslations(PHD_MESSAGES_CATALOG);
+                wxTranslations::Get()->GetAvailableTranslations(LGuider_MESSAGES_CATALOG);
 
         availableTranslations.Sort();
 
@@ -3008,7 +3008,7 @@ MyFrameConfigDialogCtrlSet::MyFrameConfigDialogCtrlSet(MyFrame *pFrame, Advanced
 
     m_pFrame = pFrame;
     m_pResetConfiguration = new wxCheckBox(GetParentWindow(AD_cbResetConfig), wxID_ANY, _("Reset Configuration"));
-    AddCtrl(CtrlMap, AD_cbResetConfig, m_pResetConfiguration, _("Reset all configuration and program settings to fresh install status. This will require restarting PHD2"));
+    AddCtrl(CtrlMap, AD_cbResetConfig, m_pResetConfiguration, _("Reset all configuration and program settings to fresh install status. This will require restarting LGuider2"));
     m_pResetDontAskAgain = new wxCheckBox(GetParentWindow(AD_cbDontAsk), wxID_ANY, _("Reset \"Don't Show Again\" messages"));
     AddCtrl(CtrlMap, AD_cbDontAsk, m_pResetDontAskAgain, _("Restore any messages that were hidden when you checked \"Don't show this again\"."));
 
@@ -3029,7 +3029,7 @@ MyFrameConfigDialogCtrlSet::MyFrameConfigDialogCtrlSet(MyFrame *pFrame, Advanced
     m_pTimeLapse = pFrame->MakeSpinCtrl(parent, wxID_ANY, _T(" "), wxDefaultPosition,
         wxSize(width, -1), wxSP_ARROW_KEYS, 0, 10000, 0, _T("TimeLapse"));
     AddLabeledCtrl(CtrlMap, AD_szTimeLapse, _("Time Lapse (ms)"), m_pTimeLapse,
-        _("How long should PHD wait between guide frames? Default = 0ms, useful when using very short exposures (e.g., using a video camera) but wanting to send guide commands less frequently"));
+        _("How long should LGuider wait between guide frames? Default = 0ms, useful when using very short exposures (e.g., using a video camera) but wanting to send guide commands less frequently"));
 
     parent = GetParentWindow(AD_szFocalLength);
     // Put a validator on this field to be sure that only digits are entered - avoids problem where
@@ -3044,14 +3044,14 @@ MyFrameConfigDialogCtrlSet::MyFrameConfigDialogCtrlSet(MyFrame *pFrame, Advanced
     m_pLanguage = new wxChoice(parent, wxID_ANY, wxPoint(-1, -1),
         wxSize(width + 35, -1), PhdLanguages.Names());
     AddLabeledCtrl(CtrlMap, AD_szLanguage, _("Language"), m_pLanguage,
-        wxString::Format(_("%s Language. You'll have to restart PHD to take effect."), APPNAME));
+        wxString::Format(_("%s Language. You'll have to restart LGuider to take effect."), APPNAME));
 
     // Software Update
     {
         parent = GetParentWindow(AD_szSoftwareUpdate);
         wxStaticBoxSizer *sz = new wxStaticBoxSizer(wxHORIZONTAL, parent, _("Software Update"));
         m_updateEnabled = new wxCheckBox(parent, wxID_ANY, _("Automatically check for updates"));
-        m_updateEnabled->SetToolTip(_("Check for software updates when PHD2 starts (recommended)"));
+        m_updateEnabled->SetToolTip(_("Check for software updates when LGuider2 starts (recommended)"));
         sz->Add(m_updateEnabled, wxSizerFlags().Align(wxALIGN_CENTER_VERTICAL).Border(wxALL, 8));
         m_updateMajorOnly = new wxCheckBox(parent, wxID_ANY, _("Only check for major releases"));
         m_updateMajorOnly->SetToolTip(_("Ignore minor (development) releases when checking for updates"));
@@ -3271,7 +3271,7 @@ void MyFrameConfigDialogCtrlSet::LoadValues()
     m_LogNextNFramesCount->SetValue(imlSettings.logNextNFramesCount);
 
     UpdaterSettings updSettings;
-    PHD2Updater::GetSettings(&updSettings);
+    LGuider2Updater::GetSettings(&updSettings);
 
     m_updateEnabled->SetValue(updSettings.enabled);
     m_updateMajorOnly->SetValue(updSettings.series == UPD_SERIES_MAIN);
@@ -3286,7 +3286,7 @@ void MyFrameConfigDialogCtrlSet::UnloadValues()
     {
         if (m_pResetConfiguration->GetValue())
         {
-            int choice = wxMessageBox(_("This will reset all PHD2 configuration values and restart the program.  Are you sure?"), _("Confirmation"), wxYES_NO);
+            int choice = wxMessageBox(_("This will reset all LGuider2 configuration values and restart the program.  Are you sure?"), _("Confirmation"), wxYES_NO);
 
             if (choice == wxYES)
             {
@@ -3317,9 +3317,9 @@ void MyFrameConfigDialogCtrlSet::UnloadValues()
         pConfig->Global.SetInt("/wxLanguage", langid);
         if (m_oldLanguageChoice != idx)
         {
-            wxString title = TranslateStrToLang(wxTRANSLATE("Restart PHD2"), langid);
-            wxString msg = TranslateStrToLang(wxTRANSLATE("You must restart PHD2 for the language change to take effect.\n"
-                "Would you like to restart PHD2 now?"), langid);
+            wxString title = TranslateStrToLang(wxTRANSLATE("Restart LGuider2"), langid);
+            wxString msg = TranslateStrToLang(wxTRANSLATE("You must restart LGuider2 for the language change to take effect.\n"
+                "Would you like to restart LGuider2 now?"), langid);
             int val = wxMessageBox(msg, title, wxYES_NO | wxCENTRE);
             if (val == wxYES)
                 wxGetApp().RestartApp();
@@ -3366,7 +3366,7 @@ void MyFrameConfigDialogCtrlSet::UnloadValues()
         UpdaterSettings updSettings;
         updSettings.enabled = m_updateEnabled->GetValue();
         updSettings.series = m_updateMajorOnly->GetValue() ? UPD_SERIES_MAIN : UPD_SERIES_DEV;
-        PHD2Updater::SetSettings(updSettings);
+        LGuider2Updater::SetSettings(updSettings);
     }
     catch (const wxString& Msg)
     {

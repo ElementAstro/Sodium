@@ -1,5 +1,5 @@
 /**
- * PHD2 Guiding
+ * LGuider2 Guiding
  *
  * @file
  * @date      2014-2017

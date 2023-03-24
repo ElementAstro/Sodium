@@ -1,6 +1,6 @@
 /*
  *  polardrift_toolwin.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Ken Self
  *  Copyright (c) 2017 Ken Self
@@ -83,7 +83,7 @@ struct PolarDriftToolWin : public wxFrame
     double m_sumt, m_sumt2, m_sumx, m_sumx2, m_sumy, m_sumy2, m_sumtx, m_sumty, m_sumxy;
     long m_num;
     double m_offset, m_alpha;
-    PHD_Point m_current, m_target;
+    LGuider_Point m_current, m_target;
 
     void FillPanel();
 

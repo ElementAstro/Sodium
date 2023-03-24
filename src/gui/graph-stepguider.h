@@ -1,6 +1,6 @@
 /*
  *  graph-stepguider.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2013 Bret McKee
@@ -49,8 +49,8 @@ public:
     void OnButtonClear(wxCommandEvent& evt);
 
     void SetLimits(unsigned int xMax, unsigned int yMax, unsigned int xBump, unsigned int yBump);
-    void AppendData(const wxPoint& pos, const PHD_Point& avgPos);
-    void ShowBump(const PHD_Point& curBump);
+    void AppendData(const wxPoint& pos, const LGuider_Point& avgPos);
+    void ShowBump(const LGuider_Point& curBump);
 
     bool SetState(bool is_active);
 

@@ -1,5 +1,5 @@
 /*  profile_wizard.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bruce Waddington in collaboration with Andy Galasso
  *  Copyright (c) 2014 Bruce Waddington
@@ -383,35 +383,35 @@ void ProfileWizard::ShowHelp(DialogState state)
     {
     case STATE_GREETINGS:
         hText = _("This short sequence of steps will help you identify the equipment you want to use for guiding and will associate it with a profile name of your choice. "
-            "This profile will then be available any time you run PHD2.  At a minimum, you will need to choose both the guide camera and the mount interface that PHD2 will use for guiding.  "
+            "This profile will then be available any time you run LGuider2.  At a minimum, you will need to choose both the guide camera and the mount interface that LGuider2 will use for guiding.  "
             "You will also enter some information about the optical characteristics of your setup. "
-            "PHD2 will use this to create a good 'starter set' of guiding and calibration "
+            "LGuider2 will use this to create a good 'starter set' of guiding and calibration "
             "parameters. If you are a new user, please review the 'Basic Use' section of the 'Help' guide after the wizard dialog has finished.");
         break;
     case STATE_CAMERA:
-        hText = _("Select your guide camera from the list.  All cameras supported by PHD2 and all installed ASCOM cameras are shown. If your camera is not shown, "
-            "it is either not supported by PHD2 or its camera driver is not installed. "
-            " PHD2 needs to know the camera pixel size and guide scope focal length in order to compute reasonable guiding parameters. "
+        hText = _("Select your guide camera from the list.  All cameras supported by LGuider2 and all installed ASCOM cameras are shown. If your camera is not shown, "
+            "it is either not supported by LGuider2 or its camera driver is not installed. "
+            " LGuider2 needs to know the camera pixel size and guide scope focal length in order to compute reasonable guiding parameters. "
             " When you choose a camera, you'll be given the option to connect to it immediately to get the pixel-size automatically. "
             " You can also choose a binning-level if your camera supports binning." );
         break;
     case STATE_MOUNT:
-        hText = wxString::Format(_("Select your mount interface from the list.  This determines how PHD2 will send guide commands to the mount. For most modern "
+        hText = wxString::Format(_("Select your mount interface from the list.  This determines how LGuider2 will send guide commands to the mount. For most modern "
             "mounts, the ASCOM interface is a good choice if you are running MS Windows.  The other interfaces are available for "
             "cases where ASCOM isn't available or isn't well supported by mount firmware.  If you know the mount guide speed, you can specify it "
-            " so PHD2 can calibrate more efficiently.  If you don't know the mount guide speed, you can just use the default value of %0.1fx.  When you choose a "
-            " mount, you'll usually be given the option to connect to it immediately so PHD2 can read the guide speed for you."), Scope::DEFAULT_MOUNT_GUIDE_SPEED );
+            " so LGuider2 can calibrate more efficiently.  If you don't know the mount guide speed, you can just use the default value of %0.1fx.  When you choose a "
+            " mount, you'll usually be given the option to connect to it immediately so LGuider2 can read the guide speed for you."), Scope::DEFAULT_MOUNT_GUIDE_SPEED );
         break;
     case STATE_AUXMOUNT:
         if (m_SelectedCamera == _("Simulator"))
         {
-            hText = _("The 'simulator' camera/mount interface doesn't provide pointing information, so PHD2 will not be able to automatically adjust "
+            hText = _("The 'simulator' camera/mount interface doesn't provide pointing information, so LGuider2 will not be able to automatically adjust "
                 "guiding for side-of-pier and declination. You can enable these features by choosing an 'Aux Mount' connection that does provide pointing "
                 "information.");
         }
         else
         {
-            hText = _("The mount interface you chose in the previous step doesn't provide pointing information, so PHD2 will not be able to automatically adjust "
+            hText = _("The mount interface you chose in the previous step doesn't provide pointing information, so LGuider2 will not be able to automatically adjust "
                 "guiding for side-of-pier and declination. You can enable these features by choosing an 'Aux Mount' connection that does provide pointing "
                 "information.  The Aux Mount interface will be used only for that purpose and not for sending guide commands.");
         }
@@ -421,13 +421,13 @@ void ProfileWizard::ShowHelp(DialogState state)
             "while the mount interface you chose earlier will be used for larger ('bump') corrections. Calibration of both interfaces will be handled automatically.");
         break;
     case STATE_ROTATOR:
-        hText = _("If you have an ASCOM or INDI-compatible rotator device, you can select it here.  This will allow PHD2 to automatically adjust calibration when the rotator "
-                  "is moved. Otherwise, any change in rotator position will require a re-calibration in PHD2");
+        hText = _("If you have an ASCOM or INDI-compatible rotator device, you can select it here.  This will allow LGuider2 to automatically adjust calibration when the rotator "
+                  "is moved. Otherwise, any change in rotator position will require a re-calibration in LGuider2");
         break;
     case STATE_WRAPUP:
         hText = _("Your profile is complete and ready to save.  Give it a name and, optionally, build a dark-frame library for it. This is strongly "
             "recommended for best results. If your setup is stable from one night to the next, you can choose to automatically "
-            "re-use the last calibration when you load this profile. If you are new to PHD2 or encounter problems, please use the 'Help' function for assistance.");
+            "re-use the last calibration when you load this profile. If you are new to LGuider2 or encounter problems, please use the 'Help' function for assistance.");
     case STATE_DONE:
         break;
     }
@@ -478,15 +478,15 @@ ConfigSuggestionDlg::ConfigSuggestionDlg(ConfigWarningTypes Type, wxHyperlinkCtr
     wxStaticText* wikiLoc;
     wxString msg;
     if (Type == eNoPointingInfo)
-        msg = _("This configuration doesn't provide PHD2 with any information about the scope's pointing position.  This means you will need to recalibrate\n"
-        "whenever the scope is slewed, and some PHD2 features will be disabled.  You should choose an ASCOM or INDI mount connection\n"
+        msg = _("This configuration doesn't provide LGuider2 with any information about the scope's pointing position.  This means you will need to recalibrate\n"
+        "whenever the scope is slewed, and some LGuider2 features will be disabled.  You should choose an ASCOM or INDI mount connection\n"
         "for either 'mount' or 'aux-mount' unless there are no drivers available for your mount.\n"
         "Please review the Help guide on 'Equipment Connections' for more details.");
     else if (Type == eEQModMount)
     {
-        msg = wxString::Format(_("Please make sure the EQMOD ASCOM settings are configured for PHD2 according to this document: \n"), "");
-        wikiLoc = new wxStaticText (this, wxID_ANY, "https://github.com/OpenPHDGuiding/phd2/wiki/EQASCOM-Settings");
-        m_EqLink = new wxHyperlinkCtrl(this, wxID_ANY, _("Open EQMOD document..."), "https://github.com/OpenPHDGuiding/phd2/wiki/EQASCOM-Settings");
+        msg = wxString::Format(_("Please make sure the EQMOD ASCOM settings are configured for LGuider2 according to this document: \n"), "");
+        wikiLoc = new wxStaticText (this, wxID_ANY, "https://github.com/OpenLGuiderGuiding/phd2/wiki/EQASCOM-Settings");
+        m_EqLink = new wxHyperlinkCtrl(this, wxID_ANY, _("Open EQMOD document..."), "https://github.com/OpenLGuiderGuiding/phd2/wiki/EQASCOM-Settings");
         m_EqLink->Connect(wxEVT_COMMAND_HYPERLINK, wxHyperlinkEventHandler(ConfigSuggestionDlg::OnURLClicked), nullptr, this);
     }
 
@@ -674,7 +674,7 @@ void ProfileWizard::UpdateState(const int change)
             m_pUserProperties->Show(false);
             m_pMountProperties->Show(false);
             m_pWrapUp->Show(false);
-            m_pInstructions->SetLabel(_("Welcome to the PHD2 'first light' wizard"));
+            m_pInstructions->SetLabel(_("Welcome to the LGuider2 'first light' wizard"));
             m_pHelpText->SetSizeHints(wxSize(-1, TallHelpHeight));
             SetSizerAndFit(m_pvSizer);
             break;
@@ -834,7 +834,7 @@ struct AutoConnectCamera
 
         if (!m_camera || !m_camera->Connected)
         {
-            wxMessageBox(_("PHD2 could not connect to the camera so you may want to deal with that later. "
+            wxMessageBox(_("LGuider2 could not connect to the camera so you may want to deal with that later. "
                 "In the meantime, you can just enter the pixel-size manually along with the "
                 "focal length and binning levels."));
 
@@ -1134,7 +1134,7 @@ void ProfileWizard::InitMountProps(Scope* theScope)
         if (err)
         {
             wxMessageBox(
-                wxString::Format(_("PHD2 could not connect to the mount, so you'll probably want to deal with that later.  "
+                wxString::Format(_("LGuider2 could not connect to the mount, so you'll probably want to deal with that later.  "
                 "In the meantime, if you know the mount guide speed setting, you can enter it manually. "
                 " Otherwise, you can just leave it at the default value of %0.1fx"), Scope::DEFAULT_MOUNT_GUIDE_SPEED));
             speedVal = Scope::DEFAULT_MOUNT_GUIDE_SPEED;
@@ -1280,21 +1280,21 @@ wxDialog(parent, wxID_ANY, _("Ask About Connection"), wxDefaultPosition, wxDefau
     {
     case ProfileWizard::STATE_CAMERA:
         m_Instructions->SetLabelText(
-            _("Is the camera already connected to the PC?   If so, PHD2 can usually determine the camera pixel-size automatically. "
+            _("Is the camera already connected to the PC?   If so, LGuider2 can usually determine the camera pixel-size automatically. "
             " If the camera isn't connected or its driver doesn't report the pixel-size, you can enter the value yourself using information in the camera manual or online. ")
             );
         this->SetTitle(_("Camera Already Connected?"));
         break;
     case ProfileWizard::STATE_MOUNT:
         m_Instructions->SetLabelText(
-            wxString::Format(_("Is the mount already connected and set up to communicate with PHD2?  If so, PHD2 can determine the mount guide speed automatically. "
+            wxString::Format(_("Is the mount already connected and set up to communicate with LGuider2?  If so, LGuider2 can determine the mount guide speed automatically. "
             " If not, you can enter the guide-speed manually.  If you don't know what it is, just leave the setting at the default value of %0.1fx."), Scope::DEFAULT_MOUNT_GUIDE_SPEED)
             );
         this->SetTitle(_("Mount Already Connected?"));
         break;
     case ProfileWizard::STATE_AUXMOUNT:
         m_Instructions->SetLabelText(
-            wxString::Format(_("Is the aux-mount already connected and set up to communicate with PHD2?  If so, PHD2 can determine the mount guide speed automatically. "
+            wxString::Format(_("Is the aux-mount already connected and set up to communicate with LGuider2?  If so, LGuider2 can determine the mount guide speed automatically. "
             " If not, you can enter it manually.  If you don't know what it is, just leave the setting at the default value of %0.1fx. "
             " If the guide speed on the previous page doesn't match what is read from the mount, the mount value will be used."), Scope::DEFAULT_MOUNT_GUIDE_SPEED)
             );

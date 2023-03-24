@@ -1,6 +1,6 @@
 /*
 *  guide_algorithm_lowpass.cpp
-*  PHD Guiding
+*  LGuider Guiding
 *
 *  Created by Bret McKee
 *  Copyright (c) 2012 Bret McKee

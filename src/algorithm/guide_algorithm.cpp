@@ -1,6 +1,6 @@
 /*
  *  guide_algorithm.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2013-2016 Andy Galasso

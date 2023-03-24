@@ -1,6 +1,6 @@
 /*
  *  star.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Refactored by Bret McKee
@@ -61,7 +61,7 @@ void Star::Invalidate()
     SNR = 0.0;
     HFD = 0.0;
     m_lastFindResult = STAR_ERROR;
-    PHD_Point::Invalidate();
+    LGuider_Point::Invalidate();
 }
 
 void Star::SetError(FindResult error)
@@ -772,7 +772,7 @@ bool GuideStar::AutoFind(const usImage& image, int extraEdgeAllowance, int searc
     int dh = conv.Size.GetHeight();     // height of the downsampled image
     wxRect convRect(CONV_RADIUS, CONV_RADIUS, dw - 2 * CONV_RADIUS, dh - 2 * CONV_RADIUS);  // region containing valid data
 
-    SaveImage(conv, "PHD2_AutoFind.fit");
+    SaveImage(conv, "LGuider2_AutoFind.fit");
 
     enum { TOP_N = 100 };  // keep track of the brightest stars
     std::set<Peak> stars;  // sorted by ascending intensity

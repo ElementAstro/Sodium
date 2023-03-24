@@ -1,6 +1,6 @@
 /*
  *  stepguider_sbigao_indi.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Hans Lambermont
  *  Copyright (c) 2016 Hans Lambermont

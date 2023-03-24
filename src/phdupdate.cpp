@@ -1,6 +1,6 @@
 /*
  *  phdupdate.cpp
- *  Open PHD Guiding
+ *  Open LGuider Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2017-2018 Andy Galasso.
@@ -122,7 +122,7 @@ public:
     void OnCancel() override;
 };
 
-// PHD2 version numbers and ordering
+// LGuider2 version numbers and ordering
 //
 // Major releases: a.b.c
 // Dev releases: a.b.{c}dev{d}
@@ -680,12 +680,12 @@ struct Updater
         if (mode == UpdaterDialog::MODE_NOTIFY)
         {
             msg = wxString::Format(
-                _("PHD2 version %s is available at %s"), newver, GetDownloadPageURL());
+                _("LGuider2 version %s is available at %s"), newver, GetDownloadPageURL());
         }
         else
         {
             msg = wxString::Format(
-                _("PHD2 version %s is ready to install. Update and restart PHD2 now?"), newver);
+                _("LGuider2 version %s is ready to install. Update and restart LGuider2 now?"), newver);
         }
 
         UpdaterDialog *dlg = new UpdaterDialog(this, mode, interactive, msg, changelog);
@@ -718,14 +718,14 @@ struct Updater
             ShowUpdate(UpdaterDialog::MODE_INSTALL, UpdaterDialog::NONINTERACTIVE);
         else if (m_status == UPD_UP_TO_DATE)
         {
-            // this is annoying   pFrame->StatusMsg(_("PHD2 is up to date"));
+            // this is annoying   pFrame->StatusMsg(_("LGuider2 is up to date"));
         }
     }
 
     void HandleStateInteractive()
     {
         if (m_status == UPD_DOWNLOADING_INSTALLER)
-            m_updatenow->SetMessage(wxString::Format(_("Downloading PHD2 version %s"), newver));
+            m_updatenow->SetMessage(wxString::Format(_("Downloading LGuider2 version %s"), newver));
     }
 };
 
@@ -745,7 +745,7 @@ wxThread::ExitCode UpdaterThread::Entry()
 
 UpdateNow::UpdateNow(Updater *upd)
     :
-    RunInBg(pFrame, _("PHD2 Update"), _("Checking for updates")),
+    RunInBg(pFrame, _("LGuider2 Update"), _("Checking for updates")),
     m_upd(upd)
 {
     m_upd->m_updatenow = this;
@@ -772,7 +772,7 @@ void UpdateNow::OnCancel()
 
 UpdaterDialog::UpdaterDialog(Updater *updater, Mode mode, Interactive interactive, const wxString& text, const wxString& changelog)
     :
-    wxDialog(pFrame, wxID_ANY, _("PHD2 Update Available"), wxDefaultPosition, wxDefaultSize,
+    wxDialog(pFrame, wxID_ANY, _("LGuider2 Update Available"), wxDefaultPosition, wxDefaultSize,
              wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
     m_updater(updater),
     m_mode(mode),
@@ -907,7 +907,7 @@ void UpdaterDialog::OnTimer(wxTimerEvent&)
 
 static Updater *updater;
 
-void PHD2Updater::InitUpdater()
+void LGuider2Updater::InitUpdater()
 {
     updater = new Updater();
 
@@ -922,19 +922,19 @@ void PHD2Updater::InitUpdater()
     }
 }
 
-void PHD2Updater::GetSettings(UpdaterSettings *settings)
+void LGuider2Updater::GetSettings(UpdaterSettings *settings)
 {
     *settings = updater->m_settings;
 }
 
-void PHD2Updater::SetSettings(const UpdaterSettings& settings)
+void LGuider2Updater::SetSettings(const UpdaterSettings& settings)
 {
     updater->m_settings = settings;
     updater->SaveSettings();
     // todo: should we cancel an ongoing download if new setting == disabled?
 }
 
-void PHD2Updater::CheckNow()
+void LGuider2Updater::CheckNow()
 {
     if (!updater->CanCheckNow())
         return;
@@ -944,7 +944,7 @@ void PHD2Updater::CheckNow()
     UpdateNow(updater).Run();
 
     if (updater->m_status == UPD_UP_TO_DATE)
-        wxMessageBox(_("PHD2 is up to date"), _("Software Update"), wxOK);
+        wxMessageBox(_("LGuider2 is up to date"), _("Software Update"), wxOK);
     else if (updater->m_status == UPD_READY_FOR_INSTALL || updater->m_status == UPD_DOWNLOAD_DONE)
         updater->ShowUpdate(UpdaterDialog::MODE_INSTALL, UpdaterDialog::INTERACTIVE);
     else if (updater->m_status == UPD_UPDATE_NEEDED)
@@ -955,7 +955,7 @@ void PHD2Updater::CheckNow()
     pFrame->m_upgradeMenuItem->Enable(true);
 }
 
-void PHD2Updater::StopUpdater()
+void LGuider2Updater::StopUpdater()
 {
     if (!updater)
         return;
@@ -966,7 +966,7 @@ void PHD2Updater::StopUpdater()
     updater = nullptr;
 }
 
-void PHD2Updater::OnUpdaterStateChanged()
+void LGuider2Updater::OnUpdaterStateChanged()
 {
     if (!updater)
         return;

@@ -1,6 +1,6 @@
 /*
 *  guiding_assistant.h
-*  PHD Guiding
+*  LGuider Guiding
 *
 *  Created by Andy Galasso
 *  Copyright (c) 2015 Andy Galasso
@@ -42,7 +42,7 @@ public:
     static wxWindow *CreateDialogBox();
     static void NotifyGuideStep(const GuideStepInfo& info);
     static void NotifyFrameDropped(const FrameDroppedInfo& info);
-    static void NotifyBacklashStep(const PHD_Point& camLoc);
+    static void NotifyBacklashStep(const LGuider_Point& camLoc);
     static void NotifyBacklashError();
     static void UpdateUIControls();
 };

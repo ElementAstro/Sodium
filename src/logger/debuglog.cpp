@@ -1,6 +1,6 @@
 /*
  *  debuglog.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee
@@ -71,8 +71,8 @@ wxDateTime DebugLog::GetLogFileTime()
     // find the latest log file time
     wxDir dir(Debug.GetLogDir());
     wxString filename;
-    // PHD2_DebugLog_YYYY-mm-dd_HHMMSS.txt
-    bool cont = dir.GetFirst(&filename, "PHD2_DebugLog_*.txt", wxDIR_FILES);
+    // LGuider2_DebugLog_YYYY-mm-dd_HHMMSS.txt
+    bool cont = dir.GetFirst(&filename, "LGuider2_DebugLog_*.txt", wxDIR_FILES);
     wxDateTime latest;
     while (cont)
     {
@@ -118,7 +118,7 @@ void DebugLog::InitDebugLog(bool enable, bool forceOpen)
 
     if (enable && (m_path.IsEmpty() || forceOpen))
     {
-        m_path = GetLogDir() + PATHSEPSTR + logFileTime.Format(_T("PHD2_DebugLog_%Y-%m-%d_%H%M%S.txt"));
+        m_path = GetLogDir() + PATHSEPSTR + logFileTime.Format(_T("LGuider2_DebugLog_%Y-%m-%d_%H%M%S.txt"));
 
         if (!wxFFile::Open(m_path, "a"))
         {
@@ -149,7 +149,7 @@ bool DebugLog::ChangeDirLog(const wxString& newdir)
 
 void DebugLog::RemoveOldFiles()
 {
-    Logger::RemoveMatchingFiles("PHD2_DebugLog*.txt", RetentionPeriod);
+    Logger::RemoveMatchingFiles("LGuider2_DebugLog*.txt", RetentionPeriod);
 }
 
 wxString DebugLog::AddLine(const wxString& str)

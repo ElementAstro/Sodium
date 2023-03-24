@@ -1,6 +1,6 @@
 /*
  *  myframe.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -41,7 +41,7 @@ class WorkerThread;
 class MyFrame;
 class RefineDefMap;
 struct alert_params;
-class PHDStatusBar;
+class LGuiderStatusBar;
 
 enum E_MYFRAME_WORKER_THREAD_MESSAGES
 {
@@ -200,7 +200,7 @@ private:
     bool m_autoLoadCalibration;
 
     wxAuiManager m_mgr;
-    PHDStatusBar *m_statusbar;
+    LGuiderStatusBar *m_statusbar;
 
     bool m_continueCapturing; // should another image be captured?
     SingleExposure m_singleExposure;

@@ -1,6 +1,6 @@
 /*
  *  cam_qhy.h
- *  Open PHD Guiding
+ *  Open LGuider Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2015 Andy Galasso.

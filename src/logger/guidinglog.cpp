@@ -1,6 +1,6 @@
 /*
  *  guidinglog.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012-2013 Bret McKee
@@ -261,7 +261,7 @@ void GuidingLog::EnableLogging()
         const wxDateTime& logFileTime = wxGetApp().GetLogFileTime();
         if (!m_file.IsOpened())
         {
-            m_fileName = GetLogDir() + PATHSEPSTR + logFileTime.Format(_T("PHD2_GuideLog_%Y-%m-%d_%H%M%S.txt"));
+            m_fileName = GetLogDir() + PATHSEPSTR + logFileTime.Format(_T("LGuider2_GuideLog_%Y-%m-%d_%H%M%S.txt"));
 
             if (!m_file.Open(m_fileName, "a+"))
             {
@@ -282,7 +282,7 @@ void GuidingLog::EnableLogging()
 
         assert(m_file.IsOpened());
 
-        m_file.Write(_T("PHD2 version ") FULLVER _T(" [") PHD_OSNAME _T("]") _T(", Log version ") GUIDELOG_VERSION _T(". Log enabled at ") +
+        m_file.Write(_T("LGuider2 version ") FULLVER _T(" [") LGuider_OSNAME _T("]") _T(", Log version ") GUIDELOG_VERSION _T(". Log enabled at ") +
             logFileTime.Format(_T("%Y-%m-%d %H:%M:%S")) + "\n");
 
         m_enabled = true;
@@ -353,7 +353,7 @@ bool GuidingLog::ChangeDirLog(const wxString& newdir)
 
 void GuidingLog::RemoveOldFiles()
 {
-    Logger::RemoveMatchingFiles("PHD2_GuideLog*.txt", RetentionPeriod);
+    Logger::RemoveMatchingFiles("LGuider2_GuideLog*.txt", RetentionPeriod);
 }
 
 bool GuidingLog::Flush()
@@ -662,7 +662,7 @@ void GuidingLog::NotifySetLockPosition(Guider *guider)
     m_keepFile = true;
 }
 
-void GuidingLog::NotifyLockShiftParams(const LockPosShiftParams& shiftParams, const PHD_Point& cameraRate)
+void GuidingLog::NotifyLockShiftParams(const LockPosShiftParams& shiftParams, const LGuider_Point& cameraRate)
 {
     if (!m_enabled || !m_isGuiding)
         return;

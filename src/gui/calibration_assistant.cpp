@@ -1,6 +1,6 @@
 /*
 *  calibration_assistant.cpp
-*  PHD Guiding
+*  LGuider Guiding
 *
 *  Created by Bruce Waddington
 *  Copyright (c) 2023 Bruce Waddington
@@ -238,7 +238,7 @@ CalibrationAssistant::CalibrationAssistant()
     m_pSlewBtn->SetToolTip(_("Start a slew to the calibration location. BE SURE the scope can be safely slewed"));
     m_pSlewBtn->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CalibrationAssistant::OnSlew, this);
     m_pCalibrateBtn = new wxButton(this, wxID_ANY, _("Calibrate"));
-    m_pCalibrateBtn->SetToolTip(_("Start the PHD2 calibration.  The Calibration Assistant window will remain open to monitor and assess results"));
+    m_pCalibrateBtn->SetToolTip(_("Start the LGuider2 calibration.  The Calibration Assistant window will remain open to monitor and assess results"));
     m_pCalibrateBtn->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &CalibrationAssistant::OnCalibrate, this);
     wxButton* pCancelBtn = new wxButton(this, wxID_ANY, _("Cancel"));
     pCancelBtn->SetToolTip(_("Close the Calibration Assistant window.  Any calibration currently underway will continue."));
@@ -318,11 +318,11 @@ void CalibrationAssistant::PerformSanityChecks(void)
         if (sidRate <= 0.2)
             msg = _("Your mount guide speed is too slow for effective calibration and guiding."
                 " Use the hand-controller or mount driver to increase the guide speed to at least 0.5x sidereal."
-                " Then click the 'Recal' button so PHD2 can compute a correct calibration step-size.");
+                " Then click the 'Recal' button so LGuider2 can compute a correct calibration step-size.");
         else
             msg = _("Your mount guide speed is below the minimum recommended value of 0.5x sidereal."
             " Use the hand-controller or mount driver to increase the guide speed to at least 0.5x sidereal."
-            " Then click the 'Recal' button so PHD2 can compute a correct calibration step-size.");
+            " Then click the 'Recal' button so LGuider2 can compute a correct calibration step-size.");
     }
     else
     {
@@ -1213,7 +1213,7 @@ CalAssistExplanationDialog::CalAssistExplanationDialog(const wxString& Why)
         wxStaticBoxSizer* orthGrp = new wxStaticBoxSizer(wxHORIZONTAL, this, _("Orthogonality"));
         wxStaticText* pOrtho = new wxStaticText(orthGrp->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(600, textHeight), wxALIGN_LEFT);
         pOrtho->SetLabelText(_(
-            "The mount is wandering off-target on one axis while PHD2 is measuring movement on the other axis. "
+            "The mount is wandering off-target on one axis while LGuider2 is measuring movement on the other axis. "
             "This can be caused by large periodic error in RA or polar alignment > 10 arc-min. If the orthogonality "
             "error is very large, the mount is probably not guiding correctly."
             ));
@@ -1241,7 +1241,7 @@ CalAssistExplanationDialog::CalAssistExplanationDialog(const wxString& Why)
         wxStaticText* pFail = new wxStaticText(failGrp->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(600, textHeight), wxALIGN_LEFT);
         pFail->SetLabelText(_(
             "If you saw an alert saying the guide star did not move enough, the mount may not be receiving or handling guide commands. "
-            "If you are using an ST-4 guide cable, try replacing it. Otherwise, use the Star-Cross and Manual Guide tools in PHD2 to help "
+            "If you are using an ST-4 guide cable, try replacing it. Otherwise, use the Star-Cross and Manual Guide tools in LGuider2 to help "
             "isolate the mechanical problem."
             ));
         pFail->Wrap(wrapPoint);

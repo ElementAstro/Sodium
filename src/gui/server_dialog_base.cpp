@@ -62,7 +62,7 @@ ServerDialog::ServerDialog( wxWindow* parent, wxWindowID id, const wxString& tit
 
 	m_server_start = new wxButton( this, wxID_ANY, _("Start"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_server_start->SetToolTip( _("Start socket server on specific host and port") );
-	m_server_start->SetHelpText( _("Start socket server on specific host and port , default host is 0.0.0.0 which allow all ips to connect to server ,and port is 4400 the same as PHD2.") );
+	m_server_start->SetHelpText( _("Start socket server on specific host and port , default host is 0.0.0.0 which allow all ips to connect to server ,and port is 4400 the same as LGuider2.") );
 
 	m_server_control_sizer->Add( m_server_start, 0, wxALL, 5 );
 

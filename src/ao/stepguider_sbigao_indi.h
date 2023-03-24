@@ -1,6 +1,6 @@
 /*
  *  stepguider_sbigao_indi.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  SBIG AO Added by Jasem Mutlaq
  *  Copyright (c) 2019 Jasem Mutlaq

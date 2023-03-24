@@ -1,6 +1,6 @@
 /*
  *  point.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee
@@ -36,7 +36,7 @@
 #ifndef POINT_H_INCLUDED
 #define POINT_H_INCLUDED
 
-class PHD_Point
+class LGuider_Point
 {
     bool m_valid;
 
@@ -45,17 +45,17 @@ public:
     double X;
     double Y;
 
-    PHD_Point(double x, double y)
+    LGuider_Point(double x, double y)
     {
         SetXY(x, y);
     }
 
-    PHD_Point(const PHD_Point& p)
+    LGuider_Point(const LGuider_Point& p)
         : m_valid(p.m_valid), X(p.X), Y(p.Y)
     {
     }
 
-    PHD_Point()
+    LGuider_Point()
     {
         Invalidate();
     }
@@ -77,7 +77,7 @@ public:
         m_valid = true;
     }
 
-    double dX(const PHD_Point& p) const
+    double dX(const LGuider_Point& p) const
     {
         assert(m_valid && p.m_valid);
 
@@ -85,12 +85,12 @@ public:
         return dRet;
     }
 
-    double dX(const PHD_Point *pPoint) const
+    double dX(const LGuider_Point *pPoint) const
     {
         return this->dX(*pPoint);
     }
 
-    double dY(const PHD_Point& p) const
+    double dY(const LGuider_Point& p) const
     {
         assert(m_valid && p.m_valid);
 
@@ -98,12 +98,12 @@ public:
         return dRet;
     }
 
-    double dY(const PHD_Point *pPoint) const
+    double dY(const LGuider_Point *pPoint) const
     {
         return this->dY(*pPoint);
     }
 
-    double Distance(const PHD_Point& p) const
+    double Distance(const LGuider_Point& p) const
     {
         double dX = this->dX(p);
         double dY = this->dY(p);
@@ -111,7 +111,7 @@ public:
         return dRet;
     }
 
-    double Distance(const PHD_Point *pPoint) const
+    double Distance(const LGuider_Point *pPoint) const
     {
         return Distance(*pPoint);
     }
@@ -121,7 +121,7 @@ public:
         return hypot(X, Y);
     }
 
-    double Angle(const PHD_Point& p) const
+    double Angle(const LGuider_Point& p) const
     {
         double dX = this->dX(p);
         double dY = this->dY(p);
@@ -139,23 +139,23 @@ public:
 
     double Angle() const
     {
-        PHD_Point origin(0,0);
+        LGuider_Point origin(0,0);
 
         return Angle(origin);
     }
 
-    double Angle(const PHD_Point *pPoint) const
+    double Angle(const LGuider_Point *pPoint) const
     {
         return Angle(*pPoint);
     }
 
-    PHD_Point operator+(const PHD_Point& addend) const
+    LGuider_Point operator+(const LGuider_Point& addend) const
     {
         assert(m_valid && addend.m_valid);
-        return PHD_Point(this->X + addend.X, this->Y + addend.Y);
+        return LGuider_Point(this->X + addend.X, this->Y + addend.Y);
     }
 
-    PHD_Point& operator+=(const PHD_Point& addend)
+    LGuider_Point& operator+=(const LGuider_Point& addend)
     {
         assert(m_valid && addend.m_valid);
         this->X += addend.X;
@@ -164,13 +164,13 @@ public:
         return *this;
     }
 
-    PHD_Point operator-(const PHD_Point& subtrahend) const
+    LGuider_Point operator-(const LGuider_Point& subtrahend) const
     {
         assert(m_valid && subtrahend.m_valid);
-        return PHD_Point(this->X - subtrahend.X, this->Y - subtrahend.Y);
+        return LGuider_Point(this->X - subtrahend.X, this->Y - subtrahend.Y);
     }
 
-    PHD_Point operator-=(const PHD_Point& subtrahend)
+    LGuider_Point operator-=(const LGuider_Point& subtrahend)
     {
         assert(m_valid && subtrahend.m_valid);
         this->X -= subtrahend.X;
@@ -179,13 +179,13 @@ public:
         return *this;
     }
 
-    PHD_Point operator/(double divisor) const
+    LGuider_Point operator/(double divisor) const
     {
         assert(m_valid);
-        return PHD_Point(this->X/divisor, this->Y/divisor);
+        return LGuider_Point(this->X/divisor, this->Y/divisor);
     }
 
-    PHD_Point& operator/=(double divisor)
+    LGuider_Point& operator/=(double divisor)
     {
         assert(m_valid);
         this->X /= divisor;
@@ -194,13 +194,13 @@ public:
         return *this;
     }
 
-    PHD_Point operator*(double multiplicand) const
+    LGuider_Point operator*(double multiplicand) const
     {
         assert(m_valid);
-        return PHD_Point(this->X * multiplicand, this->Y * multiplicand);
+        return LGuider_Point(this->X * multiplicand, this->Y * multiplicand);
     }
 
-    PHD_Point& operator*=(double multiplicand)
+    LGuider_Point& operator*=(double multiplicand)
     {
         assert(m_valid);
         this->X *= multiplicand;
@@ -210,11 +210,11 @@ public:
     }
 };
 
-class ShiftPoint : public PHD_Point
+class ShiftPoint : public LGuider_Point
 {
-    typedef PHD_Point super;
+    typedef LGuider_Point super;
 
-    PHD_Point m_rate; // rate of change (per second)
+    LGuider_Point m_rate; // rate of change (per second)
     double m_x0;    // initial x position
     double m_y0;    // initial y position
     wxLongLong_t m_t0;      // initial time (seconds)
@@ -260,7 +260,7 @@ public:
         BeginShift();
     }
 
-    const PHD_Point& ShiftRate() const { return m_rate; }
+    const LGuider_Point& ShiftRate() const { return m_rate; }
 };
 
 #endif /* POINT_H_INCLUDED */

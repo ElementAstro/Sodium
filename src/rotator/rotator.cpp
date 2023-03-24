@@ -1,6 +1,6 @@
 /*
 *  rotator.cpp
-*  PHD Guiding
+*  LGuider Guiding
 *
 *  Created by Andy Galasso
 *  Copyright (c) 2015 Andy Galasso

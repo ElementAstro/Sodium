@@ -41,7 +41,7 @@ site_name(HOST_NAME)
 if(UNIX AND NOT APPLE)
   install(TARGETS lightguider
           RUNTIME DESTINATION bin)
-  install(FILES ${PHD_INSTALL_LIBS}
+  install(FILES ${LGuider_INSTALL_LIBS}
           DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/lightguider/)
   install(FILES ${lightguider_src_dir}/src/icons/phd2_48.png
           DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps/
@@ -75,7 +75,7 @@ if(UNIX AND NOT APPLE)
   # Ubuntu 14.04 compatible minimal dependency
   set(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.17), libgcc1 (>= 1:4.1.1), libnova-0.14-0 | libnova-0.16-0, libstdc++6 (>= 4.2.1), libusb-1.0-0 (>= 2:1.0.8), libwxbase3.0-0 | libwxbase3.0-0v5 (>= 3.0.0), libwxgtk3.0-0 | libwxgtk3.0-0v5 | libwxgtk3.0-gtk3-0v5 (>=3.0.0), libx11-6, zlib1g (>= 1:1.1.4)")
   set(CPACK_DEBIAN_PACKAGE_SUGGESTS "indi-bin (>= 0.9.7)")
-  set(CPACK_DEBIAN_PACKAGE_DESCRIPTION "LightGuider Auto-Guiding Software (Modified from PHD2)")
+  set(CPACK_DEBIAN_PACKAGE_DESCRIPTION "LightGuider Auto-Guiding Software (Modified from LGuider2)")
   # same section as many astronomy packages
   set(CPACK_DEBIAN_PACKAGE_SECTION "education")
   set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")

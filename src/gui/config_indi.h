@@ -1,6 +1,6 @@
 /*
  *  config_indi.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark
  *  Copyright (c) 2006, 2007, 2008, 2009 Craig Stark.

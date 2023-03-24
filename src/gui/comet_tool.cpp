@@ -1,6 +1,6 @@
 /*
  *  comet_tool.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2014 Andy Galasso
@@ -54,7 +54,7 @@ struct CometToolWin : public wxDialog
     bool m_training;
     wxTimer m_timer;
 
-    PHD_Point m_startPos;
+    LGuider_Point m_startPos;
     wxLongLong_t m_startTime;
 
     CometToolWin();
@@ -211,7 +211,7 @@ void CometToolWin::OnEnableToggled(wxCommandEvent& event)
 
 void CometToolWin::UpdateGuiderShift()
 {
-    PHD_Point rate(m_xRate->GetValue(), m_yRate->GetValue());
+    LGuider_Point rate(m_xRate->GetValue(), m_yRate->GetValue());
     GRAPH_UNITS units = m_units->GetSelection() == 0 ? UNIT_PIXELS : UNIT_ARCSEC;
     bool isMountCoords = m_axes->GetSelection() == 1;
     pFrame->pGuider->SetLockPosShiftRate(rate, units, isMountCoords, false);
@@ -285,7 +285,7 @@ void CometToolWin::OnTimer(wxTimerEvent& WXUNUSED(evt))
 void CometToolWin::CalcRate()
 {
     double dt = (double) (::wxGetUTCTimeMillis().GetValue() - m_startTime) / 3600000.0; // hours
-    PHD_Point rate = (pFrame->pGuider->LockPosition() - m_startPos) / dt;
+    LGuider_Point rate = (pFrame->pGuider->LockPosition() - m_startPos) / dt;
     pFrame->pGuider->SetLockPosShiftRate(rate, UNIT_PIXELS, false, true);
 }
 

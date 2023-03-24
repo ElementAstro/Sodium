@@ -1,6 +1,6 @@
 /*
  *  camcal_import_dialog.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bruce Waddington
  *  Copyright (c) 2015 Bruce Waddington

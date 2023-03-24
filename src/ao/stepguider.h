@@ -1,6 +1,6 @@
 /*
  *  stepguider.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2013 Bret McKee
@@ -97,7 +97,7 @@ class StepGuider : public Mount, public OnboardST4
     int m_xOffset;
     int m_yOffset;
 
-    PHD_Point m_avgOffset;
+    LGuider_Point m_avgOffset;
 
     bool m_forceStartBump;
     bool m_bumpInProgress;
@@ -110,9 +110,9 @@ class StepGuider : public Mount, public OnboardST4
     // Calibration variables
     int   m_calibrationStepsPerIteration;
     int   m_calibrationIterations;
-    PHD_Point m_calibrationStartingLocation;
+    LGuider_Point m_calibrationStartingLocation;
     int   m_calibrationAverageSamples;
-    PHD_Point m_calibrationAveragedLocation;
+    LGuider_Point m_calibrationAveragedLocation;
 
     Calibration m_calibration;
     CalibrationDetails m_calibrationDetails;
@@ -186,8 +186,8 @@ public:
 
     void SetCalibration(const Calibration& cal) override;
     void SetCalibrationDetails(const CalibrationDetails& calDetails, double xAngle, double yAngle, double binning);
-    bool BeginCalibration(const PHD_Point& currentLocation) override;
-    bool UpdateCalibrationState(const PHD_Point& currentLocation) override;
+    bool BeginCalibration(const LGuider_Point& currentLocation) override;
+    bool UpdateCalibrationState(const LGuider_Point& currentLocation) override;
     void ClearCalibration() override;
 
     bool Connect() override;

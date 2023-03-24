@@ -1,6 +1,6 @@
 /*
 *  aui_controls.cpp
-*  PHD Guiding
+*  LGuider Guiding
 *
 *  Created by Bruce Waddington
 *  Copyright (c) 2016 Bruce Waddington and Andy Galasso
@@ -50,8 +50,8 @@
 #include "icons/sb_arrow_down_16.png.h"
 #endif
 
-wxBEGIN_EVENT_TABLE(PHDStatusBar, wxStatusBar)
-  EVT_SIZE(PHDStatusBar::OnSize)
+wxBEGIN_EVENT_TABLE(LGuiderStatusBar, wxStatusBar)
+  EVT_SIZE(LGuiderStatusBar::OnSize)
 wxEND_EVENT_TABLE()
 
 // Types of fields in the statusbar
@@ -68,7 +68,7 @@ enum SBFieldTypes
     Field_Max
 };
 
-class PHDStatusBar;
+class LGuiderStatusBar;
 
 // Self-drawn panel for hosting controls in the wxStatusBar
 class SBPanel : public wxPanel
@@ -188,7 +188,7 @@ public:
 };
 
 // How this works:
-// PHDStatusBar is a child of wxStatusBar and is composed of various control groups - properties of the guide star, info about
+// LGuiderStatusBar is a child of wxStatusBar and is composed of various control groups - properties of the guide star, info about
 // current guide commands, and state information about the current app session.  Each group is managed by its own class, and that class
 // is responsible for building, positioning, and updating its controls. The various controls are positioned (via the OnSize event) on top of the SBPanel that
 // is the single underlying field in the base-class statusbar.  The SBPanel class handles its own Paint event in order to render
@@ -884,10 +884,10 @@ enum {
     SB_HEIGHT = 16
 };
 
-// -----------  PHDStatusBar Class
+// -----------  LGuiderStatusBar Class
 //
-PHDStatusBar::PHDStatusBar(wxWindow *parent, long style)
-    : wxStatusBar(parent, wxID_ANY, wxSTB_SHOW_TIPS | wxSTB_ELLIPSIZE_END | wxFULL_REPAINT_ON_RESIZE, "PHDStatusBar")
+LGuiderStatusBar::LGuiderStatusBar(wxWindow *parent, long style)
+    : wxStatusBar(parent, wxID_ANY, wxSTB_SHOW_TIPS | wxSTB_ELLIPSIZE_END | wxFULL_REPAINT_ON_RESIZE, "LGuiderStatusBar")
 {
     std::vector<int> fieldWidths;
 
@@ -922,15 +922,15 @@ PHDStatusBar::PHDStatusBar(wxWindow *parent, long style)
 }
 
 // Helper function - not safe to call SetMinHeight in the constructor
-PHDStatusBar *PHDStatusBar::CreateInstance(wxWindow *parent, long style)
+LGuiderStatusBar *LGuiderStatusBar::CreateInstance(wxWindow *parent, long style)
 {
-    PHDStatusBar *sb = new PHDStatusBar(parent, style);
+    LGuiderStatusBar *sb = new LGuiderStatusBar(parent, style);
     sb->SetMinHeight(SB_HEIGHT);
     return sb;
 }
 
 // Destructor
-PHDStatusBar::~PHDStatusBar()
+LGuiderStatusBar::~LGuiderStatusBar()
 {
     this->DestroyChildren();        // any wxWidgets objects will be deleted
     delete m_StateIndicators;
@@ -938,17 +938,17 @@ PHDStatusBar::~PHDStatusBar()
     delete m_StarIndicators;
 }
 
-void PHDStatusBar::OverlayMsg(const wxString& text)
+void LGuiderStatusBar::OverlayMsg(const wxString& text)
 {
     m_ctrlPanel->SetOverlayText(text);
 }
 
-void PHDStatusBar::ClearOverlayMsg()
+void LGuiderStatusBar::ClearOverlayMsg()
 {
     m_ctrlPanel->SetOverlayText(wxEmptyString);
 }
 
-void PHDStatusBar::OnSize(wxSizeEvent& event)
+void LGuiderStatusBar::OnSize(wxSizeEvent& event)
 {
     wxRect fldRect;
     GetFieldRect(0, fldRect);
@@ -963,40 +963,40 @@ void PHDStatusBar::OnSize(wxSizeEvent& event)
 }
 
 // Let client force updates to various statusbar components
-void PHDStatusBar::UpdateStates()
+void LGuiderStatusBar::UpdateStates()
 {
     m_StateIndicators->UpdateState();
 }
 
-void PHDStatusBar::UpdateStarInfo(double SNR, bool Saturated)
+void LGuiderStatusBar::UpdateStarInfo(double SNR, bool Saturated)
 {
     m_StarIndicators->UpdateState(0, SNR, Saturated);
 }
 
-void PHDStatusBar::UpdateGuiderInfo(const GuideStepInfo& info)
+void LGuiderStatusBar::UpdateGuiderInfo(const GuideStepInfo& info)
 {
     m_GuideIndicators->UpdateState(info.directionRA, info.directionDec, fabs(info.mountOffset.X),
         info.durationRA, fabs(info.mountOffset.Y), info.durationDec);
 }
 
-void PHDStatusBar::ClearGuiderInfo()
+void LGuiderStatusBar::ClearGuiderInfo()
 {
     m_GuideIndicators->ClearState();
 }
 
-int PHDStatusBar::GetMinSBWidth()
+int LGuiderStatusBar::GetMinSBWidth()
 {
     return m_ctrlPanel->GetMinPanelWidth();
 }
 
-void PHDStatusBar::StatusMsg(const wxString& text)
+void LGuiderStatusBar::StatusMsg(const wxString& text)
 {
     m_Msg1->SetLabelText(text);
     m_Msg1->Update();
 }
 
 // Trivial class to handle the background color on the toolbar control
-void PHDToolBarArt::DrawBackground(wxDC& dc, wxWindow *parent, const wxRect& rect)
+void LGuiderToolBarArt::DrawBackground(wxDC& dc, wxWindow *parent, const wxRect& rect)
 {
     dc.SetBrush(wxColour(100, 100, 100));
     dc.DrawRectangle(rect);

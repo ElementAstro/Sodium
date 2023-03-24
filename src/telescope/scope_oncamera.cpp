@@ -1,6 +1,6 @@
 /*
  *  scope_oncamera.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee

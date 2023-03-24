@@ -1,6 +1,6 @@
 /*
 *  cam_zwo.cpp
-*  PHD Guiding
+*  LGuider Guiding
 *
 *  Created by Robin Glover.
 *  Copyright (c) 2014 Robin Glover.
@@ -329,7 +329,7 @@ static int FindCamera(const wxString& camId, wxString *err)
     wxString model;
 
     // camId is of the form
-    //    <idx>          (older PHD2 versions)
+    //    <idx>          (older LGuider2 versions)
     // or
     //    <idx>,<model>
     int pos = 0;

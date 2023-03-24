@@ -1,6 +1,6 @@
 /*
  *  usImage.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark on 9/20/08.
  *  Copyright (c) 2006-2009 Craig Stark.

@@ -260,7 +260,7 @@ class lightguiderClientWorker(object):
         # judge the system type
         if platform.platform() == "Windows":
             if path is None:
-                lightguider_path = "C:\Program Files (x86)\PHDGuiding2\lightguider.exe"
+                lightguider_path = "C:\Program Files (x86)\LGuiderGuiding2\lightguider.exe"
             else:
                 lightguider_path = path
         elif platform.platform() == "Linux":
@@ -732,7 +732,7 @@ class lightguiderClientWorker(object):
             resp["message"] = "Invalid profile parameters were specified"
             return resp
         """"
-            PHD Profile 1
+            LGuider Profile 1
             /auto_exp/exposure_max	1	5000
             /auto_exp/exposure_min	1	1000
             /auto_exp/target_snr	1	6
@@ -1809,8 +1809,8 @@ class lightguiderClientWorker(object):
         Returns : None
         """
         self._host = message.get("Host")
-        self._lightguiderversion = message.get("PHDVersion")
-        self._subversion = message.get("PHDSubver")
+        self._lightguiderversion = message.get("LGuiderVersion")
+        self._subversion = message.get("LGuiderSubver")
         self._msgversion = message.get("MsgVersion")
 
     async def __lock_position_set(self, message: dict) -> None:

@@ -1,6 +1,6 @@
 /*
  *  cam_ascom.cpp
- *  PHD2 Guiding
+ *  LGuider2 Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2010 Craig Stark

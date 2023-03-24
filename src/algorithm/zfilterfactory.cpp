@@ -1,6 +1,6 @@
 /*
 *  zfilterfactory.cpp
-*  PHD Guiding
+*  LGuider Guiding
 *
 *  Created by Ken Self
 *  Copyright (c) 2018 Ken Self

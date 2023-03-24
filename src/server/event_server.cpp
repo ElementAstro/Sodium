@@ -31,7 +31,7 @@ Description: Socket server
 
 /*
  *  event_server.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Andy Galasso.
  *  Copyright (c) 2013 Andy Galasso.
@@ -240,7 +240,7 @@ struct NV {
   NV(const wxString &n_, JAry &ary) : n(n_), v(ary.str()) {}
   NV(const wxString &n_, JObj &obj) : n(n_), v(obj.str()) {}
   NV(const wxString &n_, const json_value *v_) : n(n_), v(json_format(v_)) {}
-  NV(const wxString &n_, const PHD_Point &p) : n(n_) {
+  NV(const wxString &n_, const LGuider_Point &p) : n(n_) {
     JAry ary;
     ary << p.X << p.Y;
     v = ary.str();
@@ -282,7 +282,7 @@ static JObj &operator<<(JObj &j, const NV &nv) {
 
 static NV NVMount(const Mount *mount) { return NV("Mount", mount->Name()); }
 
-static JObj &operator<<(JObj &j, const PHD_Point &pt) {
+static JObj &operator<<(JObj &j, const LGuider_Point &pt) {
   return j << NV("X", pt.X, 3) << NV("Y", pt.Y, 3);
 }
 
@@ -299,12 +299,12 @@ struct Ev : public JObj {
 
 static Ev ev_message_version() {
   Ev ev("Version");
-  ev << NV("PHDVersion", PHDVERSION) << NV("PHDSubver", PHDSUBVER)
+  ev << NV("LGuiderVersion", LGuiderVERSION) << NV("LGuiderSubver", LGuiderSUBVER)
      << NV("OverlapSupport", true) << NV("MsgVersion", MSG_PROTOCOL_VERSION);
   return ev;
 }
 
-static Ev ev_set_lock_position(const PHD_Point &xy) {
+static Ev ev_set_lock_position(const LGuider_Point &xy) {
   Ev ev("LockPositionSet");
   ev << xy;
   return ev;
@@ -321,7 +321,7 @@ static Ev ev_calibration_complete(const Mount *mount) {
   return ev;
 }
 
-static Ev ev_star_selected(const PHD_Point &pos) {
+static Ev ev_star_selected(const LGuider_Point &pos) {
   Ev ev("StarSelected");
   ev << pos;
   return ev;
@@ -1099,7 +1099,7 @@ static void find_star(JObj& response, const json_value* params)
         }
         bool error = pFrame->AutoSelectStar(roi);
         if (!error) {
-            const PHD_Point& lockPos = pFrame->pGuider->LockPosition();
+            const LGuider_Point& lockPos = pFrame->pGuider->LockPosition();
             if (lockPos.IsValid()) {
                 spdlog::debug("Found a star at [{}, {}]", lockPos.X, lockPos.Y);
                 response << jrpc_result(lockPos);
@@ -1148,7 +1148,7 @@ static void get_lock_position(JObj& response, const json_value* params)
 {
     try {
         VERIFY_GUIDER(response);
-        const PHD_Point& lockPos = pFrame->pGuider->LockPosition();
+        const LGuider_Point& lockPos = pFrame->pGuider->LockPosition();
         if (lockPos.IsValid()) {
             response << jrpc_result(lockPos);
         } else {
@@ -1189,9 +1189,9 @@ static void set_lock_position(JObj& response, const json_value* params)
         bool error;
         // 设置锁定位置
         if (exact) {
-            error = pFrame->pGuider->SetLockPosition(PHD_Point(x, y));
+            error = pFrame->pGuider->SetLockPosition(LGuider_Point(x, y));
         } else {
-            error = pFrame->pGuider->SetLockPosToStarAtPosition(PHD_Point(x, y));
+            error = pFrame->pGuider->SetLockPosToStarAtPosition(LGuider_Point(x, y));
         }
         if (error) {
             spdlog::error("Failed to set lock position");
@@ -1387,7 +1387,7 @@ static bool get_double(double *d, const json_value *j) {
   return false;
 }
 
-static bool parse_point(PHD_Point *pt, const json_value *j) {
+static bool parse_point(LGuider_Point *pt, const json_value *j) {
   if (j->type != JSON_ARRAY)
     return false;
   const json_value *jx = j->first_child;
@@ -1676,7 +1676,7 @@ static void get_star_image(JObj &response, const json_value *params)
         VERIFY_GUIDER(response);
         Guider *guider = pFrame->pGuider;
         const usImage *img = guider->CurrentImage();
-        const PHD_Point &star = guider->CurrentPosition();
+        const LGuider_Point &star = guider->CurrentPosition();
         if (guider->GetState() < GUIDER_STATE::STATE_SELECTED || !img->ImageData ||
             !star.IsValid()) {
             spdlog::error("No star selected!");
@@ -1698,7 +1698,7 @@ static void get_star_image(JObj &response, const json_value *params)
                 img->ImageData + y * img->Size.GetWidth() + rect.GetLeft();
             enc.append(p, rect.GetWidth() * sizeof(unsigned short));
         }
-        PHD_Point pos(star);
+        LGuider_Point pos(star);
         pos.X -= rect.GetLeft();
         pos.Y -= rect.GetTop();
         JObj rslt;
@@ -2113,7 +2113,7 @@ static void set_dec_guide_mode(JObj &response, const json_value *params) {
     response << jrpc_error(JSONRPC_INTERNAL_ERROR, e.what());
   }
 }
-/// @brief Get the settling status of the PHD controller
+/// @brief Get the settling status of the LGuider controller
 /// @param response JSON response object
 /// @param params JSON request parameters
 static void get_settling(JObj &response, const json_value *params) {
@@ -3435,7 +3435,7 @@ void EventServer::NotifyLoopingStopped() {
   SIMPLE_NOTIFY("LoopingExposuresStopped");
 }
 
-void EventServer::NotifyStarSelected(const PHD_Point &pt) {
+void EventServer::NotifyStarSelected(const LGuider_Point &pt) {
   SIMPLE_NOTIFY_EV(ev_star_selected(pt));
 }
 
@@ -3523,7 +3523,7 @@ void EventServer::NotifyGuidingDithered(double dx, double dy) {
   do_notify(m_eventServerClients, ev);
 }
 
-void EventServer::NotifySetLockPosition(const PHD_Point &xy) {
+void EventServer::NotifySetLockPosition(const LGuider_Point &xy) {
   if (m_eventServerClients.empty())
     return;
 

@@ -1,6 +1,6 @@
 /*
  *  polardrift_toolwin.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Ken Self
  *  Copyright (c) 2017 Ken Self
@@ -62,7 +62,7 @@ wxWindow *PolarDriftTool::CreatePolarDriftToolWindow()
     if (pFrame->GetCameraPixelScale() == 1.0)
     {
         bool confirmed = ConfirmDialog::Confirm(_(
-            "The Polar Drift Align tool is most effective when PHD2 knows your guide\n"
+            "The Polar Drift Align tool is most effective when LGuider2 knows your guide\n"
             "scope focal length and camera pixel size.\n"
             "\n"
             "Enter your guide scope focal length on the Global tab in the Brain.\n"
@@ -422,7 +422,7 @@ bool PolarDriftToolWin::WatchDrift()
 
     m_alpha = theta + m_hemi * 90 * m_mirror; // direction to the pole
     m_offset = hypot(xslope, yslope)*factor;  //polar alignment error in pixels
-    m_target = PHD_Point(m_current.X + m_offset*cos(radians(m_alpha)), m_current.Y + m_offset*(sin(radians(m_alpha))));
+    m_target = LGuider_Point(m_current.X + m_offset*cos(radians(m_alpha)), m_current.Y + m_offset*(sin(radians(m_alpha))));
 
     Debug.AddLine(wxString::Format("Polar Drift: m_hemi %d m_mirror %d m_pxScale %.1f", m_hemi, m_mirror, m_pxScale));
     Debug.AddLine(wxString::Format("Polar Drift: m_num %d m_t0 %.1f tnow %.1f m_current(X,Y): %.1f,%.1f", m_num, m_t0, tnow,

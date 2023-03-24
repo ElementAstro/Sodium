@@ -1770,7 +1770,7 @@ msgid ""
 msgstr ""
 
 #: camera.cpp:1412
-msgid "PHD will make several attempts to re-connect the camera."
+msgid "LGuider will make several attempts to re-connect the camera."
 msgstr ""
 
 #: camera.cpp:1417
@@ -2307,7 +2307,7 @@ msgstr ""
 
 #: drift_tool.cpp:807
 msgid ""
-"The Drift Align tool is most effective when PHD2 knows your guide\n"
+"The Drift Align tool is most effective when LGuider2 knows your guide\n"
 "scope focal length and camera pixel size.\n"
 "\n"
 "Enter your guide scope focal length on the Global tab in the Brain.\n"
@@ -2370,7 +2370,7 @@ msgstr ""
 
 #: gear_dialog.cpp:189
 msgid ""
-"Select the Equipment Profile you would like to use. PHD stores all of your "
+"Select the Equipment Profile you would like to use. LGuider stores all of your "
 "settings and equipment selections in an Equipment Profile. You can create "
 "multiple profiles and switch back and forth between them."
 msgstr ""
@@ -2686,7 +2686,7 @@ msgid "Enter the name of the new equipment profile"
 msgstr ""
 
 #: gear_dialog.cpp:1817
-msgid "PHD Defaults"
+msgid "LGuider Defaults"
 msgstr ""
 
 #: gear_dialog.cpp:1820
@@ -2695,7 +2695,7 @@ msgstr ""
 
 #: gear_dialog.cpp:1823
 msgid ""
-"Select PHD Defaults to create a profile with default PHD settings, or select "
+"Select LGuider Defaults to create a profile with default LGuider settings, or select "
 "an existing Equipment Profile to copy its settings into your new profile."
 msgstr ""
 
@@ -2737,11 +2737,11 @@ msgid "Could not rename profile"
 msgstr ""
 
 #: gear_dialog.cpp:1928
-msgid "Import PHD Equipment Profiles"
+msgid "Import LGuider Equipment Profiles"
 msgstr ""
 
 #: gear_dialog.cpp:1961
-msgid "Export PHD Equipment Profile"
+msgid "Export LGuider Equipment Profile"
 msgstr ""
 
 #: graph-stepguider.cpp:47 myframe.cpp:325 myframe.cpp:389
@@ -3163,9 +3163,9 @@ msgstr ""
 #: guide_algorithm_resistswitch.cpp:321
 msgid ""
 "Ordinarily the Resist Switch algortithm waits several frames before "
-"switching direction. With Fast Switch enabled PHD2 will switch direction "
+"switching direction. With Fast Switch enabled LGuider2 will switch direction "
 "immediately if it sees a very large deflection. Enable this option if your "
-"mount has a substantial amount of backlash and PHD2 sometimes overcorrects."
+"mount has a substantial amount of backlash and LGuider2 sometimes overcorrects."
 msgstr ""
 
 #: guider.cpp:490
@@ -3340,7 +3340,7 @@ msgstr ""
 
 #: guider_onestar.cpp:1004
 msgid ""
-"Check to enable star mass change detection. When enabled, PHD skips frames "
+"Check to enable star mass change detection. When enabled, LGuider skips frames "
 "when the guide star mass changes by an amount greater than the setting for "
 "'tolerance'."
 msgstr ""
@@ -3368,7 +3368,7 @@ msgstr ""
 #: guider_onestar.cpp:1028
 msgid ""
 "The minimum star HFD (size) that will be used for identifying a guide star. "
-"This setting can be used to prevent PHD2 from guiding on a hot pixel. Use "
+"This setting can be used to prevent LGuider2 from guiding on a hot pixel. Use "
 "the Star Profile Tool to measure the HFD of a hot pixel and set the min HFD "
 "threshold a bit higher. When the HFD falls below this level, the hot pixel "
 "will be ignored."
@@ -3484,7 +3484,7 @@ msgstr ""
 
 #: guiding_assistant.cpp:433
 msgid ""
-"PHD2 will move the guide star a considerable distance north, then south to "
+"LGuider2 will move the guide star a considerable distance north, then south to "
 "measure backlash. Be sure the selected star has plenty of room to move in "
 "the north direction.  If the guide star is lost, increase the size of the "
 "search region to at least 20 px"
@@ -3500,7 +3500,7 @@ msgstr ""
 
 #: guiding_assistant.cpp:514
 msgid ""
-"Signal-to-noise ratio; a measure of how well PHD2 can isolate the star from "
+"Signal-to-noise ratio; a measure of how well LGuider2 can isolate the star from "
 "the sky/noise background"
 msgstr ""
 
@@ -3953,7 +3953,7 @@ msgid "Enable Server"
 msgstr ""
 
 #: myframe.cpp:488
-msgid "Enable PHD2 server capability"
+msgid "Enable LGuider2 server capability"
 msgstr ""
 
 #: myframe.cpp:489 nudge_lock.cpp:159
@@ -4228,7 +4228,7 @@ msgid "Begin looping exposures for frame and focus"
 msgstr ""
 
 #: myframe.cpp:867
-msgid "Begin guiding (PHD). Shift-click to force calibration."
+msgid "Begin guiding (LGuider). Shift-click to force calibration."
 msgstr ""
 
 #: myframe.cpp:868
@@ -4367,7 +4367,7 @@ msgstr ""
 #: myframe.cpp:2531
 msgid ""
 "Reset all configuration and program settings to fresh install status -- "
-"Note: this closes PHD2"
+"Note: this closes LGuider2"
 msgstr ""
 
 #: myframe.cpp:2532
@@ -4402,7 +4402,7 @@ msgstr ""
 
 #: myframe.cpp:2552
 msgid ""
-"How long should PHD wait between guide frames? Default = 0ms, useful when "
+"How long should LGuider wait between guide frames? Default = 0ms, useful when "
 "using very short exposures (e.g., using a video camera) but wanting to send "
 "guide commands less frequently"
 msgstr ""
@@ -4431,7 +4431,7 @@ msgstr ""
 
 #: myframe.cpp:2600
 #, c-format
-msgid "%s Language. You'll have to restart PHD to take effect."
+msgid "%s Language. You'll have to restart LGuider to take effect."
 msgstr ""
 
 #: myframe.cpp:2604
@@ -4602,7 +4602,7 @@ msgstr ""
 
 #: myframe.cpp:2787
 msgid ""
-"This will reset all PHD2 configuration values and exit the program.  Are you "
+"This will reset all LGuider2 configuration values and exit the program.  Are you "
 "sure?"
 msgstr ""
 
@@ -4611,7 +4611,7 @@ msgid "Confirmation"
 msgstr ""
 
 #: myframe.cpp:2814
-msgid "You must restart PHD2 for the language change to take effect."
+msgid "You must restart LGuider2 for the language change to take effect."
 msgstr ""
 
 #: myframe.cpp:2814 myframe_events.cpp:274 myframe_events.cpp:482
@@ -4621,9 +4621,9 @@ msgstr ""
 
 #: myframe_events.cpp:100
 msgid ""
-"Welcome to PHD2 (Push Here Dummy, Gen2) Guiding\n"
+"Welcome to LGuider2 (Push Here Dummy, Gen2) Guiding\n"
 "\n"
-" Basic operation is quite simple (hence the 'PHD')\n"
+" Basic operation is quite simple (hence the 'LGuider')\n"
 "\n"
 "   1) Press the green 'USB' button, select your camera and mount, click on "
 "'Connect All'\n"
@@ -4633,7 +4633,7 @@ msgid ""
 "   4) Click on a star away from the edge or use Alt-S to auto-select a star\n"
 "   5) Press the guide (green target) icon\n"
 "\n"
-" PHD2 will then calibrate itself and begin guiding.  That's it!\n"
+" LGuider2 will then calibrate itself and begin guiding.  That's it!\n"
 "\n"
 " To stop guiding, simply press the 'Loop' or 'Stop' buttons. If you need "
 "to \n"
@@ -4698,7 +4698,7 @@ msgstr ""
 
 #: myframe_events.cpp:318
 msgid ""
-"For refining the Bad-pixel Map PHD2 is now displaying raw camera data "
+"For refining the Bad-pixel Map LGuider2 is now displaying raw camera data "
 "frames, which are a different size from ordinary guide frames for this "
 "camera."
 msgstr ""
@@ -4730,7 +4730,7 @@ msgstr ""
 #: myframe_events.cpp:802
 msgid ""
 "For best results, use a Dark Library or a Bad-pixel Map while guiding. This "
-"will help prevent PHD from locking on to a hot pixel. Use the Darks menu to "
+"will help prevent LGuider from locking on to a hot pixel. Use the Darks menu to "
 "build a Dark Library or Bad-pixel Map."
 msgstr ""
 
@@ -4758,7 +4758,7 @@ msgstr ""
 
 #: myframe_events.cpp:969
 msgid ""
-"With your current setting for Dec guide mode, this version of PHD2 will "
+"With your current setting for Dec guide mode, this version of LGuider2 will "
 "dither in Declination. To restore the old behavior you can set the RA-only "
 "option in the Dither Settings of the Advanced Dialog."
 msgstr ""
@@ -4876,7 +4876,7 @@ msgstr ""
 #: lightguider.cpp:110
 #, c-format
 msgid ""
-"PHD2 instance %ld is already running. Use the -i INSTANCE_NUM command-line "
+"LGuider2 instance %ld is already running. Use the -i INSTANCE_NUM command-line "
 "option to start a different instance."
 msgstr ""
 
@@ -4979,10 +4979,10 @@ msgstr ""
 msgid ""
 "This short sequence of steps will help you identify the equipment you want "
 "to use for guiding and will associate it with a profile name of your choice. "
-"This profile will then be available any time you run PHD2.  At a minimum, "
+"This profile will then be available any time you run LGuider2.  At a minimum, "
 "you will need to choose both the guide camera and the mount interface that "
-"PHD2 will use for guiding.  You will also enter some information about the "
-"optical characteristics of your setup. PHD2 will use this to create a good "
+"LGuider2 will use for guiding.  You will also enter some information about the "
+"optical characteristics of your setup. LGuider2 will use this to create a good "
 "'starter set' of guiding and calibration parameters. If you are a new user, "
 "please review the 'Impatient Instructions' under the 'Help' menu after the "
 "wizard dialog has finished."
@@ -4990,27 +4990,27 @@ msgstr ""
 
 #: profile_wizard.cpp:249
 msgid ""
-"Select your guide camera from the list.  All cameras supported by PHD2 and "
+"Select your guide camera from the list.  All cameras supported by LGuider2 and "
 "all installed ASCOM cameras are shown. If your camera is not shown, it is "
-"either not supported by PHD2 or its camera driver is not installed. You must "
-"also specify the camera pixel size and guide scope focal length so PHD2 can "
+"either not supported by LGuider2 or its camera driver is not installed. You must "
+"also specify the camera pixel size and guide scope focal length so LGuider2 can "
 "compute reasonable guiding parameters for you."
 msgstr ""
 
 #: profile_wizard.cpp:254
 msgid ""
-"Select your mount interface from the list.  This determines how PHD2 will "
+"Select your mount interface from the list.  This determines how LGuider2 will "
 "send guide commands to the mount. For most modern mounts, the ASCOM "
 "interface is a good choice if you are running MS Windows.  The other "
 "interfaces are available for cases where ASCOM isn't available or isn't well "
 "supported by mount firmware.  You should specify the mount guide speed so "
-"PHD2 can calibrate efficiently."
+"LGuider2 can calibrate efficiently."
 msgstr ""
 
 #: profile_wizard.cpp:260
 msgid ""
 "The mount interface you chose in the previous step doesn't provide pointing "
-"information, so PHD2 will not be able to automatically adjust guiding for "
+"information, so LGuider2 will not be able to automatically adjust guiding for "
 "side-of-pier and declination. You can enable these features by choosing an "
 "'Aux Mount' connection that does provide pointing information.  The Aux "
 "Mount interface will be used only for that purpose and not for sending guide "
@@ -5030,8 +5030,8 @@ msgid ""
 "Your profile is complete and ready to save.  Give it a name and, optionally, "
 "build a dark-frame library for it.  This is strongly recommended for best "
 "results in both calibration and guiding. You can always change the settings "
-"in this new profile by clicking on the PHD2 USB icon, selecting the profile "
-"name you just entered, and making your changes there. If you are new to PHD2 "
+"in this new profile by clicking on the LGuider2 USB icon, selecting the profile "
+"name you just entered, and making your changes there. If you are new to LGuider2 "
 "or encounter problems, please use the 'Help' function for assistance."
 msgstr ""
 
@@ -5054,7 +5054,7 @@ msgid ""
 msgstr ""
 
 #: profile_wizard.cpp:368
-msgid "Welcome to the PHD2 'first light' wizard"
+msgid "Welcome to the LGuider2 'first light' wizard"
 msgstr ""
 
 #: profile_wizard.cpp:373
@@ -5220,14 +5220,14 @@ msgstr ""
 #: scope.cpp:557
 #, c-format
 msgid ""
-"Your %s is preventing PHD from making adequate corrections to keep the guide "
-"star locked. Increase the %s to allow PHD2 to make the needed corrections."
+"Your %s is preventing LGuider from making adequate corrections to keep the guide "
+"star locked. Increase the %s to allow LGuider2 to make the needed corrections."
 msgstr ""
 
 #: scope.cpp:565
 #, c-format
 msgid ""
-"Even using the maximum moves, PHD2 can't properly correct for the large "
+"Even using the maximum moves, LGuider2 can't properly correct for the large "
 "guide star movements in %s. Guiding will be impaired until you can eliminate "
 "the source of these problems."
 msgstr ""
@@ -5341,7 +5341,7 @@ msgid "Stop guiding when mount slews"
 msgstr ""
 
 #: scope.cpp:1653
-msgid "When checked, PHD will stop guiding if the mount starts slewing"
+msgid "When checked, LGuider will stop guiding if the mount starts slewing"
 msgstr ""
 
 #: scope.cpp:1659
@@ -5498,7 +5498,7 @@ msgstr ""
 
 #: scope_manual_pointing.cpp:102
 msgid ""
-"Select Unspecified if you do not want PHD2 to flip your calibration data for "
+"Select Unspecified if you do not want LGuider2 to flip your calibration data for "
 "side of pier changes"
 msgstr ""
 
@@ -6045,14 +6045,14 @@ msgstr ""
 #: testguide.cpp:116
 msgid ""
 "Select the dither amount type. Imaging applications have the option of "
-"sending each of these dither amounts to PHD."
+"sending each of these dither amounts to LGuider."
 msgstr ""
 
 #: testguide.cpp:124
 msgid ""
 "Scale factor for dithering. The dither amount type is multiplied by this "
 "value to get the actual dither amount. Changing the value here affects both "
-"manual dithering and dithering from imaging applications connected to PHD."
+"manual dithering and dithering from imaging applications connected to LGuider."
 msgstr ""
 
 #: testguide.cpp:127
@@ -6062,7 +6062,7 @@ msgstr ""
 #: testguide.cpp:130
 msgid ""
 "Dither on RA axis only. Changing the value here affects both manual "
-"dithering and dithering from imaging applications connected to PHD."
+"dithering and dithering from imaging applications connected to LGuider."
 msgstr ""
 
 #: testguide.cpp:133

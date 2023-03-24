@@ -1,6 +1,6 @@
 /*
  *  pierflip_tool.cpp
- *  Open PHD Guiding
+ *  Open LGuider Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2018 Andy Galasso.

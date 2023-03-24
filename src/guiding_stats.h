@@ -1,6 +1,6 @@
 /*
 *  guiding_stats.h
-*  PHD2 Guiding
+*  LGuider2 Guiding
 *
 *  Created by Bruce Waddington
 *  Copyright (c) 2018 Bruce Waddington

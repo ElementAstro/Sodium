@@ -1,6 +1,6 @@
 /*
  *  manualcal_dialog.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Sylvain Girard
  *  Copyright (c) 2013 Sylvain Girard

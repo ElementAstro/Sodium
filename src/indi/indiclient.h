@@ -1,6 +1,6 @@
 /*
  *  phdindiclient.h
- *  PHD2 Guiding
+ *  LGuider2 Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2018 Andy Galasso
@@ -14,7 +14,7 @@
  *    Redistributions in binary form must reproduce the above copyright notice,
  *     this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *    Neither the name of Open PHD Guiding, openphdguiding.org, nor the names of its
+ *    Neither the name of Open LGuider Guiding, openphdguiding.org, nor the names of its
  *     contributors may be used to endorse or promote products derived from
  *     this software without specific prior written permission.
  *
@@ -31,8 +31,8 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#ifndef PHDINDICLIENT_H
-#define PHDINDICLIENT_H
+#ifndef LGuiderINDICLIENT_H
+#define LGuiderINDICLIENT_H
 
 #include <libindi/baseclient.h>
 #include <libindi/basedevice.h>
@@ -59,7 +59,7 @@ protected:
     virtual void IndiServerConnected() = 0;
     virtual void IndiServerDisconnected(int exit_code) = 0;
 
-    // must use this in PHD2 rather than BaseClient::disconnectServer()
+    // must use this in LGuider2 rather than BaseClient::disconnectServer()
     bool DisconnectIndiServer();
 
 #if INDI_VERSION_MAJOR >= 2

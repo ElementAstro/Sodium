@@ -1,6 +1,6 @@
 /*
 *  cam_ascom.h
-*  Open PHD Guiding
+*  Open LGuider Guiding
 *
 *  Copyright (c) 2020 Andy Galasso.
 *  All rights reserved.

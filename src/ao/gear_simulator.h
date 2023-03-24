@@ -1,6 +1,6 @@
 /*
  *  gear_simulator.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Copyright (c) 2018 Andy Galasso
  *  All rights reserved.

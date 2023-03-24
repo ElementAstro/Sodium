@@ -1,6 +1,6 @@
 /*
  *  graph.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2008-2010 Craig Stark.
@@ -657,7 +657,7 @@ void GraphLogWindow::OnCheckboxTrendlines(wxCommandEvent& WXUNUSED(evt))
     if (!m_pClient->m_showTrendlines)
     {
         // clear the polar alignment circle
-        pFrame->pGuider->SetPolarAlignCircle(PHD_Point(), 0.0);
+        pFrame->pGuider->SetPolarAlignCircle(LGuider_Point(), 0.0);
     }
     Refresh();
 }
@@ -789,7 +789,7 @@ GraphLogClientWindow::GraphLogClientWindow(wxWindow *parent) :
     m_noDitherDec.ChangeWindowSize(m_length);
     m_noDitherRA.ChangeWindowSize(m_length);
     Debug.Write(wxString::Format("GraphStats window size = %d\n", (int)m_length));
-    m_height = pConfig->Global.GetInt("/graph/height", m_minHeight * 2 * 2); // match PHD1 4-pixel scale for new users
+    m_height = pConfig->Global.GetInt("/graph/height", m_minHeight * 2 * 2); // match LGuider1 4-pixel scale for new users
     m_heightUnits = (GRAPH_UNITS) pConfig->Global.GetInt("graph/HeightUnits", (int) UNIT_ARCSEC); // preferred units, will still display pixels if camera pixel scale not available
 
     m_showTrendlines = false;
@@ -1528,7 +1528,7 @@ void GraphLogClientWindow::OnPaint(wxPaintEvent& WXUNUSED(evt))
         }
         // when drifting, center the polar align circle on the star; when adjusting, center the polar
         // align circle at the lock position
-        const PHD_Point& center = pFrame->pGuider->IsCalibratingOrGuiding() ?
+        const LGuider_Point& center = pFrame->pGuider->IsCalibratingOrGuiding() ?
             pFrame->pGuider->CurrentPosition() : pFrame->pGuider->LockPosition();
         pFrame->pGuider->SetPolarAlignCircle(center, polarAlignCircleRadius);
 

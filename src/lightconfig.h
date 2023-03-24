@@ -1,6 +1,6 @@
 /*
  *  lightconfig.h
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -34,12 +34,12 @@
  *
  */
 
-#ifndef PHDCONFIG_H_INCLUDED
-#define PHDCONFIG_H_INCLUDED
+#ifndef LGuiderCONFIG_H_INCLUDED
+#define LGuiderCONFIG_H_INCLUDED
 
 /*
  * The way configuration varialbes are handled has been
- * fundamentally changed from the way PHD 1.X handled them
+ * fundamentally changed from the way LGuider 1.X handled them
  * because they are no longer all stored in global variables.
  *
  * The wxConfig routines allow for hierarchical configuration data, and
@@ -186,4 +186,4 @@ public:
     bool Commit(const wxString& name);
 };
 
-#endif /* PHDCONFIG_H_INCLUDED */
+#endif /* LGuiderCONFIG_H_INCLUDED */

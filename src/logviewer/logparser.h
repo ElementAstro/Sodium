@@ -56,7 +56,7 @@ struct GuideEntry
 
 inline static bool StarWasFound(int err)
 {
-    // reproduces PHD2's function Star::WasFound
+    // reproduces LGuider2's function Star::WasFound
     switch (err) {
         case 0: // STAR_OK
         case 1: // STAR_SATURATED

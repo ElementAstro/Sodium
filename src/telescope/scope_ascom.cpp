@@ -1,6 +1,6 @@
 /*
  *  ascom.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -191,7 +191,7 @@ void ScopeASCOM::SetupDialog()
         }
     }
     // destroy the COM object now as this reduces the likelhood of getting into a
-    // state where the user has killed the ASCOM local server instance and PHD2 is
+    // state where the user has killed the ASCOM local server instance and LGuider2 is
     // holding a reference to the defunct driver instance in the global interface
     // table
     m_gitEntry.Unregister();
@@ -357,7 +357,7 @@ bool ScopeASCOM::Connect()
         {
             // Gemini2 firmware (2013 Oct 13 version, perhaps others) has been found to contain a
             // bug where a pulse guide command can fail to complete, with the Guiding property
-            // returning true forever. The firmware developer suggests that PHD2 should issue an
+            // returning true forever. The firmware developer suggests that LGuider2 should issue an
             // AbortSlew when this condition is detected.
             Debug.Write("ASCOM scope: enabling stuck guide pulse workaround\n");
             m_abortSlewWhenGuidingStuck = true;

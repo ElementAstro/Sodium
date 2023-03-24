@@ -46,13 +46,13 @@ set(_default_locale "en_EN")
 #    `VERSION_MAJOR`, `VERSION_MINOR` and `VERSION_PATCH`.
 #    Raises an error if the version cannot be extracted
 function(get_lightguider_version)
-  set(filename_to_extract_from ${PHD_PROJECT_ROOT_DIR}/src/lightguider.h)
+  set(filename_to_extract_from ${LGuider_PROJECT_ROOT_DIR}/src/lightguider.h)
   file(STRINGS ${filename_to_extract_from} file_content
-       #REGEX "PHDVERSION[ _T\\(]+\"(.*)\""
+       #REGEX "LGuiderVERSION[ _T\\(]+\"(.*)\""
   )
 
   foreach(SRC_LINE ${file_content})
-    if("${SRC_LINE}" MATCHES "PHDVERSION[ _T\\(]+\"(([0-9]+)\\.([0-9]+).([0-9]+))\"")
+    if("${SRC_LINE}" MATCHES "LGuiderVERSION[ _T\\(]+\"(([0-9]+)\\.([0-9]+).([0-9]+))\"")
         # message("Extracted/discovered version '${CMAKE_MATCH_1}'")
         set(VERSION_MAJOR ${CMAKE_MATCH_2} PARENT_SCOPE)
         set(VERSION_MINOR ${CMAKE_MATCH_3} PARENT_SCOPE)
@@ -229,8 +229,8 @@ function(generate_single_doc_targets)
   set(multiValueArgs INPUT_FILES)
   cmake_parse_arguments(_local_vars "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
-  if("${PHD_PROJECT_ROOT_DIR}"  STREQUAL "")
-    message(FATAL_ERROR "PHD_PROJECT_ROOT_DIR should be set")
+  if("${LGuider_PROJECT_ROOT_DIR}"  STREQUAL "")
+    message(FATAL_ERROR "LGuider_PROJECT_ROOT_DIR should be set")
   endif()
 
   if("${_local_vars_INPUT_FOLDER}" STREQUAL "")
@@ -278,11 +278,11 @@ function(generate_single_doc_targets)
         OUTPUT ${generated_outputs}
         DEPENDS ${html_input_files}
         COMMAND ${CMAKE_COMMAND}
-          -Dproject_root_dir=${PHD_PROJECT_ROOT_DIR}
+          -Dproject_root_dir=${LGuider_PROJECT_ROOT_DIR}
           "-Dlist_of_files='${documentation_filelist}'"
           "-Doutput_folder=${current_locale_output_folder}"
           "-Dinput_folder=${input_folder}/doc/help/"
-          -P ${PHD_PROJECT_ROOT_DIR}/cmake_modules/LightGuiderGenerateDocScript.cmake
+          -P ${LGuider_PROJECT_ROOT_DIR}/cmake_modules/LightGuiderGenerateDocScript.cmake
         )
 
     add_custom_target(${locale}_html
@@ -318,8 +318,8 @@ function(generate_single_doc_targets)
       # the generation of the main messages.mo (default language) is dependant on all the source files
       # edit: this step is now manual
       #file(GLOB all_sources
-      #     "${PHD_PROJECT_ROOT_DIR}/*.cpp"
-      #     "${PHD_PROJECT_ROOT_DIR}/*.h")
+      #     "${LGuider_PROJECT_ROOT_DIR}/*.cpp"
+      #     "${LGuider_PROJECT_ROOT_DIR}/*.h")
 
       # extracts the messages from the sources and merges those messages with the locale/messages.pot
       # into the build folder. This is a manual step
@@ -340,19 +340,19 @@ function(generate_single_doc_targets)
           COMMAND 
             ${CMAKE_COMMAND}
               -Dinput_file="${current_translation_output_folder}/messages.po"
-              -P ${PHD_PROJECT_ROOT_DIR}/cmake_modules/LightGuiderRemovegettextwarning.cmake
+              -P ${LGuider_PROJECT_ROOT_DIR}/cmake_modules/LightGuiderRemovegettextwarning.cmake
           COMMAND 
             ${MSGMERGE} 
               -N
               -o "${current_translation_output_folder}/messages.pot"
-              "${PHD_PROJECT_ROOT_DIR}/locale/messages.pot" 
+              "${LGuider_PROJECT_ROOT_DIR}/locale/messages.pot" 
               "${current_translation_output_folder}/messages.po"
           COMMAND 
             "${CMAKE_COMMAND}" 
               -E remove 
               "${current_translation_output_folder}/messages.po"
           WORKING_DIRECTORY 
-            "${PHD_PROJECT_ROOT_DIR}"
+            "${LGuider_PROJECT_ROOT_DIR}"
       )
       list(APPEND translation_target_files
            "${current_translation_output_folder}/messages.pot")
@@ -368,7 +368,7 @@ function(generate_single_doc_targets)
           COMMAND 
             "${CMAKE_COMMAND}" 
               -E copy_if_different 
-              "${PHD_PROJECT_ROOT_DIR}/locale/messages.pot" 
+              "${LGuider_PROJECT_ROOT_DIR}/locale/messages.pot" 
               "${current_translation_output_folder}/messages.pot" 
           COMMENT 
             "Copying './locale/messages.pot' to the build folder"
@@ -381,16 +381,16 @@ function(generate_single_doc_targets)
               -E echo "Cannot extract strings: the xgettext program is not found" 
       )
       list(APPEND translation_input_files 
-          "${PHD_PROJECT_ROOT_DIR}/locale/messages.pot")
+          "${LGuider_PROJECT_ROOT_DIR}/locale/messages.pot")
     endif()
 
     list(APPEND translation_input_files
-         "${PHD_PROJECT_ROOT_DIR}/locale/messages.pot")
+         "${LGuider_PROJECT_ROOT_DIR}/locale/messages.pot")
 
     # target for extracting the strings visible on an IDE
     add_custom_target(${target_string_extraction_from_sources}
       #DEPENDS
-      #  "${PHD_PROJECT_ROOT_DIR}/locale/messages.pot" 
+      #  "${LGuider_PROJECT_ROOT_DIR}/locale/messages.pot" 
       # the command to run in order to extract the strings
       ${_extract_locales_commands}
       SOURCES
@@ -411,7 +411,7 @@ function(generate_single_doc_targets)
           "${CMAKE_COMMAND}" 
             -E copy_if_different 
             "${current_translation_output_folder}/messages.pot" 
-            "${PHD_PROJECT_ROOT_DIR}/locale/messages.pot" 
+            "${LGuider_PROJECT_ROOT_DIR}/locale/messages.pot" 
         COMMENT 
           "Extracting strings and updating the source tree for file 'messages.pot'"
       )
@@ -589,12 +589,12 @@ function(generate_doc_targets)
   cmake_parse_arguments(_local_vars "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
   # global English
-  generate_single_doc_targets(INPUT_FOLDER "${PHD_PROJECT_ROOT_DIR}")
+  generate_single_doc_targets(INPUT_FOLDER "${LGuider_PROJECT_ROOT_DIR}")
   set(DEFAULT_LOCALE "${_default_locale}")
   set(GENERATED_LOCALES "${DEFAULT_LOCALE}")
 
   # glob all the rest
-  file(GLOB all_locales "${PHD_PROJECT_ROOT_DIR}/locale/*")
+  file(GLOB all_locales "${LGuider_PROJECT_ROOT_DIR}/locale/*")
   foreach(var IN LISTS all_locales)
     if(NOT (IS_DIRECTORY ${var}))
       continue()

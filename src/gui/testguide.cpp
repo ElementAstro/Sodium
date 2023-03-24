@@ -1,6 +1,6 @@
 /*
  *  testguide.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -113,7 +113,7 @@ wxSizer *TestGuideDialog::InitMountControls()
     choices.Add(_("MOVE5 (+/- 5.0)"));
     ditherTypeChoice = new wxChoice(this, ID_DITHERTYPE, wxDefaultPosition, wxDefaultSize, choices);
     ditherTypeChoice->Select(pConfig->Profile.GetInt("/ManualGuide/DitherType", 4) - 1);
-    ditherTypeChoice->SetToolTip(_("Select the dither amount type. Imaging applications have the option of sending each of these dither amounts to PHD."));
+    ditherTypeChoice->SetToolTip(_("Select the dither amount type. Imaging applications have the option of sending each of these dither amounts to LGuider."));
     sz2->Add(ditherTypeChoice, wxSizerFlags().Left().Border(wxRIGHT, 10).Align(wxALIGN_CENTER_VERTICAL));
 
     sz2->Add(new wxStaticText(this, wxID_ANY, _("Scale")), wxSizerFlags().Right().Border(wxRIGHT, 5).Align(wxALIGN_CENTER_VERTICAL));
@@ -121,13 +121,13 @@ wxSizer *TestGuideDialog::InitMountControls()
         wxSize(StringWidth(GetParent(), "000.0"), -1), wxSP_ARROW_KEYS | wxALIGN_RIGHT, 0.1, 100.0, 1.0, 1.0);
     ditherScaleSpinCtrl->SetDigits(1);
     ditherScaleSpinCtrl->SetValue(pFrame->GetDitherScaleFactor());
-    ditherScaleSpinCtrl->SetToolTip(_("Scale factor for dithering. The dither amount type is multiplied by this value to get the actual dither amount. Changing the value here affects both manual dithering and dithering from imaging applications connected to PHD."));
+    ditherScaleSpinCtrl->SetToolTip(_("Scale factor for dithering. The dither amount type is multiplied by this value to get the actual dither amount. Changing the value here affects both manual dithering and dithering from imaging applications connected to LGuider."));
     sz2->Add(ditherScaleSpinCtrl, wxSizerFlags().Left().Border(wxRIGHT, 10).Align(wxALIGN_CENTER_VERTICAL));
 
     raOnlyCheckBox = new wxCheckBox(this, ID_RAONLY, _("RA Only"));
     sz2->Add(raOnlyCheckBox, wxSizerFlags().Left().Border(wxRIGHT, 10).Align(wxALIGN_CENTER_VERTICAL));
     raOnlyCheckBox->SetValue(pFrame->GetDitherRaOnly());
-    raOnlyCheckBox->SetToolTip(_("Dither on RA axis only. Changing the value here affects both manual dithering and dithering from imaging applications connected to PHD."));
+    raOnlyCheckBox->SetToolTip(_("Dither on RA axis only. Changing the value here affects both manual dithering and dithering from imaging applications connected to LGuider."));
 
     btn = new wxButton(this, ID_DITHER, _("Dither"));
     btn->SetToolTip(_("Move the guider lock position a random amount on each axis, up to the maximum value determined by the dither type and the dither scale factor."));

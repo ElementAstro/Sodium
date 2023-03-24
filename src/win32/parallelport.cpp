@@ -1,6 +1,6 @@
 /*
  *  parallelport.cpp
- *  PHD Guiding
+ *  LGuider Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2013 Bret McKee
