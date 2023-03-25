@@ -255,43 +255,43 @@ msgstr "build %lu"
 msgid ", 64-bit edition"
 msgstr ", 64 位元版"
 
-#: src/phdupdate.cpp:683
+#: src/lightupdate.cpp:683
 #, c-format
 msgid "LGuider2 version %s is available at %s"
 msgstr ""
 
-#: src/phdupdate.cpp:688
+#: src/lightupdate.cpp:688
 #, c-format
 msgid ""
 "LGuider2 version %s is ready to install. Update and restart LGuider2 now?"
 msgstr ""
 
-#: src/phdupdate.cpp:728
+#: src/lightupdate.cpp:728
 #, c-format
 msgid "Downloading LGuider2 version %s"
 msgstr ""
 
-#: src/phdupdate.cpp:748
+#: src/lightupdate.cpp:748
 msgid "LGuider2 Update"
 msgstr ""
 
-#: src/phdupdate.cpp:748
+#: src/lightupdate.cpp:748
 msgid "Checking for updates"
 msgstr "檢查更新"
 
-#: src/phdupdate.cpp:775
+#: src/lightupdate.cpp:775
 msgid "LGuider2 Update Available"
 msgstr ""
 
-#: src/phdupdate.cpp:793
+#: src/lightupdate.cpp:793
 msgid "Web Site"
 msgstr "網站"
 
-#: src/phdupdate.cpp:793
+#: src/lightupdate.cpp:793
 msgid "Install"
 msgstr "安裝"
 
-#: src/phdupdate.cpp:800 src/ao/gear_simulator.cpp:1854
+#: src/lightupdate.cpp:800 src/ao/gear_simulator.cpp:1854
 #: src/gui/calibration_assistant.cpp:243 src/gui/calibration_assistant.cpp:1072
 #: src/gui/calibration_assistant.cpp:1126 src/gui/camcal_import_dialog.cpp:124
 #: src/gui/darks_dialog.cpp:210 src/gui/darks_dialog.cpp:366
@@ -300,24 +300,24 @@ msgstr "安裝"
 msgid "Cancel"
 msgstr "取消"
 
-#: src/phdupdate.cpp:809
+#: src/lightupdate.cpp:809
 msgid "Change Log"
 msgstr "異動日誌"
 
-#: src/phdupdate.cpp:824 src/phdupdate.cpp:896
+#: src/lightupdate.cpp:824 src/lightupdate.cpp:896
 #, c-format
 msgid "Closing in %d seconds"
 msgstr "將於 %d 秒後關閉"
 
-#: src/phdupdate.cpp:947
+#: src/lightupdate.cpp:947
 msgid "LGuider2 is up to date"
 msgstr ""
 
-#: src/phdupdate.cpp:947 src/phdupdate.cpp:953 src/gui/myframe.cpp:3053
+#: src/lightupdate.cpp:947 src/lightupdate.cpp:953 src/gui/myframe.cpp:3053
 msgid "Software Update"
 msgstr "軟體更新"
 
-#: src/phdupdate.cpp:953
+#: src/lightupdate.cpp:953
 msgid "Unable to check updates"
 msgstr "無法檢查更新"
 

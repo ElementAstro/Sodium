@@ -55,7 +55,10 @@ enum SettleOp
     OP_GUIDE,
 };
 
-enum { SETTLING_TIME_DISABLED = 9999 };
+enum
+{
+    SETTLING_TIME_DISABLED = 9999
+};
 
 struct ControllerState
 {
@@ -107,17 +110,19 @@ bool PhdController::IsIdle()
     return ctrl.state == STATE_IDLE;
 }
 
-#define SETSTATE(newstate) do { \
-    Debug.AddLine("PhdController: newstate " #newstate); \
-    ctrl.state = newstate; \
-} while (false)
+#define SETSTATE(newstate)                                   \
+    do                                                       \
+    {                                                        \
+        Debug.AddLine("PhdController: newstate " #newstate); \
+        ctrl.state = newstate;                               \
+    } while (false)
 
 static wxString ReentrancyError(const char *op)
 {
     return wxString::Format("Cannot initiate %s while %s is in progress", op, ctrl.settleOp == OP_DITHER ? "dither" : "guide");
 }
 
-bool PhdController::Guide(unsigned int options, const SettleParams& settle, const wxRect& roi, wxString *error)
+bool PhdController::Guide(unsigned int options, const SettleParams &settle, const wxRect &roi, wxString *error)
 {
     if (ctrl.state != STATE_IDLE)
     {
@@ -137,7 +142,7 @@ bool PhdController::Guide(unsigned int options, const SettleParams& settle, cons
     return true;
 }
 
-static void do_fail(const wxString& msg)
+static void do_fail(const wxString &msg)
 {
     Debug.AddLine(wxString::Format("PhdController failed: %s", msg));
     ctrl.succeeded = false;
@@ -145,7 +150,7 @@ static void do_fail(const wxString& msg)
     SETSTATE(STATE_FINISH);
 }
 
-bool PhdController::Dither(double pixels, bool forceRaOnly, const SettleParams& settle, wxString *errMsg)
+bool PhdController::Dither(double pixels, bool forceRaOnly, const SettleParams &settle, wxString *errMsg)
 
 {
     if (ctrl.state != STATE_IDLE)
@@ -185,7 +190,7 @@ bool PhdController::Dither(double pixels, bool forceRaOnly, const SettleParams& 
                 // DEC_NONE or no settling parameters
 
                 Debug.Write(wxString::Format("PhdController: forcing dither RA-only since Dec guide mode is %s\n",
-                    Scope::DecGuideModeStr(ctrl.saveDecGuideMode)));
+                                             Scope::DecGuideModeStr(ctrl.saveDecGuideMode)));
 
                 raOnly = true;
             }
@@ -226,12 +231,15 @@ bool PhdController::DitherCompat(double pixels, wxString *errMsg)
 {
     AbortController("manual or phd1-style dither");
 
-    enum { SETTLE_FRAMES = 10 };
+    enum
+    {
+        SETTLE_FRAMES = 10
+    };
 
     return Dither(pixels, SETTLE_FRAMES, errMsg);
 }
 
-void PhdController::AbortController(const wxString& reason)
+void PhdController::AbortController(const wxString &reason)
 {
     if (ctrl.state != STATE_IDLE)
     {
@@ -243,8 +251,8 @@ void PhdController::AbortController(const wxString& reason)
 static bool all_gear_connected(void)
 {
     return pCamera && pCamera->Connected &&
-        (!pMount || pMount->IsConnected()) &&
-        (!pSecondaryMount || pSecondaryMount->IsConnected());
+           (!pMount || pMount->IsConnected()) &&
+           (!pSecondaryMount || pSecondaryMount->IsConnected());
 }
 
 static void do_notify(void)
@@ -273,7 +281,7 @@ static bool start_capturing(void)
         return false;
     }
 
-    pFrame->pGuider->Reset(true); // invalidate current position, etc.
+    pFrame->pGuider->Reset(true);      // invalidate current position, etc.
     pFrame->pGuider->ForceFullFrame(); // we need a full frame to auto-select a star
     pFrame->ResetAutoExposure();
     pFrame->StartCapturing();
@@ -308,7 +316,8 @@ void PhdController::UpdateControllerState(void)
 
     while (!done)
     {
-        switch (ctrl.state) {
+        switch (ctrl.state)
+        {
         case STATE_IDLE:
             done = true;
             break;
@@ -317,11 +326,12 @@ void PhdController::UpdateControllerState(void)
             Debug.AddLine("PhdController: setup");
             ctrl.haveSaveSticky = false;
             ctrl.autoFindAttemptsRemaining = 3;
-            ctrl.overrideDecGuideMode = false;      // guide stop/start with no dithering
+            ctrl.overrideDecGuideMode = false; // guide stop/start with no dithering
             SETSTATE(STATE_ATTEMPT_START);
             break;
 
-        case STATE_ATTEMPT_START: {
+        case STATE_ATTEMPT_START:
+        {
 
             wxString err;
 
@@ -382,7 +392,8 @@ void PhdController::UpdateControllerState(void)
             break;
         }
 
-        case STATE_SELECT_STAR: {
+        case STATE_SELECT_STAR:
+        {
             bool error = pFrame->AutoSelectStar(ctrl.roi);
             if (error)
             {
@@ -445,7 +456,6 @@ void PhdController::UpdateControllerState(void)
                     pFrame->pGuider->SetLockPosIsSticky(true);
                 }
 
-
                 if (!start_guiding())
                 {
                     if (ctrl.useStickyLock && ctrl.haveSaveSticky)
@@ -467,7 +477,7 @@ void PhdController::UpdateControllerState(void)
             if ((!pMount || pMount->IsCalibrated()) &&
                 (!pSecondaryMount || pSecondaryMount->IsCalibrated()))
             {
-                 if (ctrl.useStickyLock && ctrl.haveSaveSticky)
+                if (ctrl.useStickyLock && ctrl.haveSaveSticky)
                     pFrame->pGuider->SetLockPosIsSticky(ctrl.saveSticky);
 
                 SETSTATE(STATE_SETTLE_BEGIN);
@@ -502,7 +512,8 @@ void PhdController::UpdateControllerState(void)
             done = true;
             break;
 
-        case STATE_SETTLE_WAIT: {
+        case STATE_SETTLE_WAIT:
+        {
             bool lockedOnStar = pFrame->pGuider->IsLocked();
             double currentError = pFrame->CurrentGuideError();
             bool inRange = lockedOnStar && currentError <= ctrl.settle.tolerancePx;

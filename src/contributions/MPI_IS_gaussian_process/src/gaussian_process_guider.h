@@ -42,7 +42,7 @@
 #ifndef GAUSSIAN_PROCESS_GUIDER
 #define GAUSSIAN_PROCESS_GUIDER
 
-#include "circbuf.h"
+#include "guiding/circbuf.h"
 #include "gaussian_process.h"
 #include "covariance_functions.h"
 #include "math_tools.h"

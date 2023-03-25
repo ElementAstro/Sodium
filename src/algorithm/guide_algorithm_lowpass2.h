@@ -40,7 +40,7 @@
 #ifndef GUIDE_ALGORITHM_LOWPASS2_H_INCLUDED
 #define GUIDE_ALGORITHM_LOWPASS2_H_INCLUDED
 
-#include "guiding_stats.h"
+#include "guiding/guiding_stats.h"
 
 class GuideAlgorithmLowpass2 : public GuideAlgorithm
 {

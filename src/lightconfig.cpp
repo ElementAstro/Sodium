@@ -60,7 +60,7 @@ void ConfigSection::SelectProfile(int profileId)
     m_prefix = wxString::Format("/profile/%d", profileId);
 }
 
-bool ConfigSection::GetBoolean(const wxString& name, bool defaultValue)
+bool ConfigSection::GetBoolean(const wxString &name, bool defaultValue)
 {
     bool bReturn = defaultValue;
     wxString path = m_prefix + name;
@@ -75,7 +75,7 @@ bool ConfigSection::GetBoolean(const wxString& name, bool defaultValue)
     return bReturn;
 }
 
-wxString ConfigSection::GetString(const wxString& name, const wxString& defaultValue)
+wxString ConfigSection::GetString(const wxString &name, const wxString &defaultValue)
 {
     wxString sReturn = defaultValue;
     wxString path = m_prefix + name;
@@ -90,7 +90,7 @@ wxString ConfigSection::GetString(const wxString& name, const wxString& defaultV
     return sReturn;
 }
 
-double ConfigSection::GetDouble(const wxString& name, double defaultValue)
+double ConfigSection::GetDouble(const wxString &name, double defaultValue)
 {
     double dReturn = defaultValue;
     wxString path = m_prefix + name;
@@ -105,7 +105,7 @@ double ConfigSection::GetDouble(const wxString& name, double defaultValue)
     return dReturn;
 }
 
-long ConfigSection::GetLong(const wxString& name, long defaultValue)
+long ConfigSection::GetLong(const wxString &name, long defaultValue)
 {
     long lReturn = defaultValue;
     wxString path = m_prefix + name;
@@ -120,7 +120,7 @@ long ConfigSection::GetLong(const wxString& name, long defaultValue)
     return lReturn;
 }
 
-int ConfigSection::GetInt(const wxString& name, int defaultValue)
+int ConfigSection::GetInt(const wxString &name, int defaultValue)
 {
     long lReturn = defaultValue;
     wxString path = m_prefix + name;
@@ -135,7 +135,7 @@ int ConfigSection::GetInt(const wxString& name, int defaultValue)
     return (int)lReturn;
 }
 
-void ConfigSection::SetBoolean(const wxString& name, bool value)
+void ConfigSection::SetBoolean(const wxString &name, bool value)
 {
     if (m_pConfig)
     {
@@ -144,7 +144,7 @@ void ConfigSection::SetBoolean(const wxString& name, bool value)
     }
 }
 
-void ConfigSection::SetString(const wxString& name, const wxString& value)
+void ConfigSection::SetString(const wxString &name, const wxString &value)
 {
     if (m_pConfig)
     {
@@ -153,7 +153,7 @@ void ConfigSection::SetString(const wxString& name, const wxString& value)
     }
 }
 
-void ConfigSection::SetDouble(const wxString& name, double value)
+void ConfigSection::SetDouble(const wxString &name, double value)
 {
     if (m_pConfig)
     {
@@ -162,7 +162,7 @@ void ConfigSection::SetDouble(const wxString& name, double value)
     }
 }
 
-void ConfigSection::SetLong(const wxString& name, long value)
+void ConfigSection::SetLong(const wxString &name, long value)
 {
     if (m_pConfig)
     {
@@ -171,23 +171,23 @@ void ConfigSection::SetLong(const wxString& name, long value)
     }
 }
 
-void ConfigSection::SetInt(const wxString& name, int value)
+void ConfigSection::SetInt(const wxString &name, int value)
 {
     SetLong(name, value);
 }
 
-bool ConfigSection::HasEntry(const wxString& name) const
+bool ConfigSection::HasEntry(const wxString &name) const
 {
     return m_pConfig && m_pConfig->HasEntry(m_prefix + name);
 }
 
-void ConfigSection::DeleteEntry(const wxString& name)
+void ConfigSection::DeleteEntry(const wxString &name)
 {
     m_pConfig->DeleteEntry(m_prefix + name);
     EvtServer.NotifyConfigurationChange();
 }
 
-void ConfigSection::DeleteGroup(const wxString& name)
+void ConfigSection::DeleteGroup(const wxString &name)
 {
     m_pConfig->DeleteGroup(m_prefix + name);
     EvtServer.NotifyConfigurationChange();
@@ -195,7 +195,7 @@ void ConfigSection::DeleteGroup(const wxString& name)
 
 // Return a list of node names (group names) for the current profile, starting at the level specified by baseName
 // e.g. baseName = "scope" would enumerate all the nodes in the profile whose parent is "scope"
-std::vector<wxString> ConfigSection::GetGroupNames(const wxString& baseName)
+std::vector<wxString> ConfigSection::GetGroupNames(const wxString &baseName)
 {
     wxString oldPath = m_pConfig->GetPath();
     m_pConfig->SetPath(m_prefix + baseName);
@@ -254,7 +254,7 @@ struct AutoConfigPath
     wxConfigBase *m_cfg;
     wxString m_savePath;
 
-    AutoConfigPath(wxConfigBase *cfg, const wxString& path)
+    AutoConfigPath(wxConfigBase *cfg, const wxString &path)
         : m_cfg(cfg)
     {
         m_savePath = cfg->GetPath();
@@ -284,7 +284,7 @@ int PhdConfig::FirstProfile()
         found = Profile.m_pConfig->GetNextGroup(str, cookie);
     }
 
-    return (int) id;
+    return (int)id;
 }
 
 void PhdConfig::InitializeProfile()
@@ -319,7 +319,7 @@ wxString PhdConfig::GetCurrentProfile()
     return GetProfileName(m_currentProfileId);
 }
 
-bool PhdConfig::SetCurrentProfile(const wxString& name)
+bool PhdConfig::SetCurrentProfile(const wxString &name)
 {
     if (GetProfileName(m_currentProfileId).CmpNoCase(name) == 0)
         return false;
@@ -343,7 +343,7 @@ bool PhdConfig::SetCurrentProfile(const wxString& name)
     return false;
 }
 
-int PhdConfig::GetProfileId(const wxString& name)
+int PhdConfig::GetProfileId(const wxString &name)
 {
     AutoConfigPath changer(Profile.m_pConfig, "/profile");
 
@@ -360,7 +360,7 @@ int PhdConfig::GetProfileId(const wxString& name)
         {
             if (GetProfileName(id).CmpNoCase(name) == 0)
             {
-                ret = (int) id;
+                ret = (int)id;
                 break;
             }
         }
@@ -385,7 +385,7 @@ bool PhdConfig::ProfileExists(int profileId)
     return !name.IsEmpty();
 }
 
-bool PhdConfig::CreateProfile(const wxString& name)
+bool PhdConfig::CreateProfile(const wxString &name)
 {
     // does the profile already exist?
     int id = GetProfileId(name);
@@ -407,29 +407,34 @@ bool PhdConfig::CreateProfile(const wxString& name)
     return false;
 }
 
-static void CopyVal(wxConfigBase *cfg, const wxString& src, const wxString& dst)
+static void CopyVal(wxConfigBase *cfg, const wxString &src, const wxString &dst)
 {
     wxConfigBase::EntryType type = cfg->GetEntryType(src);
-    switch (type) {
-    case wxConfigBase::Type_String: {
+    switch (type)
+    {
+    case wxConfigBase::Type_String:
+    {
         wxString val;
         cfg->Read(src, &val);
         cfg->Write(dst, val);
         break;
     }
-    case wxConfigBase::Type_Boolean: {
+    case wxConfigBase::Type_Boolean:
+    {
         bool val;
         cfg->Read(src, &val);
         cfg->Write(dst, val);
         break;
     }
-    case wxConfigBase::Type_Integer: {
+    case wxConfigBase::Type_Integer:
+    {
         long val;
         cfg->Read(src, &val);
         cfg->Write(dst, val);
         break;
     }
-    case wxConfigBase::Type_Float: {
+    case wxConfigBase::Type_Float:
+    {
         double val;
         cfg->Read(src, &val);
         cfg->Write(dst, val);
@@ -440,7 +445,7 @@ static void CopyVal(wxConfigBase *cfg, const wxString& src, const wxString& dst)
     }
 }
 
-static void CopyGroup(wxConfigBase *cfg, const wxString& src, const wxString& dst)
+static void CopyGroup(wxConfigBase *cfg, const wxString &src, const wxString &dst)
 {
     wxString str;
     long cookie;
@@ -462,7 +467,7 @@ static void CopyGroup(wxConfigBase *cfg, const wxString& src, const wxString& ds
     }
 }
 
-bool PhdConfig::CloneProfile(const wxString& dest, const wxString& source)
+bool PhdConfig::CloneProfile(const wxString &dest, const wxString &source)
 {
     int srcId = GetProfileId(source);
     if (srcId <= 0)
@@ -496,7 +501,7 @@ bool PhdConfig::CloneProfile(const wxString& dest, const wxString& source)
     return false;
 }
 
-void PhdConfig::DeleteProfile(const wxString& name)
+void PhdConfig::DeleteProfile(const wxString &name)
 {
     Debug.Write(wxString::Format("Delete profile %s\n", name));
 
@@ -521,7 +526,7 @@ void PhdConfig::DeleteProfile(const wxString& name)
     EvtServer.NotifyConfigurationChange();
 }
 
-bool PhdConfig::RenameProfile(const wxString& oldname, const wxString& newname)
+bool PhdConfig::RenameProfile(const wxString &oldname, const wxString &newname)
 {
     if (GetProfileId(newname) > 0)
     {
@@ -542,7 +547,7 @@ bool PhdConfig::RenameProfile(const wxString& oldname, const wxString& newname)
     return false;
 }
 
-static wxString escape_string(const wxString& s)
+static wxString escape_string(const wxString &s)
 {
     wxString t(s);
     static const wxString BACKSLASH("\\");
@@ -560,7 +565,7 @@ static wxString escape_string(const wxString& s)
     return t;
 }
 
-static wxString unescape_string(const wxString& s)
+static wxString unescape_string(const wxString &s)
 {
     size_t const len = s.length();
     wxString d;
@@ -571,11 +576,25 @@ static wxString unescape_string(const wxString& s)
         {
             switch (s[i + 1].GetValue())
             {
-            case '\\': d.Append('\\'); ++i; break;
-            case 't':  d.Append('\t'); ++i; break;
-            case 'r':  d.Append('\r'); ++i; break;
-            case 'n':  d.Append('\n'); ++i; break;
-            default:   d.Append(ch);        break;
+            case '\\':
+                d.Append('\\');
+                ++i;
+                break;
+            case 't':
+                d.Append('\t');
+                ++i;
+                break;
+            case 'r':
+                d.Append('\r');
+                ++i;
+                break;
+            case 'n':
+                d.Append('\n');
+                ++i;
+                break;
+            default:
+                d.Append(ch);
+                break;
             }
         }
         else
@@ -584,7 +603,7 @@ static wxString unescape_string(const wxString& s)
     return d;
 }
 
-static bool ParseLine(const wxString& s, wxString *name, wxString *typestr, wxString *val)
+static bool ParseLine(const wxString &s, wxString *name, wxString *typestr, wxString *val)
 {
     if (s.IsEmpty())
         return false;
@@ -596,8 +615,8 @@ static bool ParseLine(const wxString& s, wxString *name, wxString *typestr, wxSt
     return true;
 }
 
-static void LoadVal(ConfigSection& section, const wxString& s, const wxString& name,
-    const wxString& typestr, const wxString& val)
+static void LoadVal(ConfigSection &section, const wxString &s, const wxString &name,
+                    const wxString &typestr, const wxString &val)
 {
     long type;
     if (!typestr.ToLong(&type))
@@ -605,12 +624,13 @@ static void LoadVal(ConfigSection& section, const wxString& s, const wxString& n
         Debug.Write(wxString::Format("bad type '%s' in file; line = %s\n", typestr, s));
         return;
     }
-    switch ((wxConfigBase::EntryType) type)
+    switch ((wxConfigBase::EntryType)type)
     {
     case wxConfigBase::Type_String:
         section.SetString(name, unescape_string(val));
         break;
-    case wxConfigBase::Type_Boolean: {
+    case wxConfigBase::Type_Boolean:
+    {
         long lval;
         if (!val.ToLong(&lval))
         {
@@ -622,7 +642,8 @@ static void LoadVal(ConfigSection& section, const wxString& s, const wxString& n
         }
         break;
     }
-    case wxConfigBase::Type_Integer: {
+    case wxConfigBase::Type_Integer:
+    {
         long lval;
         if (!val.ToLong(&lval))
         {
@@ -634,7 +655,8 @@ static void LoadVal(ConfigSection& section, const wxString& s, const wxString& n
         }
         break;
     }
-    case wxConfigBase::Type_Float: {
+    case wxConfigBase::Type_Float:
+    {
         double dval;
         if (!val.ToDouble(&dval))
         {
@@ -652,7 +674,7 @@ static void LoadVal(ConfigSection& section, const wxString& s, const wxString& n
     }
 }
 
-bool PhdConfig::ReadProfile(const wxString& filename)
+bool PhdConfig::ReadProfile(const wxString &filename)
 {
     wxFileInputStream is(filename);
     if (!is.IsOk())
@@ -699,30 +721,35 @@ bool PhdConfig::ReadProfile(const wxString& filename)
     return false;
 }
 
-static void WriteVal(wxTextOutputStream& os, wxConfigBase *cfg, const wxString& key, const wxString& prefix)
+static void WriteVal(wxTextOutputStream &os, wxConfigBase *cfg, const wxString &key, const wxString &prefix)
 {
     wxString sval;
     wxConfigBase::EntryType type = cfg->GetEntryType(key);
-    switch (type) {
-    case wxConfigBase::Type_String: {
+    switch (type)
+    {
+    case wxConfigBase::Type_String:
+    {
         wxString val;
         cfg->Read(key, &val);
         sval = escape_string(val);
         break;
     }
-    case wxConfigBase::Type_Boolean: {
+    case wxConfigBase::Type_Boolean:
+    {
         bool val;
         cfg->Read(key, &val);
         sval = wxString(val ? "1" : "0");
         break;
     }
-    case wxConfigBase::Type_Integer: {
+    case wxConfigBase::Type_Integer:
+    {
         long val;
         cfg->Read(key, &val);
         sval = wxString::Format("%lu", val);
         break;
     }
-    case wxConfigBase::Type_Float: {
+    case wxConfigBase::Type_Float:
+    {
         double val;
         cfg->Read(key, &val);
         sval = wxString::Format("%g", val);
@@ -732,10 +759,10 @@ static void WriteVal(wxTextOutputStream& os, wxConfigBase *cfg, const wxString& 
         break;
     }
 
-    os.WriteString(wxString::Format("%s\t%d\t%s\n", key.substr(prefix.length()), (int) type, sval));
+    os.WriteString(wxString::Format("%s\t%d\t%s\n", key.substr(prefix.length()), (int)type, sval));
 }
 
-static void WriteGroup(wxTextOutputStream& os, wxConfigBase *cfg, const wxString& group, const wxString& prefix)
+static void WriteGroup(wxTextOutputStream &os, wxConfigBase *cfg, const wxString &group, const wxString &prefix)
 {
     wxString str;
     long cookie;
@@ -757,7 +784,7 @@ static void WriteGroup(wxTextOutputStream& os, wxConfigBase *cfg, const wxString
     }
 }
 
-bool PhdConfig::WriteProfile(const wxString& filename)
+bool PhdConfig::WriteProfile(const wxString &filename)
 {
     wxFileOutputStream os(filename);
     if (!os.IsOk())
@@ -773,7 +800,7 @@ bool PhdConfig::WriteProfile(const wxString& filename)
     return false;
 }
 
-bool PhdConfig::SaveAll(const wxString& filename)
+bool PhdConfig::SaveAll(const wxString &filename)
 {
     wxFileOutputStream os(filename);
     if (!os.IsOk())
@@ -788,7 +815,7 @@ bool PhdConfig::SaveAll(const wxString& filename)
     return false;
 }
 
-bool PhdConfig::RestoreAll(const wxString& filename)
+bool PhdConfig::RestoreAll(const wxString &filename)
 {
     wxFileInputStream is(filename);
     if (!is.IsOk())
@@ -905,12 +932,12 @@ void AutoTempProfile::Init()
         m_prev = pConfig->GetCurrentProfile();
 
     wxString const tempName(".!temp!profile!name!~");
-    pConfig->DeleteProfile(tempName); // stale temp profile from a crash?
+    pConfig->DeleteProfile(tempName);     // stale temp profile from a crash?
     pConfig->SetCurrentProfile(tempName); // creates it and make it the current profile
     m_name = tempName;
 }
 
-bool AutoTempProfile::Commit(const wxString& name)
+bool AutoTempProfile::Commit(const wxString &name)
 {
     // caller should have validated name is not empty
     assert(!name.empty());

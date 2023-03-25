@@ -40,7 +40,7 @@
 #include "comet_tool.h"
 #include "config_indi.h"
 #include "guiding_assistant.h"
-#include "phdupdate.h"
+#include "network/lightupdate.h"
 #include "pierflip_tool.h"
 #include "Refine_DefMap.h"
 

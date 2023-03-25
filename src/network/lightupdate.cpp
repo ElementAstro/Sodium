@@ -1,5 +1,5 @@
 /*
- *  phdupdate.cpp
+ *  lightupdate.cpp
  *  Open LGuider Guiding
  *
  *  Created by Andy Galasso
@@ -33,7 +33,7 @@
  */
 
 #include "lightguider.h"
-#include "phdupdate.h"
+#include "lightupdate.h"
 #include "sha1.h"
 
 #include <wx/tokenzr.h>

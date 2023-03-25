@@ -36,7 +36,7 @@
 #ifndef BACKLASH_COMP_H_INCLUDED
 #define BACKLASH_COMP_H_INCLUDED
 
-#include "guiding_stats.h"
+#include "guiding/guiding_stats.h"
 
 class Scope;
 class BLCHistory;

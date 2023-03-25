@@ -35,7 +35,7 @@
 #include "lightguider.h"
 #include "guiding_assistant.h"
 #include "algorithm/backlash_comp.h"
-#include "guiding_stats.h"
+#include "guiding/guiding_stats.h"
 #include "gui/optionsbutton.h"
 
 #include <wx/textwrapper.h>

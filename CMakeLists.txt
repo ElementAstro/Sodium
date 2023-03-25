@@ -246,9 +246,9 @@ set(guiding_SRC
   ${lightguider_src_dir}/src/algorithm/zfilterfactory.cpp
   ${lightguider_src_dir}/src/algorithm/zfilterfactory.h
 
-  ${lightguider_src_dir}/src/guider.cpp
-  ${lightguider_src_dir}/src/guider.h
-  ${lightguider_src_dir}/src/guiders.h
+  ${lightguider_src_dir}/src/guiding/guider.cpp
+  ${lightguider_src_dir}/src/guiding/guider.h
+  ${lightguider_src_dir}/src/guiding/guiders.h
 )
 source_group(Guiding FILES ${guiding_SRC})
 
@@ -385,7 +385,7 @@ source_group(Gui FILES ${gui_src})
 # it would ease if files are organised in an alphabetical order
 set(lightguider_SRC
 
-  ${lightguider_src_dir}/src/circbuf.h
+  ${lightguider_src_dir}/src/guiding/circbuf.h
 
   ${lightguider_src_dir}/src/image/fitsiowrap.cpp
   ${lightguider_src_dir}/src/image/fitsiowrap.h
@@ -410,8 +410,8 @@ set(lightguider_SRC
   ${lightguider_src_dir}/src/logger/log_uploader.cpp
   ${lightguider_src_dir}/src/logger/log_uploader.h
 
-  ${lightguider_src_dir}/src/guiding_stats.cpp
-  ${lightguider_src_dir}/src/guiding_stats.h
+  ${lightguider_src_dir}/src/guiding/guiding_stats.cpp
+  ${lightguider_src_dir}/src/guiding/guiding_stats.h
   
   ${lightguider_src_dir}/src/device/onboard_st4.cpp
   ${lightguider_src_dir}/src/device/onboard_st4.h
@@ -425,10 +425,13 @@ set(lightguider_SRC
   ${lightguider_src_dir}/src/lightcontrol.h
   ${lightguider_src_dir}/src/indi/indiclient.cpp
   ${lightguider_src_dir}/src/indi/indiclient.h
-  ${lightguider_src_dir}/src/phdupdate.cpp
-  ${lightguider_src_dir}/src/phdupdate.h
+
+  ${lightguider_src_dir}/src/network/lightupdate.cpp
+  ${lightguider_src_dir}/src/network/lightupdate.h
+  ${lightguider_src_dir}/src/network/sha1.cpp
+  ${lightguider_src_dir}/src/network/sha1.h
   
-  ${lightguider_src_dir}/src/point.h
+  ${lightguider_src_dir}/src/guiding/point.h
 
   ${lightguider_src_dir}/src/device/serialport.cpp
   ${lightguider_src_dir}/src/device/serialport.h
@@ -441,12 +444,9 @@ set(lightguider_SRC
   ${lightguider_src_dir}/src/device/serialport_posix.cpp
   ${lightguider_src_dir}/src/device/serialport_posix.h
   ${lightguider_src_dir}/src/device/serialports.h
-
-  ${lightguider_src_dir}/src/sha1.cpp
-  ${lightguider_src_dir}/src/sha1.h
   
-  ${lightguider_src_dir}/src/star.cpp
-  ${lightguider_src_dir}/src/star.h
+  ${lightguider_src_dir}/src/guiding/star.cpp
+  ${lightguider_src_dir}/src/guiding/star.h
   
   ${lightguider_src_dir}/src/worker_thread.cpp
   ${lightguider_src_dir}/src/worker_thread.h

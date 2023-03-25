@@ -1,5 +1,5 @@
 /*
- *  phdupdate.h
+ *  lightupdate.h
  *  Open LGuider Guiding
  *
  *  Created by Andy Galasso

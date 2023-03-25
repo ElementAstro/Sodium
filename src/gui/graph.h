@@ -36,7 +36,7 @@
 #define GRAPHCLASS
 
 #include <deque>
-#include "guiding_stats.h"
+#include "guiding/guiding_stats.h"
 
 class GraphControlPane;
 

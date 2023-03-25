@@ -33,7 +33,7 @@
  */
 
 #include "lightguider.h"
-#include "phdupdate.h"
+#include "network/lightupdate.h"
 
 #include "modules/modloader.h"
 
@@ -48,11 +48,11 @@
 #include <wx/evtloop.h>
 #include <wx/snglinst.h>
 
-#ifdef  __linux__
-# include <X11/Xlib.h>
+#ifdef __linux__
+#include <X11/Xlib.h>
 #endif // __linux__
 
-//#define DEVBUILD
+// #define DEVBUILD
 
 // Globals
 
@@ -71,15 +71,14 @@ int XWinSize = 640;
 int YWinSize = 512;
 
 static const wxCmdLineEntryDesc cmdLineDesc[] =
-{
-    { wxCMD_LINE_SWITCH, "v", "version", "Show the version of the LightGuider" },
-    { wxCMD_LINE_OPTION, "i", "instanceNumber", "sets the LGuider2 instance number (default = 1)", wxCMD_LINE_VAL_NUMBER, wxCMD_LINE_PARAM_OPTIONAL},
-    { wxCMD_LINE_OPTION, "l", "load", "load settings from file and exit", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
-    { wxCMD_LINE_SWITCH, "R", "Reset", "Reset all LGuider2 settings to default values" },
-    { wxCMD_LINE_SWITCH, "w", "web", "Start the http server" },
-    { wxCMD_LINE_OPTION, "s", "save", "save settings to file and exit", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
-    { wxCMD_LINE_NONE }
-};
+    {
+        {wxCMD_LINE_SWITCH, "v", "version", "Show the version of the LightGuider"},
+        {wxCMD_LINE_OPTION, "i", "instanceNumber", "sets the LGuider2 instance number (default = 1)", wxCMD_LINE_VAL_NUMBER, wxCMD_LINE_PARAM_OPTIONAL},
+        {wxCMD_LINE_OPTION, "l", "load", "load settings from file and exit", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
+        {wxCMD_LINE_SWITCH, "R", "Reset", "Reset all LGuider2 settings to default values"},
+        {wxCMD_LINE_SWITCH, "w", "web", "Start the http server"},
+        {wxCMD_LINE_OPTION, "s", "save", "save settings to file and exit", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL},
+        {wxCMD_LINE_NONE}};
 
 enum ConfigOp
 {
@@ -98,10 +97,10 @@ static void DisableOSXAppNap()
     // this is obsolete (2020-02-04) now that we disable AppNap in a
     // launcher script (run_phd2_macos), but it is harmless so we can
     // leave it in for a release or two
-# define  APPKEY "org.openphdguiding.phd2"
+#define APPKEY "org.openphdguiding.phd2"
     int major = wxPlatformInfo::Get().GetOSMajorVersion();
     int minor = wxPlatformInfo::Get().GetOSMinorVersion();
-    if (major > 10 || (major == 10 && minor >= 9))  // Mavericks or later -- deal with App Nap
+    if (major > 10 || (major == 10 && minor >= 9)) // Mavericks or later -- deal with App Nap
     {
         wxArrayString out, err;
         wxExecute("defaults read " APPKEY " NSAppSleepDisabled", out, err);
@@ -111,7 +110,7 @@ static void DisableOSXAppNap()
             wxMessageBox("OSX 10.9's App Nap feature causes problems.  Please quit and relaunch LGuider to finish disabling App Nap.");
         }
     }
-# undef APPKEY
+#undef APPKEY
 #endif
 }
 
@@ -124,19 +123,21 @@ struct ExecFuncThreadEvent : public wxThreadEvent
 {
     std::function<void()> func;
     ExecFuncThreadEvent(std::function<void()> func_)
-            : wxThreadEvent(EXEC_IN_MAIN_THREAD_EVENT), func(func_)
-    { }
+        : wxThreadEvent(EXEC_IN_MAIN_THREAD_EVENT), func(func_)
+    {
+    }
 };
 
 PhdApp::PhdApp()
 {
     m_resetConfig = false;
     m_instanceNumber = 1;
-#ifdef  __linux__
+#ifdef __linux__
     XInitThreads();
 #endif // __linux__
 
-    Bind(EXEC_IN_MAIN_THREAD_EVENT, [](ExecFuncThreadEvent& evt) { evt.func(); });
+    Bind(EXEC_IN_MAIN_THREAD_EVENT, [](ExecFuncThreadEvent &evt)
+         { evt.func(); });
 };
 
 void PhdApp::HandleRestart()
@@ -151,7 +152,7 @@ void PhdApp::HandleRestart()
     }
 
     // copy command-line args skipping "restart"
-    wchar_t **targv = new wchar_t*[argc * sizeof(*targv)];
+    wchar_t **targv = new wchar_t *[argc * sizeof(*targv)];
     targv[0] = wxStrdup(argv[0].wc_str());
     int src = 2, dst = 1;
     while (src < argc)
@@ -168,7 +169,7 @@ void PhdApp::HandleRestart()
 void PhdApp::RestartApp()
 {
     // copy command-line args inserting "restart" as the first arg
-    wchar_t **targv = new wchar_t*[(argc + 2) * sizeof(*targv)];
+    wchar_t **targv = new wchar_t *[(argc + 2) * sizeof(*targv)];
     targv[0] = wxStrdup(argv[0].wc_str());
     targv[1] = wxStrdup(_T("restart"));
     int src = 1, dst = 2;
@@ -183,7 +184,7 @@ void PhdApp::RestartApp()
     TerminateApp();
 }
 
-static void IdleClosing(wxIdleEvent& evt)
+static void IdleClosing(wxIdleEvent &evt)
 {
     Debug.Write("IdleClosing\n");
 
@@ -216,9 +217,9 @@ void PhdApp::TerminateApp()
 }
 
 #ifdef __WINDOWS__
-# if wxCHECK_VERSION(3, 1, 0)
-#  pragma message ("FIXME: obsolete code -- remove and use wxGetOsDescription()")
-# endif
+#if wxCHECK_VERSION(3, 1, 0)
+#pragma message("FIXME: obsolete code -- remove and use wxGetOsDescription()")
+#endif
 #include <wx/dynlib.h>
 static OSVERSIONINFOEXW wx_3_1_wxGetWindowsVersionInfo()
 {
@@ -230,13 +231,13 @@ static OSVERSIONINFOEXW wx_3_1_wxGetWindowsVersionInfo()
     // RtlGetVersion() directly, if it is available.
 #if wxUSE_DYNLIB_CLASS
     wxDynamicLibrary dllNtDll;
-    if ( dllNtDll.Load(wxS("ntdll.dll"), wxDL_VERBATIM | wxDL_QUIET) )
+    if (dllNtDll.Load(wxS("ntdll.dll"), wxDL_VERBATIM | wxDL_QUIET))
     {
-        typedef LONG /* NTSTATUS */ (WINAPI *RtlGetVersion_t)(OSVERSIONINFOEXW*);
+        typedef LONG /* NTSTATUS */ (WINAPI * RtlGetVersion_t)(OSVERSIONINFOEXW *);
 
         RtlGetVersion_t wxDL_INIT_FUNC(pfn, RtlGetVersion, dllNtDll);
-        if ( pfnRtlGetVersion &&
-             (pfnRtlGetVersion(&info) == 0 /* STATUS_SUCCESS */) )
+        if (pfnRtlGetVersion &&
+            (pfnRtlGetVersion(&info) == 0 /* STATUS_SUCCESS */))
         {
             return info;
         }
@@ -245,13 +246,13 @@ static OSVERSIONINFOEXW wx_3_1_wxGetWindowsVersionInfo()
 
 #ifdef __VISUALC__
 #pragma warning(push)
-#pragma warning(disable:4996) // 'xxx': was declared deprecated
+#pragma warning(disable : 4996) // 'xxx': was declared deprecated
 #endif
 
-    if ( !::GetVersionExW(reinterpret_cast<OSVERSIONINFOW *>(&info)) )
+    if (!::GetVersionExW(reinterpret_cast<OSVERSIONINFOW *>(&info)))
     {
         // This really shouldn't ever happen.
-        wxFAIL_MSG( "GetVersionEx() unexpectedly failed" );
+        wxFAIL_MSG("GetVersionEx() unexpectedly failed");
     }
 
 #ifdef __VISUALC__
@@ -264,14 +265,14 @@ static OSVERSIONINFOEXW wx_3_1_wxGetWindowsVersionInfo()
 static int wxIsWindowsServer()
 {
 #ifdef VER_NT_WORKSTATION
-    switch ( wx_3_1_wxGetWindowsVersionInfo().wProductType )
+    switch (wx_3_1_wxGetWindowsVersionInfo().wProductType)
     {
-        case VER_NT_WORKSTATION:
-            return false;
+    case VER_NT_WORKSTATION:
+        return false;
 
-        case VER_NT_SERVER:
-        case VER_NT_DOMAIN_CONTROLLER:
-            return true;
+    case VER_NT_SERVER:
+    case VER_NT_DOMAIN_CONTROLLER:
+        return true;
     }
 #endif // VER_NT_WORKSTATION
 
@@ -319,8 +320,8 @@ static wxString wx_3_1_wxGetOsDescription()
             break;
         default:
             str.Printf(_("Windows 9x (%d.%d)"),
-                info.dwMajorVersion,
-                info.dwMinorVersion);
+                       info.dwMajorVersion,
+                       info.dwMinorVersion);
             break;
         }
         if (!wxIsEmpty(info.szCSDVersion))
@@ -348,7 +349,7 @@ static wxString wx_3_1_wxGetOsDescription()
                     str = _("Windows Server 2003");
                     break;
                 }
-                //else: must be XP, fall through
+                // else: must be XP, fall through
 
             case 1:
                 str = _("Windows XP");
@@ -361,42 +362,42 @@ static wxString wx_3_1_wxGetOsDescription()
             {
             case 0:
                 str = wxIsWindowsServer() == 1
-                    ? _("Windows Server 2008")
-                    : _("Windows Vista");
+                          ? _("Windows Server 2008")
+                          : _("Windows Vista");
                 break;
 
             case 1:
                 str = wxIsWindowsServer() == 1
-                    ? _("Windows Server 2008 R2")
-                    : _("Windows 7");
+                          ? _("Windows Server 2008 R2")
+                          : _("Windows 7");
                 break;
 
             case 2:
                 str = wxIsWindowsServer() == 1
-                    ? _("Windows Server 2012")
-                    : _("Windows 8");
+                          ? _("Windows Server 2012")
+                          : _("Windows 8");
                 break;
 
             case 3:
                 str = wxIsWindowsServer() == 1
-                    ? _("Windows Server 2012 R2")
-                    : _("Windows 8.1");
+                          ? _("Windows Server 2012 R2")
+                          : _("Windows 8.1");
                 break;
             }
             break;
 
         case 10:
             str = wxIsWindowsServer() == 1
-                ? _("Windows Server 2016")
-                : _("Windows 10");
+                      ? _("Windows Server 2016")
+                      : _("Windows 10");
             break;
         }
 
         if (str.empty())
         {
             str.Printf(_("Windows NT %lu.%lu"),
-                info.dwMajorVersion,
-                info.dwMinorVersion);
+                       info.dwMajorVersion,
+                       info.dwMinorVersion);
         }
 
         str << wxT(" (")
@@ -507,7 +508,7 @@ struct EarlyLogger : public wxLog
 
         m_closed = true;
     }
-    void DoLogText(const wxString& msg) override
+    void DoLogText(const wxString &msg) override
     {
         if (!m_buf.empty() && *m_buf.rbegin() != '\n')
             m_buf += '\n';
@@ -554,15 +555,15 @@ bool PhdApp::OnInit()
         return false;
     }
 
-    //MySplashScreen* splashScreen = new MySplashScreen("assets/texture/splash.png", "正在加载，请稍候...", 3);
-    //splashScreen->Show();
+    // MySplashScreen* splashScreen = new MySplashScreen("assets/texture/splash.png", "正在加载，请稍候...", 3);
+    // splashScreen->Show();
 
     spdlog::debug("Passed instance check");
 
 #ifndef DEBUG
-# if (wxMAJOR_VERSION > 2 || wxMINOR_VERSION > 8)
+#if (wxMAJOR_VERSION > 2 || wxMINOR_VERSION > 8)
     wxDisableAsserts();
-# endif
+#endif
 #endif
 
     SetVendorName(_T("StarkLabs"));
@@ -591,17 +592,17 @@ bool PhdApp::OnInit()
     else if (s_configOp == CONFIG_OP_SAVE)
     {
         bool err = pConfig->SaveAll(s_configPath);
-        if(err)
-            spdlog::error("Failed to save the profile to {}",s_configPath);
+        if (err)
+            spdlog::error("Failed to save the profile to {}", s_configPath);
         else
-            spdlog::debug("Saved the profile to {} successfully",s_configPath);
+            spdlog::debug("Saved the profile to {} successfully", s_configPath);
         ::exit(err ? 1 : 0);
         return false;
     }
 
     spdlog::debug("Start creating log file");
 
-    m_logFileTime = DebugLog::GetLogFileTime();     // GetLogFileTime implements grouping by imaging-day, the 24-hour period starting at 09:00 am local time
+    m_logFileTime = DebugLog::GetLogFileTime(); // GetLogFileTime implements grouping by imaging-day, the 24-hour period starting at 09:00 am local time
     OpenLogs(false /* not for rollover */);
 
     logger.Close(); // writes any deferrred error messages to the debug log
@@ -628,7 +629,7 @@ bool PhdApp::OnInit()
 
     wxString ldir = GetLocalesDir();
 
-    spdlog::debug("Current locales folder : {}",std::string(ldir));
+    spdlog::debug("Current locales folder : {}", std::string(ldir));
 
     Debug.Write(wxString::Format("locale: using dir %s exists=%d\n", ldir, wxDirExists(ldir)));
     wxLocale::AddCatalogLookupPathPrefix(ldir);
@@ -675,7 +676,7 @@ bool PhdApp::OnInit()
     if (pConfig->IsNewInstance() || (pConfig->NumProfiles() == 1 && pFrame->pGearDialog->IsEmptyProfile()))
     {
         spdlog::debug("The first load starts the configuration guidance interface");
-        pFrame->pGearDialog->ShowProfileWizard();               // First-light version of profile wizard
+        pFrame->pGearDialog->ShowProfileWizard(); // First-light version of profile wizard
     }
 
     spdlog::debug("Start checking for updates");
@@ -712,7 +713,7 @@ int PhdApp::OnExit()
     return wxApp::OnExit();
 }
 
-void PhdApp::OnInitCmdLine(wxCmdLineParser& parser)
+void PhdApp::OnInitCmdLine(wxCmdLineParser &parser)
 {
     parser.SetDesc(cmdLineDesc);
     parser.SetSwitchChars(wxT("-"));
@@ -722,45 +723,54 @@ void PhdApp::OnInitCmdLine(wxCmdLineParser& parser)
 #include <thread>
 
 /// @brief Command line parsing
-/// @param parser 
+/// @param parser
 /// @return bReturn(bool)
-bool PhdApp::OnCmdLineParsed(wxCmdLineParser& parser)
+bool PhdApp::OnCmdLineParsed(wxCmdLineParser &parser)
 {
     bool bReturn = true;
 
-    spdlog::debug("LightGuider is running on {}",std::string(wxGetCwd()));
+    spdlog::debug("LightGuider is running on {}", std::string(wxGetCwd()));
 
-    if (parser.Found("v")){
-        spdlog::info("LightGuider version : {} , based on LGuider2 : {}","1.0.0-indev","2.6.11-dev5");
+    if (parser.Found("v"))
+    {
+        spdlog::info("LightGuider version : {} , based on LGuider2 : {}", "1.0.0-indev", "2.6.11-dev5");
         ::exit(1);
     }
 
-    if (parser.Found("i", &m_instanceNumber)){
-        if(typeid(m_instanceNumber).name() != "long"){
+    if (parser.Found("i", &m_instanceNumber))
+    {
+        if (typeid(m_instanceNumber).name() != "long")
+        {
             spdlog::error("Wrong entity number type provided");
             ::exit(1);
         }
     }
 
-    if (parser.Found("l", &s_configPath)){
-        spdlog::debug("trying to load profile from {}",s_configPath);
-        if(!wxFileExists(s_configPath)){
-            spdlog::error("Profile {} is not existed ! Please have a check!",s_configPath);
+    if (parser.Found("l", &s_configPath))
+    {
+        spdlog::debug("trying to load profile from {}", s_configPath);
+        if (!wxFileExists(s_configPath))
+        {
+            spdlog::error("Profile {} is not existed ! Please have a check!", s_configPath);
             ::exit(1);
         }
         s_configOp = CONFIG_OP_LOAD;
     }
-        
-    if (parser.Found("s", &s_configPath)){
-        if(wxFileExists(s_configPath)){
+
+    if (parser.Found("s", &s_configPath))
+    {
+        if (wxFileExists(s_configPath))
+        {
             spdlog::error("The profile had already existed.Please change to a new name");
             ::exit(1);
         }
         s_configOp = CONFIG_OP_SAVE;
     }
 
-    if (parser.Found("w")){
-        if (!LightGuider::module_loader.LoadModule("./modules/webserver/libserver.so","server")) {
+    if (parser.Found("w"))
+    {
+        if (!LightGuider::module_loader.LoadModule("./modules/webserver/libserver.so", "server"))
+        {
             ::exit(1);
         }
         LightGuider::module_loader.LoadAndRunFunction<void>("server", "run", "webserver");
@@ -803,7 +813,7 @@ wxString PhdApp::GetLocalesDir() const
 // get the imaging date for a given date-time
 //    log files started after midnight belong to the prior imaging day
 //    imaging day rolls over at 9am
-wxDateTime PhdApp::ImagingDay(const wxDateTime& dt)
+wxDateTime PhdApp::ImagingDay(const wxDateTime &dt)
 {
     if (dt.GetHour() >= 9)
         return dt.GetDateOnly();
@@ -812,7 +822,7 @@ wxDateTime PhdApp::ImagingDay(const wxDateTime& dt)
     return dt.GetDateOnly().Subtract(ONE_DAY);
 }
 
-bool PhdApp::IsSameImagingDay(const wxDateTime& a, const wxDateTime& b)
+bool PhdApp::IsSameImagingDay(const wxDateTime &a, const wxDateTime &b)
 {
     return ImagingDay(a).IsSameDate(ImagingDay(b));
 }

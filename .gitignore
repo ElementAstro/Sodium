@@ -5,7 +5,6 @@ test/
 *.tle
 test.py
 .vscode
-obsolete
 kd-u64.fits
 CMakeFiles
 indi/Makefile

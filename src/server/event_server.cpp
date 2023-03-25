@@ -2351,6 +2351,7 @@ static void dump_response(const JRpcCall &call) {
 
   Debug.Write(wxString::Format("evsrv: cli %p response: %s\n", call.cli, s));
 }
+
 /// @brief Just a response to check whether the server is modified by LightAPT
 /// @param response
 /// @param params
