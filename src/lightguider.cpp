@@ -34,6 +34,7 @@
 
 #include "lightguider.h"
 #include "phdupdate.h"
+
 #include "modules/modloader.h"
 
 #include "gui/splash.hpp"
@@ -61,6 +62,7 @@ Mount *pSecondaryMount = nullptr;
 Scope *pPointingSource = nullptr;
 MyFrame *pFrame = nullptr;
 GuideCamera *pCamera = nullptr;
+LightGuider::ThreadManager *m_ThreadManage = nullptr;
 
 DebugLog Debug;
 GuidingLog GuideLog;
@@ -75,7 +77,6 @@ static const wxCmdLineEntryDesc cmdLineDesc[] =
     { wxCMD_LINE_OPTION, "l", "load", "load settings from file and exit", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
     { wxCMD_LINE_SWITCH, "R", "Reset", "Reset all LGuider2 settings to default values" },
     { wxCMD_LINE_SWITCH, "w", "web", "Start the http server" },
-    { wxCMD_LINE_SWITCH, "g", "websocket", "Start the websocket server" },
     { wxCMD_LINE_OPTION, "s", "save", "save settings to file and exit", wxCMD_LINE_VAL_STRING, wxCMD_LINE_PARAM_OPTIONAL },
     { wxCMD_LINE_NONE }
 };
@@ -522,6 +523,8 @@ bool PhdApp::OnInit()
 
     spdlog::set_level(spdlog::level::debug);
 
+    m_ThreadManage = new LightGuider::ThreadManager();
+
 #ifdef __APPLE__
     // for newer versions of OSX the app will hang if the wx log code
     // tries to display a message box in OnOnit.  As a workaround send
@@ -657,6 +660,8 @@ bool PhdApp::OnInit()
     wxImage::AddHandler(new wxJPEGHandler);
     wxImage::AddHandler(new wxPNGHandler);
 
+    LightGuider::iterator_modules_dir();
+
     spdlog::debug("Create an interface instance and start the main loop");
 
     pFrame = new MyFrame();
@@ -685,6 +690,7 @@ int PhdApp::OnExit()
     assert(!pMount);
     assert(!pSecondaryMount);
     assert(!pCamera);
+    assert(!m_ThreadManage);
 
     ImageLogger::Destroy();
 
@@ -697,6 +703,9 @@ int PhdApp::OnExit()
 
     delete m_instanceChecker;
     m_instanceChecker = nullptr;
+
+    delete m_ThreadManage;
+    m_ThreadManage = nullptr;
 
     spdlog::debug("Shutdown by user , good bye!");
 
@@ -757,13 +766,6 @@ bool PhdApp::OnCmdLineParsed(wxCmdLineParser& parser)
         LightGuider::module_loader.LoadAndRunFunction<void>("server", "run", "webserver");
         spdlog::info("Started web server successfully");
     }
-
-    if (parser.Found("g")){
-        spdlog::debug("Trying to start websocket server for LightGuider");
-        int port = 4444;
-        LightGuider::ThreadManage.addThread(std::bind(&LightGuider::Event_WS_Server::run,&LightGuider::Evt_WS_Server,port), "websocketserver");
-    }
-    
     m_resetConfig = parser.Found("R");
 
     return bReturn;

@@ -176,7 +176,7 @@ void MyFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 
 void MyFrame::OnInstructions(wxCommandEvent& WXUNUSED(event))
 {
-    wxMessageBox(wxString::Format(_("Welcome to LGuider2 (Push Here Dummy, Gen2) Guiding\n\n \
+    wxMessageBox(wxString::Format(_("Welcome to LightGuider (OpenAPT)\n\n \
 Basic operation is quite simple (hence the 'LGuider')\n\n \
   1) Press the green 'USB' button, select your camera and mount, click on 'Connect All'\n \
   2) Pick an exposure duration from the drop-down list. Try 2 seconds to start.\n \
@@ -204,7 +204,7 @@ void MyFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 
 void MyFrame::OnHelpOnline(wxCommandEvent& evt)
 {
-    wxLaunchDefaultBrowser("https://openphdguiding.org/getting-help/");
+    wxLaunchDefaultBrowser("https://lightapt.com/lightapt");
 }
 
 static void _shell_open(const wxString& loc)

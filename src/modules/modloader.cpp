@@ -38,8 +38,9 @@ Description: Chai Script Loader and Lua Script Loader
 #include "plugins/proc_manager.hpp"
 #include "plugins/io.hpp"
 #include "plugins/package.hpp"
-
-#include "configor/configor.hpp"
+#include "plugins/compress.hpp"
+#include "plugins/sqlite3.hpp"
+#include "plugins/ssl.hpp"
 
 #include <spdlog/spdlog.h>
 
@@ -59,20 +60,36 @@ namespace pt = boost::property_tree;
 namespace LightGuider{
 
     ModuleLoader module_loader;
+
+    nlohmann::json read_config_file(const std::string& file_path) {
+        try {
+            // 打开文件流
+            std::ifstream file_stream(file_path);
+            // 读取文件内容到json对象
+            nlohmann::json config = nlohmann::json::parse(file_stream);
+            // 关闭文件流
+            file_stream.close();
+            return config;
+        } catch (const std::exception& e) {
+            spdlog::error("Failed to read config file {}: {}", file_path, e.what());
+            return {{"error", "Failed to read config file"}};
+        }
+    }
     
-    configor::json::value iterator_modules_dir() {
-        // 定义modules目录路径
+    nlohmann::json iterator_modules_dir() {
         fs::path modules_dir{"modules"};
-        // 定义一个空的json对象
-        configor::json::value config;
-        // 判断modules目录是否存在，不存在则返回错误信息
         try {
             if (!fs::exists(modules_dir) || !fs::is_directory(modules_dir)) {
-                spdlog::error("Error: modules folder not found!");
-                config["error"] = "Error: modules folder not found!";
-                return config;
+                spdlog::warn("Warning: modules folder not found, creating a new one...");
+                fs::create_directory(modules_dir);
             }
-            // 遍历modules目录下的所有子目录
+        } catch (const std::exception& e) {
+            spdlog::error("Failed to create modules directory: {}", e.what());
+            return {{"error", "Failed to create modules directory"}};
+        }
+        nlohmann::json config;
+        // 遍历modules目录下的所有子目录
+        try {
             for (auto& dir : fs::directory_iterator(modules_dir)) {
                 // 如果当前目录是子目录
                 if (fs::is_directory(dir)) {
@@ -83,6 +100,13 @@ namespace LightGuider{
                         // 在json对象中添加子目录路径和info.json文件路径
                         config[dir.path().string()]["path"] = dir.path().string();
                         config[dir.path().string()]["config"] = info_file.string();
+                        // 调用读取配置文件的函数，将读取到的信息存入config对象
+                        nlohmann::json module_config = read_config_file(info_file.string());
+                        config[dir.path().string()]["name"] = module_config["name"];
+                        config[dir.path().string()]["version"] = module_config["version"];
+                        config[dir.path().string()]["author"] = module_config["author"];
+                        config[dir.path().string()]["license"] = module_config["license"];
+                        config[dir.path().string()]["description"] = module_config["description"];
                         // 调试输出信息
                         spdlog::debug("Module found: {}, config file: {}", dir.path().string(), info_file.string());
                     }
@@ -90,11 +114,15 @@ namespace LightGuider{
             }
         } catch (const std::exception& e) { // 捕获异常
             spdlog::error("Failed to iterate modules directory: {}", e.what());
-            config["error"] = "Failed to iterate modules directory";
+            return {{"error", "Failed to iterate modules directory"}};
+        }
+        if(config.empty()){
+            config["message"] = "No module found";
         }
         // 返回json对象
         return config;
     }
+
 
     ModuleLoader::ModuleLoader(){
         L_ = luaL_newstate();

@@ -158,8 +158,6 @@ source_group(Cameras FILES ${cam_SRC})
 set(server_SRC
   ${lightguider_src_dir}/src/server/event_server.cpp
   ${lightguider_src_dir}/src/server/event_server.h
-  ${lightguider_src_dir}/src/server/event_server_ws.cpp
-  ${lightguider_src_dir}/src/server/event_server_ws.h
   ${lightguider_src_dir}/src/server/socket_server.cpp
   ${lightguider_src_dir}/src/server/socket_server.h
   ${lightguider_src_dir}/src/server/json_parser.cpp

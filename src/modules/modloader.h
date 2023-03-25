@@ -25,7 +25,7 @@ E-mail: astro_air@126.com
  
 Date: 2023-3-16
  
-Description: Chai Script Loader and Lua Script Loader
+Description: C++ Dynamic Libraries Loader and Lua Script Loader
  
 **************************************************/
 
@@ -42,10 +42,13 @@ Description: Chai Script Loader and Lua Script Loader
 #include <spdlog/spdlog.h>
 
 #include "plugins/thread.hpp"
+#include "nlohmann/json.hpp"
+
+#include "lightguider.h"
 
 namespace LightGuider{
 
-    configor::json::value iterator_modules_dir();
+    nlohmann::json iterator_modules_dir();
     
     class ModuleLoader {
         public:
@@ -55,7 +58,6 @@ namespace LightGuider{
             bool UnloadModule(const std::string& filename);
             bool LoadBinary(const char *dir_path, const char *out_path, const char *build_path, const char *lib_name);
             bool loadLuaModule(const std::string& moduleName, const std::string& fileName);
-            bool LoadChaiScript(const std::string& filename);
             bool LoadPythonScript(const std::string& scriptName);
             void UnloadPythonScript(const std::string& scriptName);
 
@@ -88,7 +90,7 @@ namespace LightGuider{
                 if constexpr (std::is_member_function_pointer_v<MemberFunctionPtr>) {
                     member_func_ptr = reinterpret_cast<MemberFunctionPtr>(sym_ptr);
                 }
-                ThreadManage.addThread(std::bind(member_func_ptr, instance, args...), std::bind(func_ptr, args...), thread_name);
+                m_ThreadManage->addThread(std::bind(member_func_ptr, instance, args...), std::bind(func_ptr, args...), thread_name);
                 return true;
             }
 
@@ -120,7 +122,7 @@ namespace LightGuider{
                 FunctionPtr func_ptr = reinterpret_cast<FunctionPtr>(sym_ptr);
 
                 // 新建线程并执行函数
-                ThreadManage.addThread(std::bind(func_ptr, std::forward<Args>(args)...), thread_name);
+                m_ThreadManage->addThread(std::bind(func_ptr, std::forward<Args>(args)...), thread_name);
 
                 // 返回函数返回值
                 return static_cast<T>(0);

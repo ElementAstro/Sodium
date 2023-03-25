@@ -34,7 +34,4 @@ namespace LightGuider{
             std::mutex m_mtx;  // 互斥量，保护线程列表
             std::atomic<bool> m_stopFlag{ false };
     };
-
-    extern ThreadManager ThreadManage;
-
 }

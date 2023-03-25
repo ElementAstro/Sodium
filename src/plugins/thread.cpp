@@ -6,7 +6,8 @@ namespace LightGuider{
 
     // 析构函数，停止所有线程并销毁 ThreadManager 对象
     ThreadManager::~ThreadManager() {
-        joinAllThreads();
+        if(!m_stopFlag)
+            joinAllThreads();
     }
 
     // 添加一个新线程，并指定线程名称
@@ -23,6 +24,7 @@ namespace LightGuider{
         }));
         m_threadNames.emplace_back(name); // 添加线程名
         m_sleepFlags.push_back(false); // 初始化睡眠标志
+        m_stopFlag = false;
         spdlog::info("Added thread: {}", name); // 日志输出
     }
 
@@ -30,9 +32,9 @@ namespace LightGuider{
     void ThreadManager::joinAllThreads() {
         m_stopFlag = true; // 设置停止标志
         if (!m_threads.empty()) { // 如果 m_threads 不为空
-        for (auto& t : m_threads) {
-            t.join();
-        }
+            for (auto& t : m_threads) {
+                t.join();
+            }
         }
         spdlog::info("All threads joined"); // 日志输出
     }
@@ -85,7 +87,4 @@ namespace LightGuider{
         spdlog::warn("Thread {} not found", name); // 日志输出
         return false;
     }
-
-    ThreadManager ThreadManage;
-
 }

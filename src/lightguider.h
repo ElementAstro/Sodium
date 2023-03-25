@@ -185,7 +185,6 @@ WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 #include "logger/debuglog.h"
 #include "worker_thread.h"
 #include "server/event_server.h"
-#include "server/event_server_ws.h"
 #include "gui/confirm_dialog.h"
 #include "lightcontrol.h"
 #include "gui/runinbg.h"
@@ -194,12 +193,16 @@ WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 #include "image/fitsiowrap.h"
 #include "image/imagelogger.h"
 
+#include "plugins/thread.hpp"
+
 class wxSingleInstanceChecker;
 
 extern Mount *pMount;
 extern Mount *pSecondaryMount;
 extern Scope *pPointingSource;      // For using an 'aux' mount connection to get pointing info if the user has specified one
 extern GuideCamera *pCamera;
+
+extern LightGuider::ThreadManager *m_ThreadManage;
 
 inline static Scope *TheScope()
 {

@@ -1,10 +1,10 @@
 # fr\messages.po
 # LGuider Guiding
-# 
+#
 # Created by Sylvain Girard
 # Copyright (c) 2013 Sylvain Girard
 # All rights reserved.
-# 
+#
 # This source code is distributed under the following "BSD" license
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -16,7 +16,7 @@
 # Neither the name of Bret McKee, Dad Dog Development Ltd, nor the names of its
 # contributors may be used to endorse or promote products derived from
 # this software without specific prior written permission.
-# 
+#
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
 # IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -28,13 +28,13 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
-# 
-# 
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: LightGuider 2.6.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-18 12:07+0800\n"
+"POT-Creation-Date: 2023-03-25 12:20+0800\n"
 "PO-Revision-Date: 2022-04-21 10:18+0800\n"
 "Last-Translator: Tsung-Chi Wu <tc.wooo@gmail.com>\n"
 "Language-Team: 天體暨宇宙事件攝影觀測聯萌 <tc.wooo@gmail.com>\n"
@@ -87,15 +87,15 @@ msgstr ""
 msgid "star lost"
 msgstr "星點遺失"
 
-#: src/guider.cpp:1377 src/gui/myframe.cpp:1907
+#: src/guider.cpp:1377 src/gui/myframe.cpp:1913
 msgid "Paused"
 msgstr "暫停"
 
-#: src/guider.cpp:1377 src/gui/myframe.cpp:1907
+#: src/guider.cpp:1377 src/gui/myframe.cpp:1913
 msgid "/full"
 msgstr "/full"
 
-#: src/guider.cpp:1377 src/gui/myframe.cpp:1907
+#: src/guider.cpp:1377 src/gui/myframe.cpp:1913
 msgid "/looping"
 msgstr "/迴圈"
 
@@ -160,98 +160,98 @@ msgstr "你是否要將所有書籤刪除?"
 msgid "My Equipment"
 msgstr "我的設備"
 
-#: src/lightguider.cpp:284
+#: src/lightguider.cpp:290
 msgid "Win32s on Windows 3.1"
 msgstr "Win32s on Windows 3.1"
 
-#: src/lightguider.cpp:294
+#: src/lightguider.cpp:300
 msgid "Windows 95 OSR2"
 msgstr "Windows 95 OSR2"
 
-#: src/lightguider.cpp:298
+#: src/lightguider.cpp:304
 msgid "Windows 95"
 msgstr "Windows 95"
 
-#: src/lightguider.cpp:305
+#: src/lightguider.cpp:311
 msgid "Windows 98 SE"
 msgstr "Windows 98 SE"
 
-#: src/lightguider.cpp:309
+#: src/lightguider.cpp:315
 msgid "Windows 98"
 msgstr "Windows 98"
 
-#: src/lightguider.cpp:313
+#: src/lightguider.cpp:319
 msgid "Windows ME"
 msgstr "Windows ME"
 
-#: src/lightguider.cpp:316
+#: src/lightguider.cpp:322
 #, c-format
 msgid "Windows 9x (%d.%d)"
 msgstr "Windows 9x (%d.%d)"
 
-#: src/lightguider.cpp:334
+#: src/lightguider.cpp:340
 msgid "Windows 2000"
 msgstr "Windows 2000"
 
-#: src/lightguider.cpp:343
+#: src/lightguider.cpp:349
 msgid "Windows Server 2003"
 msgstr "Windows Server 2003"
 
-#: src/lightguider.cpp:349
+#: src/lightguider.cpp:355
 msgid "Windows XP"
 msgstr "Windows XP"
 
-#: src/lightguider.cpp:359
+#: src/lightguider.cpp:365
 msgid "Windows Server 2008"
 msgstr "Windows Server 2008"
 
-#: src/lightguider.cpp:360
+#: src/lightguider.cpp:366
 msgid "Windows Vista"
 msgstr "Windows Vista"
 
-#: src/lightguider.cpp:365
+#: src/lightguider.cpp:371
 msgid "Windows Server 2008 R2"
 msgstr "Windows Server 2008 R2"
 
-#: src/lightguider.cpp:366
+#: src/lightguider.cpp:372
 msgid "Windows 7"
 msgstr "Windows 7"
 
-#: src/lightguider.cpp:371
+#: src/lightguider.cpp:377
 msgid "Windows Server 2012"
 msgstr "Windows Server 2012"
 
-#: src/lightguider.cpp:372
+#: src/lightguider.cpp:378
 msgid "Windows 8"
 msgstr "Windows 8"
 
-#: src/lightguider.cpp:377
+#: src/lightguider.cpp:383
 msgid "Windows Server 2012 R2"
 msgstr "Windows Server 2012 R2"
 
-#: src/lightguider.cpp:378
+#: src/lightguider.cpp:384
 msgid "Windows 8.1"
 msgstr "Windows 8.1"
 
-#: src/lightguider.cpp:385
+#: src/lightguider.cpp:391
 msgid "Windows Server 2016"
 msgstr "Windows Server 2016"
 
-#: src/lightguider.cpp:386
+#: src/lightguider.cpp:392
 msgid "Windows 10"
 msgstr "Windows 10"
 
-#: src/lightguider.cpp:392
+#: src/lightguider.cpp:398
 #, c-format
 msgid "Windows NT %lu.%lu"
 msgstr "Windows NT %lu.%lu"
 
-#: src/lightguider.cpp:398
+#: src/lightguider.cpp:404
 #, c-format
 msgid "build %lu"
 msgstr "build %lu"
 
-#: src/lightguider.cpp:406
+#: src/lightguider.cpp:412
 msgid ", 64-bit edition"
 msgstr ", 64 位元版"
 
@@ -262,7 +262,8 @@ msgstr ""
 
 #: src/phdupdate.cpp:688
 #, c-format
-msgid "LGuider2 version %s is ready to install. Update and restart LGuider2 now?"
+msgid ""
+"LGuider2 version %s is ready to install. Update and restart LGuider2 now?"
 msgstr ""
 
 #: src/phdupdate.cpp:728
@@ -312,7 +313,7 @@ msgstr "將於 %d 秒後關閉"
 msgid "LGuider2 is up to date"
 msgstr ""
 
-#: src/phdupdate.cpp:947 src/phdupdate.cpp:953 src/gui/myframe.cpp:3047
+#: src/phdupdate.cpp:947 src/phdupdate.cpp:953 src/gui/myframe.cpp:3053
 msgid "Software Update"
 msgstr "軟體更新"
 
@@ -651,7 +652,7 @@ msgstr "與相機連接中斷"
 #: src/gui/gear_dialog.cpp:456 src/gui/gear_dialog.cpp:695
 #: src/gui/gear_dialog.cpp:1115 src/gui/gear_dialog.cpp:1881
 #: src/gui/gear_dialog.cpp:1882 src/gui/gear_dialog.cpp:1883
-#: src/gui/myframe.cpp:3012 src/gui/profile_wizard.cpp:357
+#: src/gui/myframe.cpp:3018 src/gui/profile_wizard.cpp:357
 #: src/gui/profile_wizard.cpp:358 src/gui/profile_wizard.cpp:359
 #: src/gui/profile_wizard.cpp:573 src/gui/profile_wizard.cpp:578
 #: src/gui/profile_wizard.cpp:606 src/gui/profile_wizard.cpp:778
@@ -728,7 +729,7 @@ msgstr "相機增益"
 #: src/gui/calibration_assistant.cpp:145 src/gui/calstep_dialog.cpp:196
 #: src/gui/camcal_import_dialog.cpp:47 src/gui/configdialog.cpp:61
 #: src/gui/configdialog.cpp:236 src/gui/darks_dialog.cpp:52
-#: src/gui/myframe.cpp:3150 src/gui/starcross_test.cpp:52
+#: src/gui/myframe.cpp:3156 src/gui/starcross_test.cpp:52
 msgid ": "
 msgstr ": "
 
@@ -969,15 +970,21 @@ msgstr "測量完成"
 msgid "Measurement halted"
 msgstr "測量中斷"
 
-#: src/algorithm/guide_algorithm.cpp:50 src/gui/comet_tool.cpp:325
+#: src/algorithm/guide_algorithm.cpp:50
+#: src/gui/LightGuiderDeviceDialogBase.cpp:431
+#: src/gui/LightGuiderDeviceDialogBase.cpp:523
+#: src/gui/LightGuiderDeviceDialogBase.cpp:679 src/gui/comet_tool.cpp:325
 #: src/gui/graph.cpp:158 src/gui/graph.cpp:185 src/gui/graph.cpp:327
 #: src/gui/solver_dialog_base.cpp:59 src/gui/statswindow.cpp:73
 #: src/gui/target.cpp:339 src/telescope/scope.cpp:672
 msgid "RA"
 msgstr "赤經"
 
-#: src/algorithm/guide_algorithm.cpp:50 src/gui/solver_dialog_base.cpp:74
-#: src/gui/solver_dialog_base.cpp:243
+#: src/algorithm/guide_algorithm.cpp:50
+#: src/gui/LightGuiderDeviceDialogBase.cpp:439
+#: src/gui/LightGuiderDeviceDialogBase.cpp:578
+#: src/gui/LightGuiderDeviceDialogBase.cpp:686
+#: src/gui/solver_dialog_base.cpp:74 src/gui/solver_dialog_base.cpp:243
 msgid "DEC"
 msgstr "赤緯"
 
@@ -1349,7 +1356,8 @@ msgid ""
 "Ordinarily the Resist Switch algortithm waits several frames before "
 "switching direction. With Fast Switch enabled LGuider2 will switch direction "
 "immediately if it sees a very large deflection. Enable this option if your "
-"mount has a substantial amount of backlash and LGuider2 sometimes overcorrects."
+"mount has a substantial amount of backlash and LGuider2 sometimes "
+"overcorrects."
 msgstr ""
 
 #: src/algorithm/guide_algorithm_zfilter.cpp:273
@@ -1460,7 +1468,8 @@ msgstr "在 (上/下/左/右)各多少像素內搜尋被導星體的移動? 預�
 msgid "Star Mass Detection"
 msgstr "星點值心變化偵測"
 
-#: src/algorithm/guider_multistar.cpp:1370 src/gui/comet_tool.cpp:90
+#: src/algorithm/guider_multistar.cpp:1370
+#: src/gui/LightGuiderDeviceDialogBase.cpp:169 src/gui/comet_tool.cpp:90
 #: src/gui/comet_tool.cpp:201 src/gui/server_dialog_base.cpp:126
 #: src/gui/server_dialog_base.cpp:133 src/telescope/scope.cpp:1964
 msgid "Enable"
@@ -1468,9 +1477,9 @@ msgstr "啟用"
 
 #: src/algorithm/guider_multistar.cpp:1371
 msgid ""
-"Check to enable star mass change detection. When enabled, LGuider skips frames "
-"when the guide star mass changes by an amount greater than the setting for "
-"'tolerance'."
+"Check to enable star mass change detection. When enabled, LGuider skips "
+"frames when the guide star mass changes by an amount greater than the "
+"setting for 'tolerance'."
 msgstr ""
 "點選以啟用心點質心變化偵測, 啟用後, 若導星星體的質心變化大於『質心變化容許"
 "量』設定值時, LGuider 會忽略該擷取的影像."
@@ -1486,10 +1495,10 @@ msgid ""
 "(less sensitive) to star mass changes. Valid range is 10-100, default is 50. "
 "If star mass change detection is not enabled then this setting is ignored."
 msgstr ""
-"啟用星體質心變化偵測後，LGuider 會略過星點質心變化量超出質心變動容許量的影像。此"
-"數值以百分比表示前後影像中星點質心變化的情形，數值越大代表容許變化量越大(較不"
-"靈敏), 此數值有效範圍為 10-100, 預設質為 50，如果沒有啟用星點質心變化偵測，這"
-"個參數會被忽略。"
+"啟用星體質心變化偵測後，LGuider 會略過星點質心變化量超出質心變動容許量的影"
+"像。此數值以百分比表示前後影像中星點質心變化的情形，數值越大代表容許變化量越"
+"大(較不靈敏), 此數值有效範圍為 10-100, 預設質為 50，如果沒有啟用星點質心變化"
+"偵測，這個參數會被忽略。"
 
 #: src/algorithm/guider_multistar.cpp:1387
 msgid "65535"
@@ -1502,14 +1511,14 @@ msgstr "最小星點 HFD (像素) 值"
 #: src/algorithm/guider_multistar.cpp:1394
 msgid ""
 "The minimum star HFD (size) that will be used for identifying a guide star. "
-"This setting can be used to prevent LGuider2 from guiding on a hot pixel. Use "
-"the Star Profile Tool to measure the HFD of a hot pixel and set the min HFD "
-"threshold a bit higher. When the HFD falls below this level, the hot pixel "
-"will be ignored."
+"This setting can be used to prevent LGuider2 from guiding on a hot pixel. "
+"Use the Star Profile Tool to measure the HFD of a hot pixel and set the min "
+"HFD threshold a bit higher. When the HFD falls below this level, the hot "
+"pixel will be ignored."
 msgstr ""
 
-#: src/algorithm/guider_multistar.cpp:1399 src/gui/myframe.cpp:920
-#: src/gui/myframe.cpp:994 src/gui/solver_dialog_base.cpp:108
+#: src/algorithm/guider_multistar.cpp:1399 src/gui/myframe.cpp:926
+#: src/gui/myframe.cpp:1000 src/gui/solver_dialog_base.cpp:108
 #: src/telescope/scope.cpp:262
 msgid "Auto"
 msgstr "自動"
@@ -1550,10 +1559,10 @@ msgstr "使用 AutoFind 時所需的最低星點訊躁比"
 #: src/algorithm/guider_multistar.cpp:1417
 msgid ""
 "The minimum star SNR that will be used for auto-selecting guide stars. This "
-"setting can be used to discourage LGuider2 from choosing a guide star you know "
-"will be too faint for sustained guiding. This setting applies to both the "
-"primary guide star and candidate secondary stars in multi-star guiding. If "
-"this constraint cannot be met, a saturated or near-saturated star may be "
+"setting can be used to discourage LGuider2 from choosing a guide star you "
+"know will be too faint for sustained guiding. This setting applies to both "
+"the primary guide star and candidate secondary stars in multi-star guiding. "
+"If this constraint cannot be met, a saturated or near-saturated star may be "
 "selected."
 msgstr ""
 
@@ -1610,7 +1619,8 @@ msgstr "週期誤差的振幅及週期需為大於 0 的數值"
 msgid "Camera Simulator"
 msgstr "相機模擬器"
 
-#: src/ao/gear_simulator.cpp:1749 src/gui/advanced_dialog.cpp:100
+#: src/ao/gear_simulator.cpp:1749 src/gui/LightGuiderDeviceDialogBase.cpp:50
+#: src/gui/LightGuiderDeviceDialogBase.cpp:300 src/gui/advanced_dialog.cpp:100
 #: src/gui/advanced_dialog.cpp:177 src/gui/aui_controls.cpp:675
 #: src/gui/config_indi.cpp:113 src/gui/gear_dialog.cpp:253
 #: src/gui/gear_dialog.cpp:255
@@ -1644,7 +1654,7 @@ msgstr "噪點"
 
 #: src/ao/gear_simulator.cpp:1761 src/gui/advanced_dialog.cpp:384
 #: src/gui/aui_controls.cpp:684 src/gui/calreview_dialog.cpp:93
-#: src/gui/config_indi.cpp:115 src/gui/eegg.cpp:133 src/gui/gear_dialog.cpp:274
+#: src/gui/config_indi.cpp:115 src/gui/eegg.cpp:134 src/gui/gear_dialog.cpp:274
 #: src/gui/gear_dialog.cpp:276 src/gui/testguide.cpp:149
 #: src/gui/testguide.cpp:193
 msgid "Mount"
@@ -2039,6 +2049,332 @@ msgstr ""
 "downloads,\n"
 "取得, 該工具程式同時也包含新的韌體。"
 
+#: src/gui/LightGuiderDeviceDialogBase.cpp:54
+#: src/gui/LightGuiderDeviceDialogBase.cpp:322
+#: src/gui/LightGuiderDeviceDialogBase.cpp:352
+#: src/gui/LightGuiderDeviceDialogBase.cpp:973
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1003 src/gui/profile_wizard.cpp:406
+#: src/gui/profile_wizard.cpp:700
+msgid "Simulator"
+msgstr "模擬器"
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:61
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1245 src/gui/graph.cpp:126
+msgid "Settings"
+msgstr "設定"
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:66
+msgid "Connect / Disconnect"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:71
+msgid "Scan all of the devices available"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:86
+#: src/gui/LightGuiderDeviceDialogBase.cpp:348
+#: src/gui/LightGuiderDeviceDialogBase.cpp:999 src/gui/gear_dialog.cpp:2090
+msgid "Name"
+msgstr "檔名"
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:102
+#: src/gui/LightGuiderDeviceDialogBase.cpp:364
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1015
+msgid "Description"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:121
+msgid "Gain"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:138
+msgid "Offset"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:155
+msgid "Bin"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:159
+msgid "1x1"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:159
+msgid "2x2"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:159
+msgid "4x4"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:165
+msgid "Cooling"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:172
+msgid "Temperature"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:181
+msgid "Power"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:190
+#: src/gui/LightGuiderDeviceDialogBase.cpp:383
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1034
+msgid "DriverVersion"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:198
+msgid "Sensor"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:206
+msgid "ImageHeight"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:214
+msgid "ImageWidth"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:222
+msgid "Pixel(x)"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:230
+msgid "Pixel(y)"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:238
+msgid "MaxBin(x)"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:246
+#: src/gui/LightGuiderDeviceDialogBase.cpp:247
+msgid "MaxBin(y)"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:256
+msgid "MaxExposure"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:264
+msgid "MinExposure"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:278
+msgid "Temperature Graph"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:318
+#: src/gui/LightGuiderDeviceDialogBase.cpp:709
+#: src/gui/LightGuiderDeviceDialogBase.cpp:969
+msgid "Telescope"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:368
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1019
+msgid "A basic simulator telescope"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:387
+#: src/gui/LightGuiderDeviceDialogBase.cpp:395
+msgid "          "
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:391
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1042
+msgid "DrvierInfo"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:399
+msgid "Longitude"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:407
+msgid "Latitude"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:415
+msgid "AZ"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:423
+msgid "ALT"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:447
+msgid "Elevation"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:455
+msgid "Transmit"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:474
+msgid "Track"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:477
+msgid "Home"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:480
+msgid "Park"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:483 src/gui/myframe.cpp:3135
+msgid "Random"
+msgstr "隨機的"
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:486
+msgid "Sync"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:489
+msgid "GetInfo"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:506
+msgid "Telescope Control"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:540
+#: src/gui/LightGuiderDeviceDialogBase.cpp:595
+msgid "h"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:557
+#: src/gui/LightGuiderDeviceDialogBase.cpp:604
+msgid "m"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:574
+#: src/gui/LightGuiderDeviceDialogBase.cpp:613
+#: src/gui/LightGuiderDeviceDialogBase.cpp:614
+#: src/gui/guiding_assistant.cpp:1297 src/gui/guiding_assistant.cpp:1802
+#: src/gui/guiding_assistant.cpp:1887
+msgid "s"
+msgstr "s"
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:626
+#: src/gui/LightGuiderDeviceDialogBase.cpp:629
+msgid "MyButton"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:727
+#: src/gui/LightGuiderDeviceDialogBase.cpp:948
+msgid "Focuser"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:756
+#: src/gui/LightGuiderDeviceDialogBase.cpp:760
+#: src/gui/LightGuiderDeviceDialogBase.cpp:764
+#: src/gui/LightGuiderDeviceDialogBase.cpp:768
+#: src/gui/LightGuiderDeviceDialogBase.cpp:772
+#: src/gui/LightGuiderDeviceDialogBase.cpp:776
+#: src/gui/LightGuiderDeviceDialogBase.cpp:780
+#: src/gui/LightGuiderDeviceDialogBase.cpp:784
+#: src/gui/LightGuiderDeviceDialogBase.cpp:788
+#: src/gui/LightGuiderDeviceDialogBase.cpp:792
+#: src/gui/LightGuiderDeviceDialogBase.cpp:796
+#: src/gui/LightGuiderDeviceDialogBase.cpp:800
+#: src/gui/LightGuiderDeviceDialogBase.cpp:804
+#: src/gui/LightGuiderDeviceDialogBase.cpp:808
+#: src/gui/LightGuiderDeviceDialogBase.cpp:812
+#: src/gui/LightGuiderDeviceDialogBase.cpp:816
+#: src/gui/LightGuiderDeviceDialogBase.cpp:831
+#: src/gui/LightGuiderDeviceDialogBase.cpp:849
+#: src/gui/LightGuiderDeviceDialogBase.cpp:907
+#: src/gui/LightGuiderDeviceDialogBase.cpp:914
+#: src/gui/LightGuiderDeviceDialogBase.cpp:921
+#: src/gui/LightGuiderDeviceDialogBase.cpp:928
+msgid "MyLabel"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:835
+msgid "Check Me!"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:872
+msgid "<<"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:875
+msgid "<"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:878 src/gui/staticpa_toolwin.cpp:361
+msgid ">"
+msgstr ">"
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:881
+msgid ">>"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:895
+msgid "Focuser Settings"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1061
+msgid "Position"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1065
+msgid "Combo!"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1068
+msgid "MoveTo"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1119
+msgid "FilterWheel"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1121 src/gui/myframe_events.cpp:882
+msgid "Guider"
+msgstr "導星設定"
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1133 src/gui/myframe.cpp:514
+msgid "OpenAPT"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1150
+msgid "Installed"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1152
+#: src/gui/solver_dialog_base.cpp:145
+msgid "Download"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1162
+msgid "Local Modules Installer"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1174
+#: src/gui/solver_dialog_base.cpp:142
+msgid "Refresh"
+msgstr "刷新"
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1184
+#: src/gui/solver_dialog_base.cpp:39
+msgid "Search"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1210
+msgid "Local"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1227
+msgid "Plugins"
+msgstr ""
+
+#: src/gui/LightGuiderDeviceDialogBase.cpp:1236
+msgid "Server"
+msgstr ""
+
 #: src/gui/Refine_DefMap.cpp:65
 msgid "Refine Bad-pixel Map"
 msgstr "完善壞像素影像"
@@ -2228,7 +2564,7 @@ msgstr "像素位置沒有被加入 - 該位置為非星點狀的物件"
 msgid "Settings restored to original values"
 msgstr "設定回復到初始值"
 
-#: src/gui/about_dialog.cpp:45 src/gui/myframe.cpp:582
+#: src/gui/about_dialog.cpp:45 src/gui/myframe.cpp:587
 #, c-format
 msgid "About %s"
 msgstr "關於 %s"
@@ -2238,7 +2574,7 @@ msgid "Global"
 msgstr "整體"
 
 #: src/gui/advanced_dialog.cpp:102 src/gui/advanced_dialog.cpp:182
-#: src/gui/myframe.cpp:1686 src/gui/myframe.cpp:2241
+#: src/gui/myframe.cpp:1692 src/gui/myframe.cpp:2247
 #: src/telescope/scope_manual_pointing.cpp:66
 msgid "Guiding"
 msgstr "導星"
@@ -2252,13 +2588,13 @@ msgstr "導星演算法"
 msgid "Other Devices"
 msgstr "其他裝置"
 
-#: src/gui/advanced_dialog.cpp:120 src/gui/myframe.cpp:507
-#: src/gui/myframe.cpp:1021
+#: src/gui/advanced_dialog.cpp:120 src/gui/myframe.cpp:509
+#: src/gui/myframe.cpp:1027
 msgid "Advanced Settings"
 msgstr "進階設定"
 
 #: src/gui/advanced_dialog.cpp:224 src/gui/guiding_assistant.cpp:512
-#: src/gui/myframe.cpp:1295 src/gui/profile_wizard.cpp:333
+#: src/gui/myframe.cpp:1301 src/gui/profile_wizard.cpp:333
 msgid "Help"
 msgstr "幫助"
 
@@ -2325,7 +2661,7 @@ msgid "Aux Mount"
 msgstr "AUX 赤道儀"
 
 #: src/gui/aui_controls.cpp:702 src/gui/calreview_dialog.cpp:101
-#: src/gui/config_indi.cpp:119 src/gui/eegg.cpp:131 src/gui/gear_dialog.cpp:313
+#: src/gui/config_indi.cpp:119 src/gui/eegg.cpp:132 src/gui/gear_dialog.cpp:313
 #: src/gui/gear_dialog.cpp:315 src/gui/testguide.cpp:161
 msgid "AO"
 msgstr "AO"
@@ -2488,8 +2824,8 @@ msgstr "校準"
 
 #: src/gui/calibration_assistant.cpp:241
 msgid ""
-"Start the LGuider2 calibration.  The Calibration Assistant window will remain "
-"open to monitor and assess results"
+"Start the LGuider2 calibration.  The Calibration Assistant window will "
+"remain open to monitor and assess results"
 msgstr ""
 
 #: src/gui/calibration_assistant.cpp:244
@@ -2520,8 +2856,8 @@ msgstr ""
 msgid ""
 "Your mount guide speed is below the minimum recommended value of 0.5x "
 "sidereal. Use the hand-controller or mount driver to increase the guide "
-"speed to at least 0.5x sidereal. Then click the 'Recal' button so LGuider2 can "
-"compute a correct calibration step-size."
+"speed to at least 0.5x sidereal. Then click the 'Recal' button so LGuider2 "
+"can compute a correct calibration step-size."
 msgstr ""
 
 #: src/gui/calibration_assistant.cpp:336
@@ -2823,12 +3159,12 @@ msgid "Right Ascension"
 msgstr "赤經"
 
 #: src/gui/calreview_dialog.cpp:135 src/gui/comet_tool.cpp:331
-#: src/gui/myframe_events.cpp:257
+#: src/gui/myframe_events.cpp:258
 msgid "X"
 msgstr "X"
 
 #: src/gui/calreview_dialog.cpp:143 src/gui/comet_tool.cpp:332
-#: src/gui/myframe_events.cpp:264
+#: src/gui/myframe_events.cpp:265
 msgid "Y"
 msgstr "Y"
 
@@ -3825,8 +4161,8 @@ msgstr "轉向中...."
 msgid "Coordinates saved."
 msgstr "座標已儲存。"
 
-#: src/gui/drift_tool.cpp:819 src/gui/eegg.cpp:298
-#: src/gui/myframe_events.cpp:771 src/gui/polardrift_toolwin.cpp:56
+#: src/gui/drift_tool.cpp:819 src/gui/eegg.cpp:307
+#: src/gui/myframe_events.cpp:772 src/gui/polardrift_toolwin.cpp:56
 #: src/gui/staticpa_toolwin.cpp:100
 msgid "Please connect a camera first."
 msgstr "請先連接相機."
@@ -3842,55 +4178,55 @@ msgid ""
 "Would you like to run the drift tool anyway?"
 msgstr ""
 
-#: src/gui/eegg.cpp:68
+#: src/gui/eegg.cpp:69
 msgid "There is no calibration data available."
 msgstr "無校準資料."
 
-#: src/gui/eegg.cpp:74 src/gui/eegg.cpp:303 src/gui/myframe_events.cpp:1091
-#: src/gui/myframe_events.cpp:1108
+#: src/gui/eegg.cpp:75 src/gui/eegg.cpp:312 src/gui/myframe_events.cpp:1092
+#: src/gui/myframe_events.cpp:1109
 msgid "Please connect a mount first."
 msgstr "請連接赤道儀."
 
-#: src/gui/eegg.cpp:137
+#: src/gui/eegg.cpp:138
 msgid ", Mount"
 msgstr ", 赤道儀"
 
-#: src/gui/eegg.cpp:141
+#: src/gui/eegg.cpp:142
 #, c-format
 msgid ""
 "%s calibration will be cleared - calibration will be re-done when guiding is "
 "started."
 msgstr "%s 校準資料將會被清除-在導星動作開始時會重新做校準動作。"
 
-#: src/gui/eegg.cpp:142
+#: src/gui/eegg.cpp:143
 msgid "Clear Calibration"
 msgstr "清除校準資料"
 
-#: src/gui/eegg.cpp:165
+#: src/gui/eegg.cpp:166
 msgid ""
 "Scope has no current calibration data - you should just do a fresh "
 "calibration."
 msgstr "望遠鏡無校準資料 - 你必須進行初始的校準."
 
-#: src/gui/eegg.cpp:175
+#: src/gui/eegg.cpp:176
 msgid ""
-"This is unnecessary because LGuider2 has pointing info from the mount.  If you "
-"are seeing run-away Dec guiding after a meridian flip, use Help and look in "
-"the index for 'Reverse Dec output'."
+"This is unnecessary because LGuider2 has pointing info from the mount.  If "
+"you are seeing run-away Dec guiding after a meridian flip, use Help and look "
+"in the index for 'Reverse Dec output'."
 msgstr ""
 
-#: src/gui/eegg.cpp:183
+#: src/gui/eegg.cpp:184
 msgid ""
-"Failed to flip calibration - please upload debug log file to LGuider2 forum for "
-"assistance."
+"Failed to flip calibration - please upload debug log file to LGuider2 forum "
+"for assistance."
 msgstr ""
 
-#: src/gui/eegg.cpp:189
+#: src/gui/eegg.cpp:190
 #, c-format
 msgid "Calibration angles flipped: (%.2f, %.2f) to (%.2f, %.2f)"
 msgstr "校準角度已翻轉: (%.2f, %.2f) 至 (%.2f, %.2f)"
 
-#: src/gui/eegg.cpp:314
+#: src/gui/eegg.cpp:323
 msgid ""
 "The Guiding Assitant will disable guide output and\n"
 "allow the guide star to drift.\n"
@@ -3901,7 +4237,7 @@ msgstr ""
 "讓導星星體飄移。\n"
 "按下【OK]】關閉導星訊號輸出？"
 
-#: src/gui/eegg.cpp:319
+#: src/gui/eegg.cpp:328
 msgid "Confirm Disable Guiding"
 msgstr "確認關閉導星動作"
 
@@ -3915,12 +4251,12 @@ msgstr "設備配置檔案"
 
 #: src/gui/gear_dialog.cpp:217
 msgid ""
-"Select the Equipment Profile you would like to use. LGuider stores all of your "
-"settings and equipment selections in an Equipment Profile. You can create "
-"multiple profiles and switch back and forth between them."
+"Select the Equipment Profile you would like to use. LGuider stores all of "
+"your settings and equipment selections in an Equipment Profile. You can "
+"create multiple profiles and switch back and forth between them."
 msgstr ""
-"選擇您偏好的設備配置檔案, LGuider 將在設備配置檔案中儲存您所使用設備及相關的設"
-"定。您可以建立多個設備配置檔案並可在不同配置檔案間切換。"
+"選擇您偏好的設備配置檔案, LGuider 將在設備配置檔案中儲存您所使用設備及相關的"
+"設定。您可以建立多個設備配置檔案並可在不同配置檔案間切換。"
 
 #: src/gui/gear_dialog.cpp:223
 msgid "New using Wizard..."
@@ -4062,7 +4398,7 @@ msgstr "中斷所有"
 msgid "Disconnect all equipment"
 msgstr "中斷所有的設備"
 
-#: src/gui/gear_dialog.cpp:344 src/gui/myframe.cpp:1290
+#: src/gui/gear_dialog.cpp:344 src/gui/myframe.cpp:1296
 #: src/gui/polardrift_toolwin.cpp:208 src/gui/staticpa_toolwin.cpp:423
 msgid "Close"
 msgstr "關閉"
@@ -4224,10 +4560,6 @@ msgstr "相場旋轉器已切斷"
 msgid "New Equipment Profile"
 msgstr "新建設備配置檔案"
 
-#: src/gui/gear_dialog.cpp:2090
-msgid "Name"
-msgstr "檔名"
-
 #: src/gui/gear_dialog.cpp:2094
 msgid "Enter the name of the new equipment profile"
 msgstr "輸入新建設備配置檔案檔名"
@@ -4242,11 +4574,12 @@ msgstr "設備配置檔案初始設定"
 
 #: src/gui/gear_dialog.cpp:2104
 msgid ""
-"Select LGuider Defaults to create a profile with default LGuider settings, or select "
-"an existing Equipment Profile to copy its settings into your new profile."
+"Select LGuider Defaults to create a profile with default LGuider settings, "
+"or select an existing Equipment Profile to copy its settings into your new "
+"profile."
 msgstr ""
-"選擇【LGuider預設值】，以建立包含 LGuider預設值的設備配置檔案, 或者選擇已存在的設備配"
-"置檔案並拷貝其內容到新建的設備配置檔案。"
+"選擇【LGuider預設值】，以建立包含 LGuider預設值的設備配置檔案, 或者選擇已存在"
+"的設備配置檔案並拷貝其內容到新建的設備配置檔案。"
 
 #: src/gui/gear_dialog.cpp:2128
 #, c-format
@@ -4293,8 +4626,8 @@ msgstr "匯入 LGuider 設備配置檔案"
 msgid "Export LGuider Equipment Profile"
 msgstr "匯出 LGuider 設備配置檔案"
 
-#: src/gui/graph-stepguider.cpp:86 src/gui/myframe.cpp:341
-#: src/gui/myframe.cpp:414
+#: src/gui/graph-stepguider.cpp:86 src/gui/myframe.cpp:342
+#: src/gui/myframe.cpp:416
 msgid "AO Position"
 msgstr "AO 位置"
 
@@ -4328,10 +4661,6 @@ msgstr "赤道儀:"
 #: src/gui/graph.cpp:117
 msgid "Select the number of frames of history to display on the X-axis"
 msgstr "選擇 X-軸要顯示的歷史圖像數目"
-
-#: src/gui/graph.cpp:126
-msgid "Settings"
-msgstr "設定"
 
 #: src/gui/graph.cpp:127
 msgid "Graph settings"
@@ -4589,8 +4918,8 @@ msgstr "測量赤緯軸齒輪回差"
 
 #: src/gui/guiding_assistant.cpp:526
 msgid ""
-"LGuider2 will move the guide star a considerable distance north, then south to "
-"measure backlash. Be sure the selected star has plenty of room to move in "
+"LGuider2 will move the guide star a considerable distance north, then south "
+"to measure backlash. Be sure the selected star has plenty of room to move in "
 "the north direction.  If the guide star is lost, increase the size of the "
 "search region to at least 20 px"
 msgstr ""
@@ -4613,8 +4942,8 @@ msgstr "結束測量並重新導星"
 
 #: src/gui/guiding_assistant.cpp:628
 msgid ""
-"Signal-to-noise ratio; a measure of how well LGuider2 can isolate the star from "
-"the sky/noise background"
+"Signal-to-noise ratio; a measure of how well LGuider2 can isolate the star "
+"from the sky/noise background"
 msgstr ""
 
 #: src/gui/guiding_assistant.cpp:630
@@ -4737,14 +5066,9 @@ msgid "Apply"
 msgstr "套用"
 
 #: src/gui/guiding_assistant.cpp:1296 src/gui/guiding_assistant.cpp:1939
-#: src/gui/myframe.cpp:3093 src/gui/myframe.cpp:3103
+#: src/gui/myframe.cpp:3099 src/gui/myframe.cpp:3109
 msgid " "
 msgstr " "
-
-#: src/gui/guiding_assistant.cpp:1297 src/gui/guiding_assistant.cpp:1802
-#: src/gui/guiding_assistant.cpp:1887
-msgid "s"
-msgstr "s"
 
 #: src/gui/guiding_assistant.cpp:1335
 #, c-format
@@ -4899,679 +5223,687 @@ msgstr "赤緯角度(度):"
 msgid "Declination (e.g. 2.1):"
 msgstr "偏差 (如 2.1):"
 
-#: src/gui/myframe.cpp:331 src/gui/myframe.cpp:412
+#: src/gui/myframe.cpp:332 src/gui/myframe.cpp:414
 msgid "History"
 msgstr "歷史"
 
-#: src/gui/myframe.cpp:336 src/gui/myframe.cpp:413
+#: src/gui/myframe.cpp:337 src/gui/myframe.cpp:415
 msgid "Guide Stats"
 msgstr "導星狀態"
 
-#: src/gui/myframe.cpp:346 src/gui/myframe.cpp:415
+#: src/gui/myframe.cpp:347 src/gui/myframe.cpp:417
 msgid "Star Profile"
 msgstr "星點狀態"
 
-#: src/gui/myframe.cpp:351 src/gui/myframe.cpp:416 src/gui/target.cpp:51
+#: src/gui/myframe.cpp:352 src/gui/myframe.cpp:418 src/gui/target.cpp:51
 msgid "Target"
 msgstr "目標"
 
-#: src/gui/myframe.cpp:496
+#: src/gui/myframe.cpp:498
 msgid "&Save Image..."
 msgstr "儲存影像..."
 
-#: src/gui/myframe.cpp:496
+#: src/gui/myframe.cpp:498
 msgid "Save current image"
 msgstr "儲存目前影像"
 
-#: src/gui/myframe.cpp:497
+#: src/gui/myframe.cpp:499
 msgid "E&xit\tAlt-X"
 msgstr "退出\tAlt-X"
 
-#: src/gui/myframe.cpp:497
+#: src/gui/myframe.cpp:499
 msgid "Quit this program"
 msgstr "離開本程式"
 
-#: src/gui/myframe.cpp:500
+#: src/gui/myframe.cpp:502
 msgid "&Connect Equipment\tCtrl-C"
 msgstr "連接裝置\tCtrl-C"
 
-#: src/gui/myframe.cpp:500
+#: src/gui/myframe.cpp:502
 msgid "Connect or disconnect equipment"
 msgstr "連接或斷開裝置"
 
-#: src/gui/myframe.cpp:501
+#: src/gui/myframe.cpp:503
 msgid "&Loop Exposures\tCtrl-L"
 msgstr "連續曝光\tCtrl-L"
 
-#: src/gui/myframe.cpp:501
+#: src/gui/myframe.cpp:503
 msgid "Begin looping exposures"
 msgstr "開始連續曝光"
 
-#: src/gui/myframe.cpp:503
+#: src/gui/myframe.cpp:505
 msgid "&Guide\tCtrl-G"
 msgstr "導星\tCtrl-G"
 
-#: src/gui/myframe.cpp:503
+#: src/gui/myframe.cpp:505
 msgid "Begin guiding"
 msgstr "開始導星"
 
-#: src/gui/myframe.cpp:505
+#: src/gui/myframe.cpp:507
 msgid "&Stop\tCtrl-S"
 msgstr "停止導星\tCtrl-S"
 
-#: src/gui/myframe.cpp:505 src/gui/myframe.cpp:1016
+#: src/gui/myframe.cpp:507 src/gui/myframe.cpp:1022
 msgid "Stop looping and guiding"
 msgstr "停止曝光及導星"
 
-#: src/gui/myframe.cpp:507
+#: src/gui/myframe.cpp:509
 msgid "&Advanced Settings\tCtrl-A"
 msgstr "進階設定\tCtrl-A"
 
-#: src/gui/myframe.cpp:508
+#: src/gui/myframe.cpp:510
 msgid "&Camera Settings"
 msgstr "設定相機"
 
-#: src/gui/myframe.cpp:508 src/gui/myframe.cpp:1022
+#: src/gui/myframe.cpp:510 src/gui/myframe.cpp:1028
 msgid "Camera settings"
 msgstr "相機設定"
 
-#: src/gui/myframe.cpp:512
+#: src/gui/myframe.cpp:514
+msgid "Full Device Control"
+msgstr ""
+
+#: src/gui/myframe.cpp:517
 msgid "&Manual Guide"
 msgstr "手動導星"
 
-#: src/gui/myframe.cpp:512
+#: src/gui/myframe.cpp:517
 msgid "Manual / test guide dialog"
 msgstr "手動/測試導星交談框"
 
-#: src/gui/myframe.cpp:513
+#: src/gui/myframe.cpp:518
 msgid "&Auto-select Star\tAlt-S"
 msgstr "自動選星\tAlt-S"
 
-#: src/gui/myframe.cpp:513
+#: src/gui/myframe.cpp:518
 msgid "Automatically select star"
 msgstr "自動選擇被導星體"
 
-#: src/gui/myframe.cpp:514 src/gui/myframe_events.cpp:985
-#: src/gui/myframe_events.cpp:992
+#: src/gui/myframe.cpp:519 src/gui/myframe_events.cpp:986
+#: src/gui/myframe_events.cpp:993
 msgid "Calibration Assistant..."
 msgstr ""
 
-#: src/gui/myframe.cpp:514
+#: src/gui/myframe.cpp:519
 msgid "Slew to a preferred calibration position"
 msgstr ""
 
-#: src/gui/myframe.cpp:515
+#: src/gui/myframe.cpp:520
 msgid "&Review Calibration Data\tAlt-C"
 msgstr "檢視校準資料\tAlt-C"
 
-#: src/gui/myframe.cpp:515
+#: src/gui/myframe.cpp:520
 msgid "Review calibration data from last successful calibration"
 msgstr "檢視上回成功的校準資料"
 
-#: src/gui/myframe.cpp:516
+#: src/gui/myframe.cpp:521
 msgid "Server Assistant"
 msgstr ""
 
-#: src/gui/myframe.cpp:516
+#: src/gui/myframe.cpp:521
 msgid "Manage socket server and web server"
 msgstr ""
 
-#: src/gui/myframe.cpp:517
+#: src/gui/myframe.cpp:522
 msgid "Solver Assistant"
 msgstr ""
 
-#: src/gui/myframe.cpp:517
+#: src/gui/myframe.cpp:522
 msgid "Using astrometry or astap as the platesolve engine"
 msgstr ""
 
-#: src/gui/myframe.cpp:519
+#: src/gui/myframe.cpp:524
 msgid "Restore Calibration Data..."
 msgstr "恢復校準資料..."
 
-#: src/gui/myframe.cpp:519
+#: src/gui/myframe.cpp:524
 msgid "Restore calibration data from last successful calibration"
 msgstr "由上回校準成功資料中恢復"
 
-#: src/gui/myframe.cpp:520
+#: src/gui/myframe.cpp:525
 msgid "Enter Calibration Data..."
 msgstr "輸入校準資料..."
 
-#: src/gui/myframe.cpp:520
+#: src/gui/myframe.cpp:525
 msgid "Manually enter the calibration data"
 msgstr "手動輸入校準資料"
 
-#: src/gui/myframe.cpp:521
+#: src/gui/myframe.cpp:526
 msgid "Flip Calibration Now"
 msgstr "翻轉校準資料"
 
-#: src/gui/myframe.cpp:521
+#: src/gui/myframe.cpp:526
 msgid "Flip the calibration data now"
 msgstr "翻轉校準資料"
 
-#: src/gui/myframe.cpp:522
+#: src/gui/myframe.cpp:527
 msgid "Clear Calibration Data..."
 msgstr "清除校準資料..."
 
-#: src/gui/myframe.cpp:522
+#: src/gui/myframe.cpp:527
 msgid "Clear calibration data currently in use"
 msgstr "清除目前使用中的較準資料"
 
-#: src/gui/myframe.cpp:523
+#: src/gui/myframe.cpp:528
 msgid "Modify Calibration"
 msgstr "修改校準資料"
 
-#: src/gui/myframe.cpp:526
+#: src/gui/myframe.cpp:531
 msgid "Adjust &Lock Position"
 msgstr "調整鎖定位置"
 
-#: src/gui/myframe.cpp:526
+#: src/gui/myframe.cpp:531
 msgid "Adjust the lock position"
 msgstr "調整鎖定位置"
 
-#: src/gui/myframe.cpp:527
+#: src/gui/myframe.cpp:532
 msgid "&Comet Tracking"
 msgstr "彗星追蹤"
 
-#: src/gui/myframe.cpp:527
+#: src/gui/myframe.cpp:532
 msgid "Run the Comet Tracking tool"
 msgstr "執行彗星追蹤工具"
 
-#: src/gui/myframe.cpp:528 src/gui/myframe_events.cpp:1108
+#: src/gui/myframe.cpp:533 src/gui/myframe_events.cpp:1109
 #: src/gui/starcross_test.cpp:76
 msgid "Star-Cross Test"
 msgstr "十字星點移動測試"
 
-#: src/gui/myframe.cpp:528
+#: src/gui/myframe.cpp:533
 msgid "Run a star-cross test for mount diagnostics"
 msgstr "執行一次十字星點移動測試來檢測赤道儀"
 
-#: src/gui/myframe.cpp:529
+#: src/gui/myframe.cpp:534
 msgid "Calibrate meridian flip"
 msgstr "過中天翻轉校準"
 
-#: src/gui/myframe.cpp:529
+#: src/gui/myframe.cpp:534
 msgid "Automatically determine the correct meridian flip settings"
 msgstr "自動決定過中天翻轉設定"
 
-#: src/gui/myframe.cpp:530
+#: src/gui/myframe.cpp:535
 msgid "&Guiding Assistant"
 msgstr "導星小幫手"
 
-#: src/gui/myframe.cpp:530
+#: src/gui/myframe.cpp:535
 msgid "Run the Guiding Assistant"
 msgstr "執行導星小幫手"
 
-#: src/gui/myframe.cpp:531
+#: src/gui/myframe.cpp:536
 msgid "&Drift Align"
 msgstr "飄移法極軸校準"
 
-#: src/gui/myframe.cpp:531
+#: src/gui/myframe.cpp:536
 msgid "Align by analysing star drift near the celestial equator (Accurate)"
 msgstr "依據分析天球赤道附近星點進行對準 (精確)"
 
-#: src/gui/myframe.cpp:532
+#: src/gui/myframe.cpp:537
 msgid "&Polar Drift Align"
 msgstr "極點飄移對極軸"
 
-#: src/gui/myframe.cpp:532
+#: src/gui/myframe.cpp:537
 msgid "Align by analysing star drift near the celestial pole (Simple)"
 msgstr "依據分析天球極區附近星點進行對準 (簡易)"
 
-#: src/gui/myframe.cpp:533
+#: src/gui/myframe.cpp:538
 msgid "&Static Polar Align"
 msgstr "靜態對極軸"
 
-#: src/gui/myframe.cpp:533
+#: src/gui/myframe.cpp:538
 msgid "Align by measuring the RA axis offset from the celestial pole (Fast)"
 msgstr "依據量測極區附近的赤經軸偏移量來對極軸 (快速)"
 
-#: src/gui/myframe.cpp:535
+#: src/gui/myframe.cpp:540
 msgid "Enable Server"
 msgstr "啟用伺服器"
 
-#: src/gui/myframe.cpp:535
+#: src/gui/myframe.cpp:540
 msgid "Enable LGuider2 server capability"
 msgstr ""
 
-#: src/gui/myframe.cpp:536 src/gui/nudge_lock.cpp:158
+#: src/gui/myframe.cpp:541 src/gui/nudge_lock.cpp:158
 msgid "Sticky Lock Position"
 msgstr "標定鎖定位置"
 
-#: src/gui/myframe.cpp:536
+#: src/gui/myframe.cpp:541
 msgid "Keep the same lock position when guiding starts"
 msgstr "當導星開始後保持相同的鎖定位置"
 
-#: src/gui/myframe.cpp:539
+#: src/gui/myframe.cpp:544
 msgid "Display Toolbar"
 msgstr "顯示工具列"
 
-#: src/gui/myframe.cpp:539
+#: src/gui/myframe.cpp:544
 msgid "Enable / disable tool bar"
 msgstr "啟用/關閉顯示工具列"
 
-#: src/gui/myframe.cpp:540
+#: src/gui/myframe.cpp:545
 msgid "Display &Graph"
 msgstr "顯示圖型"
 
-#: src/gui/myframe.cpp:540
+#: src/gui/myframe.cpp:545
 msgid "Enable / disable graph"
 msgstr "啟用/關閉顯示圖型"
 
-#: src/gui/myframe.cpp:541
+#: src/gui/myframe.cpp:546
 msgid "Display &Stats"
 msgstr "顯示狀態"
 
-#: src/gui/myframe.cpp:541
+#: src/gui/myframe.cpp:546
 msgid "Enable / disable guide stats"
 msgstr "啟用/關閉顯示狀態"
 
-#: src/gui/myframe.cpp:542
+#: src/gui/myframe.cpp:547
 msgid "Display &AO Graph"
 msgstr "顯示 AO 狀態圖型"
 
-#: src/gui/myframe.cpp:542
+#: src/gui/myframe.cpp:547
 msgid "Enable / disable AO graph"
 msgstr "啟用/關閉顯示 AO 狀態圖型"
 
-#: src/gui/myframe.cpp:543
+#: src/gui/myframe.cpp:548
 msgid "Display &Target"
 msgstr "顯示星點分布圖"
 
-#: src/gui/myframe.cpp:543
+#: src/gui/myframe.cpp:548
 msgid "Enable / disable target"
 msgstr "啟用/關閉顯示星點分布圖"
 
-#: src/gui/myframe.cpp:544
+#: src/gui/myframe.cpp:549
 msgid "Display Star &Profile"
 msgstr "顯示星點狀態圖"
 
-#: src/gui/myframe.cpp:544
+#: src/gui/myframe.cpp:549
 msgid "Enable / disable star profile view"
 msgstr "啟用/關閉顯示星點狀態圖"
 
-#: src/gui/myframe.cpp:546
+#: src/gui/myframe.cpp:551
 msgid "&No Overlay"
 msgstr "無底圖"
 
-#: src/gui/myframe.cpp:546
+#: src/gui/myframe.cpp:551
 msgid "No additional crosshairs"
 msgstr "無額外的十字線"
 
-#: src/gui/myframe.cpp:547
+#: src/gui/myframe.cpp:552
 msgid "&Bullseye"
 msgstr "標靶線"
 
-#: src/gui/myframe.cpp:547
+#: src/gui/myframe.cpp:552
 msgid "Centered bullseye overlay"
 msgstr "標靶線底圖"
 
-#: src/gui/myframe.cpp:548
+#: src/gui/myframe.cpp:553
 msgid "&Fine Grid"
 msgstr "細網格線"
 
-#: src/gui/myframe.cpp:548 src/gui/myframe.cpp:549
+#: src/gui/myframe.cpp:553 src/gui/myframe.cpp:554
 msgid "Grid overlay"
 msgstr "網格線底圖"
 
-#: src/gui/myframe.cpp:549
+#: src/gui/myframe.cpp:554
 msgid "&Coarse Grid"
 msgstr "粗網格線"
 
-#: src/gui/myframe.cpp:550
+#: src/gui/myframe.cpp:555
 msgid "&RA/Dec"
 msgstr "赤經/赤緯線"
 
-#: src/gui/myframe.cpp:550
+#: src/gui/myframe.cpp:555
 msgid "RA and Dec overlay"
 msgstr "赤經及赤緯線底圖"
 
-#: src/gui/myframe.cpp:551
+#: src/gui/myframe.cpp:556
 msgid "Spectrograph S&lit"
 msgstr "光譜儀狹縫"
 
-#: src/gui/myframe.cpp:551
+#: src/gui/myframe.cpp:556
 msgid "Spectrograph slit overlay"
 msgstr "光譜儀狹縫底圖"
 
-#: src/gui/myframe.cpp:553
+#: src/gui/myframe.cpp:558
 msgid "Slit Position..."
 msgstr "狹縫位置..."
 
-#: src/gui/myframe.cpp:555
+#: src/gui/myframe.cpp:560
 msgid "Restore Window Positions"
 msgstr "恢復視窗位置"
 
-#: src/gui/myframe.cpp:555
+#: src/gui/myframe.cpp:560
 msgid "Restore all windows to their default/docked positions"
 msgstr "將所有視窗回復到預設的位置及擺放點"
 
-#: src/gui/myframe.cpp:558
+#: src/gui/myframe.cpp:563
 msgid "Dark &Library..."
 msgstr "暗場影像庫..."
 
-#: src/gui/myframe.cpp:558
+#: src/gui/myframe.cpp:563
 msgid "Build a dark library for this profile"
 msgstr "將暗場影像庫套用至配置檔案中"
 
-#: src/gui/myframe.cpp:559
+#: src/gui/myframe.cpp:564
 msgid "Bad-pixel &Map..."
 msgstr "壞點影像..."
 
-#: src/gui/myframe.cpp:559
+#: src/gui/myframe.cpp:564
 msgid "Adjust parameters to create or modify the bad-pixel map"
 msgstr "調整參數以建立或修改壞像素影像"
 
-#: src/gui/myframe.cpp:560
+#: src/gui/myframe.cpp:565
 msgid "Import From Profile..."
 msgstr "由配置檔匯入..."
 
-#: src/gui/myframe.cpp:560
+#: src/gui/myframe.cpp:565
 msgid "Import existing dark library/bad-pixel map from a different profile"
 msgstr "由不同的組態檔案匯入已經存在的暗場影像庫/壞點影像庫"
 
-#: src/gui/myframe.cpp:562
+#: src/gui/myframe.cpp:567
 msgid "Use &Dark Library"
 msgstr "使用暗場影像庫"
 
-#: src/gui/myframe.cpp:562
+#: src/gui/myframe.cpp:567
 msgid "Use the the dark library for this profile"
 msgstr "讓配置檔使用此暗場影像庫"
 
-#: src/gui/myframe.cpp:563
+#: src/gui/myframe.cpp:568
 msgid "Use &Bad-pixel Map"
 msgstr "使用壞點影像庫"
 
-#: src/gui/myframe.cpp:563
+#: src/gui/myframe.cpp:568
 msgid "Use the bad-pixel map for this profile"
 msgstr "將壞點影像庫套用至配置檔案中"
 
-#: src/gui/myframe.cpp:568
+#: src/gui/myframe.cpp:573
 msgid "&Save settings"
 msgstr "儲存設定"
 
-#: src/gui/myframe.cpp:568
+#: src/gui/myframe.cpp:573
 msgid "Save current camera settings"
 msgstr "儲存目前相機的設定"
 
-#: src/gui/myframe.cpp:569
+#: src/gui/myframe.cpp:574
 msgid "&Restore settings"
 msgstr "恢復設定"
 
-#: src/gui/myframe.cpp:569
+#: src/gui/myframe.cpp:574
 msgid "Restore camera settings"
 msgstr "恢復相機設定"
 
-#: src/gui/myframe.cpp:573
+#: src/gui/myframe.cpp:578
 msgid "Show &Bookmarks\tb"
 msgstr "顯示標記\tB"
 
-#: src/gui/myframe.cpp:573
+#: src/gui/myframe.cpp:578
 msgid "Hide or show bookmarks"
 msgstr "顯示或隱藏標記"
 
-#: src/gui/myframe.cpp:576
+#: src/gui/myframe.cpp:581
 msgid "Bookmark &Lock Pos\tShift-B"
 msgstr "鎖定位置標記\tShift-B"
 
-#: src/gui/myframe.cpp:576
+#: src/gui/myframe.cpp:581
 msgid "Set a bookmark at the current lock position"
 msgstr "在目前鎖定位置設定一個標記"
 
-#: src/gui/myframe.cpp:578
+#: src/gui/myframe.cpp:583
 msgid "Bookmark &Star Pos"
 msgstr "標記星點位置"
 
-#: src/gui/myframe.cpp:578
+#: src/gui/myframe.cpp:583
 msgid "Set a bookmark at the position of the currently selected star"
 msgstr "將所選擇星點位置設置一個標記"
 
-#: src/gui/myframe.cpp:579
+#: src/gui/myframe.cpp:584
 msgid "&Delete all\tCtrl-B"
 msgstr "刪除全部標記\tCtrl-B"
 
-#: src/gui/myframe.cpp:579
+#: src/gui/myframe.cpp:584
 msgid "Remove all bookmarks"
 msgstr "移除所有的標記"
 
-#: src/gui/myframe.cpp:582
+#: src/gui/myframe.cpp:587
 msgid "&About..."
 msgstr "關於..."
 
-#: src/gui/myframe.cpp:583
+#: src/gui/myframe.cpp:588
 msgid "&Check for updates"
 msgstr "檢查更新"
 
-#: src/gui/myframe.cpp:583
+#: src/gui/myframe.cpp:588
 msgid "Check for LGuider2 software updates"
 msgstr ""
 
-#: src/gui/myframe.cpp:584
+#: src/gui/myframe.cpp:589
 msgid "Online Support"
 msgstr "線上支援"
 
-#: src/gui/myframe.cpp:584
+#: src/gui/myframe.cpp:589
 msgid "Ask for help in the LGuider2 Forum"
 msgstr ""
 
-#: src/gui/myframe.cpp:585
+#: src/gui/myframe.cpp:590
 msgid "Open Log Folder"
 msgstr "打開日誌檔案夾"
 
-#: src/gui/myframe.cpp:585
+#: src/gui/myframe.cpp:590
 msgid "Open the log folder"
 msgstr "打開該日誌檔案夾"
 
-#: src/gui/myframe.cpp:586
+#: src/gui/myframe.cpp:591
 msgid "Upload Log Files..."
 msgstr "上傳日誌檔案中..."
 
-#: src/gui/myframe.cpp:586
+#: src/gui/myframe.cpp:591
 msgid "Upload log files for review"
 msgstr "上傳日誌檔案以供檢視"
 
-#: src/gui/myframe.cpp:587
+#: src/gui/myframe.cpp:592
 msgid "&Contents...\tF1"
 msgstr "內容"
 
-#: src/gui/myframe.cpp:587
+#: src/gui/myframe.cpp:592
 msgid "Full help"
 msgstr "全部輔助文件"
 
-#: src/gui/myframe.cpp:588
+#: src/gui/myframe.cpp:593
 msgid "&Impatient Instructions"
 msgstr "簡介"
 
-#: src/gui/myframe.cpp:588
+#: src/gui/myframe.cpp:593
 msgid "Quick instructions for the impatient"
 msgstr "快速說明"
 
-#: src/gui/myframe.cpp:591
+#: src/gui/myframe.cpp:596
 msgid "&File"
 msgstr "檔案"
 
-#: src/gui/myframe.cpp:592
+#: src/gui/myframe.cpp:597
 msgid "&Guide"
 msgstr "&G導星"
 
-#: src/gui/myframe.cpp:601
+#: src/gui/myframe.cpp:606
 msgid "&Tools"
 msgstr "工具"
 
-#: src/gui/myframe.cpp:602
+#: src/gui/myframe.cpp:607
+msgid "&OpenAPT"
+msgstr ""
+
+#: src/gui/myframe.cpp:608
 msgid "&View"
 msgstr "檢視"
 
-#: src/gui/myframe.cpp:603
+#: src/gui/myframe.cpp:609
 msgid "&Darks"
 msgstr "暗場"
 
-#: src/gui/myframe.cpp:604
+#: src/gui/myframe.cpp:610
 msgid "&Bookmarks"
 msgstr "標記"
 
-#: src/gui/myframe.cpp:605
+#: src/gui/myframe.cpp:611
 msgid "&Help"
 msgstr "輔助"
 
-#: src/gui/myframe.cpp:680 src/gui/myframe.cpp:901 src/gui/myframe.cpp:997
+#: src/gui/myframe.cpp:686 src/gui/myframe.cpp:907 src/gui/myframe.cpp:1003
 #, c-format
 msgid "Custom: %g s"
 msgstr "自定: %g s"
 
-#: src/gui/myframe.cpp:803
+#: src/gui/myframe.cpp:809
 #, c-format
 msgid "%g s"
 msgstr "%g s"
 
-#: src/gui/myframe.cpp:806
+#: src/gui/myframe.cpp:812
 #, c-format
 msgid "%.*f s"
 msgstr "%.*f s"
 
-#: src/gui/myframe.cpp:998
+#: src/gui/myframe.cpp:1004
 msgid "Edit Custom..."
 msgstr "編輯自定..."
 
-#: src/gui/myframe.cpp:1002
+#: src/gui/myframe.cpp:1008
 msgid "Camera exposure duration"
 msgstr "相機曝光時間"
 
-#: src/gui/myframe.cpp:1007
+#: src/gui/myframe.cpp:1013
 msgid "Screen gamma (brightness)"
 msgstr "螢幕灰度(亮度)"
 
-#: src/gui/myframe.cpp:1009
+#: src/gui/myframe.cpp:1015
 msgid ""
 "Connect to equipment. Shift-click to reconnect the same equipment last "
 "connected."
 msgstr "連接到設備. 按 Shift-click 來連接到上次所連接的相同設備。"
 
-#: src/gui/myframe.cpp:1010
+#: src/gui/myframe.cpp:1016
 msgid "Begin looping exposures for frame and focus"
 msgstr "開始連續曝光以對焦及對準影像"
 
-#: src/gui/myframe.cpp:1011
+#: src/gui/myframe.cpp:1017
 msgid "Auto-select Star. Shift-click to de-select star."
 msgstr "自動選星, [Shitf]+點擊來取消選星"
 
-#: src/gui/myframe.cpp:1015
+#: src/gui/myframe.cpp:1021
 msgid "Begin guiding (LGuider). Shift-click to force calibration."
 msgstr "開始導星 (LGuider), 按下 Shit-Click 進行強制校準."
 
-#: src/gui/myframe.cpp:1018
+#: src/gui/myframe.cpp:1024
 msgid "Exposure duration"
 msgstr "曝光時間"
 
-#: src/gui/myframe.cpp:1019
+#: src/gui/myframe.cpp:1025
 msgid "Gamma"
 msgstr "Gamma"
 
-#: src/gui/myframe.cpp:1260
+#: src/gui/myframe.cpp:1266
 msgid "Trouble-shooting and Analysis"
 msgstr "除錯與分析"
 
-#: src/gui/myframe.cpp:1280
+#: src/gui/myframe.cpp:1286
 msgid ""
 "Don't show\n"
 " again"
 msgstr "不再顯示"
 
-#: src/gui/myframe.cpp:1688 src/gui/myframe.cpp:1952
+#: src/gui/myframe.cpp:1694 src/gui/myframe.cpp:1958
 msgid "Looping"
 msgstr "迴圈中"
 
-#: src/gui/myframe.cpp:1807
+#: src/gui/myframe.cpp:1813
 msgid "Capturing single exposure"
 msgstr "單張曝光拍攝中"
 
-#: src/gui/myframe.cpp:1875
+#: src/gui/myframe.cpp:1881
 msgid "Waiting for devices..."
 msgstr "等待設備回應..."
 
-#: src/gui/myframe.cpp:1921
+#: src/gui/myframe.cpp:1927
 msgid "Resumed"
 msgstr "重啟"
 
-#: src/gui/myframe.cpp:1970
+#: src/gui/myframe.cpp:1976
 msgid ""
 "Cannot guide while refining a Bad-pixel Map. Please close the Refine Bad-"
 "pixel Map window."
 msgstr "在微調壞點影像時無法進行導星, 請將微調壞點影像視窗關閉。"
 
-#: src/gui/myframe.cpp:2084
+#: src/gui/myframe.cpp:2090
 #, c-format
 msgid "Dither by %.2f,%.2f"
 msgstr "Dither by %.2f,%.2f"
 
-#: src/gui/myframe.cpp:2132
+#: src/gui/myframe.cpp:2138
 msgid "Are you sure you want to exit while capturing is active?"
 msgstr "確定要在影像拍攝進行當中關閉程式?"
 
-#: src/gui/myframe.cpp:2133
+#: src/gui/myframe.cpp:2139
 msgid "Confirm Exit"
 msgstr "確認關閉"
 
-#: src/gui/myframe.cpp:2405
+#: src/gui/myframe.cpp:2411
 #, c-format
 msgid "FITS file is not of an image: %s"
 msgstr "FITS 檔案: %s 不是一個正確的影像檔"
 
-#: src/gui/myframe.cpp:2413 src/image/usImage.cpp:438
+#: src/gui/myframe.cpp:2419 src/image/usImage.cpp:438
 #, c-format
 msgid "Unsupported type or read error loading FITS file %s"
 msgstr "不支援的檔案格式或載入 %s FITS 檔案時發生讀取錯誤"
 
-#: src/gui/myframe.cpp:2423
+#: src/gui/myframe.cpp:2429
 msgid ""
 "Existing dark library has frames with incompatible formats - please rebuild "
 "the dark library from scratch."
 msgstr "目前的暗場影像庫係以不相容格式建立, 請重建暗場影像庫。"
 
-#: src/gui/myframe.cpp:2434
+#: src/gui/myframe.cpp:2440
 #, c-format
 msgid "Memory allocation error reading FITS file %s"
 msgstr "讀取 FITS 檔案 %s 時發生記憶體配置錯誤"
 
-#: src/gui/myframe.cpp:2441
+#: src/gui/myframe.cpp:2447
 #, c-format
 msgid "Error reading data from %s"
 msgstr "讀取 %s 資料時發生錯誤"
 
-#: src/gui/myframe.cpp:2474 src/image/usImage.cpp:484
+#: src/gui/myframe.cpp:2480 src/image/usImage.cpp:484
 #, c-format
 msgid "Error opening FITS file %s"
 msgstr "開啟 FITS 檔案 %s 時發生錯誤"
 
-#: src/gui/myframe.cpp:2538
+#: src/gui/myframe.cpp:2544
 msgid ""
 "Dark library does not match the camera in this profile. Check that you are "
 "connected to the camera you want to use for guiding."
 msgstr ""
 
-#: src/gui/myframe.cpp:2585
+#: src/gui/myframe.cpp:2591
 msgid ""
 "Dark library and bad-pixel maps don't match the current camera. Check that "
 "you are connected to the camera you want to use for guiding."
 msgstr ""
 
-#: src/gui/myframe.cpp:2617
+#: src/gui/myframe.cpp:2623
 msgid "You must connect a camera before loading dark frames"
 msgstr "載入暗場影像時須先連接相機"
 
-#: src/gui/myframe.cpp:2624
+#: src/gui/myframe.cpp:2630
 msgid "Darks not loaded"
 msgstr "暗場影像未能載入"
 
-#: src/gui/myframe.cpp:2631
+#: src/gui/myframe.cpp:2637
 msgid "Darks loaded"
 msgstr "載入暗場影像"
 
-#: src/gui/myframe.cpp:2644
+#: src/gui/myframe.cpp:2650
 #, c-format
 msgid "Error saving darks FITS file %s"
 msgstr "儲存暗場 FITS 檔案 %s 時發生錯誤"
 
-#: src/gui/myframe.cpp:2845
+#: src/gui/myframe.cpp:2851
 msgid ""
 "Guiding parameters have been reset because the binning or pixel size changed "
 "unexpectedly. You should use separate profiles for different image scales."
@@ -5579,11 +5911,11 @@ msgstr ""
 "導星參數因非預期的影像併合或像素大小改變而重置, 不同影像比例需使用個別的設置"
 "檔"
 
-#: src/gui/myframe.cpp:2855
+#: src/gui/myframe.cpp:2861
 msgid "Global Settings"
 msgstr "整體設定"
 
-#: src/gui/myframe.cpp:2902
+#: src/gui/myframe.cpp:2908
 #, c-format
 msgid ""
 "Enter a focal length in millimeters, between %.f and %.f,\n"
@@ -5592,136 +5924,137 @@ msgstr ""
 "以毫米為單位輸入焦長, 輸入數值在 %.f 與 %.f 之間,\n"
 "如果不知道焦長的話, 請輸入 0 "
 
-#: src/gui/myframe.cpp:2954 src/gui/myframe.cpp:3037
+#: src/gui/myframe.cpp:2960 src/gui/myframe.cpp:3043
 msgid "System default"
 msgstr "系統預設"
 
-#: src/gui/myframe.cpp:2966
+#: src/gui/myframe.cpp:2972
 msgid "Language-Name"
 msgstr "正體中文(台灣)"
 
-#: src/gui/myframe.cpp:3005
+#: src/gui/myframe.cpp:3011
 msgid "Reset Configuration"
 msgstr "重置所有的設定"
 
-#: src/gui/myframe.cpp:3006
+#: src/gui/myframe.cpp:3012
 msgid ""
 "Reset all configuration and program settings to fresh install status. This "
 "will require restarting LGuider2"
 msgstr ""
 
-#: src/gui/myframe.cpp:3007
+#: src/gui/myframe.cpp:3013
 msgid "Reset \"Don't Show Again\" messages"
 msgstr "重置【不再顯示】訊息"
 
-#: src/gui/myframe.cpp:3008
+#: src/gui/myframe.cpp:3014
 msgid ""
 "Restore any messages that were hidden when you checked \"Don't show this "
 "again\"."
 msgstr "恢復所有因為設定了「不再顯示該訊息」選項而被隱藏的訊息。"
 
-#: src/gui/myframe.cpp:3012
+#: src/gui/myframe.cpp:3018
 msgid "2x2 mean"
 msgstr "2x2 平均"
 
-#: src/gui/myframe.cpp:3012
+#: src/gui/myframe.cpp:3018
 msgid "3x3 median"
 msgstr "3x3 中位數"
 
-#: src/gui/myframe.cpp:3019
+#: src/gui/myframe.cpp:3025
 msgid "Noise Reduction"
 msgstr "降噪"
 
-#: src/gui/myframe.cpp:3020
+#: src/gui/myframe.cpp:3026
 msgid "Technique to reduce noise in images"
 msgstr "用來降噪的技術"
 
-#: src/gui/myframe.cpp:3026
+#: src/gui/myframe.cpp:3032
 msgid "Time Lapse (ms)"
 msgstr "延時 (ms)"
 
-#: src/gui/myframe.cpp:3027
+#: src/gui/myframe.cpp:3033
 msgid ""
-"How long should LGuider wait between guide frames? Default = 0ms, useful when "
-"using very short exposures (e.g., using a video camera) but wanting to send "
-"guide commands less frequently"
+"How long should LGuider wait between guide frames? Default = 0ms, useful "
+"when using very short exposures (e.g., using a video camera) but wanting to "
+"send guide commands less frequently"
 msgstr ""
-"LGuider 等待個別導星影像的時間, 預設值為 0ms，這個數值在使用曝光時間很短(如使用視"
-"訊攝影機)而想減少對赤道儀送出導星訊號頻率以免產生過度修正問題的情況下非常有用"
+"LGuider 等待個別導星影像的時間, 預設值為 0ms，這個數值在使用曝光時間很短(如使"
+"用視訊攝影機)而想減少對赤道儀送出導星訊號頻率以免產生過度修正問題的情況下非常"
+"有用"
 
-#: src/gui/myframe.cpp:3034
+#: src/gui/myframe.cpp:3040
 msgid "Focal length (mm)"
 msgstr "焦長 (mm)"
 
-#: src/gui/myframe.cpp:3035
+#: src/gui/myframe.cpp:3041
 msgid ""
 "Guider telescope focal length, used with the camera pixel size to display "
 "guiding error in arc-sec."
 msgstr "導星鏡焦長, 結合相機像素大小來計算並以角秒為單位顯示導星誤差。"
 
-#: src/gui/myframe.cpp:3041
+#: src/gui/myframe.cpp:3047
 msgid "Language"
 msgstr "正體中文(台灣)"
 
-#: src/gui/myframe.cpp:3042
+#: src/gui/myframe.cpp:3048
 #, c-format
 msgid "%s Language. You'll have to restart LGuider to take effect."
 msgstr "%s 語言 . 您必須重新啟動 LightGuider 才會生效。"
 
-#: src/gui/myframe.cpp:3048
+#: src/gui/myframe.cpp:3054
 msgid "Automatically check for updates"
 msgstr "自動檢查更新"
 
-#: src/gui/myframe.cpp:3049
+#: src/gui/myframe.cpp:3055
 msgid "Check for software updates when LGuider2 starts (recommended)"
 msgstr ""
 
-#: src/gui/myframe.cpp:3051
+#: src/gui/myframe.cpp:3057
 msgid "Only check for major releases"
 msgstr "只檢查是否為主要發行版本"
 
-#: src/gui/myframe.cpp:3052
+#: src/gui/myframe.cpp:3058
 msgid "Ignore minor (development) releases when checking for updates"
 msgstr "檢查更新時自動忽略小版本(開發版)的更新"
 
-#: src/gui/myframe.cpp:3059
+#: src/gui/myframe.cpp:3065
 msgid "Log File Location"
 msgstr "日誌檔案儲存位置"
 
-#: src/gui/myframe.cpp:3062
+#: src/gui/myframe.cpp:3068
 msgid ""
 "Folder for guide and debug logs; empty string to restore the default location"
 msgstr "存放導星及除錯日誌記錄的目錄，空白的話，則會存放於預設的目錄下"
 
-#: src/gui/myframe.cpp:3063
+#: src/gui/myframe.cpp:3069
 msgid "Browse..."
 msgstr "瀏灠..."
 
-#: src/gui/myframe.cpp:3076
+#: src/gui/myframe.cpp:3082
 msgid "Enable diagnostic image logging"
 msgstr "啟用除錯影像記錄"
 
-#: src/gui/myframe.cpp:3077
+#: src/gui/myframe.cpp:3083
 msgid "Save guider images based on options below"
 msgstr "根據以下選項來儲存導星影像"
 
-#: src/gui/myframe.cpp:3080
+#: src/gui/myframe.cpp:3086
 msgid "Save Guider Images"
 msgstr "儲存導星影像"
 
-#: src/gui/myframe.cpp:3083
+#: src/gui/myframe.cpp:3089
 msgid "For all lost-star frames"
 msgstr "所有遺失星點的影像"
 
-#: src/gui/myframe.cpp:3084
+#: src/gui/myframe.cpp:3090
 msgid "Save guider image whenever a lost-star event occurs"
 msgstr "無論是否發生星點遺失事件都儲存導星影像"
 
-#: src/gui/myframe.cpp:3086
+#: src/gui/myframe.cpp:3092
 msgid "For all Auto-select Star frames"
 msgstr "所有自動選星的影像"
 
-#: src/gui/myframe.cpp:3087
+#: src/gui/myframe.cpp:3093
 msgid ""
 "Save guider image when a star auto-selection is made. Note: the image is "
 "always saved when star auto-selection fails, regardless of this setting."
@@ -5729,11 +6062,11 @@ msgstr ""
 "當某星點於自動選星模式下被選取時就儲存導星影像，注意，不論是否有勾選此選項，"
 "當自動選星失敗時，都會立刻儲存影像。"
 
-#: src/gui/myframe.cpp:3090
+#: src/gui/myframe.cpp:3096
 msgid "When relative error exceeds"
 msgstr "當超過相對錯誤時"
 
-#: src/gui/myframe.cpp:3091
+#: src/gui/myframe.cpp:3097
 msgid ""
 "Save guider images when the error for the current frame exceeds the average "
 "error by this factor. For example, if the average (RMS) error is 0.5 pixels, "
@@ -5742,180 +6075,176 @@ msgstr ""
 "當目前影像的錯誤超過該數值的平均誤差時就儲存導星影像。如，如果平均（RMS）誤差"
 "為 0.5 個像素，目前影像的誤差為 1.5 個像素，則相對誤差為 3"
 
-#: src/gui/myframe.cpp:3095
+#: src/gui/myframe.cpp:3101
 msgid ""
 "Relative error threshold. Relative error is the ratio between the current "
 "frame's error and the average error"
 msgstr "相對誤差門檻值，相對誤差是目前影像誤差與平均誤差之間的相對比值"
 
-#: src/gui/myframe.cpp:3100
+#: src/gui/myframe.cpp:3106
 msgid "When absolute error exceeds (pixels)"
 msgstr "當絕對誤差超過 (像素) 時"
 
-#: src/gui/myframe.cpp:3101
+#: src/gui/myframe.cpp:3107
 msgid ""
 "Save guider images when the distance between the guide star and the lock "
 "position exceeds this many pixels"
 msgstr "當導星影像和鎖定位置之間的距離超過多少像素時，就儲存導星影像"
 
-#: src/gui/myframe.cpp:3105
+#: src/gui/myframe.cpp:3111
 msgid "Absolute error threshold in pixels"
 msgstr "絕對誤差門檻值 (以像素為計算單位)"
 
-#: src/gui/myframe.cpp:3110
+#: src/gui/myframe.cpp:3116
 msgid "Until this count is reached"
 msgstr "直到達到此數值"
 
-#: src/gui/myframe.cpp:3111
+#: src/gui/myframe.cpp:3117
 msgid ""
 "Save each guider image until the specified number of images have been saved"
 msgstr "儲存每張導星影像到所設定的影像數量為止"
 
-#: src/gui/myframe.cpp:3113
+#: src/gui/myframe.cpp:3119
 msgid "Number of images to save"
 msgstr "要儲存的影像數"
 
-#: src/gui/myframe.cpp:3128
+#: src/gui/myframe.cpp:3134
 msgid "Dither Settings"
 msgstr "抖動設定"
 
-#: src/gui/myframe.cpp:3129
-msgid "Random"
-msgstr "隨機的"
-
-#: src/gui/myframe.cpp:3130
+#: src/gui/myframe.cpp:3136
 msgid ""
 "Each dither command moves the lock position a random distance on each axis"
 msgstr "每次抖動命令會將鎖定位置往每個軸向移動某個隨機的距離"
 
-#: src/gui/myframe.cpp:3131
+#: src/gui/myframe.cpp:3137
 msgid "Spiral"
 msgstr "螺旋狀"
 
-#: src/gui/myframe.cpp:3132
+#: src/gui/myframe.cpp:3138
 msgid "Each dither command moves the lock position along a spiral path"
 msgstr "每次抖動命令會沿著螺旋狀路徑移動鎖定位置"
 
-#: src/gui/myframe.cpp:3134
+#: src/gui/myframe.cpp:3140
 msgid "Mode: "
 msgstr "模式: "
 
-#: src/gui/myframe.cpp:3139
+#: src/gui/myframe.cpp:3145
 msgid "RA only"
 msgstr "僅 RA"
 
-#: src/gui/myframe.cpp:3140
+#: src/gui/myframe.cpp:3146
 msgid "Constrain dither to RA only"
 msgstr "Dither 將僅在赤經方向進行"
 
-#: src/gui/myframe.cpp:3146
+#: src/gui/myframe.cpp:3152
 msgid "Scaling for dither commands. Default = 1.0 (0.1-100.0)"
 msgstr "抖動命令的尺度。 預設值 = 1.0 (0.1-100.0)"
 
-#: src/gui/myframe.cpp:3150 src/gui/testguide.cpp:119
+#: src/gui/myframe.cpp:3156 src/gui/testguide.cpp:119
 msgid "Scale"
 msgstr "比例"
 
-#: src/gui/myframe.cpp:3157 src/gui/profile_wizard.cpp:319
+#: src/gui/myframe.cpp:3163 src/gui/profile_wizard.cpp:319
 msgid "Auto restore calibration"
 msgstr "自動恢復校準"
 
-#: src/gui/myframe.cpp:3158
+#: src/gui/myframe.cpp:3164
 msgid ""
 "For this equipment profile, automatically restore data from last successful "
 "calibration after gear is connected."
 msgstr ""
 "針對此設備組態腳本，當連接赤道儀後會自動恢復最近一次成功校準所得的資料。"
 
-#: src/gui/myframe.cpp:3175 src/telescope/scope.cpp:1988
+#: src/gui/myframe.cpp:3181 src/telescope/scope.cpp:1988
 msgid "Min"
 msgstr "最短"
 
-#: src/gui/myframe.cpp:3175
+#: src/gui/myframe.cpp:3181
 msgid "Auto exposure minimum duration"
 msgstr "自動曝光的最短時間"
 
-#: src/gui/myframe.cpp:3176 src/telescope/scope.cpp:1990
+#: src/gui/myframe.cpp:3182 src/telescope/scope.cpp:1990
 msgid "Max"
 msgstr "最長"
 
-#: src/gui/myframe.cpp:3176
+#: src/gui/myframe.cpp:3182
 msgid "Auto exposure maximum duration"
 msgstr "自動曝光的最長時間"
 
-#: src/gui/myframe.cpp:3177
+#: src/gui/myframe.cpp:3183
 msgid "Target SNR"
 msgstr "標的 SNR"
 
-#: src/gui/myframe.cpp:3177
+#: src/gui/myframe.cpp:3183
 msgid "Auto exposure target SNR value"
 msgstr "自動曝光標的的 SNR 值"
 
-#: src/gui/myframe.cpp:3178
+#: src/gui/myframe.cpp:3184
 msgid "Auto Exposure"
 msgstr "自動曝光"
 
-#: src/gui/myframe.cpp:3185
+#: src/gui/myframe.cpp:3191
 msgid "Use Variable Exposure Delays"
 msgstr "使用可變動的曝光延遲"
 
-#: src/gui/myframe.cpp:3186
+#: src/gui/myframe.cpp:3192
 msgid ""
 "Use \"short\" delay for calibration, looping, dithering, GA, \"long\" delay "
 "for normal guiding"
 msgstr "使用“短”延遲進行校準、循環曝光、抖動、GA，使用“長”延遲進行導星"
 
-#: src/gui/myframe.cpp:3191
+#: src/gui/myframe.cpp:3197
 msgid "Short delay (sec)"
 msgstr "短延遲 (秒)"
 
-#: src/gui/myframe.cpp:3191
+#: src/gui/myframe.cpp:3197
 msgid "Short delay for calibration, looping, dithering, GA"
 msgstr "供校準、循環、抖動、GA 使用的短延遲"
 
-#: src/gui/myframe.cpp:3192
+#: src/gui/myframe.cpp:3198
 msgid "Long delay (sec)"
 msgstr "長延遲 (秒)"
 
-#: src/gui/myframe.cpp:3192
+#: src/gui/myframe.cpp:3198
 msgid "Long delay for normal guiding"
 msgstr "供導星用的長時間延遲"
 
-#: src/gui/myframe.cpp:3193
+#: src/gui/myframe.cpp:3199
 msgid "Variable Exposure Delay (High-precision encoder mounts)"
 msgstr "可變曝光延遲（高精度編碼器的赤道儀）"
 
-#: src/gui/myframe.cpp:3284
+#: src/gui/myframe.cpp:3290
 msgid ""
-"This will reset all LGuider2 configuration values and restart the program.  Are "
-"you sure?"
+"This will reset all LGuider2 configuration values and restart the program.  "
+"Are you sure?"
 msgstr ""
 
-#: src/gui/myframe.cpp:3284
+#: src/gui/myframe.cpp:3290
 msgid "Confirmation"
 msgstr "確認"
 
-#: src/gui/myframe.cpp:3315
+#: src/gui/myframe.cpp:3321
 msgid "Restart LGuider2"
 msgstr ""
 
-#: src/gui/myframe.cpp:3316
+#: src/gui/myframe.cpp:3322
 msgid ""
 "You must restart LGuider2 for the language change to take effect.\n"
 "Would you like to restart LGuider2 now?"
 msgstr ""
 
-#: src/gui/myframe_events.cpp:80
+#: src/gui/myframe_events.cpp:81
 msgid "Custom exposure duration (seconds)"
 msgstr "自定曝光時間 (秒)"
 
-#: src/gui/myframe_events.cpp:80
+#: src/gui/myframe_events.cpp:81
 msgid "Edit custom exposure"
 msgstr "編輯自定曝光時間"
 
-#: src/gui/myframe_events.cpp:178
+#: src/gui/myframe_events.cpp:179
 msgid ""
-"Welcome to LGuider2 (Push Here Dummy, Gen2) Guiding\n"
+"Welcome to LightGuider (OpenAPT)\n"
 "\n"
 " Basic operation is quite simple (hence the 'LGuider')\n"
 "\n"
@@ -5936,75 +6265,75 @@ msgid ""
 " problems, read the 'Best Practices' document and the help files! "
 msgstr ""
 
-#: src/gui/myframe_events.cpp:189 src/gui/staticpa_toolwin.cpp:310
+#: src/gui/myframe_events.cpp:190 src/gui/staticpa_toolwin.cpp:310
 #: src/gui/staticpa_toolwin.cpp:626
 msgid "Instructions"
 msgstr "說明"
 
-#: src/gui/myframe_events.cpp:195 src/gui/profile_wizard.cpp:670
+#: src/gui/myframe_events.cpp:196 src/gui/profile_wizard.cpp:670
 msgid "Introduction"
 msgstr "說明"
 
-#: src/gui/myframe_events.cpp:243
+#: src/gui/myframe_events.cpp:244
 msgid "Spectrograph Slit Overlay"
 msgstr "光譜儀狹縫覆蓋"
 
-#: src/gui/myframe_events.cpp:253
+#: src/gui/myframe_events.cpp:254
 msgid "Position (Center)"
 msgstr "位置(中央"
 
-#: src/gui/myframe_events.cpp:254
+#: src/gui/myframe_events.cpp:255
 msgid "Size"
 msgstr "大小"
 
-#: src/gui/myframe_events.cpp:273
+#: src/gui/myframe_events.cpp:274
 msgid "Width"
 msgstr "寬度"
 
-#: src/gui/myframe_events.cpp:280
+#: src/gui/myframe_events.cpp:281
 msgid "Height"
 msgstr "高度"
 
-#: src/gui/myframe_events.cpp:296
+#: src/gui/myframe_events.cpp:297
 msgid "Angle (degrees)"
 msgstr "赤經角度(度)"
 
-#: src/gui/myframe_events.cpp:357
+#: src/gui/myframe_events.cpp:358
 msgid "Save FITS Image"
 msgstr "儲存 FITS 影像"
 
-#: src/gui/myframe_events.cpp:367
+#: src/gui/myframe_events.cpp:368
 #, c-format
 msgid "The image could not be saved to %s"
 msgstr "該影像無法儲存 %s"
 
-#: src/gui/myframe_events.cpp:371
+#: src/gui/myframe_events.cpp:372
 #, c-format
 msgid "%s saved"
 msgstr "%s 已儲存"
 
-#: src/gui/myframe_events.cpp:386 src/gui/myframe_events.cpp:644
-#: src/gui/myframe_events.cpp:747
+#: src/gui/myframe_events.cpp:387 src/gui/myframe_events.cpp:645
+#: src/gui/myframe_events.cpp:748
 msgid "Please connect to a camera first"
 msgstr "請先連接相機"
 
-#: src/gui/myframe_events.cpp:386 src/gui/myframe_events.cpp:644
-#: src/gui/myframe_events.cpp:747
+#: src/gui/myframe_events.cpp:387 src/gui/myframe_events.cpp:645
+#: src/gui/myframe_events.cpp:748
 msgid "Info"
 msgstr "提示"
 
-#: src/gui/myframe_events.cpp:414 src/gui/myframe_events.cpp:483
+#: src/gui/myframe_events.cpp:415 src/gui/myframe_events.cpp:484
 msgid "Stopped."
 msgstr "已停止。"
 
-#: src/gui/myframe_events.cpp:432
+#: src/gui/myframe_events.cpp:433
 msgid ""
 "For refining the Bad-pixel Map LGuider2 is now displaying raw camera data "
 "frames, which are a different size from ordinary guide frames for this "
 "camera."
 msgstr ""
 
-#: src/gui/myframe_events.cpp:585
+#: src/gui/myframe_events.cpp:586
 #, c-format
 msgid ""
 "The AO exceeded its travel limit stepping from (%d, %d) to (%d, %d) and "
@@ -6014,7 +6343,7 @@ msgstr ""
 "AO 由 (%d, %d) 到 (%d, %d) 已經超出它的移動限制步數且校準無法繼續進行; 請降"
 "低 AO 移動設定為 %d 或更小的數值再試一次。"
 
-#: src/gui/myframe_events.cpp:594
+#: src/gui/myframe_events.cpp:595
 #, c-format
 msgid ""
 "The AO exceeded its travel limit stepping from (%d, %d) to (%d, %d) and has "
@@ -6023,99 +6352,95 @@ msgstr ""
 "AO 由 (%d, %d) 到 (%d, %d) 已經超出它的移動限制步數且已經重新回到中心位置; 請"
 "降低 AO 移動設定為 %d 或更小的數值。"
 
-#: src/gui/myframe_events.cpp:659
+#: src/gui/myframe_events.cpp:660
 msgid "You must connect a camera before loading a dark library"
 msgstr "載入暗場影像前你必需要連接到相機"
 
-#: src/gui/myframe_events.cpp:686
+#: src/gui/myframe_events.cpp:687
 msgid "Dark library unloaded"
 msgstr "無法卸載暗場影像庫"
 
-#: src/gui/myframe_events.cpp:702
+#: src/gui/myframe_events.cpp:703
 msgid "You must connect a camera before loading a bad-pixel map"
 msgstr "載入壞點影像前你必需要連接到相機"
 
-#: src/gui/myframe_events.cpp:717
+#: src/gui/myframe_events.cpp:718
 msgid "Defect map loaded"
 msgstr "載入壞點影像"
 
-#: src/gui/myframe_events.cpp:721
+#: src/gui/myframe_events.cpp:722
 msgid "Defect map not loaded"
 msgstr "壞點影像未能載入"
 
-#: src/gui/myframe_events.cpp:733
+#: src/gui/myframe_events.cpp:734
 msgid "Bad-pixel map unloaded"
 msgstr "壞點影像已經卸載"
 
-#: src/gui/myframe_events.cpp:881
-msgid "Guider"
-msgstr "導星設定"
-
-#: src/gui/myframe_events.cpp:967
+#: src/gui/myframe_events.cpp:968
 msgid ""
 "For best results, use a Dark Library or a Bad-pixel Map while guiding. This "
-"will help prevent LGuider from locking on to a hot pixel. Use the Darks menu to "
-"build a Dark Library or Bad-pixel Map."
+"will help prevent LGuider from locking on to a hot pixel. Use the Darks menu "
+"to build a Dark Library or Bad-pixel Map."
 msgstr ""
-"為取得最佳的結果，建議在導星時使用暗場影像或壞點影像庫，如此可以避免 LGuider 選到"
-"熱噪點當導星星體，請利用【暗場】功能表項來建立暗場或壞點影像庫."
+"為取得最佳的結果，建議在導星時使用暗場影像或壞點影像庫，如此可以避免 LGuider "
+"選到熱噪點當導星星體，請利用【暗場】功能表項來建立暗場或壞點影像庫."
 
-#: src/gui/myframe_events.cpp:984
+#: src/gui/myframe_events.cpp:985
 msgid ""
 "Scope isn't pointing in recommended sky area for calibration - run the "
 "Calibration Assistant to improve results."
 msgstr ""
 
-#: src/gui/myframe_events.cpp:985 src/gui/myframe_events.cpp:992
+#: src/gui/myframe_events.cpp:986 src/gui/myframe_events.cpp:993
 msgid "Calibrate here"
 msgstr ""
 
-#: src/gui/myframe_events.cpp:989
+#: src/gui/myframe_events.cpp:990
 msgid ""
 "With the scope pointing this close to the pole, calibration can be degraded "
 "and may "
 msgstr ""
 
-#: src/gui/myframe_events.cpp:990
+#: src/gui/myframe_events.cpp:991
 msgid ""
 "fail altogether.  Run the Calibration Assistant and follow the instructions "
 "to eliminate these risks, "
 msgstr ""
 
-#: src/gui/myframe_events.cpp:991
+#: src/gui/myframe_events.cpp:992
 msgid ""
 "including slewing the scope as close as practical to the recommended "
 "position."
 msgstr ""
 
-#: src/gui/myframe_events.cpp:1039
+#: src/gui/myframe_events.cpp:1040
 msgid "Are you sure you want to force recalibration?"
 msgstr ""
 
-#: src/gui/myframe_events.cpp:1040
+#: src/gui/myframe_events.cpp:1041
 msgid "Force Recalibration"
 msgstr "強制重新校準"
 
-#: src/gui/myframe_events.cpp:1091 src/gui/testguide.cpp:146
+#: src/gui/myframe_events.cpp:1092 src/gui/testguide.cpp:146
 msgid "Manual Guide"
 msgstr "手動導星"
 
-#: src/gui/myframe_events.cpp:1124 src/gui/pierflip_tool.cpp:79
+#: src/gui/myframe_events.cpp:1125 src/gui/pierflip_tool.cpp:79
 msgid "Meridian Flip Calibration Tool"
 msgstr "過中天翻轉校準工具"
 
-#: src/gui/myframe_events.cpp:1183
+#: src/gui/myframe_events.cpp:1184
 msgid ""
 "With your current setting for Dec guide mode, this version of LGuider2 will "
 "dither in Declination. To restore the old behavior you can set the RA-only "
 "option in the Dither Settings of the Advanced Dialog."
 msgstr ""
 
-#: src/gui/myframe_events.cpp:1187
+#: src/gui/myframe_events.cpp:1188
 msgid "Set RA-only now"
 msgstr "設定為僅赤經方向 (RA-only)"
 
-#: src/gui/myframe_events.cpp:1207
+#: src/gui/myframe_events.cpp:1208
 msgid ""
 "It looks like this is a first-time connection to your camera and mount. The "
 "Setup Wizard can help\n"
@@ -6126,15 +6451,15 @@ msgstr ""
 "似乎這是第一次連接到你的相機和赤道儀, 設定精靈將會幫助你為你所使用設備\n"
 "設定導星所需的基本參數。是否要使用設定精靈呢?"
 
-#: src/gui/myframe_events.cpp:1210 src/gui/profile_wizard.cpp:1313
+#: src/gui/myframe_events.cpp:1211 src/gui/profile_wizard.cpp:1313
 msgid "Yes"
 msgstr "是"
 
-#: src/gui/myframe_events.cpp:1210 src/gui/profile_wizard.cpp:1315
+#: src/gui/myframe_events.cpp:1211 src/gui/profile_wizard.cpp:1315
 msgid "No"
 msgstr "否"
 
-#: src/gui/myframe_events.cpp:1210
+#: src/gui/myframe_events.cpp:1211
 msgid "Setup Wizard Recommendation"
 msgstr "設定精靈建議值"
 
@@ -6584,59 +6909,55 @@ msgstr "跳到下一個畫面"
 msgid ""
 "This short sequence of steps will help you identify the equipment you want "
 "to use for guiding and will associate it with a profile name of your choice. "
-"This profile will then be available any time you run LGuider2.  At a minimum, "
-"you will need to choose both the guide camera and the mount interface that "
-"LGuider2 will use for guiding.  You will also enter some information about the "
-"optical characteristics of your setup. LGuider2 will use this to create a good "
-"'starter set' of guiding and calibration parameters. If you are a new user, "
-"please review the 'Basic Use' section of the 'Help' guide after the wizard "
-"dialog has finished."
+"This profile will then be available any time you run LGuider2.  At a "
+"minimum, you will need to choose both the guide camera and the mount "
+"interface that LGuider2 will use for guiding.  You will also enter some "
+"information about the optical characteristics of your setup. LGuider2 will "
+"use this to create a good 'starter set' of guiding and calibration "
+"parameters. If you are a new user, please review the 'Basic Use' section of "
+"the 'Help' guide after the wizard dialog has finished."
 msgstr ""
 
 #: src/gui/profile_wizard.cpp:392
 msgid ""
-"Select your guide camera from the list.  All cameras supported by LGuider2 and "
-"all installed ASCOM cameras are shown. If your camera is not shown, it is "
-"either not supported by LGuider2 or its camera driver is not installed.  LGuider2 "
-"needs to know the camera pixel size and guide scope focal length in order to "
-"compute reasonable guiding parameters.  When you choose a camera, you'll be "
-"given the option to connect to it immediately to get the pixel-size "
-"automatically.  You can also choose a binning-level if your camera supports "
-"binning."
+"Select your guide camera from the list.  All cameras supported by LGuider2 "
+"and all installed ASCOM cameras are shown. If your camera is not shown, it "
+"is either not supported by LGuider2 or its camera driver is not installed.  "
+"LGuider2 needs to know the camera pixel size and guide scope focal length in "
+"order to compute reasonable guiding parameters.  When you choose a camera, "
+"you'll be given the option to connect to it immediately to get the pixel-"
+"size automatically.  You can also choose a binning-level if your camera "
+"supports binning."
 msgstr ""
 
 #: src/gui/profile_wizard.cpp:399
 #, c-format
 msgid ""
-"Select your mount interface from the list.  This determines how LGuider2 will "
-"send guide commands to the mount. For most modern mounts, the ASCOM "
+"Select your mount interface from the list.  This determines how LGuider2 "
+"will send guide commands to the mount. For most modern mounts, the ASCOM "
 "interface is a good choice if you are running MS Windows.  The other "
 "interfaces are available for cases where ASCOM isn't available or isn't well "
 "supported by mount firmware.  If you know the mount guide speed, you can "
-"specify it  so LGuider2 can calibrate more efficiently.  If you don't know the "
-"mount guide speed, you can just use the default value of %0.1fx.  When you "
-"choose a  mount, you'll usually be given the option to connect to it "
+"specify it  so LGuider2 can calibrate more efficiently.  If you don't know "
+"the mount guide speed, you can just use the default value of %0.1fx.  When "
+"you choose a  mount, you'll usually be given the option to connect to it "
 "immediately so LGuider2 can read the guide speed for you."
 msgstr ""
-
-#: src/gui/profile_wizard.cpp:406 src/gui/profile_wizard.cpp:700
-msgid "Simulator"
-msgstr "模擬器"
 
 #: src/gui/profile_wizard.cpp:408
 msgid ""
 "The 'simulator' camera/mount interface doesn't provide pointing information, "
-"so LGuider2 will not be able to automatically adjust guiding for side-of-pier "
-"and declination. You can enable these features by choosing an 'Aux Mount' "
-"connection that does provide pointing information."
+"so LGuider2 will not be able to automatically adjust guiding for side-of-"
+"pier and declination. You can enable these features by choosing an 'Aux "
+"Mount' connection that does provide pointing information."
 msgstr ""
 
 #: src/gui/profile_wizard.cpp:414
 msgid ""
 "The mount interface you chose in the previous step doesn't provide pointing "
-"information, so LGuider2 will not be able to automatically adjust guiding for "
-"side-of-pier and declination. You can enable these features by choosing an "
-"'Aux Mount' connection that does provide pointing information.  The Aux "
+"information, so LGuider2 will not be able to automatically adjust guiding "
+"for side-of-pier and declination. You can enable these features by choosing "
+"an 'Aux Mount' connection that does provide pointing information.  The Aux "
 "Mount interface will be used only for that purpose and not for sending guide "
 "commands."
 msgstr ""
@@ -6666,8 +6987,8 @@ msgid ""
 "build a dark-frame library for it. This is strongly recommended for best "
 "results. If your setup is stable from one night to the next, you can choose "
 "to automatically re-use the last calibration when you load this profile. If "
-"you are new to LGuider2 or encounter problems, please use the 'Help' function "
-"for assistance."
+"you are new to LGuider2 or encounter problems, please use the 'Help' "
+"function for assistance."
 msgstr ""
 
 #: src/gui/profile_wizard.cpp:474
@@ -6678,8 +6999,8 @@ msgstr "設定建議值"
 msgid ""
 "This configuration doesn't provide LGuider2 with any information about the "
 "scope's pointing position.  This means you will need to recalibrate\n"
-"whenever the scope is slewed, and some LGuider2 features will be disabled.  You "
-"should choose an ASCOM or INDI mount connection\n"
+"whenever the scope is slewed, and some LGuider2 features will be disabled.  "
+"You should choose an ASCOM or INDI mount connection\n"
 "for either 'mount' or 'aux-mount' unless there are no drivers available for "
 "your mount.\n"
 "Please review the Help guide on 'Equipment Connections' for more details."
@@ -6687,8 +7008,8 @@ msgstr ""
 
 #: src/gui/profile_wizard.cpp:487
 msgid ""
-"Please make sure the EQMOD ASCOM settings are configured for LGuider2 according "
-"to this document: \n"
+"Please make sure the EQMOD ASCOM settings are configured for LGuider2 "
+"according to this document: \n"
 msgstr ""
 
 #: src/gui/profile_wizard.cpp:489
@@ -6848,10 +7169,10 @@ msgstr "連接赤道儀中..."
 #: src/gui/profile_wizard.cpp:1137
 #, c-format
 msgid ""
-"LGuider2 could not connect to the mount, so you'll probably want to deal with "
-"that later.  In the meantime, if you know the mount guide speed setting, you "
-"can enter it manually.  Otherwise, you can just leave it at the default "
-"value of %0.1fx"
+"LGuider2 could not connect to the mount, so you'll probably want to deal "
+"with that later.  In the meantime, if you know the mount guide speed "
+"setting, you can enter it manually.  Otherwise, you can just leave it at the "
+"default value of %0.1fx"
 msgstr ""
 
 #: src/gui/profile_wizard.cpp:1150
@@ -6895,10 +7216,10 @@ msgstr "已連接相機?"
 #: src/gui/profile_wizard.cpp:1290
 #, c-format
 msgid ""
-"Is the mount already connected and set up to communicate with LGuider2?  If so, "
-"LGuider2 can determine the mount guide speed automatically.  If not, you can "
-"enter the guide-speed manually.  If you don't know what it is, just leave "
-"the setting at the default value of %0.1fx."
+"Is the mount already connected and set up to communicate with LGuider2?  If "
+"so, LGuider2 can determine the mount guide speed automatically.  If not, you "
+"can enter the guide-speed manually.  If you don't know what it is, just "
+"leave the setting at the default value of %0.1fx."
 msgstr ""
 
 #: src/gui/profile_wizard.cpp:1293
@@ -6908,11 +7229,11 @@ msgstr "已經連接赤道儀?"
 #: src/gui/profile_wizard.cpp:1297
 #, c-format
 msgid ""
-"Is the aux-mount already connected and set up to communicate with LGuider2?  If "
-"so, LGuider2 can determine the mount guide speed automatically.  If not, you can "
-"enter it manually.  If you don't know what it is, just leave the setting at "
-"the default value of %0.1fx.  If the guide speed on the previous page "
-"doesn't match what is read from the mount, the mount value will be used."
+"Is the aux-mount already connected and set up to communicate with LGuider2?  "
+"If so, LGuider2 can determine the mount guide speed automatically.  If not, "
+"you can enter it manually.  If you don't know what it is, just leave the "
+"setting at the default value of %0.1fx.  If the guide speed on the previous "
+"page doesn't match what is read from the mount, the mount value will be used."
 msgstr ""
 
 #: src/gui/profile_wizard.cpp:1301
@@ -6950,7 +7271,8 @@ msgstr ""
 #: src/gui/server_dialog_base.cpp:65
 msgid ""
 "Start socket server on specific host and port , default host is 0.0.0.0 "
-"which allow all ips to connect to server ,and port is 4400 the same as LGuider2."
+"which allow all ips to connect to server ,and port is 4400 the same as "
+"LGuider2."
 msgstr ""
 
 #: src/gui/server_dialog_base.cpp:71
@@ -7033,10 +7355,6 @@ msgstr ""
 msgid "Astap"
 msgstr ""
 
-#: src/gui/solver_dialog_base.cpp:39
-msgid "Search"
-msgstr ""
-
 #: src/gui/solver_dialog_base.cpp:48
 msgid "Solver Settings"
 msgstr ""
@@ -7063,14 +7381,6 @@ msgstr ""
 
 #: src/gui/solver_dialog_base.cpp:126
 msgid "Template Download"
-msgstr ""
-
-#: src/gui/solver_dialog_base.cpp:142
-msgid "Refresh"
-msgstr "刷新"
-
-#: src/gui/solver_dialog_base.cpp:145
-msgid "Download"
 msgstr ""
 
 #: src/gui/solver_dialog_base.cpp:165
@@ -7357,10 +7667,6 @@ msgstr "設定導星鏡的時角"
 msgid "Select the star used for checking alignment."
 msgstr "選擇用來檢查對極軸時使用的恆星."
 
-#: src/gui/staticpa_toolwin.cpp:361
-msgid ">"
-msgstr ">"
-
 #: src/gui/staticpa_toolwin.cpp:368
 msgid "Camera Angle"
 msgstr "相機角度"
@@ -7625,7 +7931,8 @@ msgstr "選擇抖動量型態，影像應用程式會有送出此抖動量給 LG
 msgid ""
 "Scale factor for dithering. The dither amount type is multiplied by this "
 "value to get the actual dither amount. Changing the value here affects both "
-"manual dithering and dithering from imaging applications connected to LGuider."
+"manual dithering and dithering from imaging applications connected to "
+"LGuider."
 msgstr ""
 "抖動比例參數，此數值乘以實際抖動量獲得的職稱為抖動量型態(Dither amount type)"
 "變更這個數值同時會影響到手動抖動和連接到 LGuider 的影像應用程式所產生的抖動."
@@ -7639,8 +7946,8 @@ msgid ""
 "Dither on RA axis only. Changing the value here affects both manual "
 "dithering and dithering from imaging applications connected to LGuider."
 msgstr ""
-"僅赤經軸向做抖動，變更這個數值同時會影響到手動抖動和連接到 LGuider 的影像應用程式"
-"所產生的抖動."
+"僅赤經軸向做抖動，變更這個數值同時會影響到手動抖動和連接到 LGuider 的影像應用"
+"程式所產生的抖動."
 
 #: src/gui/testguide.cpp:133
 msgid ""
@@ -7649,6 +7956,11 @@ msgid ""
 msgstr ""
 "隨機移動每個軸向的導星鏡鎖定位置一段距離到達由抖動型態和大小參數所決定出的一"
 "段距離."
+
+#: src/gui/LightGuiderDeviceDialogBase.h:262
+#: src/gui/LightGuiderDeviceDialogBase.h:263
+msgid "OpenAPT Client"
+msgstr ""
 
 #: src/gui/calreview_dialog.h:48
 msgid "Review Calibration"
@@ -7758,9 +8070,9 @@ msgstr "上傳日誌檔案-上傳未完成"
 
 #: src/logger/log_uploader.cpp:660
 msgid ""
-"When asking for help in the LGuider2 Forum it is important to include your LGuider2 "
-"logs. This tool will help you upload your log files so they can be seen in "
-"the forum.\n"
+"When asking for help in the LGuider2 Forum it is important to include your "
+"LGuider2 logs. This tool will help you upload your log files so they can be "
+"seen in the forum.\n"
 "The first step is to select which files to upload.\n"
 msgstr ""
 
@@ -7866,8 +8178,8 @@ msgstr ""
 
 #: src/logger/log_uploader.cpp:1310
 msgid ""
-"LGuider2 encountered an error while compressing the log files. Please make sure "
-"the selected logs are available and try again."
+"LGuider2 encountered an error while compressing the log files. Please make "
+"sure the selected logs are available and try again."
 msgstr ""
 
 #: src/logger/log_uploader.cpp:1314
@@ -7901,15 +8213,15 @@ msgstr "無法建立 ASCOM 相場旋轉器物件, 請參考除錯日誌中的詳
 msgid "ASCOM driver problem -- cannot get rotator position"
 msgstr "ASCOM 驅動程式異常: 無法取得相場旋轉器位置"
 
-#: src/server/event_server_ws.cpp:181 src/server/event_server_ws.cpp:245
+#: src/server/event_server_ws.cpp:197 src/server/event_server_ws.cpp:261
 msgid "other exception"
 msgstr ""
 
-#: src/server/event_server_ws.cpp:196
+#: src/server/event_server_ws.cpp:212
 msgid "Switched off by user."
 msgstr ""
 
-#: src/server/socket_server.cpp:107 src/server/socket_server.cpp:119
+#: src/server/socket_server.cpp:108 src/server/socket_server.cpp:120
 msgid "Server start failed"
 msgstr "伺服器啟動失敗"
 
@@ -7917,15 +8229,15 @@ msgstr "伺服器啟動失敗"
 msgid "Server started"
 msgstr "伺服器已啟用"
 
-#: src/server/socket_server.cpp:139
+#: src/server/socket_server.cpp:142
 msgid "Server stopped"
 msgstr "伺服器已停止"
 
-#: src/server/socket_server.cpp:163
+#: src/server/socket_server.cpp:181
 msgid "New server connection"
 msgstr "連接新伺服器"
 
-#: src/server/socket_server.cpp:303
+#: src/server/socket_server.cpp:324
 #, c-format
 msgid "Lock set to %d,%d"
 msgstr "鎖定設定為 %d,%d"
@@ -8079,10 +8391,11 @@ msgstr ""
 
 #: src/telescope/scope.cpp:649
 msgid ""
-"LGuider2 is not able to make sufficient corrections in Dec.  If you have just "
-"done a meridian flip, check to see if the 'Reverse Dec output option' on the "
-"Advanced Dialog guiding tab is wrong.  Otherwise, check for cable snags, try "
-"re-doing your calibration, and check for problems with the mount mechanics."
+"LGuider2 is not able to make sufficient corrections in Dec.  If you have "
+"just done a meridian flip, check to see if the 'Reverse Dec output option' "
+"on the Advanced Dialog guiding tab is wrong.  Otherwise, check for cable "
+"snags, try re-doing your calibration, and check for problems with the mount "
+"mechanics."
 msgstr ""
 
 #: src/telescope/scope.cpp:655
@@ -8103,9 +8416,9 @@ msgstr "最大赤緯週期設定"
 #: src/telescope/scope.cpp:665
 #, c-format
 msgid ""
-"Your %s is preventing LGuider from making adequate corrections to keep the guide "
-"star locked. Try restoring %s to its default value to allow LGuider2 to make "
-"larger corrections."
+"Your %s is preventing LGuider from making adequate corrections to keep the "
+"guide star locked. Try restoring %s to its default value to allow LGuider2 "
+"to make larger corrections."
 msgstr ""
 
 #: src/telescope/scope.cpp:674
@@ -8483,8 +8796,8 @@ msgstr "未指定"
 
 #: src/telescope/scope_manual_pointing.cpp:102
 msgid ""
-"Select Unspecified if you do not want LGuider2 to flip your calibration data for "
-"side of pier changes"
+"Select Unspecified if you do not want LGuider2 to flip your calibration data "
+"for side of pier changes"
 msgstr ""
 
 #: src/telescope/scope_manual_pointing.cpp:116
@@ -9416,12 +9729,12 @@ msgstr "自定通訊埠位址:"
 
 #, c-format
 #~ msgid ""
-#~ "Your %s is preventing LGuider from making adequate corrections to keep the "
-#~ "guide star locked. Try restoring %s to its default value to allow "
+#~ "Your %s is preventing LGuider from making adequate corrections to keep "
+#~ "the guide star locked. Try restoring %s to its default value to allow "
 #~ "LightGuider to make larger corrections."
 #~ msgstr ""
-#~ "你 %s 使得 LGuider 無法進行適當的修正來維持鎖定導星星體位置, 請嘗試復原 %s 為"
-#~ "初始設定值, 好讓 LightGuider 進行較大幅度的修正."
+#~ "你 %s 使得 LGuider 無法進行適當的修正來維持鎖定導星星體位置, 請嘗試復原 "
+#~ "%s 為初始設定值, 好讓 LightGuider 進行較大幅度的修正."
 
 #, c-format
 #~ msgid ""
@@ -9973,12 +10286,12 @@ msgstr "自定通訊埠位址:"
 #~ msgstr "翻轉赤經校準資料"
 
 #~ msgid ""
-#~ "Your %s is preventing LGuider from making adequate corrections to keep the "
-#~ "guide star locked. Increase the %s to allow LightGuider to make the "
+#~ "Your %s is preventing LGuider from making adequate corrections to keep "
+#~ "the guide star locked. Increase the %s to allow LightGuider to make the "
 #~ "needed corrections."
 #~ msgstr ""
-#~ "你的 %s 讓 LGuider 無法進行正確的修正, 因此無法鎖定導星星體, 請增加 %s 好讓 "
-#~ "LightGuider 可以進行適當的修正。"
+#~ "你的 %s 讓 LGuider 無法進行正確的修正, 因此無法鎖定導星星體, 請增加 %s 好"
+#~ "讓 LightGuider 可以進行適當的修正。"
 
 #~ msgid "Meridian Offset ("
 #~ msgstr "中天偏移 ("
@@ -10774,9 +11087,9 @@ msgstr "自定通訊埠位址:"
 #~ msgstr "無法建立 ASCOM 相場旋轉器物件"
 
 #~ msgid ""
-#~ "Your %s is preventing LGuider from making adequate corrections to keep the "
-#~ "guide star locked. Increasing the %s will allow LightGuider to make the "
-#~ "needed corrections."
+#~ "Your %s is preventing LGuider from making adequate corrections to keep "
+#~ "the guide star locked. Increasing the %s will allow LightGuider to make "
+#~ "the needed corrections."
 #~ msgstr ""
 #~ "因為 %s 問題讓 LightGuider 無法進行修正以鎖定導星星體, 請增加 %s 讓 "
 #~ "LightGuider 進行所需要的修正工作。"
@@ -10940,8 +11253,8 @@ msgstr "自定通訊埠位址:"
 #~ "frames when the guide star mass changes by an amount greater than the "
 #~ "Star mass tolerance setting."
 #~ msgstr ""
-#~ "點選以啟用星體質心變化偵測，啟用後，LGuider 會略過星點質心變化量超出質心變動容"
-#~ "許量的影像。"
+#~ "點選以啟用星體質心變化偵測，啟用後，LGuider 會略過星點質心變化量超出質心變"
+#~ "動容許量的影像。"
 
 #~ msgid "Star mass tolerance"
 #~ msgstr "星點質心變化容許量"
@@ -11109,12 +11422,12 @@ msgstr "自定通訊埠位址:"
 #~ msgstr "導星"
 
 #~ msgid ""
-#~ "Your %s is preventing LGuider from making adequate corrections to keep the "
-#~ "guide star locked. Increasing the %s will allow LGuider to make the needed "
-#~ "corrections."
+#~ "Your %s is preventing LGuider from making adequate corrections to keep "
+#~ "the guide star locked. Increasing the %s will allow LGuider to make the "
+#~ "needed corrections."
 #~ msgstr ""
-#~ "您 %s 讓 LGuider 無法執行正確的修正以鎖定導星星體, 增加 %s 將可讓 LGuider 執行所需"
-#~ "的修正動作"
+#~ "您 %s 讓 LGuider 無法執行正確的修正以鎖定導星星體, 增加 %s 將可讓 LGuider "
+#~ "執行所需的修正動作"
 
 #~ msgid "Clear backlash step %3d"
 #~ msgstr "消除回差 %3d"
@@ -11235,7 +11548,8 @@ msgstr "自定通訊埠位址:"
 #~ msgid "RA angle (e.g. 0.5):"
 #~ msgstr "赤經角度 (例如: 0.5):"
 
-#~ msgid "Check to clear any previous calibration and force LGuider to recalibrate"
+#~ msgid ""
+#~ "Check to clear any previous calibration and force LGuider to recalibrate"
 #~ msgstr "核選該項以清除任何之前的校準資料並強制 LGuider 重新執行校準"
 
 #~ msgid "No Cam"

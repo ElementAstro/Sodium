@@ -236,6 +236,7 @@ private:
     }
 };
 
+/*
 int main()
 {
     SqliteDB db;
@@ -265,3 +266,4 @@ int main()
 
     return 0;
 }
+*/
