@@ -101,19 +101,6 @@ include(cmake_modules/thirdparty.cmake)
 
 #################################################################################
 #
-#
-
-add_subdirectory(libs/)
-
-add_subdirectory(libs/lua)
-
-include_directories(${CMAKE_SOURCE_DIR}/libs/crow)
-include_directories(${CMAKE_SOURCE_DIR}/libs/)
-
-add_subdirectory(modules)
-
-#################################################################################
-#
 # generates the documentation targets. Part of those targets define the
 # zip files LGuider2GuideHelp.zip. In order to include them in the main build
 # we need to declare them here. Those targets should not depend on any source file
@@ -136,7 +123,6 @@ generate_doc_targets(
 # include_directories(${wxWidgets_INCLUDE_DIRS})
 # include_directories(${lightguider_src_dir}/src/cameras/)
 include_directories(${lightguider_src_dir}/src/)
-include_directories(${lightguider_src_dir}/libs/)
 
 
 #################################################################################
@@ -165,16 +151,6 @@ set(server_SRC
 )
 
 source_group(Server FILES ${server_SRC})
-
-set(modloader_SRC
-  ${lightguider_src_dir}/src/modules/modloader.cpp
-  ${lightguider_src_dir}/src/modules/modloader.h
-
-  ${lightguider_src_dir}/src/plugins/thread.cpp
-  ${lightguider_src_dir}/src/plugins/thread.hpp
-)
-
-source_group(ModLoader FILES ${modloader_SRC})
 
 set(scopes_SRC
   ${lightguider_src_dir}/src/telescope/mount.cpp
@@ -527,38 +503,11 @@ if(UNIX)
 
   target_precompile_headers(lightguider PUBLIC ${lightguider_src_dir}/src/lightguider.h)
 
-  # 查找 Python 库
-  find_package(Python REQUIRED COMPONENTS Development)
-
-  # 判断 Python 是否存在
-  if(Python_FOUND)
-      message(STATUS "Python version: ${Python_VERSION}")
-  else()
-      message(SEND_ERROR "Python not found.")
-  endif()
-
-  # 添加 Python 头文件和库路径
-  include_directories(${Python_INCLUDE_DIRS})
-  link_directories(${Python_LIBRARY_DIRS})
-
-  # 编译器标志
-  add_definitions(${Python_DEFINITIONS})
-
   # 链接 Python 库
   target_link_libraries(lightguider ${Python_LIBRARIES})
 
 
   target_link_libraries(lightguider X11)
-
-  target_link_libraries(lightguider lua)
-
-  find_package(OpenSSL REQUIRED)
-  if(OpenSSL_FOUND)
-    target_link_libraries(lightguider ${OPENSSL_LIBRARIES})
-    message("-- Using OpenSSL ${OPENSSL_VERSION}")
-  else()
-    message("-- OpenSSL Not Found")
-  endif()
 
   find_package(spdlog REQUIRED)
   target_link_libraries(lightguider spdlog::spdlog_header_only)

@@ -35,10 +35,7 @@
 #include "lightguider.h"
 #include "network/lightupdate.h"
 
-#include "modules/modloader.h"
-
 #include "gui/splash.hpp"
-#include "plugins/thread.hpp"
 
 #include <spdlog/spdlog.h>
 
@@ -62,7 +59,6 @@ Mount *pSecondaryMount = nullptr;
 Scope *pPointingSource = nullptr;
 MyFrame *pFrame = nullptr;
 GuideCamera *pCamera = nullptr;
-LightGuider::ThreadManager *m_ThreadManage = nullptr;
 
 DebugLog Debug;
 GuidingLog GuideLog;
@@ -524,8 +520,6 @@ bool PhdApp::OnInit()
 
     spdlog::set_level(spdlog::level::debug);
 
-    m_ThreadManage = new LightGuider::ThreadManager();
-
 #ifdef __APPLE__
     // for newer versions of OSX the app will hang if the wx log code
     // tries to display a message box in OnOnit.  As a workaround send
@@ -661,8 +655,6 @@ bool PhdApp::OnInit()
     wxImage::AddHandler(new wxJPEGHandler);
     wxImage::AddHandler(new wxPNGHandler);
 
-    LightGuider::iterator_modules_dir();
-
     spdlog::debug("Create an interface instance and start the main loop");
 
     pFrame = new MyFrame();
@@ -704,9 +696,6 @@ int PhdApp::OnExit()
 
     delete m_instanceChecker;
     m_instanceChecker = nullptr;
-
-    delete m_ThreadManage;
-    m_ThreadManage = nullptr;
 
     spdlog::debug("Shutdown by user , good bye!");
 
@@ -767,15 +756,6 @@ bool PhdApp::OnCmdLineParsed(wxCmdLineParser &parser)
         s_configOp = CONFIG_OP_SAVE;
     }
 
-    if (parser.Found("w"))
-    {
-        if (!LightGuider::module_loader.LoadModule("./modules/webserver/libserver.so", "server"))
-        {
-            ::exit(1);
-        }
-        LightGuider::module_loader.LoadAndRunFunction<void>("server", "run", "webserver");
-        spdlog::info("Started web server successfully");
-    }
     m_resetConfig = parser.Found("R");
 
     return bReturn;
