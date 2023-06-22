@@ -19,6 +19,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    
+    - name: Add INDI Source
+      run: sudo apt-add-repository ppa:mutlaqja/ppa -y
+      
+    - name: Install dependences
+      run: sudo apt-get install build-essential gcc git cmake pkg-config libwxgtk3.0-gtk3-dev  wx-common wx3.0-i18n libindi-dev libnova-dev gettext zlib1g-dev libx11-dev libcurl4-gnutls-dev libcfitsio-dev libeigen3-dev libspdlog-dev libgsl-dev libboost-dev    libasio-dev libboost-system-dev libboost-thread-dev libssl-dev
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
