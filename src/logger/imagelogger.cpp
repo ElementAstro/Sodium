@@ -32,8 +32,8 @@
  *
  */
 
-#include "phd.h"
-#include "imagelogger.h"
+#include "sodium.hpp"
+#include "imagelogger.hpp"
 
 enum { SAVE_IMAGES = 2 }; // number of images to log preceding and following the trigger image
 

@@ -33,8 +33,8 @@
  *
  */
 
-#include "phd.h"
-#include "scope_onboard_st4.h"
+#include "sodium.hpp"
+#include "scope_onboard_st4.hpp"
 
 ScopeOnboardST4::ScopeOnboardST4(void)
     :

@@ -37,7 +37,7 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 GuideAlgorithmIdentity::GuideAlgorithmIdentity(Mount *pMount, GuideAxis axis)
     : GuideAlgorithm(pMount, axis)

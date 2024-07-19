@@ -32,7 +32,7 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 ConfirmDialog::ConfirmDialog(const wxString& prompt, const wxString& title, const wxString& affirmLabel, const wxString& negativeLabel)
     : wxDialog(pFrame, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, wxCAPTION | wxCLOSE_BOX)

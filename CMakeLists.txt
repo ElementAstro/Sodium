@@ -41,37 +41,35 @@ endif()
 
 
 # root directory of the project
-set(LGuider_PROJECT_ROOT_DIR ${CMAKE_SOURCE_DIR})
-set(lightguider_src_dir ${LGuider_PROJECT_ROOT_DIR})
+set(SODIUM_PROJECT_ROOT_DIR ${CMAKE_SOURCE_DIR})
+set(sodium_src_dir ${SODIUM_PROJECT_ROOT_DIR}/src)
 
 add_custom_target(CmakeAdditionalFiles
   SOURCES
-  ${lightguider_src_dir}/cmake_modules/FindASCOM_INTERFACE.cmake
-  ${lightguider_src_dir}/cmake_modules/FindCFITSIO.cmake
-  ${lightguider_src_dir}/cmake_modules/FindINDI.cmake
-  ${lightguider_src_dir}/cmake_modules/FindNova.cmake
-  ${lightguider_src_dir}/cmake_modules/LightGuiderBuildDoc.cmake
-  ${lightguider_src_dir}/cmake_modules/LightGuiderGenerateDocScript.cmake
-  ${lightguider_src_dir}/cmake_modules/LightGuiderRemovegettextwarning.cmake
-  ${lightguider_src_dir}/cmake_modules/compiler_options.cmake
-  ${lightguider_src_dir}/cmake_modules/LightGuiderPackaging.cmake)
+  ${SODIUM_PROJECT_ROOT_DIR}/cmake_modules/FindASCOM_INTERFACE.cmake
+  ${SODIUM_PROJECT_ROOT_DIR}/cmake_modules/FindCFITSIO.cmake
+  ${SODIUM_PROJECT_ROOT_DIR}/cmake_modules/FindINDI.cmake
+  ${SODIUM_PROJECT_ROOT_DIR}/cmake_modules/FindNova.cmake
+  ${SODIUM_PROJECT_ROOT_DIR}/cmake_modules/SodiumBuildDoc.cmake
+  ${SODIUM_PROJECT_ROOT_DIR}/cmake_modules/SodiumGenerateDocScript.cmake
+  ${SODIUM_PROJECT_ROOT_DIR}/cmake_modules/SodiumRemovegettextwarning.cmake
+  ${SODIUM_PROJECT_ROOT_DIR}/cmake_modules/compiler_options.cmake
+  ${SODIUM_PROJECT_ROOT_DIR}/cmake_modules/SodiumPackaging.cmake)
 
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake_modules/")
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake_modules/")
 
-#message(${LGuider_PROJECT_ROOT_DIR})
+#message(${SODIUM_PROJECT_ROOT_DIR})
 # Additional files in the workspace, To improve maintainability
-
-add_subdirectory(src/logviewer)
 
 # compiler options
 include(cmake_modules/compiler_options.cmake)
 
 # declare useful functions about documentation
-include(cmake_modules/LightGuiderBuildDoc.cmake)
+include(cmake_modules/SodiumBuildDoc.cmake)
 
 # retrieves the version from the source file
-get_lightguider_version()
+get_sodium_version()
 message(STATUS "Light Guider version '${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}' (extracted from source)")
 
 #################################################################################
@@ -79,7 +77,7 @@ message(STATUS "Light Guider version '${VERSION_MAJOR}.${VERSION_MINOR}.${VERSIO
 # general defines
 if(UNIX AND NOT APPLE)
   if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    set(CMAKE_INSTALL_PREFIX /usr CACHE PATH "lightguider install path" FORCE)
+    set(CMAKE_INSTALL_PREFIX /usr CACHE PATH "sodium install path" FORCE)
   endif()
 endif()
 
@@ -102,7 +100,7 @@ include(cmake_modules/thirdparty.cmake)
 #################################################################################
 #
 # generates the documentation targets. Part of those targets define the
-# zip files LGuider2GuideHelp.zip. In order to include them in the main build
+# zip files SODIUM2GuideHelp.zip. In order to include them in the main build
 # we need to declare them here. Those targets should not depend on any source file
 # but may require thirdparty (gettext etc).
 generate_doc_targets(
@@ -119,334 +117,344 @@ generate_doc_targets(
 #################################################################################
 #
 # Global include directories
-# WxWidgets inclusion narrowed to lightguider project only
+# WxWidgets inclusion narrowed to sodium project only
 # include_directories(${wxWidgets_INCLUDE_DIRS})
-# include_directories(${lightguider_src_dir}/src/cameras/)
-include_directories(${lightguider_src_dir}/src)
-
+# include_directories(${sodium_src_dir}/cameras/)
+include_directories(${sodium_src_dir})
+include_directories(${sodium_src_dir}/algorithm)
+include_directories(${sodium_src_dir}/ao)
+include_directories(${sodium_src_dir}/camera)
+include_directories(${sodium_src_dir}/config)
+include_directories(${sodium_src_dir}/device)
+include_directories(${sodium_src_dir}/gui)
+include_directories(${sodium_src_dir}/guiding)
+include_directories(${sodium_src_dir}/icons)
+include_directories(${sodium_src_dir}/image)
+include_directories(${sodium_src_dir}/logger)
+include_directories(${sodium_src_dir}/network)
+include_directories(${sodium_src_dir}/rotator)
+include_directories(${sodium_src_dir}/server)
+include_directories(${sodium_src_dir}/telescope)
+include_directories(${sodium_src_dir}/win32)
 
 #################################################################################
 #
 # main project
 
 set(cam_SRC
-  ${lightguider_src_dir}/src/camera/cam_ascom.cpp
-  ${lightguider_src_dir}/src/camera/cam_ascom.h
-  ${lightguider_src_dir}/src/camera/cam_indi.cpp
-  ${lightguider_src_dir}/src/camera/cam_indi.h
-  ${lightguider_src_dir}/src/camera/camera.cpp
-  ${lightguider_src_dir}/src/camera/camera.h
-  ${lightguider_src_dir}/src/camera/cameras.h
+  ${sodium_src_dir}/camera/cam_ascom.cpp
+  ${sodium_src_dir}/camera/cam_ascom.hpp
+  ${sodium_src_dir}/camera/cam_indi.cpp
+  ${sodium_src_dir}/camera/cam_indi.hpp
+  ${sodium_src_dir}/camera/camera.cpp
+  ${sodium_src_dir}/camera/camera.hpp
+  ${sodium_src_dir}/camera/cameras.hpp
 )
 
 source_group(Cameras FILES ${cam_SRC})
 
 set(server_SRC
-  ${lightguider_src_dir}/src/server/event_server.cpp
-  ${lightguider_src_dir}/src/server/event_server.h
-  ${lightguider_src_dir}/src/server/socket_server.cpp
-  ${lightguider_src_dir}/src/server/socket_server.h
-  ${lightguider_src_dir}/src/server/json_parser.cpp
-  ${lightguider_src_dir}/src/server/json_parser.h
+  ${sodium_src_dir}/server/event_server.cpp
+  ${sodium_src_dir}/server/event_server.hpp
+  ${sodium_src_dir}/server/socket_server.cpp
+  ${sodium_src_dir}/server/socket_server.hpp
+  ${sodium_src_dir}/server/json_parser.cpp
+  ${sodium_src_dir}/server/json_parser.hpp
+  ${sodium_src_dir}/server/worker_thread.cpp
+  ${sodium_src_dir}/server/worker_thread.hpp
 )
 
 source_group(Server FILES ${server_SRC})
 
 set(scopes_SRC
-  ${lightguider_src_dir}/src/telescope/mount.cpp
-  ${lightguider_src_dir}/src/telescope/mount.h
-  ${lightguider_src_dir}/src/telescope/scope.cpp
-  ${lightguider_src_dir}/src/telescope/scope.h
-  ${lightguider_src_dir}/src/telescope/scope_manual_pointing.cpp
-  ${lightguider_src_dir}/src/telescope/scope_manual_pointing.h
-  ${lightguider_src_dir}/src/telescope/scope_onboard_st4.cpp
-  ${lightguider_src_dir}/src/telescope/scope_onboard_st4.h
-  ${lightguider_src_dir}/src/telescope/scope_oncamera.cpp
-  ${lightguider_src_dir}/src/telescope/scope_oncamera.h
-  ${lightguider_src_dir}/src/telescope/scope_onstepguider.cpp
-  ${lightguider_src_dir}/src/telescope/scope_onstepguider.h
-  ${lightguider_src_dir}/src/telescope/scope_indi.h
-  ${lightguider_src_dir}/src/telescope/scope_indi.cpp
-  ${lightguider_src_dir}/src/telescope/scopes.h
+  ${sodium_src_dir}/telescope/mount.cpp
+  ${sodium_src_dir}/telescope/mount.hpp
+  ${sodium_src_dir}/telescope/scope.cpp
+  ${sodium_src_dir}/telescope/scope.hpp
+  ${sodium_src_dir}/telescope/scope_manual_pointing.cpp
+  ${sodium_src_dir}/telescope/scope_manual_pointing.hpp
+  ${sodium_src_dir}/telescope/scope_onboard_st4.cpp
+  ${sodium_src_dir}/telescope/scope_onboard_st4.hpp
+  ${sodium_src_dir}/telescope/scope_oncamera.cpp
+  ${sodium_src_dir}/telescope/scope_oncamera.hpp
+  ${sodium_src_dir}/telescope/scope_onstepguider.cpp
+  ${sodium_src_dir}/telescope/scope_onstepguider.hpp
+  ${sodium_src_dir}/telescope/scope_indi.hpp
+  ${sodium_src_dir}/telescope/scope_indi.cpp
+  ${sodium_src_dir}/telescope/scopes.hpp
 )
 
 source_group(Scopes FILES ${scopes_SRC})
 
 set(stepguiders_SRC
-  ${lightguider_src_dir}/src/ao/stepguider_sxao.cpp
-  ${lightguider_src_dir}/src/ao/stepguider_sxao.h
-  ${lightguider_src_dir}/src/ao/stepguider_sxao_indi.cpp
-  ${lightguider_src_dir}/src/ao/stepguider_sxao_indi.h
-  ${lightguider_src_dir}/src/ao/stepguider_sbigao_indi.cpp
-  ${lightguider_src_dir}/src/ao/stepguider_sbigao_indi.h
-  ${lightguider_src_dir}/src/ao/stepguider.cpp
-  ${lightguider_src_dir}/src/ao/stepguider.h
-  ${lightguider_src_dir}/src/ao/stepguiders.h
+  ${sodium_src_dir}/ao/stepguider_sxao_indi.cpp
+  ${sodium_src_dir}/ao/stepguider_sxao_indi.hpp
+  ${sodium_src_dir}/ao/stepguider_sbigao_indi.cpp
+  ${sodium_src_dir}/ao/stepguider_sbigao_indi.hpp
+  ${sodium_src_dir}/ao/stepguider.cpp
+  ${sodium_src_dir}/ao/stepguider.hpp
+  ${sodium_src_dir}/ao/stepguiders.hpp
 )
 
 source_group(StepGuider FILES ${stepguiders_SRC})
 
 set(rotators_SRC
   # rotators
-  ${lightguider_src_dir}/src/rotator/rotators.h
-  ${lightguider_src_dir}/src/rotator/rotator.cpp
-  ${lightguider_src_dir}/src/rotator/rotator.h
-  ${lightguider_src_dir}/src/rotator/rotator_ascom.cpp
-  ${lightguider_src_dir}/src/rotator/rotator_ascom.h
+  ${sodium_src_dir}/rotator/rotators.hpp
+  ${sodium_src_dir}/rotator/rotator.cpp
+  ${sodium_src_dir}/rotator/rotator.hpp
+  ${sodium_src_dir}/rotator/rotator_ascom.cpp
+  ${sodium_src_dir}/rotator/rotator_ascom.hpp
+  ${sodium_src_dir}/rotator/rotator_indi.cpp
+  ${sodium_src_dir}/rotator/rotator_indi.hpp
 )
 
 source_group(Rotator FILES ${rotators_SRC})
 
 set(guiding_SRC
-  ${lightguider_src_dir}/src/algorithm/backlash_comp.cpp
-  ${lightguider_src_dir}/src/algorithm/backlash_comp.h
-  ${lightguider_src_dir}/src/algorithm/guide_algorithm_hysteresis.cpp
-  ${lightguider_src_dir}/src/algorithm/guide_algorithm_hysteresis.h
-  ${lightguider_src_dir}/src/algorithm/guide_algorithm_gaussian_process.cpp # MPI.IS PEC Guider: requires link to the GP target (contrib)
-  ${lightguider_src_dir}/src/algorithm/guide_algorithm_gaussian_process.h
-  ${lightguider_src_dir}/src/algorithm/guide_algorithm_identity.cpp
-  ${lightguider_src_dir}/src/algorithm/guide_algorithm_identity.h
-  ${lightguider_src_dir}/src/algorithm/guide_algorithm_lowpass.cpp
-  ${lightguider_src_dir}/src/algorithm/guide_algorithm_lowpass.h
-  ${lightguider_src_dir}/src/algorithm/guide_algorithm_lowpass2.cpp
-  ${lightguider_src_dir}/src/algorithm/guide_algorithm_lowpass2.h
-  ${lightguider_src_dir}/src/algorithm/guide_algorithm_resistswitch.cpp
-  ${lightguider_src_dir}/src/algorithm/guide_algorithm_resistswitch.h
-  ${lightguider_src_dir}/src/algorithm/guide_algorithm_zfilter.cpp
-  ${lightguider_src_dir}/src/algorithm/guide_algorithm_zfilter.h
-  ${lightguider_src_dir}/src/algorithm/guide_algorithm.cpp
-  ${lightguider_src_dir}/src/algorithm/guide_algorithm.h
-  ${lightguider_src_dir}/src/algorithm/guide_algorithms.h
-  ${lightguider_src_dir}/src/algorithm/guider_multistar.cpp
-  ${lightguider_src_dir}/src/algorithm/guider_multistar.h
-  ${lightguider_src_dir}/src/algorithm/zfilterfactory.cpp
-  ${lightguider_src_dir}/src/algorithm/zfilterfactory.h
+  ${sodium_src_dir}/algorithm/backlash_comp.cpp
+  ${sodium_src_dir}/algorithm/backlash_comp.hpp
+  ${sodium_src_dir}/algorithm/guide_algorithm_hysteresis.cpp
+  ${sodium_src_dir}/algorithm/guide_algorithm_hysteresis.hpp
+  ${sodium_src_dir}/algorithm/guide_algorithm_gaussian_process.cpp # MPI.IS PEC Guider: requires link to the GP target (contrib)
+  ${sodium_src_dir}/algorithm/guide_algorithm_gaussian_process.hpp
+  ${sodium_src_dir}/algorithm/guide_algorithm_identity.cpp
+  ${sodium_src_dir}/algorithm/guide_algorithm_identity.hpp
+  ${sodium_src_dir}/algorithm/guide_algorithm_lowpass.cpp
+  ${sodium_src_dir}/algorithm/guide_algorithm_lowpass.hpp
+  ${sodium_src_dir}/algorithm/guide_algorithm_lowpass2.cpp
+  ${sodium_src_dir}/algorithm/guide_algorithm_lowpass2.hpp
+  ${sodium_src_dir}/algorithm/guide_algorithm_resistswitch.cpp
+  ${sodium_src_dir}/algorithm/guide_algorithm_resistswitch.hpp
+  ${sodium_src_dir}/algorithm/guide_algorithm_zfilter.cpp
+  ${sodium_src_dir}/algorithm/guide_algorithm_zfilter.hpp
+  ${sodium_src_dir}/algorithm/guide_algorithm.cpp
+  ${sodium_src_dir}/algorithm/guide_algorithm.hpp
+  ${sodium_src_dir}/algorithm/guide_algorithms.hpp
+  ${sodium_src_dir}/algorithm/zfilterfactory.cpp
+  ${sodium_src_dir}/algorithm/zfilterfactory.hpp
 
-  ${lightguider_src_dir}/src/guiding/guider.cpp
-  ${lightguider_src_dir}/src/guiding/guider.h
-  ${lightguider_src_dir}/src/guiding/guiders.h
+  ${sodium_src_dir}/guiding/guider.cpp
+  ${sodium_src_dir}/guiding/guider.hpp
+  ${sodium_src_dir}/guiding/guider_multistar.cpp
+  ${sodium_src_dir}/guiding/guider_multistar.hpp
+  ${sodium_src_dir}/guiding/guiders.hpp
 )
 source_group(Guiding FILES ${guiding_SRC})
 
 set(gui_src
 
-  ${lightguider_src_dir}/src/gui/LightGuiderDeviceDialogBase.cpp
-  ${lightguider_src_dir}/src/gui/LightGuiderDeviceDialogBase.h
+  ${sodium_src_dir}/gui/SodiumDeviceDialogBase.cpp
+  ${sodium_src_dir}/gui/SodiumDeviceDialogBase.hpp
 
-  ${lightguider_src_dir}/src/gui/LightGuiderDeviceDialog.cpp
-  ${lightguider_src_dir}/src/gui/LightGuiderDeviceDialog.h
+  ${sodium_src_dir}/gui/SodiumDeviceDialog.cpp
+  ${sodium_src_dir}/gui/SodiumDeviceDialog.hpp
 
-  ${lightguider_src_dir}/src/gui/about_dialog.cpp
-  ${lightguider_src_dir}/src/gui/about_dialog.h
+  ${sodium_src_dir}/gui/about_dialog.cpp
+  ${sodium_src_dir}/gui/about_dialog.hpp
 
-  ${lightguider_src_dir}/src/gui/advanced_dialog.cpp
-  ${lightguider_src_dir}/src/gui/advanced_dialog.h
+  ${sodium_src_dir}/gui/advanced_dialog.cpp
+  ${sodium_src_dir}/gui/advanced_dialog.hpp
 
-  ${lightguider_src_dir}/src/gui/aui_controls.cpp
-  ${lightguider_src_dir}/src/gui/aui_controls.h
+  ${sodium_src_dir}/gui/aui_controls.cpp
+  ${sodium_src_dir}/gui/aui_controls.hpp
 
-  ${lightguider_src_dir}/src/gui/calreview_dialog.cpp
-  ${lightguider_src_dir}/src/gui/calreview_dialog.h
+  ${sodium_src_dir}/gui/calreview_dialog.cpp
+  ${sodium_src_dir}/gui/calreview_dialog.hpp
 
-  ${lightguider_src_dir}/src/gui/calstep_dialog.cpp
-  ${lightguider_src_dir}/src/gui/calstep_dialog.h
+  ${sodium_src_dir}/gui/calstep_dialog.cpp
+  ${sodium_src_dir}/gui/calstep_dialog.hpp
 
-  ${lightguider_src_dir}/src/gui/configdialog.cpp
-  ${lightguider_src_dir}/src/gui/configdialog.h
+  ${sodium_src_dir}/gui/configdialog.cpp
+  ${sodium_src_dir}/gui/configdialog.hpp
 
-  ${lightguider_src_dir}/src/gui/confirm_dialog.cpp
-  ${lightguider_src_dir}/src/gui/confirm_dialog.h
+  ${sodium_src_dir}/gui/confirm_dialog.cpp
+  ${sodium_src_dir}/gui/confirm_dialog.hpp
 
-  ${lightguider_src_dir}/src/gui/darks_dialog.cpp
-  ${lightguider_src_dir}/src/gui/darks_dialog.h
+  ${sodium_src_dir}/gui/darks_dialog.cpp
+  ${sodium_src_dir}/gui/darks_dialog.hpp
 
-  ${lightguider_src_dir}/src/gui/indi_gui.cpp
-  ${lightguider_src_dir}/src/gui/indi_gui.h
+  ${sodium_src_dir}/gui/indi_gui.cpp
+  ${sodium_src_dir}/gui/indi_gui.hpp
 
-  ${lightguider_src_dir}/src/gui/gear_dialog.cpp
-  ${lightguider_src_dir}/src/gui/gear_dialog.h
+  ${sodium_src_dir}/gui/gear_dialog.cpp
+  ${sodium_src_dir}/gui/gear_dialog.hpp
 
-  ${lightguider_src_dir}/src/gui/manualcal_dialog.cpp
-  ${lightguider_src_dir}/src/gui/manualcal_dialog.h
+  ${sodium_src_dir}/gui/manualcal_dialog.cpp
+  ${sodium_src_dir}/gui/manualcal_dialog.hpp
 
-  ${lightguider_src_dir}/src/gui/myframe.cpp
-  ${lightguider_src_dir}/src/gui/myframe.h
-  ${lightguider_src_dir}/src/gui/myframe_events.cpp
+  ${sodium_src_dir}/gui/myframe.cpp
+  ${sodium_src_dir}/gui/myframe.hpp
+  ${sodium_src_dir}/gui/myframe_events.cpp
 
-  ${lightguider_src_dir}/src/gui/profile_wizard.h
-  ${lightguider_src_dir}/src/gui/profile_wizard.cpp
+  ${sodium_src_dir}/gui/profile_wizard.hpp
+  ${sodium_src_dir}/gui/profile_wizard.cpp
 
-  ${lightguider_src_dir}/src/gui/statswindow.cpp
-  ${lightguider_src_dir}/src/gui/statswindow.h
+  ${sodium_src_dir}/gui/statswindow.cpp
+  ${sodium_src_dir}/gui/statswindow.hpp
 
-  ${lightguider_src_dir}/src/gui/config_indi.cpp
-  ${lightguider_src_dir}/src/gui/config_indi.h
+  ${sodium_src_dir}/gui/config_indi.cpp
+  ${sodium_src_dir}/gui/config_indi.hpp
 
-  ${lightguider_src_dir}/src/gui/comet_tool.cpp
-  ${lightguider_src_dir}/src/gui/comet_tool.h
+  ${sodium_src_dir}/gui/comet_tool.cpp
+  ${sodium_src_dir}/gui/comet_tool.hpp
 
-  ${lightguider_src_dir}/src/gui/drift_tool.cpp
-  ${lightguider_src_dir}/src/gui/drift_tool.h
+  ${sodium_src_dir}/gui/drift_tool.cpp
+  ${sodium_src_dir}/gui/drift_tool.hpp
 
-  ${lightguider_src_dir}/src/gui/Refine_DefMap.cpp
-  ${lightguider_src_dir}/src/gui/Refine_DefMap.h
+  ${sodium_src_dir}/gui/Refine_DefMap.cpp
+  ${sodium_src_dir}/gui/Refine_DefMap.hpp
 
-  ${lightguider_src_dir}/src/gui/graph-stepguider.cpp
-  ${lightguider_src_dir}/src/gui/graph-stepguider.h
+  ${sodium_src_dir}/gui/graph-stepguider.cpp
+  ${sodium_src_dir}/gui/graph-stepguider.hpp
 
-  ${lightguider_src_dir}/src/gui/graph.cpp
-  ${lightguider_src_dir}/src/gui/graph.h
+  ${sodium_src_dir}/gui/graph.cpp
+  ${sodium_src_dir}/gui/graph.hpp
 
-  ${lightguider_src_dir}/src/gui/guiding_assistant.cpp
-  ${lightguider_src_dir}/src/gui/guiding_assistant.h
+  ${sodium_src_dir}/gui/guiding_assistant.cpp
+  ${sodium_src_dir}/gui/guiding_assistant.hpp
 
-  ${lightguider_src_dir}/src/gui/calibration_assistant.cpp
-  ${lightguider_src_dir}/src/gui/calibration_assistant.h
+  ${sodium_src_dir}/gui/calibration_assistant.cpp
+  ${sodium_src_dir}/gui/calibration_assistant.hpp
 
-  ${lightguider_src_dir}/src/gui/optionsbutton.cpp
-  ${lightguider_src_dir}/src/gui/optionsbutton.h
+  ${sodium_src_dir}/gui/optionsbutton.cpp
+  ${sodium_src_dir}/gui/optionsbutton.hpp
 
-  ${lightguider_src_dir}/src/gui/pierflip_tool.cpp
-  ${lightguider_src_dir}/src/gui/pierflip_tool.h
+  ${sodium_src_dir}/gui/pierflip_tool.cpp
+  ${sodium_src_dir}/gui/pierflip_tool.hpp
 
-  ${lightguider_src_dir}/src/gui/polardrift_tool.h
-  ${lightguider_src_dir}/src/gui/polardrift_toolwin.h
-  ${lightguider_src_dir}/src/gui/polardrift_toolwin.cpp
+  ${sodium_src_dir}/gui/polardrift_tool.hpp
+  ${sodium_src_dir}/gui/polardrift_toolwin.hpp
+  ${sodium_src_dir}/gui/polardrift_toolwin.cpp
 
-  ${lightguider_src_dir}/src/gui/starcross_test.cpp
-  ${lightguider_src_dir}/src/gui/starcross_test.h
+  ${sodium_src_dir}/gui/starcross_test.cpp
+  ${sodium_src_dir}/gui/starcross_test.hpp
 
-  ${lightguider_src_dir}/src/gui/staticpa_tool.h
-  ${lightguider_src_dir}/src/gui/staticpa_toolwin.h
-  ${lightguider_src_dir}/src/gui/staticpa_toolwin.cpp
+  ${sodium_src_dir}/gui/staticpa_tool.hpp
+  ${sodium_src_dir}/gui/staticpa_toolwin.hpp
+  ${sodium_src_dir}/gui/staticpa_toolwin.cpp
 
-  ${lightguider_src_dir}/src/gui/star_profile.cpp
-  ${lightguider_src_dir}/src/gui/star_profile.h
+  ${sodium_src_dir}/gui/star_profile.cpp
+  ${sodium_src_dir}/gui/star_profile.hpp
 
-  ${lightguider_src_dir}/src/gui/testguide.cpp
-  ${lightguider_src_dir}/src/gui/testguide.h
+  ${sodium_src_dir}/gui/testguide.cpp
+  ${sodium_src_dir}/gui/testguide.hpp
 
-  ${lightguider_src_dir}/src/gui/wxled.cpp
-  ${lightguider_src_dir}/src/gui/wxled.h
+  ${sodium_src_dir}/gui/wxled.cpp
+  ${sodium_src_dir}/gui/wxled.hpp
 
-  ${lightguider_src_dir}/src/gui/camcal_import_dialog.cpp
-  ${lightguider_src_dir}/src/gui/camcal_import_dialog.h
+  ${sodium_src_dir}/gui/camcal_import_dialog.cpp
+  ${sodium_src_dir}/gui/camcal_import_dialog.hpp
 
-  ${lightguider_src_dir}/src/gui/messagebox_proxy.cpp
-  ${lightguider_src_dir}/src/gui/messagebox_proxy.h
+  ${sodium_src_dir}/gui/messagebox_proxy.cpp
+  ${sodium_src_dir}/gui/messagebox_proxy.hpp
 
-  ${lightguider_src_dir}/src/gui/eegg.cpp
+  ${sodium_src_dir}/gui/eegg.cpp
 
-  ${lightguider_src_dir}/src/gui/nudge_lock.cpp
-  ${lightguider_src_dir}/src/gui/nudge_lock.h
+  ${sodium_src_dir}/gui/nudge_lock.cpp
+  ${sodium_src_dir}/gui/nudge_lock.hpp
 
-  ${lightguider_src_dir}/src/gui/target.cpp
-  ${lightguider_src_dir}/src/gui/target.h
+  ${sodium_src_dir}/gui/target.cpp
+  ${sodium_src_dir}/gui/target.hpp
 
-  ${lightguider_src_dir}/src/gui/server_dialog_base.cpp
-  ${lightguider_src_dir}/src/gui/server_dialog_base.h
-  ${lightguider_src_dir}/src/gui/server_dialog.cpp
-  ${lightguider_src_dir}/src/gui/server_dialog.h
+  ${sodium_src_dir}/gui/server_dialog_base.cpp
+  ${sodium_src_dir}/gui/server_dialog_base.hpp
+  ${sodium_src_dir}/gui/server_dialog.cpp
+  ${sodium_src_dir}/gui/server_dialog.hpp
 
-  ${lightguider_src_dir}/src/gui/solver_dialog_base.cpp
-  ${lightguider_src_dir}/src/gui/solver_dialog_base.h
-  ${lightguider_src_dir}/src/gui/solver_dialog.cpp
-  ${lightguider_src_dir}/src/gui/solver_dialog.h
+  ${sodium_src_dir}/gui/solver_dialog_base.cpp
+  ${sodium_src_dir}/gui/solver_dialog_base.hpp
+  ${sodium_src_dir}/gui/solver_dialog.cpp
+  ${sodium_src_dir}/gui/solver_dialog.hpp
 
-  ${lightguider_src_dir}/src/gui/runinbg.cpp
-  ${lightguider_src_dir}/src/gui/runinbg.h
+  ${sodium_src_dir}/gui/runinbg.cpp
+  ${sodium_src_dir}/gui/runinbg.hpp
 )
 source_group(Gui FILES ${gui_src})
 
 # it would ease if files are organised in an alphabetical order
-set(lightguider_SRC
+set(sodium_SRC
 
-  ${lightguider_src_dir}/src/guiding/circbuf.h
+  ${sodium_src_dir}/guiding/circbuf.hpp
 
-  ${lightguider_src_dir}/src/image/fitsiowrap.cpp
-  ${lightguider_src_dir}/src/image/fitsiowrap.h
-  ${lightguider_src_dir}/src/image/image_math.cpp
-  ${lightguider_src_dir}/src/image/image_math.h
-  ${lightguider_src_dir}/src/image/imagelogger.cpp
-  ${lightguider_src_dir}/src/image/imagelogger.h
-  ${lightguider_src_dir}/src/image/usImage.cpp
-  ${lightguider_src_dir}/src/image/usImage.h
+  ${sodium_src_dir}/image/fitsiowrap.cpp
+  ${sodium_src_dir}/image/fitsiowrap.hpp
+  ${sodium_src_dir}/image/image_math.cpp
+  ${sodium_src_dir}/image/image_math.hpp
+  ${sodium_src_dir}/image/usImage.cpp
+  ${sodium_src_dir}/image/usImage.hpp
   
-  ${lightguider_src_dir}/src/ao/gear_simulator.h
-  ${lightguider_src_dir}/src/ao/gear_simulator.cpp
+  ${sodium_src_dir}/ao/gear_simulator.hpp
+  ${sodium_src_dir}/ao/gear_simulator.cpp
 
   
+  ${sodium_src_dir}/logger/imagelogger.cpp
+  ${sodium_src_dir}/logger/imagelogger.hpp
+  ${sodium_src_dir}/logger/debuglog.cpp
+  ${sodium_src_dir}/logger/debuglog.hpp
+  ${sodium_src_dir}/logger/guidinglog.cpp
+  ${sodium_src_dir}/logger/guidinglog.hpp
+  ${sodium_src_dir}/logger/logger.cpp
+  ${sodium_src_dir}/logger/logger.hpp
+  ${sodium_src_dir}/logger/log_uploader.cpp
+  ${sodium_src_dir}/logger/log_uploader.hpp
 
-  ${lightguider_src_dir}/src/logger/debuglog.cpp
-  ${lightguider_src_dir}/src/logger/debuglog.h
-  ${lightguider_src_dir}/src/logger/guidinglog.cpp
-  ${lightguider_src_dir}/src/logger/guidinglog.h
-  ${lightguider_src_dir}/src/logger/logger.cpp
-  ${lightguider_src_dir}/src/logger/logger.h
-  ${lightguider_src_dir}/src/logger/log_uploader.cpp
-  ${lightguider_src_dir}/src/logger/log_uploader.h
+  ${sodium_src_dir}/guiding/guiding_stats.cpp
+  ${sodium_src_dir}/guiding/guiding_stats.hpp
+  
+  ${sodium_src_dir}/device/onboard_st4.cpp
+  ${sodium_src_dir}/device/onboard_st4.hpp
+  
+  ${sodium_src_dir}/sodium.cpp
+  ${sodium_src_dir}/sodium.hpp
 
-  ${lightguider_src_dir}/src/guiding/guiding_stats.cpp
-  ${lightguider_src_dir}/src/guiding/guiding_stats.h
-  
-  ${lightguider_src_dir}/src/device/onboard_st4.cpp
-  ${lightguider_src_dir}/src/device/onboard_st4.h
-  
-  ${lightguider_src_dir}/src/lightguider.cpp
-  ${lightguider_src_dir}/src/lightguider.h
+  ${sodium_src_dir}/config/config.cpp
+  ${sodium_src_dir}/config/config.hpp
+  ${sodium_src_dir}/controller.cpp
+  ${sodium_src_dir}/controller.hpp
 
-  ${lightguider_src_dir}/src/lightconfig.cpp
-  ${lightguider_src_dir}/src/lightconfig.h
-  ${lightguider_src_dir}/src/lightcontrol.cpp
-  ${lightguider_src_dir}/src/lightcontrol.h
-  ${lightguider_src_dir}/src/indi/indiclient.cpp
-  ${lightguider_src_dir}/src/indi/indiclient.h
+  ${sodium_src_dir}/network/update.cpp
+  ${sodium_src_dir}/network/update.hpp
+  ${sodium_src_dir}/network/sha1.cpp
+  ${sodium_src_dir}/network/sha1.hpp
+  
+  ${sodium_src_dir}/guiding/point.hpp
 
-  ${lightguider_src_dir}/src/network/lightupdate.cpp
-  ${lightguider_src_dir}/src/network/lightupdate.h
-  ${lightguider_src_dir}/src/network/sha1.cpp
-  ${lightguider_src_dir}/src/network/sha1.h
+  ${sodium_src_dir}/device/serialport.cpp
+  ${sodium_src_dir}/device/serialport.hpp
+  ${sodium_src_dir}/device/serialport_loopback.cpp
+  ${sodium_src_dir}/device/serialport_loopback.hpp
+  ${sodium_src_dir}/device/serialport_mac.cpp
+  ${sodium_src_dir}/device/serialport_mac.hpp
+  ${sodium_src_dir}/device/serialport_win32.cpp
+  ${sodium_src_dir}/device/serialport_win32.hpp
+  ${sodium_src_dir}/device/serialport_posix.cpp
+  ${sodium_src_dir}/device/serialport_posix.hpp
+  ${sodium_src_dir}/device/serialports.hpp
   
-  ${lightguider_src_dir}/src/guiding/point.h
-
-  ${lightguider_src_dir}/src/device/serialport.cpp
-  ${lightguider_src_dir}/src/device/serialport.h
-  ${lightguider_src_dir}/src/device/serialport_loopback.cpp
-  ${lightguider_src_dir}/src/device/serialport_loopback.h
-  ${lightguider_src_dir}/src/device/serialport_mac.cpp
-  ${lightguider_src_dir}/src/device/serialport_mac.h
-  ${lightguider_src_dir}/src/device/serialport_win32.cpp
-  ${lightguider_src_dir}/src/device/serialport_win32.h
-  ${lightguider_src_dir}/src/device/serialport_posix.cpp
-  ${lightguider_src_dir}/src/device/serialport_posix.h
-  ${lightguider_src_dir}/src/device/serialports.h
-  
-  ${lightguider_src_dir}/src/guiding/star.cpp
-  ${lightguider_src_dir}/src/guiding/star.h
-  
-  ${lightguider_src_dir}/src/worker_thread.cpp
-  ${lightguider_src_dir}/src/worker_thread.h
-  
+  ${sodium_src_dir}/guiding/star.cpp
+  ${sodium_src_dir}/guiding/star.hpp
+ 
 )
 
 
 if (WIN32)
-  set(lightguider_SRC
-      ${lightguider_SRC}
+  set(sodium_SRC
+      ${sodium_SRC}
       # windows-only sources
-      ${lightguider_src_dir}/src/win32/parallelports.h
-      ${lightguider_src_dir}/src/win32/parallelport.h
-      ${lightguider_src_dir}/src/win32/parallelport.cpp
+      ${sodium_src_dir}/win32/parallelports.hpp
+      ${sodium_src_dir}/win32/parallelport.hpp
+      ${sodium_src_dir}/win32/parallelport.cpp
 
-      ${lightguider_src_dir}/src/win32/parallelport_win32.h
-      ${lightguider_src_dir}/src/win32/parallelport_win32.cpp
+      ${sodium_src_dir}/win32/parallelport_win32.hpp
+      ${sodium_src_dir}/win32/parallelport_win32.cpp
 
-      ${lightguider_src_dir}/src/win32/comdispatch.h
-      ${lightguider_src_dir}/src/win32/comdispatch.cpp
+      ${sodium_src_dir}/win32/comdispatch.hpp
+      ${sodium_src_dir}/win32/comdispatch.cpp
      )
 endif()
 
-source_group(src FILES ${lightguider_SRC})
+source_group(src FILES ${sodium_SRC})
 
 # Add the messages.mo directly in the project such that this triggers a new build
 # and all the post_build commands are honored properly
@@ -460,7 +468,7 @@ foreach(current_locale IN LISTS all_locales)
     get_filename_component(message_file_ext ${current_file} EXT)
     if(("${message_file_ext}" STREQUAL ".mo") OR ("${message_file_ext}" STREQUAL ".zip"))
       # message(STATUS "Harhar ${message_file_ext} / ${current_file}")
-      set(lightguider_SRC ${lightguider_SRC} ${current_file})
+      set(sodium_SRC ${sodium_SRC} ${current_file})
     endif()
   endforeach()
 
@@ -489,7 +497,7 @@ if(UNIX)
 
   # should be linux there
   add_executable(
-   lightguider
+   sodium
    ${server_SRC}
    ${modloader_SRC}
    ${scopes_SRC}
@@ -498,24 +506,24 @@ if(UNIX)
    ${rotators_SRC}
    ${guiding_SRC}
    ${gui_src}
-   ${lightguider_SRC}
+   ${sodium_SRC}
    )
 
-  target_precompile_headers(lightguider PUBLIC ${lightguider_src_dir}/src/lightguider.h)
+  target_precompile_headers(sodium PUBLIC ${sodium_src_dir}/sodium.hpp)
 
   # 链接 Python 库
-  target_link_libraries(lightguider ${Python_LIBRARIES})
+  target_link_libraries(sodium ${Python_LIBRARIES})
 
 
-  target_link_libraries(lightguider X11)
+  target_link_libraries(sodium X11)
 
   find_package(spdlog REQUIRED)
-  target_link_libraries(lightguider spdlog::spdlog_header_only)
+  target_link_libraries(sodium spdlog::spdlog_header_only)
 
   set_target_properties(
-    lightguider
+    sodium
     PROPERTIES
-      OUTPUT_NAME lightguider
+      OUTPUT_NAME sodium
     )
 
 else()
@@ -524,23 +532,23 @@ endif()
 
 
 # properties of the project common to all platforms
-target_compile_definitions(lightguider PRIVATE "${wxWidgets_DEFINITIONS}" "HAVE_TYPE_TRAITS")
-target_compile_options(lightguider PRIVATE "${wxWidgets_CXX_FLAGS};")
+target_compile_definitions(sodium PRIVATE "${wxWidgets_DEFINITIONS}" "HAVE_TYPE_TRAITS")
+target_compile_options(sodium PRIVATE "${wxWidgets_CXX_FLAGS};")
 if(APPLE AND NOT APPLE32)
   # suppress warnings about "overrides a member function but is not marked 'override'" with wxDECLARE_EVENT_TABLE
-  target_compile_options(lightguider PRIVATE "-Wno-inconsistent-missing-override")
+  target_compile_options(sodium PRIVATE "-Wno-inconsistent-missing-override")
 endif()
-target_include_directories(lightguider PRIVATE ${wxWidgets_INCLUDE_DIRS})
+target_include_directories(sodium PRIVATE ${wxWidgets_INCLUDE_DIRS})
 
-if (LGuider_LINK_EXTERNAL_RELEASE)
-  target_link_libraries(lightguider optimized ${LGuider_LINK_EXTERNAL_RELEASE})
+if (SODIUM_LINK_EXTERNAL_RELEASE)
+  target_link_libraries(sodium optimized ${SODIUM_LINK_EXTERNAL_RELEASE})
 endif()
-if (LGuider_LINK_EXTERNAL_DEBUG)
-  target_link_libraries(lightguider debug ${LGuider_LINK_EXTERNAL_DEBUG})
+if (SODIUM_LINK_EXTERNAL_DEBUG)
+  target_link_libraries(sodium debug ${SODIUM_LINK_EXTERNAL_DEBUG})
 endif()
-target_link_libraries(lightguider
+target_link_libraries(sodium
                       MPIIS_GP GPGuider # GP Guider
-                      ${LGuider_LINK_EXTERNAL})
+                      ${SODIUM_LINK_EXTERNAL})
 
 
 
@@ -563,7 +571,7 @@ target_link_libraries(lightguider
 foreach(locale IN LISTS all_locales)
   get_zip_file(current_zip LOCALE ${locale})
   if(NOT "${current_zip}" STREQUAL "")
-    add_dependencies(lightguider ${locale}_html)
+    add_dependencies(sodium ${locale}_html)
   endif()
 
   get_translation_files(current_messages LOCALE ${locale})
@@ -572,7 +580,7 @@ foreach(locale IN LISTS all_locales)
       #set(dependent_target ${target_string_extraction_from_sources})
     else()
       #set(dependent_target ${locale}_translation)
-      add_dependencies(lightguider ${locale}_translation)
+      add_dependencies(sodium ${locale}_translation)
     endif()
   else()
     if(NOT "${locale}" STREQUAL "${default_locale}")
@@ -596,10 +604,10 @@ if(WIN32)
       # is considered instead as the application directory
       # This is only for running the app from a Development environment
       # (TODO: use only for multiconfig cmake projects)
-      set(build_tree_target_folder $<TARGET_FILE_DIR:lightguider>/)
+      set(build_tree_target_folder $<TARGET_FILE_DIR:sodium>/)
       set(install_options DESTINATION ${CMAKE_INSTALL_PREFIX}/)
     else()
-      set(build_tree_target_folder $<TARGET_FILE_DIR:lightguider>/locale/${current_locale})
+      set(build_tree_target_folder $<TARGET_FILE_DIR:sodium>/locale/${current_locale})
       set(install_options DESTINATION ${CMAKE_INSTALL_PREFIX}/locale/${current_locale}/ OPTIONAL)
     endif()
 
@@ -612,7 +620,7 @@ if(WIN32)
       get_filename_component(message_file_ext ${current_file} EXT)
       if("${message_file_ext}" STREQUAL ".mo" OR "${message_file_ext}" STREQUAL ".zip")
         add_custom_command(
-          TARGET lightguider
+          TARGET sodium
           POST_BUILD
              COMMAND ${CMAKE_COMMAND} -E make_directory "${build_tree_target_folder}"
              COMMAND "${CMAKE_COMMAND}" -E copy_if_different ${current_file} "${build_tree_target_folder}/${message_file_basename}"
@@ -631,11 +639,11 @@ if(UNIX AND NOT APPLE)
 
   foreach(current_locale IN LISTS all_locales)
     if("${current_locale}" STREQUAL "${default_locale}")
-      set(destination share/lightguider/)
-      set(install_help_options DESTINATION ${CMAKE_INSTALL_PREFIX}/share/lightguider/)
+      set(destination share/sodium/)
+      set(install_help_options DESTINATION ${CMAKE_INSTALL_PREFIX}/share/sodium/)
     else()
-      set(destination share/lightguider/locale/${current_locale}/)
-      set(install_help_options DESTINATION ${CMAKE_INSTALL_PREFIX}/share/lightguider/locale/${current_locale}/ OPTIONAL)
+      set(destination share/sodium/locale/${current_locale}/)
+      set(install_help_options DESTINATION ${CMAKE_INSTALL_PREFIX}/share/sodium/locale/${current_locale}/ OPTIONAL)
     endif()
 
     get_zip_file(current_zip LOCALE ${current_locale})
@@ -646,17 +654,17 @@ if(UNIX AND NOT APPLE)
       get_filename_component(message_file_ext ${current_file} EXT)
       if("${message_file_name}" STREQUAL "messages.mo" OR "${message_file_ext}" STREQUAL ".zip")
         add_custom_command(
-          TARGET lightguider
+          TARGET sodium
           POST_BUILD
-          COMMAND "${CMAKE_COMMAND}" -E make_directory $<TARGET_FILE_DIR:lightguider>/${destination}
-          COMMAND "${CMAKE_COMMAND}" -E copy_if_different ${current_file} $<TARGET_FILE_DIR:lightguider>/${destination}${message_file_name}
+          COMMAND "${CMAKE_COMMAND}" -E make_directory $<TARGET_FILE_DIR:sodium>/${destination}
+          COMMAND "${CMAKE_COMMAND}" -E copy_if_different ${current_file} $<TARGET_FILE_DIR:sodium>/${destination}${message_file_name}
         )
       endif()
 
       if("${message_file_name}" STREQUAL "messages.mo")
           install(FILES       ${current_file}
                   DESTINATION  ${CMAKE_INSTALL_PREFIX}/share/locale/${current_locale}/LC_MESSAGES/
-                  RENAME "lightguider.mo"
+                  RENAME "sodium.mo"
                   OPTIONAL)
       endif()
 
@@ -673,4 +681,4 @@ endif()
 #
 # Installation and packaging
 #
-include(cmake_modules/LightGuiderPackaging.cmake)
+include(cmake_modules/SodiumPackaging.cmake)

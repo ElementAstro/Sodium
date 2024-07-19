@@ -32,8 +32,8 @@
  *
  */
 
-#include "phd.h"
-#include "image_math.h"
+#include "sodium.hpp"
+#include "image_math.hpp"
 
 #include <wx/wfstream.h>
 #include <wx/txtstrm.h>
@@ -1136,7 +1136,7 @@ bool DefectMap::DefectMapExists(int profileId, bool showAlert)
             fitsfile *fptr;
             int status = 0;  // CFITSIO status value MUST be initialized to zero!
 
-            if (PHD_fits_open_diskfile(&fptr, fName, READONLY, &status) == 0)
+            if (SODIUM_fits_open_diskfile(&fptr, fName, READONLY, &status) == 0)
             {
                 long fsize[2];
                 fits_get_img_size(fptr, 2, fsize, &status);
@@ -1150,7 +1150,7 @@ bool DefectMap::DefectMapExists(int profileId, bool showAlert)
                         pFrame->Alert(_("Bad-pixel map does not match the camera in this profile - it needs to be replaced."));
                 }
 
-                PHD_fits_close_file(fptr);
+                SODIUM_fits_close_file(fptr);
             }
             else
                 Debug.AddLine(wxString::Format("BPM check: fitsio error on open_diskfile = %d", status));

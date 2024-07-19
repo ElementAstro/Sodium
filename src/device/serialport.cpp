@@ -33,7 +33,7 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 SerialPort::SerialPort(void)
 {

@@ -4,8 +4,8 @@
 <body>
 <h1><br>
 </h1>
-<h1><a name="Drift_Align"></a>LightGuider Drift Alignment Tool</h1>
-<span style="">The drift align tool in LightGuider can be used to quickly
+<h1><a name="Drift_Align"></a>Sodium Drift Alignment Tool</h1>
+<span style="">The drift align tool in Sodium can be used to quickly
 obtain a precise polar alignment of your equatorial mount. The process
 takes a little bit of practice, but after doing it a few times, you
 should be able to obtain an accurate polar alignment in minutes.
@@ -15,8 +15,8 @@ doing the alignment, whichever is more convenient.<br></span>
 to get your mount's polar axis roughly aligned by using your mount's
 polar alignment scope if it has one. Otherwise, make sure the mount's
 polar axis is pointing towards the pole, and the altitude setting
-corresponds to your local latitude.</li><li>&nbsp;Make sure you can see your computer screen when you are standing at the mount.</li><li>&nbsp;Start LightGuider and connect your equipment.</li><li>&nbsp;&nbsp;You should be using an up-to-date version of LightGuider..</li><li>&nbsp;&nbsp;These
-instructions assume you have an ASCOM connection to your mount so LightGuider
+corresponds to your local latitude.</li><li>&nbsp;Make sure you can see your computer screen when you are standing at the mount.</li><li>&nbsp;Start Sodium and connect your equipment.</li><li>&nbsp;&nbsp;You should be using an up-to-date version of Sodium..</li><li>&nbsp;&nbsp;These
+instructions assume you have an ASCOM connection to your mount so Sodium
 knows where your scope is pointing. You can still drift align without
 an ASCOM connection, see <a href="#Drift_Align_ASCOM">Note about ASCOM</a>.</li><li>&nbsp;Calibrate
 on any convenient guide star, preferably at a declination within 20
@@ -28,7 +28,7 @@ calibration from the side-of-pier where you plan to do the alignment.
 &nbsp;If the calibration is not correct for the current side-of-pier,
 the direction of drift will change and any direction-related notes you
 made previously won't be correct.</li><li>&nbsp;Make
-sure your LightGuider settings have the correct values for your guide scope
+sure your Sodium settings have the correct values for your guide scope
 focal length and your guide camera pixel size. (Brain =&gt; Global tab
 for focal length, Camera tab for pixel size)</li></ul><br>Now you are ready for drift aligning.<br><br>
 
@@ -42,7 +42,7 @@ adjusting the mount ('Adjust'). The rate of declination drift tells us
 the amount of alignment error. Each adjustment will reduce the error,
 and you repeat the process as many times as you need to get the error
 close to zero.<br><br>Click 'Drift' to start measuring the declination
-drift. LightGuider will select a guide star and start guiding. After a few
+drift. Sodium will select a guide star and start guiding. After a few
 moments you should see something like this:<br><br><img style="width: 607px; height: 645px;" alt="" src="da_IMG05.png"><br><br>Pay
 particular attention to the Declination trend line (Red). At first the
 Dec trend line will be jumping up and down, but soon the noise should
@@ -52,11 +52,11 @@ goal is to make the Dec trend line "flat" -- neither trending up nor
 down over time.&nbsp; By adjusting the mount's azimuth, you will change
 the slope of the Dec trend line.<br><br>If this is your first time
 adjusting Azimuth, you will not know which way to go--East or West?
-LightGuider does not know either, so you just have to guess, and you have a
+Sodium does not know either, so you just have to guess, and you have a
 50-50 chance of getting it right.&nbsp; If you choose correctly, the
 new drift line will be flatter (less steep, closer to horizontal)&nbsp;
 If you choose incorrectly, the drift rate will increase (more steeply
-downward in the example above.)<br><br>Click the 'Adjust' button. LightGuider will stop guiding, and you can make your adjustment. You'll see something like this:<br><br><img style="width: 606px; height: 642px;" alt="" src="da_IMG06.png"><br><br>Slowly
+downward in the example above.)<br><br>Click the 'Adjust' button. Sodium will stop guiding, and you can make your adjustment. You'll see something like this:<br><br><img style="width: 606px; height: 642px;" alt="" src="da_IMG06.png"><br><br>Slowly
 turn your mount's Azimuth adjustment, watching the screen and moving
 the guide star towards the magenta circle. The magenta circle shows how
 far the guide star needs to move. The magenta circle is larger when the
@@ -69,7 +69,7 @@ moving the guide star, click 'Drift' to make another measurement.&nbsp;
 Before you click 'Drift', it's OK to nudge the mount to re-center the
 star, or to find a different star, or to get back closer to the
 meridian.&nbsp; Also, you can choose your own guide star by clicking on
-it, or just let LightGuider choose.<br><br>After a short time drifting, you
+it, or just let Sodium choose.<br><br>After a short time drifting, you
 will have another Dec trend line. Did it get better (closer to
 horizontal) or worse (away from horizontal)? Make a note to yourself in
 the "Azimuth adjustment notes" area, recording how you adjusted azimuth
@@ -95,14 +95,14 @@ Until you are experienced with drift aligning your particular mount, the
 'adjustment' part of the process can be a bit tedious. &nbsp;At first,
 you'll have to determine how to adjust a knob on the mount to achieve
 the desired effect: "how much" and "what direction." &nbsp;To help with
-this, the <span style="font-style: italic;">LightGuider</span> drift align
+this, the <span style="font-style: italic;">Sodium</span> drift align
 tool supports "bookmarks". &nbsp;These are a handy way to record the
 positions of the guide star before and after you've made an adjustment.
 &nbsp;<a name="Bookmarks"></a>Bookmarks are accessed using the Bookmarks menu, or keyboard shortcuts, as follows: <br>
 <ul><li>b&nbsp;: toggle/show bookmarks&nbsp;</li><li>Shift-b : set a bookmark at the current guide star position (the "lock position")</li><li>Ctrl-b : clear all bookmarks&nbsp;</li><li>Ctrl-click somewhere on the image: set a bookmark at that position, or remove the bookmark that's already there</li></ul>
 By setting a bookmark before you make a mount adjustment, you can get a
 clear view of how the adjustment has moved the star on the guide frame.<h3><a name="Drift_Align_ASCOM"></a>Notes about ASCOM</h3>The
-instructions and screenshots above correspond to what you see in LightGuider
+instructions and screenshots above correspond to what you see in Sodium
 with an ASCOM or INDI connection to the mount.&nbsp; There are a couple
 of differences if you do not have one of those connections. <br><br><ul><li>Scope
 position data and slewing functions will not be available - you'll have
@@ -117,7 +117,7 @@ move past the circle. Rather than moving the star all the way to the
 circle, you may want to only move it half-way or so as an initial
 guess.&nbsp; You can use Bookmarks to keep track of where the guide
 star was in each Drift/Adjust iteration.</li></ul>
-<h1><a name="Static_polar_alignment"></a>LightGuider
+<h1><a name="Static_polar_alignment"></a>Sodium
 Static Polar Alignment (SPA) Tool</h1>
 The Static Polar Alignment tool provides two modes of operation.
 Automated mode requires a mount that can slew under computer control
@@ -126,13 +126,13 @@ type guiding ('On camera', GPUSB, etc) or for mounts that are manually
 controlled. The SPA tool selects the most appropriate mode according to
 your mount's capabilities.<br>
 <h2>Automated Mode</h2>
-In the automated mode, LightGuider will slew the telescope as needed to perform
-the alignment procedure. To do this, LightGuider must be connected to the mount through
+In the automated mode, Sodium will slew the telescope as needed to perform
+the alignment procedure. To do this, Sodium must be connected to the mount through
 either an ASCOM or INDI interface, and the mount must be initialized and ready to
 perform go-to (slewing) operations. To get started, perform the following steps:<br>
 <ul>
-<li>Connect LightGuider to your camera and to your ASCOM or INDI mount driver</li>
-<li>Be sure that LightGuider has already done calibration for this set-up</li>
+<li>Connect Sodium to your camera and to your ASCOM or INDI mount driver</li>
+<li>Be sure that Sodium has already done calibration for this set-up</li>
 <li>Manually adjust the mount&#8217;s RA axis to point within 5 degrees of the apparent
 pole, then slew the telescope to point to Dec = +90 or -90. On a German equatorial mount,
 it&#8217;s best to start with the mount in the counterweight-down orientation,
@@ -148,12 +148,12 @@ first window will open:<br><br>
 <br>
 <img style="width: 431px; height: 673px;" alt="" src="spa_IMG01.png"><br>
 <br>
-The LightGuider main display would look like this (southern pole example):<br><br>
+The Sodium main display would look like this (southern pole example):<br><br>
 <br>
 <img style="width: 757px; height: 469px;" alt="" src="spa_IMG01a.png"><br>
 <br>
 The star map at the top of the SPA window shows the
-approximate position of the polar stars oriented according to your LightGuider
+approximate position of the polar stars oriented according to your Sodium
 calibration and mount position. You can
 adjust the &#8216;Hour Angle&#8217; control or use the
 &#8216;Flip Camera&#8217; option to orient the
@@ -166,7 +166,7 @@ You have the option to use manual control by ticking the
 &#8216;Manual Slew&#8217; checkbox. Refer to the instructions below for
 manual-mode alignment.<br>
 Use the star map to select a &#8216;Reference Star&#8217; on
-the main LightGuider display.
+the main Sodium display.
 Identify which star you selected with the drop-down list. Don't worry if you
 don't get it right; it can be corrected later.<br>
 When you are ready to start aligning, click &#8216;Rotate&#8217;.
@@ -180,7 +180,7 @@ changed to a &#8216;Stop&#8217; button. If you want to quit or stop the mount sl
 <img style="width: 747px; height: 411px;" alt="" src="spa_IMG02a.png"><br>
 <br>
 After you click 'Rotate', the mount will slew west in RA in small steps as indicated in the status bar.
-Once two points have been recorded, the alignment graphic is overlaid on the LightGuider main
+Once two points have been recorded, the alignment graphic is overlaid on the Sodium main
 display.<br><br>
 <br>
 <img style="width: 758px; height: 573px;" alt="" src="spa_IMG03.png"><br>
@@ -196,8 +196,8 @@ If you don&#8217;t have a mount driver that supports go-to&#8217;s or
 you want to retain manual control of scope slewing, you can use the
 manual mode of operation. To get started, perform the following steps:<br>
 <ul>
-<li>Connect LightGuider to your camera and to your mount&#8217;s guider interface (e.g. ST-4)</li>
-<li>Be sure that LightGuider has already done calibration for this set-up</li>
+<li>Connect Sodium to your camera and to your mount&#8217;s guider interface (e.g. ST-4)</li>
+<li>Be sure that Sodium has already done calibration for this set-up</li>
 <li>Manually adjust the RA axis to point within 5 degrees of the apparent pole, then manually
 slew the telescope to point to Dec = +90 or -90. On a German equatorial mount, it&#8217;s best
 to start with the mount in the counterweight-down orientation, pointing at the pole. Use
@@ -213,7 +213,7 @@ first window will open:<br><br>
 <img style="width: 431px; height: 673px;" alt="" src="spa_IMG04.png"><br>
 <br>
 The star map at the top of the SPA window shows the
-approximate position of the polar stars oriented according to your LightGuider
+approximate position of the polar stars oriented according to your Sodium
 calibration and mount position. You can
 adjust the &#8216;Hour Angle&#8217; control or use the
 &#8216;Flip Camera&#8217; option to orient the
@@ -226,7 +226,7 @@ You have the option to use manual control by ticking the
 &#8216;Manual Slew&#8217; checkbox. Refer to the instructions below for
 manual-mode alignment.<br>
 Use the star map to select a &#8216;Reference Star&#8217; on
-the main LightGuider display.
+the main Sodium display.
 Identify which star you selected with the drop-down list. Don't worry if you
 don't get it right, it can be corrected later.<br>
 <br>
@@ -307,7 +307,7 @@ When finished, click &#8216;Close&#8217;. If you made large adjustments you may 
 re-calibrate. <br>
 <br>
 <br>
-<h1><a name="Polar_Drift_Align"></a>LightGuider Polar Drift Alignment Tool</h1>
+<h1><a name="Polar_Drift_Align"></a>Sodium Polar Drift Alignment Tool</h1>
 The Polar Drift Alignment tool operates on a similar principle to the
 original Drift Alignment tool.
 The difference is that the drift is measured near the celestial pole to
@@ -318,11 +318,11 @@ drift star from the pole increases. Also, it may take some time for the
 adjustment to settle so Static
 Polar Alignment can be faster. The main advantages of Polar Drift
 Alignment are that any star can be chosen, the tool only needs
-to know which hemisphere you're in and&nbsp;it does not need LightGuider to be calibrated
+to know which hemisphere you're in and&nbsp;it does not need Sodium to be calibrated
 first.<br>
 To get started, perform the following steps:<br>
 <ul>
-<li>Connect LightGuider to your camera</li>
+<li>Connect Sodium to your camera</li>
 <li>Manually adjust the mount&#8217;s RA axis to point within 5 degrees of the apparent pole, then
 slew the telescope to point to Dec = +90 or -90. On a German equatorial mount, it&#8217;s best to start with
 the mount in the counterweight-down orientation, pointing at the pole.</li>

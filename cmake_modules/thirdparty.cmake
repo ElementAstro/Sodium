@@ -39,10 +39,10 @@ set(CMAKE_MODULE_PATH
 # to potentially copy some resources to the output directory of the main project.
 # They are used by the CMakeLists.txt calling this file.
 
-set(LGuider_LINK_EXTERNAL)          # target to which the phd2 main library will link to
-set(LGuider_COPY_EXTERNAL_ALL)      # copy of a file for any configuration
-set(LGuider_COPY_EXTERNAL_DBG)      # copy for debug only
-set(LGuider_COPY_EXTERNAL_REL)      # copy for release only
+set(SODIUM_LINK_EXTERNAL)          # target to which the phd2 main library will link to
+set(SODIUM_COPY_EXTERNAL_ALL)      # copy of a file for any configuration
+set(SODIUM_COPY_EXTERNAL_DBG)      # copy for debug only
+set(SODIUM_COPY_EXTERNAL_REL)      # copy for release only
 
 
 # this module will be used to find system installed libraries on Linux
@@ -68,7 +68,7 @@ set(USE_SYSTEM_CFITSIO ON)
 if(USE_SYSTEM_CFITSIO)
   find_package(CFITSIO REQUIRED)
   include_directories(${CFITSIO_INCLUDE_DIR})
-  set(LGuider_LINK_EXTERNAL ${LGuider_LINK_EXTERNAL} ${CFITSIO_LIBRARIES})
+  set(SODIUM_LINK_EXTERNAL ${SODIUM_LINK_EXTERNAL} ${CFITSIO_LIBRARIES})
   message(STATUS "Using system's CFITSIO.")
 else(USE_SYSTEM_CFITSIO)
 
@@ -151,7 +151,7 @@ else(USE_SYSTEM_CFITSIO)
   # indicating the link and include directives to the main project.
   # already done by the directive target_include_directories(cfitsio PUBLIC
   # include_directories(${libcfitsio_root})
-  set(LGuider_LINK_EXTERNAL ${LGuider_LINK_EXTERNAL} cfitsio)
+  set(SODIUM_LINK_EXTERNAL ${SODIUM_LINK_EXTERNAL} cfitsio)
 
 endif(USE_SYSTEM_CFITSIO)
 
@@ -170,7 +170,7 @@ if(WIN32)
         WORKING_DIRECTORY ${libcurl_root})
   endif()
   include_directories(${libcurl_dir}/include)
-  set(LGuider_LINK_EXTERNAL ${LGuider_LINK_EXTERNAL} ${libcurl_dir}/lib/LIBCURL.LIB)
+  set(SODIUM_LINK_EXTERNAL ${SODIUM_LINK_EXTERNAL} ${libcurl_dir}/lib/LIBCURL.LIB)
 else()
   if(APPLE)
     # make sure to pick up the macos curl, not the mapcports curl in /opt/local/lib
@@ -186,9 +186,13 @@ else()
   else()
     find_package(CURL REQUIRED)
   endif()
+  find_package(GnuTLS REQUIRED)
+  include_directories(${GNUTLS_INCLUDE_DIRS})
   message(STATUS "Using system's libcurl. ${CURL_LIBRARIES}")
   include_directories(${CURL_INCLUDE_DIRS})
-  set(LGuider_LINK_EXTERNAL ${LGuider_LINK_EXTERNAL} ${CURL_LIBRARIES})
+  if (ENABLE_LOG_UPLOAD_FLAG)
+  set(SODIUM_LINK_EXTERNAL ${SODIUM_LINK_EXTERNAL} ${CURL_LIBRARIES}  ${GNUTLS_LIBRARIES})
+  endif()
 endif()
 
 #############################################
@@ -218,7 +222,7 @@ find_package(wxWidgets REQUIRED COMPONENTS aui core base adv html net)
 if(NOT wxWidgets_FOUND)
   message(FATAL_ERROR "WxWidget cannot be found. Please use wx-config prefix")
 endif()
-set(LGuider_LINK_EXTERNAL ${LGuider_LINK_EXTERNAL} ${wxWidgets_LIBRARIES})
+set(SODIUM_LINK_EXTERNAL ${SODIUM_LINK_EXTERNAL} ${wxWidgets_LIBRARIES})
 
 
 #############################################
@@ -237,8 +241,8 @@ if(WIN32)
                     WORKING_DIRECTORY ${indiclient_root})
   endif()
   include_directories(${indiclient_dir}/include)
-  set(LGuider_LINK_EXTERNAL_RELEASE ${LGuider_LINK_EXTERNAL_RELEASE} ${indiclient_dir}/lib/indiclient.lib)
-  set(LGuider_LINK_EXTERNAL_DEBUG ${LGuider_LINK_EXTERNAL_DEBUG} ${indiclient_dir}/lib/indiclientd.lib)
+  set(SODIUM_LINK_EXTERNAL_RELEASE ${SODIUM_LINK_EXTERNAL_RELEASE} ${indiclient_dir}/lib/indiclient.lib)
+  set(SODIUM_LINK_EXTERNAL_DEBUG ${SODIUM_LINK_EXTERNAL_DEBUG} ${indiclient_dir}/lib/indiclientd.lib)
 else()
   # Linux or OSX
   set(USE_SYSTEM_LIBINDI On)
@@ -249,10 +253,10 @@ else()
     
     # source files include <libindi/baseclient.h> so we need the libindi parent directory in the include directories
     include_directories(${INDI_INCLUDE_DIR})
-    set(LGuider_LINK_EXTERNAL ${LGuider_LINK_EXTERNAL} ${INDI_CLIENT_LIBRARIES})
+    set(SODIUM_LINK_EXTERNAL ${SODIUM_LINK_EXTERNAL} ${INDI_CLIENT_LIBRARIES})
 
     find_package(ZLIB REQUIRED)
-    set(LGuider_LINK_EXTERNAL ${LGuider_LINK_EXTERNAL} ${ZLIB_LIBRARIES})
+    set(SODIUM_LINK_EXTERNAL ${SODIUM_LINK_EXTERNAL} ${ZLIB_LIBRARIES})
   else()
     
   endif()

@@ -33,9 +33,9 @@
 *
 */
 
-#include "phd.h"
-#include "calibration_assistant.h"
-#include "calstep_dialog.h"
+#include "sodium.hpp"
+#include "calibration_assistant.hpp"
+#include "calstep_dialog.hpp"
 #include <algorithm>
 
 enum {defBestDec = 0, defBestOffset = 5, textWrapPoint = 500, slewSettleTime = 2000};

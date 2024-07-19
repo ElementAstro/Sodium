@@ -32,8 +32,8 @@
  *
  */
 
-#include "phd.h"
-#include "profile_wizard.h"
+#include "sodium.hpp"
+#include "profile_wizard.hpp"
 
 #include <wx/gbsizer.h>
 #include <functional>
@@ -182,9 +182,9 @@ GearDialog::~GearDialog()
 
 static wxToggleButton *MakeConnectBtn(wxWindow *parent, wxWindowID id)
 {
-#   include "icons/connected.png.h"
+#   include "icons/connected.png.hpp"
     wxBitmap connected_bmp(wxBITMAP_PNG_FROM_DATA(connected));
-#   include "icons/disconnected.png.h"
+#   include "icons/disconnected.png.hpp"
     wxBitmap disconnected_bmp(wxBITMAP_PNG_FROM_DATA(disconnected));
 
     wxToggleButton *btn = new wxToggleButton(parent, id, _("Disconnect"), wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
@@ -257,9 +257,9 @@ void GearDialog::Initialize()
                               0, nullptr, 0, wxDefaultValidator, _("Camera"));
     m_gearSizer->Add(m_pCameras, wxGBPosition(0, 1), wxGBSpan(1, 1), wxALL | wxEXPAND | wxALIGN_CENTER_VERTICAL, 5);
 
-#   include "icons/select.png.h"
+#   include "icons/select.png.hpp"
     wxBitmap select_bmp(wxBITMAP_PNG_FROM_DATA(select));
-#   include "icons/setup.png.h"
+#   include "icons/setup.png.hpp"
     wxBitmap setup_bmp(wxBITMAP_PNG_FROM_DATA(setup));
 
     m_selectCameraButton = new wxBitmapButton(this, GEAR_BUTTON_SELECT_CAMERA, select_bmp);

@@ -32,9 +32,9 @@
  *
  */
 
-#include "phd.h"
-#include "profile_wizard.h"
-#include "calstep_dialog.h"
+#include "sodium.hpp"
+#include "profile_wizard.hpp"
+#include "calstep_dialog.hpp"
 
 #include <memory>
 #include <wx/gbsizer.h>
@@ -199,7 +199,7 @@ ProfileWizard::ProfileWizard(wxWindow *parent, bool showGreeting) :
     // Create overall vertical sizer
     m_pvSizer = new wxBoxSizer(wxVERTICAL);
 
-#   include "icons/phd2_48.png.h"
+#   include "icons/phd2_48.png.hpp"
     wxBitmap phd2(wxBITMAP_PNG_FROM_DATA(phd2_48));
     m_bitmaps[STATE_GREETINGS] = new wxBitmap(phd2);
     m_bitmaps[STATE_WRAPUP] = new wxBitmap(phd2);
@@ -290,7 +290,7 @@ ProfileWizard::ProfileWizard(wxWindow *parent, bool showGreeting) :
     AddCellPair(this, m_pUserProperties, 3, _("Guide scope focal length (mm)"), m_pFocalLength);
 
     // pixel scale
-#   include "icons/transparent24.png.h"
+#   include "icons/transparent24.png.hpp"
     wxBitmap transparent(wxBITMAP_PNG_FROM_DATA(transparent24));
     m_scaleIcon = new wxStaticBitmap(this, wxID_ANY, transparent);
     m_pUserProperties->Add(m_scaleIcon, wxGBPosition(3, 0));
@@ -1255,7 +1255,7 @@ void ProfileWizard::UpdatePixelScale()
         if (!m_scaleIcon->GetClientData())
         {
             m_scaleIcon->SetClientData((void *)-1); // so we only do this once
-#   include "icons/alert24.png.h"
+#   include "icons/alert24.png.hpp"
             wxBitmap alert(wxBITMAP_PNG_FROM_DATA(alert24));
             m_scaleIcon->SetBitmap(alert);
             m_scaleIcon->SetToolTip(_("Guide star identification works best when the pixel scale is above 0.5\"/px. "

@@ -32,11 +32,11 @@
 *
 */
 
-#include "phd.h"
+#include "sodium.hpp"
 
-#include "gear_simulator.h"
-#include "rotator_ascom.h"
-#include "rotator_indi.h"
+#include "gear_simulator.hpp"
+#include "rotator_ascom.hpp"
+#include "rotator_indi.hpp"
 
 const float Rotator::POSITION_ERROR = -999.f;
 const float Rotator::POSITION_UNKNOWN = -888.f;

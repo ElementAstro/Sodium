@@ -32,12 +32,12 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#include "phd.h"
+#include "sodium.hpp"
 
-#include "gear_simulator.h"
-#include "image_math.h"
-#include "socket_server.h"
-#include "stepguiders.h"
+#include "gear_simulator.hpp"
+#include "image_math.hpp"
+#include "socket_server.hpp"
+#include "stepguiders.hpp"
 
 #include <wx/textfile.h>
 
@@ -469,7 +469,7 @@ void StepGuider::ClearCalibration()
     m_calibrationState = CALIBRATION_STATE_CLEARED;
 }
 
-bool StepGuider::BeginCalibration(const PHD_Point& currentLocation)
+bool StepGuider::BeginCalibration(const SodiumPoint& currentLocation)
 {
     bool bError = false;
 
@@ -537,7 +537,7 @@ void StepGuider::SetCalibrationDetails(const CalibrationDetails& calDetails, dou
  *  - the guider returns to the center of its travel and calibration is complete
  */
 
-bool StepGuider::UpdateCalibrationState(const PHD_Point& currentLocation)
+bool StepGuider::UpdateCalibrationState(const SodiumPoint& currentLocation)
 {
     bool bError = false;
 
@@ -827,7 +827,7 @@ void StepGuider::NotifyGuidingStopped()
     m_bumpStepWeight = 1.0;
     m_bumpTimeoutAlertSent = false;
     // clear bump display
-    pFrame->pStepGuiderGraph->ShowBump(PHD_Point());
+    pFrame->pStepGuiderGraph->ShowBump(SodiumPoint());
 
     MoveToCenter(); // ignore failure
 }
@@ -1007,7 +1007,7 @@ static void SuppressSlowBumpWarning(long)
     pConfig->Global.SetBoolean(SlowBumpWarningEnabledKey(), false);
 }
 
-inline static void UpdateAOGraphPos(const wxPoint& pos, const PHD_Point& avgpos)
+inline static void UpdateAOGraphPos(const wxPoint& pos, const SodiumPoint& avgpos)
 {
     PhdApp::ExecInMainThread([pos, avgpos]() {
         pFrame->pStepGuiderGraph->AppendData(pos, avgpos);
@@ -1140,7 +1140,7 @@ Mount::MOVE_RESULT StepGuider::MoveOffset(GuiderOffset *ofs, unsigned int moveOp
                     Debug.Write("Stop bumping, close enough to center -- clearing m_bumpInProgress\n");
                     m_bumpInProgress = false;
                     PhdApp::ExecInMainThread([]() {
-                        pFrame->pStepGuiderGraph->ShowBump(PHD_Point());
+                        pFrame->pStepGuiderGraph->ShowBump(SodiumPoint());
                     });
                 }
             }
@@ -1155,7 +1155,7 @@ Mount::MOVE_RESULT StepGuider::MoveOffset(GuiderOffset *ofs, unsigned int moveOp
         // schedule another move
         if (m_bumpInProgress && !secondaryIsBusy)
         {
-            PHD_Point thisBump;
+            SodiumPoint thisBump;
 
             if (m_lastStep.decLimited || m_lastStep.raLimited)
             {
@@ -1180,12 +1180,12 @@ Mount::MOVE_RESULT StepGuider::MoveOffset(GuiderOffset *ofs, unsigned int moveOp
             else
             {
                 // compute incremental bump based on average position
-                PHD_Point vectorEndpoint(xRate() * -m_avgOffset.X, yRate() * -m_avgOffset.Y);
+                SodiumPoint vectorEndpoint(xRate() * -m_avgOffset.X, yRate() * -m_avgOffset.Y);
 
                 // transform AO Coordinates to Camera Coordinates since the
                 // secondary mount requires camera coordinates
 
-                PHD_Point bumpVec;
+                SodiumPoint bumpVec;
 
                 if (TransformMountCoordinatesToCameraCoordinates(vectorEndpoint, bumpVec))
                 {
@@ -1229,7 +1229,7 @@ Mount::MOVE_RESULT StepGuider::MoveOffset(GuiderOffset *ofs, unsigned int moveOp
 
             // display the current bump vector on the stepguider graph
             {
-                PHD_Point tcur;
+                SodiumPoint tcur;
                 TransformCameraCoordinatesToMountCoordinates(thisBump, tcur, false);
                 tcur.X /= xRate();
                 tcur.Y /= yRate();

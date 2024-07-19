@@ -78,7 +78,7 @@ commands it receives.<span style="">&nbsp; </span>The
 star movements we <i style="">can</i> correct for -
 drift, periodic error, atmospheric refraction, mechanical deflections, etc - are hiding in a sea of
 noise created by the seeing conditions.<span style="">
-One of the major objectives of the LightGuider guide algorithms is to identify
+One of the major objectives of the Sodium guide algorithms is to identify
 and react to the tracking errors that can be corrected while ignoring
 the spurious effects of seeing that can't be corrected. </span>&nbsp; Your choice of &nbsp;guide camera exposure times can make this job easier.<o:p></o:p></p>
 
@@ -92,7 +92,7 @@ of guide star motion decreases as the exposure time is increased:<o:p></o:p></p>
 
 <p class="MsoNormal">Essentially, the camera sensor is averaging the changing
 light pattern of the star and smoothing the result.<span style="">&nbsp; </span>Measurement uncertainty is still present
-because of under-sampling, but the longer exposures make it easier for LightGuider to
+because of under-sampling, but the longer exposures make it easier for Sodium to
 isolate and identify the lower frequency errors that really can be improved
 through guiding.<span style="">&nbsp; </span>Obviously, there is a
 practical upper limit to the exposure time.<span style="">&nbsp;
@@ -101,14 +101,14 @@ on its own without needing a correction.<span style="">&nbsp;
 </span>Small errors from periodic error, drift, flexure and other sources need
 to be corrected before they become large enough to ruin an image.<span style="">&nbsp; </span>Finding the right balance will always depend
 on both the seeing conditions and the quality of the equipment.<span style="">&nbsp; </span>As
-a starting point in LightGuider, we typically
+a starting point in Sodium, we typically
 recommend using exposure times of around 2 seconds and lower exposures
 of at least 0.5 sec only if the mount requires it and then only if
 guiding is active on multiple stars.</p><p class="MsoNormal"><o:p></o:p></p>
 
 <h3><span style="font-weight: bold;"><a name="Binning_usage"></a>Use
 of Binning</span></h3>
-Many of the guide cameras available in LightGuider support hardware-level
+Many of the guide cameras available in Sodium support hardware-level
 binning, which may be helpful in&nbsp;situations where you are guiding
 at
 long focal lengths or have a guide camera with very small pixels. These
@@ -178,9 +178,9 @@ essentially the same as switching to a different camera.<br>
 and hot pixels, imagers often move the telescope by very small amounts between
 exposures &#8211; this is called dithering. Dithering is always controlled by the imaging
 app because it is the only one that can suspend exposures with the main camera
-while the pointing position is being shifted.&nbsp; LightGuider&#8217;s only role in this is
+while the pointing position is being shifted.&nbsp; Sodium&#8217;s only role in this is
 to issue guide commands that will accomplish the requested shift in position &#8211;
-it is simply doing that it&#8217;s told. The small shift in pointing position is accomplished&nbsp; by LightGuider in two steps:<o:p></o:p></span></p>
+it is simply doing that it&#8217;s told. The small shift in pointing position is accomplished&nbsp; by Sodium in two steps:<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="line-height: normal;"><span style="">1.</span><span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Change</span><span style=""> the lock-point of the primary guide star by the
 amount requested by the imaging app.<o:p></o:p></span></p>
@@ -192,13 +192,13 @@ guide star to the new lock-point<o:p></o:p></span></p>
 <p class="MsoNormal" style="line-height: normal;"><span style="">The size of the dither is&nbsp;controlled by the imaging
 app, at least indirectly.<span style="">&nbsp; </span>The app may
 let you specify the maximum size of a dither, typically in units of
-pixels.<span style="">&nbsp; </span>In that case, LightGuider interprets this
+pixels.<span style="">&nbsp; </span>In that case, Sodium interprets this
 as the upper range of random values between zero and this limit.<span style="">&nbsp; </span>The randomizing process is done </span><span style="">to insure
 that dithering doesn't follow a simplistic back-and-forth pattern or shift the
 frame back to a location where it has previously been.<span style="">&nbsp; </span></span>For some&nbsp;applications that do
-LightGuider dithering, you can't specify the maximum amount directly - you are perhaps
+Sodium dithering, you can't specify the maximum amount directly - you are perhaps
 limited to choices like small/medium/large and the max dither amounts will have
-preset values.&nbsp; For that reason, LightGuider has a dither scaling parameter in
+preset values.&nbsp; For that reason, Sodium has a dither scaling parameter in
 the 'Global' tab of the Advanced Settings dialog.&nbsp; It is basically a
 multiplier term that lets you adjust the range of dither amounts that are
 possible.&nbsp; So a scale factor of 1 doesn't change the preset value at all,
@@ -212,7 +212,7 @@ the small/medium/large choices..<span style=""><o:p></o:p></span></p>
 up to the imaging app to determine
 when the guiding has settled down and it&#8217;s time to start the next
 exposure with the&nbsp; main camera.&nbsp; To make this easier for
-authors of the imaging apps, LightGuider provides
+authors of the imaging apps, Sodium provides
 some extra measurement information on how the settling process is
 proceeding.&nbsp; This information doesn&#8217;t need to be used by the
 imaging app,
@@ -241,9 +241,9 @@ before the measurement process is terminated and the dither is declared to be
 <p class="MsoNormal" style="line-height: normal;"><span style="">To state this in a sentence, the
 settling process is &#8220;done&#8221; when the guiding error is &lt;= <b>PT</b> for <b>ET</b>
 seconds or, if that condition is never satisfied, after <b>TO</b> seconds have
-expired.&nbsp; When this evaluation process is complete, LightGuider sends a message
+expired.&nbsp; When this evaluation process is complete, Sodium sends a message
 to the imaging app saying settling is done.&nbsp; This is all just extra credit
-for LightGuider, normal guiding is being done from the time the lock-point is moved.<o:p></o:p></span></p>
+for Sodium, normal guiding is being done from the time the lock-point is moved.<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="line-height: normal;"><span style="">Of course, the specification of these
 parameters, <b>PT</b>, <b>ET</b>, and <b>TO</b>,
@@ -268,7 +268,7 @@ of the Dec guide command is reversed.&nbsp; The <b>ET</b> and <b>PT</b> values
 should reflect the guiding performance you normally get with your setup with a
 little bit of slack to avoid wasting time.<o:p></o:p></span></p>
 
-<p class="MsoNormal" style="line-height: normal;"><span style="">LightGuider also supports different choices
+<p class="MsoNormal" style="line-height: normal;"><span style="">Sodium also supports different choices
 for how the star is moved in RA and Dec.<span style="">
 With the default settings, the mount will be shifted in RA and Dec by
 different&nbsp; random amounts as described earlier.&nbsp;
@@ -283,12 +283,12 @@ noise.<o:p></o:p></span></p>
 
 <p class="MsoNormal" style="line-height: normal;">If your mount has a substantial amount of declination
 backlash in the mount, you may be guiding in only the north or south Dec
-direction. &nbsp;If LightGuider receives a command to dither in declination while you're
+direction. &nbsp;If Sodium receives a command to dither in declination while you're
 operating in this mode, it will temporarily allow guiding in both Dec
 directions until the dither and settling are completed. &nbsp;It will then
 revert to the original north/south-only guiding mode. &nbsp;If you don't want
 this behavior, you should restrict dithering to 'RA-only'. &nbsp;All of the
-LightGuider dither controls are contained on the 'Global' tab of the Advanced Settings
+Sodium dither controls are contained on the 'Global' tab of the Advanced Settings
 dialog.</p><h3><a name="Common_mount_problems"></a>Common Mount Mechanical Problems<o:p></o:p></h3>
 
 <h3>Periodic Error in Right Ascension (PE)<o:p></o:p></h3>
@@ -353,7 +353,7 @@ error correction handles some tracking errors before they are seen in the guide
 camera image.<span style="">&nbsp; These corrections</span> are predictive, based
 on a model of the mount&#8217;s PE, as opposed to being reactive like normal
 auto-guiding.<span style="">&nbsp; </span>The net result is that
-LightGuider has less work to do to keep the RA axis on-target.<span style="">&nbsp; </span>Even when the implementation in the mount is done well,
+Sodium has less work to do to keep the RA axis on-target.<span style="">&nbsp; </span>Even when the implementation in the mount is done well,
 calculation of a high-quality PEC curve must be done carefully using an
 application specific to the purpose.<span style="">&nbsp;
 </span>During the measurement process, the app must filter out
@@ -365,7 +365,7 @@ period
 and the various harmonics in the mount drive system in order to apply
 corrections only for those tracking errors that are harmonic - i.e.
 errors with frequencies that are integer multiples of the worm
-frequency.<span style=""> &nbsp; If the PE correction curve is poorly constructed, the RA tracking can be worse than using no PEC at all.</span></p><p class="MsoNormal">If PEC isn't available for your mount or is badly implemented, you can use the PPEC guide algorithm in LightGuider. <span style="font-size: 11pt; line-height: 107%; font-family: &quot;Calibri&quot;,sans-serif;"></span><a href="Guide_algorithms.htm#Predictive_PEC">LightGuider Predictive PEC</a><span style=""> </span><o:p></o:p></p>
+frequency.<span style=""> &nbsp; If the PE correction curve is poorly constructed, the RA tracking can be worse than using no PEC at all.</span></p><p class="MsoNormal">If PEC isn't available for your mount or is badly implemented, you can use the PPEC guide algorithm in Sodium. <span style="font-size: 11pt; line-height: 107%; font-family: &quot;Calibri&quot;,sans-serif;"></span><a href="Guide_algorithms.htm#Predictive_PEC">Sodium Predictive PEC</a><span style=""> </span><o:p></o:p></p>
 
 <h3><o:p></o:p><a name="Dec_backlash"></a>Declination Backlash and Stiction</h3><p class="MsoNormal">Backlash
 can occur when the direction of motion on an axis is reversed. The
@@ -408,7 +408,7 @@ graph produced by the GA can often provide clues. &nbsp;This behavior
 can also be seen during normal guiding sessions that don't employ the
 large guide pulses used by the GA. If the reversal delay is large, say
 above 3 seconds, it's probably best to try adjusting the Dec drive
-system. &nbsp;If the delay is less than that, the LightGuider Dec Backlash
+system. &nbsp;If the delay is less than that, the Sodium Dec Backlash
 Compensation feature will probably be able to handle Dec reversals
 fairly well. &nbsp;Note that the amount of delay is inversely
 proportional to the guide speed in the mount - as the guide speed is
@@ -422,7 +422,7 @@ spends most of its time during imaging. &nbsp;For northern observers,
 that is probably in the Dec range of 0 to 40 degrees. &nbsp;With older
 mounts especially, the reversal delay can be quite different in those
 pointing positions than, for example, regions closer to the pole.
-&nbsp;This is another reason why the LightGuider Backlash Compensation feature
+&nbsp;This is another reason why the Sodium Backlash Compensation feature
 is a better choice than any fixed-size compensation that is programmed
 in the mount controller.</p>
 <h3><a name="Declination-Uni-directional_guiding"></a><span style="font-weight: bold;">Uni-directional
@@ -431,7 +431,7 @@ As
 discussed above, some mounts may have too much reveral delay in Dec to
 support guiding in both&nbsp;north and south directions.
 &nbsp;This
-situation can be mitigated by configuring LightGuider to guide in only
+situation can be mitigated by configuring Sodium to guide in only
 one&nbsp;direction, what we call uni-directional Dec guiding.
 &nbsp;This is
 a viable option because declination guiding is only intended to
@@ -502,7 +502,7 @@ declination reversal and you should be prepared to change the Dec guide
 mode accordingly.</li>
 <li>If you are dithering, you may want to set the dithering
 parameters to "RA-only" to avoid disrupting the Dec guiding. &nbsp;</li>
-</ol>If dithering is being done through the LightGuider server interface,
+</ol>If dithering is being done through the Sodium server interface,
 uni-directional Dec guiding will be temporarily switched to 'Auto' in
 order to execute dithers. &nbsp;This may result in extended settling
 times but it allows the kind of dithering that is required for cameras
@@ -533,7 +533,7 @@ min-move settings.<o:p></o:p></p>
 
 
 
-<p class="xxxmsonormal">In previous LightGuider releases, users have been able to approximate
+<p class="xxxmsonormal">In previous Sodium releases, users have been able to approximate
 this approach by using exposures in the 4-8 second range, coupled with a
 non-zero &#8220;time lapse&#8221; delay.&nbsp; The latter simply imposes a fixed delay
 between the completion of the last guide command and the start of the next
@@ -578,7 +578,7 @@ microns thick, roughly 10x larger than most guiding corrections.<o:p></o:p></p>
 
 <p class="MsoNormal">When a separate guide scope is being used in addition to the
 imaging scope, each unit will flex and shift independently &#8211; this is called
-differential flexure.<span style="">&nbsp; </span>If LightGuider is using
+differential flexure.<span style="">&nbsp; </span>If Sodium is using
 the separate guide scope, it will only see and correct for the movements of the
 guide scope/camera, the differential movements of the imaging scope/camera are
 invisible. <span style="">&nbsp;</span>This can lead to a fairly
@@ -594,7 +594,7 @@ are simply too many mechanical interface points that can move around &#8211; mov
 SCT mirrors, all the connectors between the cameras and their focusers, the
 focusers themselves, all the thumb-screw fasteners in the system, the mounting
 ring arrangement for the guide scope, etc. <span style="">&nbsp;&nbsp;</span>The typical solution is to eliminate the
-dual-scope setup and use an off-axis-guider (OAG) on the imaging scope.<span style="">&nbsp; </span>This allows LightGuider to &#8220;see&#8221; all the movements,
+dual-scope setup and use an off-axis-guider (OAG) on the imaging scope.<span style="">&nbsp; </span>This allows Sodium to &#8220;see&#8221; all the movements,
 mechanical or otherwise, that will affect the main-camera images. <span style="">&nbsp;</span>In the early days, OAGs were often difficult
 to use because their fields of view were small and usable guide stars were hard
 to find.<span style="">&nbsp; </span>With the current generation of
@@ -654,22 +654,22 @@ manual. &nbsp;<a href="Advanced_settings.htm#Other_Devices_Tab">AO Parameters</a
 
 <h3><a name="Logging_and_Debug_Output"></a>Logging
 and Debug Output</h3>
-<span style="font-style: italic;">LightGuider</span>
+<span style="font-style: italic;">Sodium</span>
 automatically creates two types of log files: a debug log and a
 guiding log. &nbsp;Both are very useful for different reasons.
 &nbsp;The guide log is intentionally formatted to
 allow easy interpretation by either a human reader or an external
 application.<span style="">&nbsp; </span>For
 example, the&nbsp;LGuiderLogView application (not
-part of the LightGuider release) can produce a variety of graphs and summary
-statistics based on data in the LightGuider guide log.<span style="">&nbsp;&nbsp;
+part of the Sodium release) can produce a variety of graphs and summary
+statistics based on data in the Sodium guide log.<span style="">&nbsp;&nbsp;
 </span>But the log can also be easily imported into
 Excel or other applications for analysis and graphing.<span style="">&nbsp;
 </span>When importing into Excel, just specify&nbsp;a
 comma&nbsp;as a
 column separator. &nbsp;The
 debug log
-has a&nbsp; complete record of everything that was done in the <span style="font-style: italic;">LightGuider</span>
+has a&nbsp; complete record of everything that was done in the <span style="font-style: italic;">Sodium</span>
 session, &nbsp;so it is very helpful in isolating any problems
 you&nbsp; have. &nbsp;It also employs a human-friendly (albeit
 verbose)
@@ -680,9 +680,9 @@ you
 need to report a problem with the software, you will almost certainly
 be asked to provide both log files. &nbsp;If you have neither
 log
-file available, you are unlikely to get any&nbsp;help. &nbsp;Note that log files are always created when LightGuider is run,
+file available, you are unlikely to get any&nbsp;help. &nbsp;Note that log files are always created when Sodium is run,
 regardless of&nbsp;what was done (or not done) during the time that
-LightGuider was running so you <span style="font-weight: bold;">will</span> have log files to support a request for help.<br>
+Sodium was running so you <span style="font-weight: bold;">will</span> have log files to support a request for help.<br>
 <br>
 The location for the files is controlled by the 'Log
 File
@@ -690,20 +690,20 @@ Location' field in the 'Global' tab of the 'Advanced Settings' dialog.
 &nbsp;By default, log
 files
 are stored in the OS-specific default directory for user documents.
-&nbsp;In Windows, for example, the files will be stored in a '<span style="font-style: italic;">LightGuider</span>'
+&nbsp;In Windows, for example, the files will be stored in a '<span style="font-style: italic;">Sodium</span>'
 sub-folder in the "Documents" directory. &nbsp;This may not be a
 convenient location, so you can specify a different folder using this
 edit field. &nbsp;In order to prevent excessive accumulation of log
-files, LightGuider automatically removes debug logs that are more than 30 days
+files, Sodium automatically removes debug logs that are more than 30 days
 old and guide logs that are more than 60 days old. &nbsp;If you
 want to
 retain the files for longer periods, you should move or copy them to a
-different folder location, one not used by LightGuider.<br>
+different folder location, one not used by Sodium.<br>
 <br>
 To
 simplify the automatic log upload process (see below), log data is
 grouped by "imaging day", defined to be a 24-hour period beginning at
-09:00 am local time.&nbsp; This means that all the LightGuider executions
+09:00 am local time.&nbsp; This means that all the Sodium executions
 on
 the same imaging day will write guiding and debug log data into the two
 log files for that imaging day. &nbsp; <br>
@@ -721,7 +721,7 @@ Image... menu item.<br>
 <span style="font-weight: bold;"><a name="Logging-Automatic_Upload"></a>Automatic Log File
 Upload<br>
 <br>
-</span>If you need help using LightGuider or improving your guiding
+</span>If you need help using Sodium or improving your guiding
 results, you can post a request on the Open<span style="font-weight: bold;">-</span>LGuider-Guiding
 forum (https://groups.google.com/forum/#!forum/open-phd-guiding).
 &nbsp;Your question should be accompanied by the LGuider log files
@@ -730,7 +730,7 @@ The debug log files are usually very large so you can't post them as
 attachments - you should use the Upload tool described
 below.&nbsp;Please
 do not edit, trim, or rename the log files. To make uploading easier,
-LightGuider has a built-in function to select, compress, and
+Sodium has a built-in function to select, compress, and
 automatically upload the relevant log files. That function is
 located on the 'Help' menu. &nbsp;You'll see a dialog box that
 shows
@@ -741,7 +741,7 @@ all the available log files, including their timestamps and duration:<br>
 Just
 select the files you want and start the upload process by clicking on
 'Next'. &nbsp;Please be careful to look at the 'Night Of' column&nbsp;to be sure the log covers the time period you're
-interested in. &nbsp;LightGuider creates guide and debug log files every
+interested in. &nbsp;Sodium creates guide and debug log files every
 time
 it's run, so some of the log files will be nearly empty - don't upload
 those. &nbsp; Be
@@ -772,7 +772,7 @@ the menu items there, you can create a new profile
 or&nbsp;edit/rename/delete an existing one. &nbsp;The most important
 option and the one you are most likely to use is to launch the
 New-Profile-Wizard, described in the Basic Use section of the manual.
-This is the function that will configure the LightGuider settings that are
+This is the function that will configure the Sodium settings that are
 specific to your equipment configuration.&nbsp; Each profile
 holds
 all the settings that were active at the time the profile was last
@@ -784,7 +784,7 @@ pull-down. &nbsp;This will take you to the Advanced Settings
 dialog, where you can make whatever changes you want.
 &nbsp;Remember
 that profiles are automatically updated anytime settings are changed
-during a <span style="font-style: italic;">LightGuider</span>
+during a <span style="font-style: italic;">Sodium</span>
 session. Finally, you can import and export
 profiles for purposes of debugging, backup, or&nbsp;exchange
 between computers.<br>
@@ -805,7 +805,7 @@ to begin:: <br>
 <br>
 If
 you enter your scope's current declination and side-of-pier values,
-&nbsp;LightGuider will automatically adjust the calibration to
+&nbsp;Sodium will automatically adjust the calibration to
 match&nbsp;that
 pointing position. &nbsp;You don't need to be&nbsp;precise, a
 Declination value that's within a few degrees will work. &nbsp;This
@@ -853,7 +853,7 @@ results.<br>
 Settings for the Simulators</h3>
 The device simulators were introduced in the <a href="Basic_use.htm">Basic
 Use</a>
-section as useful tools&nbsp;for experimenting with <span style="font-style: italic;">LightGuider</span>
+section as useful tools&nbsp;for experimenting with <span style="font-style: italic;">Sodium</span>
 and becoming
 familiar with its features. &nbsp;Remember that you must choose
 'Simulator' as the camera type and 'On-camera' as the mount type in
@@ -881,20 +881,20 @@ changes to tool tips or documentation.<br>
 <h3><a name="Multiple_Executions"></a>Multiple
 Program Executions</h3>
 In
-some situations, you may want to run multiple instances of LightGuider at the
-same time. &nbsp;To start the second instance of LightGuider, you need to
+some situations, you may want to run multiple instances of Sodium at the
+same time. &nbsp;To start the second instance of Sodium, you need to
 supply a command-line parameter of -i 2; the third instance would be
 started with -i 3, etc. &nbsp;You can accomplish this in Windows by
-running LightGuider from a command line using the Windows cmd.exe utility.
+running Sodium from a command line using the Windows cmd.exe utility.
 &nbsp;Or you can create a Windows desktop shortcut by doing the
 following: <br>
 <br>
 <div style="margin-left: 40px;">Right-click on your desktop<br>
 Select: New/Shortcut<br>
 Enter the following string to identify the location of the program:
-"C:\Program File (x86)\LGuiderBuiding2\LightGuider.exe" -i2<br>
+"C:\Program File (x86)\LGuiderBuiding2\Sodium.exe" -i2<br>
 Click Next<br>
-Enter a name for the shortcut, e.g.&nbsp;LightGuider #2<br>
+Enter a name for the shortcut, e.g.&nbsp;Sodium #2<br>
 Click Finish<br>
 </div>
 <br>
@@ -904,22 +904,22 @@ because there are blanks embedded in the directory name.<br>
 Shortcuts</h3>
 Keyboard
 shortcuts are available for many of the more commonly used tools and
-functions in LightGuider. &nbsp;These are enumerated in the <a href="KeyboardShortcuts.htm">Keyboard Shortcuts</a>
+functions in Sodium. &nbsp;These are enumerated in the <a href="KeyboardShortcuts.htm">Keyboard Shortcuts</a>
 section.
 <h3><a name="Software_Update"></a>Software
 Update</h3>
 <p>
-One of the most common responses to a request for support in the LightGuider
+One of the most common responses to a request for support in the Sodium
 Forum is: please upgrade to the latest version and see if the problem
-still exists. If you are seeing an issue in an older version of LightGuider
+still exists. If you are seeing an issue in an older version of Sodium
 it is quite likely that you are not the first person to encounter it,
 and&nbsp;it has already been discovered and fixed in a newer version of
-LightGuider. For this reason, the developers of LightGuider feel that it is
+Sodium. For this reason, the developers of Sodium feel that it is
 important to be running the most up-to-date version of the program.
 </p>
 <p>Updating a program that you rely on for unattended imaging can
 sometimes be perceived as a risky
-proposition. The developers of LightGuider recognize this sentiment--we are
+proposition. The developers of Sodium recognize this sentiment--we are
 imagers too! There is a necessary trade-off between maintaining a
 stable software installation and staying current with the latest
 bug fixes and other improvements. &nbsp;In some cases, camera vendors
@@ -929,8 +929,8 @@ problem for us because we are forced to update the camera SDK in order
 to support the new camera. &nbsp;But this also means that current users
 may encounter problems with a camera and drivers that have been working
 well, something that can only be corrected by upgrading to the latest
-camera drivers and the latest version of LightGuider.</p>
-<p>LightGuider achieves a balance between these two opposing needs by
+camera drivers and the latest version of Sodium.</p>
+<p>Sodium achieves a balance between these two opposing needs by
 publishing two series of software releases. The development releases
 contain the latest ongoing bug fixes and feature improvements and are
 tested by the developers--usually during actual imaging time--before
@@ -943,20 +943,20 @@ test
 time, it will be published as a major release. For example, 2.6.3dev6
 could be published as major release 2.6.4.</p>
 <h4>Checking for updates</h4>
-<p>LightGuider has an option to automatically check for software
+<p>Sodium has an option to automatically check for software
 updates. We
 recommend enabling this option to help keep your version of
-LightGuider up to date. When the automatic check option is enabled, LightGuider
-will&nbsp;check for updates in the background when LightGuider starts. If new
-updates are available, LightGuider will give you the option to install the
+Sodium up to date. When the automatic check option is enabled, Sodium
+will&nbsp;check for updates in the background when Sodium starts. If new
+updates are available, Sodium will give you the option to install the
 new version. Enabling the automatic check for updates will not
-interfere with the ordinary operation of LightGuider, including automated
+interfere with the ordinary operation of Sodium, including automated
 operation. It is also safe to leave the option enabled if you are
-imaging in the field without internet connectivity. If LightGuider cannot
+imaging in the field without internet connectivity. If Sodium cannot
 check for updates, it will wait until the next time it is started
 before
 trying to check again.</p>
-<p>Regardless of whether you allow LightGuider to automatically check
+<p>Regardless of whether you allow Sodium to automatically check
 for
 updates at startup, you can always manually check for updates by
 clicking "Check for updates" from the Help menu.</p>

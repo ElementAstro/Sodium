@@ -32,18 +32,18 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
-#include "about_dialog.h"
-#include "aui_controls.h"
-#include "camcal_import_dialog.h"
-#include "darks_dialog.h"
-#include "image_math.h"
-#include "log_uploader.h"
-#include "pierflip_tool.h"
-#include "Refine_DefMap.h"
-#include "starcross_test.h"
-#include "calibration_assistant.h"
+#include "about_dialog.hpp"
+#include "aui_controls.hpp"
+#include "camcal_import_dialog.hpp"
+#include "darks_dialog.hpp"
+#include "image_math.hpp"
+#include "log_uploader.hpp"
+#include "pierflip_tool.hpp"
+#include "Refine_DefMap.hpp"
+#include "starcross_test.hpp"
+#include "calibration_assistant.hpp"
 
 #include <algorithm>
 #include <memory>

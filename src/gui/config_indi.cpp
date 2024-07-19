@@ -36,13 +36,13 @@
  *
  */
 
-#include "phd.h"
-#include "camera.h"
-#include "scope.h"
+#include "sodium.hpp"
+#include "camera.hpp"
+#include "scope.hpp"
 
 #if defined (INDI_CAMERA) || defined (GUIDE_INDI)
 
-#include "config_indi.h"
+#include "config_indi.hpp"
 
 #include <wx/sizer.h>
 #include <wx/gbsizer.h>

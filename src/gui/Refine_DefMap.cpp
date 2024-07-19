@@ -32,9 +32,9 @@
  *
  */
 
-#include "phd.h"
-#include "Refine_DefMap.h"
-#include "darks_dialog.h"
+#include "sodium.hpp"
+#include "Refine_DefMap.hpp"
+#include "darks_dialog.hpp"
 
 enum {
     ID_PREVIEW = 10001,
@@ -428,7 +428,7 @@ void RefineDefMap::OnColdChange(wxScrollEvent& evt)
 // Manually add a bad pixel to the currently loaded (in-memory) defect map - does NOT affect any future map generations
 void RefineDefMap::OnAddDefect(wxCommandEvent& evt)
 {
-    PHD_Point pixelLoc = pFrame->pGuider->CurrentPosition();
+    SodiumPoint pixelLoc = pFrame->pGuider->CurrentPosition();
 
     if (pFrame->pGuider->IsLocked())
     {

@@ -33,9 +33,9 @@
 *
 */
 
-#include "phd.h"
-#include "calreview_dialog.h"
-#include "scope.h"
+#include "sodium.hpp"
+#include "calreview_dialog.hpp"
+#include "scope.hpp"
 
 // Event handling for base class - derived classes handle their own bindings
 // clang-format off

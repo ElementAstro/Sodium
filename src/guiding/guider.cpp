@@ -31,12 +31,12 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#include "phd.h"
-#include "nudge_lock.h"
-#include "comet_tool.h"
-#include "polardrift_tool.h"
-#include "staticpa_tool.h"
-#include "guiding_assistant.h"
+#include "sodium.hpp"
+#include "nudge_lock.hpp"
+#include "comet_tool.hpp"
+#include "polardrift_tool.hpp"
+#include "staticpa_tool.hpp"
+#include "guiding_assistant.hpp"
 
 // un-comment to log star deflections to a file
 //#define CAPTURE_DEFLECTIONS
@@ -45,12 +45,12 @@ struct DeflectionLogger
 {
 #ifdef CAPTURE_DEFLECTIONS
     wxFFile *m_file;
-    PHD_Point m_lastPos;
+    SodiumPoint m_lastPos;
 #endif
 
     void Init();
     void Uninit();
-    void Log(const PHD_Point& pos);
+    void Log(const SodiumPoint& pos);
 };
 static DeflectionLogger s_deflectionLogger;
 
@@ -71,11 +71,11 @@ void DeflectionLogger::Uninit()
     m_file = 0;
 }
 
-void DeflectionLogger::Log(const PHD_Point& pos)
+void DeflectionLogger::Log(const SodiumPoint& pos)
 {
     if (m_lastPos.IsValid())
     {
-        PHD_Point mountpt;
+        SodiumPoint mountpt;
         pMount->TransformCameraCoordinatesToMountCoordinates(pos - m_lastPos, mountpt);
         m_file->Write(wxString::Format("%0.2f,%0.2f\n", mountpt.X, mountpt.Y));
     }
@@ -93,7 +93,7 @@ void DeflectionLogger::Log(const PHD_Point& pos)
 
 inline void DeflectionLogger::Init() { }
 inline void DeflectionLogger::Uninit() { }
-inline void DeflectionLogger::Log(const PHD_Point&) { }
+inline void DeflectionLogger::Log(const SodiumPoint&) { }
 
 #endif // CAPTURE_DEFLECTIONS
 
@@ -396,7 +396,7 @@ void Guider::EnableFastRecenter(bool enable)
     pConfig->Profile.SetInt("/guider/FastRecenter", m_fastRecenterEnabled);
 }
 
-void Guider::SetPolarAlignCircle(const PHD_Point& pt, double radius)
+void Guider::SetPolarAlignCircle(const SodiumPoint& pt, double radius)
 {
     m_polarAlignCircleRadius = radius;
     m_polarAlignCircleCenter = pt;
@@ -760,7 +760,7 @@ void Guider::InvalidateLockPosition()
     NudgeLockTool::UpdateNudgeLockControls();
 }
 
-bool Guider::SetLockPosition(const PHD_Point& position)
+bool Guider::SetLockPosition(const SodiumPoint& position)
 {
     bool bError = false;
 
@@ -808,7 +808,7 @@ bool Guider::SetLockPosition(const PHD_Point& position)
     return bError;
 }
 
-bool Guider::SetLockPosToStarAtPosition(const PHD_Point& starPosHint)
+bool Guider::SetLockPosToStarAtPosition(const SodiumPoint& starPosHint)
 {
     bool error = SetCurrentPosition(m_pCurrentImage, starPosHint);
 
@@ -821,12 +821,12 @@ bool Guider::SetLockPosToStarAtPosition(const PHD_Point& starPosHint)
 }
 
 // distance to nearest edge
-static double edgeDist(const PHD_Point& pt, const wxSize& size)
+static double edgeDist(const SodiumPoint& pt, const wxSize& size)
 {
     return wxMin(pt.X, wxMin(size.GetWidth() - pt.X, wxMin(pt.Y, size.GetHeight() - pt.Y)));
 }
 
-bool Guider::MoveLockPosition(const PHD_Point& mountDeltaArg)
+bool Guider::MoveLockPosition(const SodiumPoint& mountDeltaArg)
 {
     bool err = false;
 
@@ -853,7 +853,7 @@ bool Guider::MoveLockPosition(const PHD_Point& mountDeltaArg)
         // of the projections results in a valid lock position, use it. Otherwise, choose the
         // direction that moves farthest from the edge of the frame.
 
-        PHD_Point cameraDelta, mountDelta;
+        SodiumPoint cameraDelta, mountDelta;
         double dbest;
 
         for (int q = 0; q < 4; q++)
@@ -861,15 +861,15 @@ bool Guider::MoveLockPosition(const PHD_Point& mountDeltaArg)
             int sx = 1 - ((q & 1) << 1);
             int sy = 1 - (q & 2);
 
-            PHD_Point tmpMount(mountDeltaArg.X * sx, mountDeltaArg.Y * sy);
-            PHD_Point tmpCamera;
+            SodiumPoint tmpMount(mountDeltaArg.X * sx, mountDeltaArg.Y * sy);
+            SodiumPoint tmpCamera;
 
             if (pMount->TransformMountCoordinatesToCameraCoordinates(tmpMount, tmpCamera))
             {
                 throw ERROR_INFO("Transform failed");
             }
 
-            PHD_Point tmpLockPosition = m_lockPosition + tmpCamera;
+            SodiumPoint tmpLockPosition = m_lockPosition + tmpCamera;
 
             if (IsValidLockPosition(tmpLockPosition))
             {
@@ -889,7 +889,7 @@ bool Guider::MoveLockPosition(const PHD_Point& mountDeltaArg)
             }
         }
 
-        PHD_Point newLockPosition = m_lockPosition + cameraDelta;
+        SodiumPoint newLockPosition = m_lockPosition + cameraDelta;
         if (SetLockPosition(newLockPosition))
         {
             throw ERROR_INFO("SetLockPosition failed");
@@ -1478,7 +1478,7 @@ void Guider::UpdateGuideState(usImage *pImage, bool bStopping)
                     // fast recenter after dither taking large steps and bypassing
                     // guide algorithms
 
-                    PHD_Point step(wxMin(m_ditherRecenterRemaining.X, m_ditherRecenterStep.X),
+                    SodiumPoint step(wxMin(m_ditherRecenterRemaining.X, m_ditherRecenterStep.X),
                                    wxMin(m_ditherRecenterRemaining.Y, m_ditherRecenterStep.Y));
 
                     Debug.Write(wxString::Format("dither recenter: remaining=(%.1f,%.1f) step=(%.1f,%.1f)\n",
@@ -1552,7 +1552,7 @@ bool Guider::ShiftLockPosition()
     return !isValid;
 }
 
-void Guider::SetLockPosShiftRate(const PHD_Point& rate, GRAPH_UNITS units, bool isMountCoords, bool updateToolWin)
+void Guider::SetLockPosShiftRate(const SodiumPoint& rate, GRAPH_UNITS units, bool isMountCoords, bool updateToolWin)
 {
     Debug.Write(wxString::Format("SetLockPosShiftRate: rate = %.2f,%.2f units = %d isMountCoords = %d\n",
         rate.X, rate.Y, units, isMountCoords));
@@ -1601,12 +1601,12 @@ void Guider::UpdateLockPosShiftCameraCoords()
         return;
     }
 
-    PHD_Point rate(0., 0.);
+    SodiumPoint rate(0., 0.);
 
     // convert shift rate to camera coordinates
     if (m_lockPosShift.shiftIsMountCoords)
     {
-        PHD_Point radec_rates = m_lockPosShift.shiftRate;
+        SodiumPoint radec_rates = m_lockPosShift.shiftRate;
 
         Debug.Write(wxString::Format("UpdateLockPosShiftCameraCoords: shift rate mount coords = %.2f,%.2f\n",
             radec_rates.X, radec_rates.Y));
@@ -1903,7 +1903,7 @@ void Guider::ToggleBookmark(const wxRealPoint& pos)
     SaveBookmarks(m_bookmarks);
 }
 
-static bool BookmarkPos(const PHD_Point& pos, std::vector<wxRealPoint>& vec)
+static bool BookmarkPos(const SodiumPoint& pos, std::vector<wxRealPoint>& vec)
 {
     if (pos.IsValid())
     {

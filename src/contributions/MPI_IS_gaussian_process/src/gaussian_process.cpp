@@ -44,9 +44,9 @@
 
 #include <cstdint>
 
-#include "covariance_functions.h"
-#include "gaussian_process.h"
-#include "math_tools.h"
+#include "covariance_functions.hpp"
+#include "gaussian_process.hpp"
+#include "math_tools.hpp"
 
 
 // A functor for special orderings

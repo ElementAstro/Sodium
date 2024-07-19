@@ -33,21 +33,21 @@
 *
 */
 
-#include "phd.h"
-#include "aui_controls.h"
+#include "sodium.hpp"
+#include "aui_controls.hpp"
 
 #include <algorithm>
 #include <unordered_set>
 
 //#define ICON_DEV
 #ifndef ICON_DEV
-#include "icons/sb_led_green.png.h"
-#include "icons/sb_led_yellow.png.h"
-#include "icons/sb_led_red.png.h"
-#include "icons/sb_arrow_left_16.png.h"
-#include "icons/sb_arrow_right_16.png.h"
-#include "icons/sb_arrow_up_16.png.h"
-#include "icons/sb_arrow_down_16.png.h"
+#include "icons/sb_led_green.png.hpp"
+#include "icons/sb_led_yellow.png.hpp"
+#include "icons/sb_led_red.png.hpp"
+#include "icons/sb_arrow_left_16.png.hpp"
+#include "icons/sb_arrow_right_16.png.hpp"
+#include "icons/sb_arrow_up_16.png.hpp"
+#include "icons/sb_arrow_down_16.png.hpp"
 #endif
 
 // clang-format off

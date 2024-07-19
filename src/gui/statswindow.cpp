@@ -32,8 +32,8 @@
 *
 */
 
-#include "phd.h"
-#include "statswindow.h"
+#include "sodium.hpp"
+#include "statswindow.hpp"
 
 enum {
     TIMER_ID_COOLER = 101,

@@ -33,8 +33,8 @@
  *
  */
 
-#include "phd.h"
-#include "manualcal_dialog.h"
+#include "sodium.hpp"
+#include "manualcal_dialog.hpp"
 
 ManualCalDialog::ManualCalDialog(const Calibration& cal)
     : wxDialog(pFrame, wxID_ANY, _("Manual Calibration"), wxDefaultPosition, wxDefaultSize, wxCAPTION | wxCLOSE_BOX)

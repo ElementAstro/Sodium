@@ -32,10 +32,10 @@
  *
  */
 
-#include "lightguider.h"
+#include "sodium.hpp"
 
-#include "ao/gear_simulator.h"
-#include "socket_server.h"
+#include "ao/gear_simulator.hpp"
+#include "socket_server.hpp"
 
 
 #include <spdlog/spdlog.h>
@@ -322,7 +322,7 @@ void MyFrame::HandleSockServerInput(wxSocketBase *sock) {
                 sock->Discard();  // Clean out anything else
 
                 if (!pFrame->pGuider->SetLockPosToStarAtPosition(
-                        LGuider_Point(x, y))) {
+                        SodiumPoint(x, y))) {
                     Debug.Write(wxString::Format(
                         "processing socket request SETLOCKPOSITION for (%d, "
                         "%d) succeeded\n",

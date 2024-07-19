@@ -17,7 +17,7 @@
         <property name="image_path_wrapper_function_name"></property>
         <property name="indent_with_spaces"></property>
         <property name="internationalize">1</property>
-        <property name="name">LightGuider</property>
+        <property name="name">Sodium</property>
         <property name="namespace"></property>
         <property name="path">C:\Users\Qrm\Desktop</property>
         <property name="precompiled_header"></property>

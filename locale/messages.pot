@@ -1,6 +1,6 @@
 #
 #  messages.pot
-#  LightGuider
+#  Sodium
 #
 #  Created by Max Qian
 #  Copyright (c) 2023 Max Qian
@@ -954,9 +954,9 @@ msgid "Measurement halted"
 msgstr ""
 
 #: src/algorithm/guide_algorithm.cpp:50
-#: src/gui/LightGuiderDeviceDialogBase.cpp:431
-#: src/gui/LightGuiderDeviceDialogBase.cpp:523
-#: src/gui/LightGuiderDeviceDialogBase.cpp:679 src/gui/comet_tool.cpp:325
+#: src/gui/SodiumDeviceDialogBase.cpp:431
+#: src/gui/SodiumDeviceDialogBase.cpp:523
+#: src/gui/SodiumDeviceDialogBase.cpp:679 src/gui/comet_tool.cpp:325
 #: src/gui/graph.cpp:158 src/gui/graph.cpp:185 src/gui/graph.cpp:327
 #: src/gui/solver_dialog_base.cpp:59 src/gui/statswindow.cpp:73
 #: src/gui/target.cpp:339 src/telescope/scope.cpp:672
@@ -964,9 +964,9 @@ msgid "RA"
 msgstr ""
 
 #: src/algorithm/guide_algorithm.cpp:50
-#: src/gui/LightGuiderDeviceDialogBase.cpp:439
-#: src/gui/LightGuiderDeviceDialogBase.cpp:578
-#: src/gui/LightGuiderDeviceDialogBase.cpp:686
+#: src/gui/SodiumDeviceDialogBase.cpp:439
+#: src/gui/SodiumDeviceDialogBase.cpp:578
+#: src/gui/SodiumDeviceDialogBase.cpp:686
 #: src/gui/solver_dialog_base.cpp:74 src/gui/solver_dialog_base.cpp:243
 msgid "DEC"
 msgstr ""
@@ -1424,7 +1424,7 @@ msgid "Star Mass Detection"
 msgstr ""
 
 #: src/algorithm/guider_multistar.cpp:1370
-#: src/gui/LightGuiderDeviceDialogBase.cpp:169 src/gui/comet_tool.cpp:90
+#: src/gui/SodiumDeviceDialogBase.cpp:169 src/gui/comet_tool.cpp:90
 #: src/gui/comet_tool.cpp:201 src/gui/server_dialog_base.cpp:126
 #: src/gui/server_dialog_base.cpp:133 src/telescope/scope.cpp:1964
 msgid "Enable"
@@ -1562,8 +1562,8 @@ msgstr ""
 msgid "Camera Simulator"
 msgstr ""
 
-#: src/ao/gear_simulator.cpp:1749 src/gui/LightGuiderDeviceDialogBase.cpp:50
-#: src/gui/LightGuiderDeviceDialogBase.cpp:300 src/gui/advanced_dialog.cpp:100
+#: src/ao/gear_simulator.cpp:1749 src/gui/SodiumDeviceDialogBase.cpp:50
+#: src/gui/SodiumDeviceDialogBase.cpp:300 src/gui/advanced_dialog.cpp:100
 #: src/gui/advanced_dialog.cpp:177 src/gui/aui_controls.cpp:675
 #: src/gui/config_indi.cpp:113 src/gui/gear_dialog.cpp:253
 #: src/gui/gear_dialog.cpp:255
@@ -1972,329 +1972,329 @@ msgid ""
 "contains the firmware."
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:54
-#: src/gui/LightGuiderDeviceDialogBase.cpp:322
-#: src/gui/LightGuiderDeviceDialogBase.cpp:352
-#: src/gui/LightGuiderDeviceDialogBase.cpp:973
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1003 src/gui/profile_wizard.cpp:406
+#: src/gui/SodiumDeviceDialogBase.cpp:54
+#: src/gui/SodiumDeviceDialogBase.cpp:322
+#: src/gui/SodiumDeviceDialogBase.cpp:352
+#: src/gui/SodiumDeviceDialogBase.cpp:973
+#: src/gui/SodiumDeviceDialogBase.cpp:1003 src/gui/profile_wizard.cpp:406
 #: src/gui/profile_wizard.cpp:700
 msgid "Simulator"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:61
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1245 src/gui/graph.cpp:126
+#: src/gui/SodiumDeviceDialogBase.cpp:61
+#: src/gui/SodiumDeviceDialogBase.cpp:1245 src/gui/graph.cpp:126
 msgid "Settings"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:66
+#: src/gui/SodiumDeviceDialogBase.cpp:66
 msgid "Connect / Disconnect"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:71
+#: src/gui/SodiumDeviceDialogBase.cpp:71
 msgid "Scan all of the devices available"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:86
-#: src/gui/LightGuiderDeviceDialogBase.cpp:348
-#: src/gui/LightGuiderDeviceDialogBase.cpp:999 src/gui/gear_dialog.cpp:2090
+#: src/gui/SodiumDeviceDialogBase.cpp:86
+#: src/gui/SodiumDeviceDialogBase.cpp:348
+#: src/gui/SodiumDeviceDialogBase.cpp:999 src/gui/gear_dialog.cpp:2090
 msgid "Name"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:102
-#: src/gui/LightGuiderDeviceDialogBase.cpp:364
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1015
+#: src/gui/SodiumDeviceDialogBase.cpp:102
+#: src/gui/SodiumDeviceDialogBase.cpp:364
+#: src/gui/SodiumDeviceDialogBase.cpp:1015
 msgid "Description"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:121
+#: src/gui/SodiumDeviceDialogBase.cpp:121
 msgid "Gain"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:138
+#: src/gui/SodiumDeviceDialogBase.cpp:138
 msgid "Offset"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:155
+#: src/gui/SodiumDeviceDialogBase.cpp:155
 msgid "Bin"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:159
+#: src/gui/SodiumDeviceDialogBase.cpp:159
 msgid "1x1"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:159
+#: src/gui/SodiumDeviceDialogBase.cpp:159
 msgid "2x2"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:159
+#: src/gui/SodiumDeviceDialogBase.cpp:159
 msgid "4x4"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:165
+#: src/gui/SodiumDeviceDialogBase.cpp:165
 msgid "Cooling"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:172
+#: src/gui/SodiumDeviceDialogBase.cpp:172
 msgid "Temperature"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:181
+#: src/gui/SodiumDeviceDialogBase.cpp:181
 msgid "Power"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:190
-#: src/gui/LightGuiderDeviceDialogBase.cpp:383
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1034
+#: src/gui/SodiumDeviceDialogBase.cpp:190
+#: src/gui/SodiumDeviceDialogBase.cpp:383
+#: src/gui/SodiumDeviceDialogBase.cpp:1034
 msgid "DriverVersion"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:198
+#: src/gui/SodiumDeviceDialogBase.cpp:198
 msgid "Sensor"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:206
+#: src/gui/SodiumDeviceDialogBase.cpp:206
 msgid "ImageHeight"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:214
+#: src/gui/SodiumDeviceDialogBase.cpp:214
 msgid "ImageWidth"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:222
+#: src/gui/SodiumDeviceDialogBase.cpp:222
 msgid "Pixel(x)"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:230
+#: src/gui/SodiumDeviceDialogBase.cpp:230
 msgid "Pixel(y)"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:238
+#: src/gui/SodiumDeviceDialogBase.cpp:238
 msgid "MaxBin(x)"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:246
-#: src/gui/LightGuiderDeviceDialogBase.cpp:247
+#: src/gui/SodiumDeviceDialogBase.cpp:246
+#: src/gui/SodiumDeviceDialogBase.cpp:247
 msgid "MaxBin(y)"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:256
+#: src/gui/SodiumDeviceDialogBase.cpp:256
 msgid "MaxExposure"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:264
+#: src/gui/SodiumDeviceDialogBase.cpp:264
 msgid "MinExposure"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:278
+#: src/gui/SodiumDeviceDialogBase.cpp:278
 msgid "Temperature Graph"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:318
-#: src/gui/LightGuiderDeviceDialogBase.cpp:709
-#: src/gui/LightGuiderDeviceDialogBase.cpp:969
+#: src/gui/SodiumDeviceDialogBase.cpp:318
+#: src/gui/SodiumDeviceDialogBase.cpp:709
+#: src/gui/SodiumDeviceDialogBase.cpp:969
 msgid "Telescope"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:368
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1019
+#: src/gui/SodiumDeviceDialogBase.cpp:368
+#: src/gui/SodiumDeviceDialogBase.cpp:1019
 msgid "A basic simulator telescope"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:387
-#: src/gui/LightGuiderDeviceDialogBase.cpp:395
+#: src/gui/SodiumDeviceDialogBase.cpp:387
+#: src/gui/SodiumDeviceDialogBase.cpp:395
 msgid "          "
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:391
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1042
+#: src/gui/SodiumDeviceDialogBase.cpp:391
+#: src/gui/SodiumDeviceDialogBase.cpp:1042
 msgid "DrvierInfo"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:399
+#: src/gui/SodiumDeviceDialogBase.cpp:399
 msgid "Longitude"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:407
+#: src/gui/SodiumDeviceDialogBase.cpp:407
 msgid "Latitude"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:415
+#: src/gui/SodiumDeviceDialogBase.cpp:415
 msgid "AZ"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:423
+#: src/gui/SodiumDeviceDialogBase.cpp:423
 msgid "ALT"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:447
+#: src/gui/SodiumDeviceDialogBase.cpp:447
 msgid "Elevation"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:455
+#: src/gui/SodiumDeviceDialogBase.cpp:455
 msgid "Transmit"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:474
+#: src/gui/SodiumDeviceDialogBase.cpp:474
 msgid "Track"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:477
+#: src/gui/SodiumDeviceDialogBase.cpp:477
 msgid "Home"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:480
+#: src/gui/SodiumDeviceDialogBase.cpp:480
 msgid "Park"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:483 src/gui/myframe.cpp:3135
+#: src/gui/SodiumDeviceDialogBase.cpp:483 src/gui/myframe.cpp:3135
 msgid "Random"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:486
+#: src/gui/SodiumDeviceDialogBase.cpp:486
 msgid "Sync"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:489
+#: src/gui/SodiumDeviceDialogBase.cpp:489
 msgid "GetInfo"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:506
+#: src/gui/SodiumDeviceDialogBase.cpp:506
 msgid "Telescope Control"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:540
-#: src/gui/LightGuiderDeviceDialogBase.cpp:595
+#: src/gui/SodiumDeviceDialogBase.cpp:540
+#: src/gui/SodiumDeviceDialogBase.cpp:595
 msgid "h"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:557
-#: src/gui/LightGuiderDeviceDialogBase.cpp:604
+#: src/gui/SodiumDeviceDialogBase.cpp:557
+#: src/gui/SodiumDeviceDialogBase.cpp:604
 msgid "m"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:574
-#: src/gui/LightGuiderDeviceDialogBase.cpp:613
-#: src/gui/LightGuiderDeviceDialogBase.cpp:614
+#: src/gui/SodiumDeviceDialogBase.cpp:574
+#: src/gui/SodiumDeviceDialogBase.cpp:613
+#: src/gui/SodiumDeviceDialogBase.cpp:614
 #: src/gui/guiding_assistant.cpp:1297 src/gui/guiding_assistant.cpp:1802
 #: src/gui/guiding_assistant.cpp:1887
 msgid "s"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:626
-#: src/gui/LightGuiderDeviceDialogBase.cpp:629
+#: src/gui/SodiumDeviceDialogBase.cpp:626
+#: src/gui/SodiumDeviceDialogBase.cpp:629
 msgid "MyButton"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:727
-#: src/gui/LightGuiderDeviceDialogBase.cpp:948
+#: src/gui/SodiumDeviceDialogBase.cpp:727
+#: src/gui/SodiumDeviceDialogBase.cpp:948
 msgid "Focuser"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:756
-#: src/gui/LightGuiderDeviceDialogBase.cpp:760
-#: src/gui/LightGuiderDeviceDialogBase.cpp:764
-#: src/gui/LightGuiderDeviceDialogBase.cpp:768
-#: src/gui/LightGuiderDeviceDialogBase.cpp:772
-#: src/gui/LightGuiderDeviceDialogBase.cpp:776
-#: src/gui/LightGuiderDeviceDialogBase.cpp:780
-#: src/gui/LightGuiderDeviceDialogBase.cpp:784
-#: src/gui/LightGuiderDeviceDialogBase.cpp:788
-#: src/gui/LightGuiderDeviceDialogBase.cpp:792
-#: src/gui/LightGuiderDeviceDialogBase.cpp:796
-#: src/gui/LightGuiderDeviceDialogBase.cpp:800
-#: src/gui/LightGuiderDeviceDialogBase.cpp:804
-#: src/gui/LightGuiderDeviceDialogBase.cpp:808
-#: src/gui/LightGuiderDeviceDialogBase.cpp:812
-#: src/gui/LightGuiderDeviceDialogBase.cpp:816
-#: src/gui/LightGuiderDeviceDialogBase.cpp:831
-#: src/gui/LightGuiderDeviceDialogBase.cpp:849
-#: src/gui/LightGuiderDeviceDialogBase.cpp:907
-#: src/gui/LightGuiderDeviceDialogBase.cpp:914
-#: src/gui/LightGuiderDeviceDialogBase.cpp:921
-#: src/gui/LightGuiderDeviceDialogBase.cpp:928
+#: src/gui/SodiumDeviceDialogBase.cpp:756
+#: src/gui/SodiumDeviceDialogBase.cpp:760
+#: src/gui/SodiumDeviceDialogBase.cpp:764
+#: src/gui/SodiumDeviceDialogBase.cpp:768
+#: src/gui/SodiumDeviceDialogBase.cpp:772
+#: src/gui/SodiumDeviceDialogBase.cpp:776
+#: src/gui/SodiumDeviceDialogBase.cpp:780
+#: src/gui/SodiumDeviceDialogBase.cpp:784
+#: src/gui/SodiumDeviceDialogBase.cpp:788
+#: src/gui/SodiumDeviceDialogBase.cpp:792
+#: src/gui/SodiumDeviceDialogBase.cpp:796
+#: src/gui/SodiumDeviceDialogBase.cpp:800
+#: src/gui/SodiumDeviceDialogBase.cpp:804
+#: src/gui/SodiumDeviceDialogBase.cpp:808
+#: src/gui/SodiumDeviceDialogBase.cpp:812
+#: src/gui/SodiumDeviceDialogBase.cpp:816
+#: src/gui/SodiumDeviceDialogBase.cpp:831
+#: src/gui/SodiumDeviceDialogBase.cpp:849
+#: src/gui/SodiumDeviceDialogBase.cpp:907
+#: src/gui/SodiumDeviceDialogBase.cpp:914
+#: src/gui/SodiumDeviceDialogBase.cpp:921
+#: src/gui/SodiumDeviceDialogBase.cpp:928
 msgid "MyLabel"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:835
+#: src/gui/SodiumDeviceDialogBase.cpp:835
 msgid "Check Me!"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:872
+#: src/gui/SodiumDeviceDialogBase.cpp:872
 msgid "<<"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:875
+#: src/gui/SodiumDeviceDialogBase.cpp:875
 msgid "<"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:878 src/gui/staticpa_toolwin.cpp:361
+#: src/gui/SodiumDeviceDialogBase.cpp:878 src/gui/staticpa_toolwin.cpp:361
 msgid ">"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:881
+#: src/gui/SodiumDeviceDialogBase.cpp:881
 msgid ">>"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:895
+#: src/gui/SodiumDeviceDialogBase.cpp:895
 msgid "Focuser Settings"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1061
+#: src/gui/SodiumDeviceDialogBase.cpp:1061
 msgid "Position"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1065
+#: src/gui/SodiumDeviceDialogBase.cpp:1065
 msgid "Combo!"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1068
+#: src/gui/SodiumDeviceDialogBase.cpp:1068
 msgid "MoveTo"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1119
+#: src/gui/SodiumDeviceDialogBase.cpp:1119
 msgid "FilterWheel"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1121 src/gui/myframe_events.cpp:882
+#: src/gui/SodiumDeviceDialogBase.cpp:1121 src/gui/myframe_events.cpp:882
 msgid "Guider"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1133 src/gui/myframe.cpp:514
+#: src/gui/SodiumDeviceDialogBase.cpp:1133 src/gui/myframe.cpp:514
 msgid "OpenAPT"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1150
+#: src/gui/SodiumDeviceDialogBase.cpp:1150
 msgid "Installed"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1152
+#: src/gui/SodiumDeviceDialogBase.cpp:1152
 #: src/gui/solver_dialog_base.cpp:145
 msgid "Download"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1162
+#: src/gui/SodiumDeviceDialogBase.cpp:1162
 msgid "Local Modules Installer"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1174
+#: src/gui/SodiumDeviceDialogBase.cpp:1174
 #: src/gui/solver_dialog_base.cpp:142
 msgid "Refresh"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1184
+#: src/gui/SodiumDeviceDialogBase.cpp:1184
 #: src/gui/solver_dialog_base.cpp:39
 msgid "Search"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1210
+#: src/gui/SodiumDeviceDialogBase.cpp:1210
 msgid "Local"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1227
+#: src/gui/SodiumDeviceDialogBase.cpp:1227
 msgid "Plugins"
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.cpp:1236
+#: src/gui/SodiumDeviceDialogBase.cpp:1236
 msgid "Server"
 msgstr ""
 
@@ -6070,7 +6070,7 @@ msgstr ""
 
 #: src/gui/myframe_events.cpp:179
 msgid ""
-"Welcome to LightGuider (OpenAPT)\n"
+"Welcome to Sodium (OpenAPT)\n"
 "\n"
 " Basic operation is quite simple (hence the 'LGuider')\n"
 "\n"
@@ -7714,8 +7714,8 @@ msgid ""
 "maximum value determined by the dither type and the dither scale factor."
 msgstr ""
 
-#: src/gui/LightGuiderDeviceDialogBase.h:262
-#: src/gui/LightGuiderDeviceDialogBase.h:263
+#: src/gui/SodiumDeviceDialogBase.h:262
+#: src/gui/SodiumDeviceDialogBase.h:263
 msgid "OpenAPT Client"
 msgstr ""
 

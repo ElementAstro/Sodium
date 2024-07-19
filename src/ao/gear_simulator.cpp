@@ -34,13 +34,13 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 #ifdef SIMULATOR
 
-#include "camera.h"
-#include "gear_simulator.h"
-#include "image_math.h"
+#include "camera.hpp"
+#include "gear_simulator.hpp"
+#include "image_math.hpp"
 
 #include <wx/dir.h>
 #include <wx/gdicmn.h>
@@ -678,14 +678,14 @@ bool SimCamState::ReadNextImage(usImage& img, const wxRect& subframe)
     fitsfile *fptr;  // FITS file pointer
     int status = 0;  // CFITSIO status value MUST be initialized to zero!
 
-    if (PHD_fits_open_diskfile(&fptr, wxFileName(dir.GetName(), filename).GetFullPath(), READONLY, &status))
+    if (SODIUM_fits_open_diskfile(&fptr, wxFileName(dir.GetName(), filename).GetFullPath(), READONLY, &status))
         return true;
 
     int hdutype;
     if (fits_get_hdu_type(fptr, &hdutype, &status) || hdutype != IMAGE_HDU)
     {
         pFrame->Alert(_("FITS file is not of an image"));
-        PHD_fits_close_file(fptr);
+        SODIUM_fits_close_file(fptr);
         return true;
     }
 
@@ -696,7 +696,7 @@ bool SimCamState::ReadNextImage(usImage& img, const wxRect& subframe)
     fits_get_num_hdus(fptr, &nhdus, &status);
     if ((nhdus != 1) || (naxis != 2)) {
         pFrame->Alert(_("Unsupported type or read error loading FITS file"));
-        PHD_fits_close_file(fptr);
+        SODIUM_fits_close_file(fptr);
         return true;
     }
 
@@ -708,7 +708,7 @@ bool SimCamState::ReadNextImage(usImage& img, const wxRect& subframe)
 
     if (img.Init(xsize, ysize)) {
         pFrame->Alert(_("Memory allocation error"));
-        PHD_fits_close_file(fptr);
+        SODIUM_fits_close_file(fptr);
         return true;
     }
 
@@ -726,7 +726,7 @@ bool SimCamState::ReadNextImage(usImage& img, const wxRect& subframe)
     if (fits_read_subset(fptr, TUSHORT, fpixel, lpixel, inc, nullptr, buf, nullptr, &status))
     {
         pFrame->Alert(_("Error reading data"));
-        PHD_fits_close_file(fptr);
+        SODIUM_fits_close_file(fptr);
         return true;
     }
 
@@ -753,7 +753,7 @@ bool SimCamState::ReadNextImage(usImage& img, const wxRect& subframe)
 
     delete[] buf;
 
-    PHD_fits_close_file(fptr);
+    SODIUM_fits_close_file(fptr);
 
     return false;
 }
@@ -1531,11 +1531,11 @@ bool CameraSimulator::Capture(int duration, usImage& img, int options, const wxR
     static int step = 1;
     char fname[256];
     snprintf(fname, sizeof(fname), "/Users/stark/dev/PHD/simimg/DriftSim_%d.fit", frame);
-    if (!PHD_fits_open_diskfile(&fptr, fname, READONLY, &status))
+    if (!SODIUM_fits_open_diskfile(&fptr, fname, READONLY, &status))
     {
         if (fits_get_hdu_type(fptr, &hdutype, &status) || hdutype != IMAGE_HDU) {
             pFrame->Alert(_("FITS file is not of an image"));
-            PHD_fits_close_file(fptr);
+            SODIUM_fits_close_file(fptr);
             return true;
         }
 
@@ -1547,20 +1547,20 @@ bool CameraSimulator::Capture(int duration, usImage& img, int options, const wxR
         fits_get_num_hdus(fptr,&nhdus,&status);
         if ((nhdus != 1) || (naxis != 2)) {
             pFrame->Alert(wxString::Format(_("Unsupported type or read error loading FITS file %d %d"),nhdus,naxis));
-            PHD_fits_close_file(fptr);
+            SODIUM_fits_close_file(fptr);
             return true;
         }
         if (img.Init(xsize,ysize)) {
             pFrame->Alert(_("Memory allocation error"));
-            PHD_fits_close_file(fptr);
+            SODIUM_fits_close_file(fptr);
             return true;
         }
         if (fits_read_pix(fptr, TUSHORT, fpixel, xsize*ysize, nullptr, img.ImageData, nullptr, &status) ) { // Read image
             pFrame->Alert(_("Error reading data"));
-            PHD_fits_close_file(fptr);
+            SODIUM_fits_close_file(fptr);
             return true;
         }
-        PHD_fits_close_file(fptr);
+        SODIUM_fits_close_file(fptr);
         frame = frame + step;
         if (frame > 440) {
             step = -1;

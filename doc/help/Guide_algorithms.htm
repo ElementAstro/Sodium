@@ -2,10 +2,10 @@
 <html><head><title>Guide Algorithms</title></head>
 <body>
 <h2>Guide Algorithms</h2><a href="#Guiding_Theory">Guiding Theory</a><br><a href="#Guide_Algorithm_Parameters">Guide Algorithm Parameters</a><br><br><h3><a name="Guiding_Theory"></a>Guiding Theory</h3>The default guiding
-algorithms in <span style="font-style: italic;">LightGuider</span> are well-established and should work well for most
+algorithms in <span style="font-style: italic;">Sodium</span> are well-established and should work well for most
 users. &nbsp;Unless you already have&nbsp;experience with guiding and
 understand its principles, you should&nbsp;be somewhat cautious about changing
-algorithms. &nbsp;However, the Advanced Settings dialog&nbsp;in <span style="font-style: italic;">LightGuider</span> makes it
+algorithms. &nbsp;However, the Advanced Settings dialog&nbsp;in <span style="font-style: italic;">Sodium</span> makes it
 easy to do that. &nbsp;Each algorithm has a set of parameters that
 control how observed changes in guide star position (star deflections)
 are translated into guiding corrections that will be sent to the mount. <br><br>Before
@@ -22,7 +22,7 @@ though many guide cameras are sensitive to guide star deflections of only a
 few microns on the sensor (e.g. 0.0002 inches, 0.005
 millimeters),&nbsp; we still expect the mount and the guiding software
 to move the camera across the sky for hours with this level of
-precision. Guiding applications like LightGuider are best able to deal with
+precision. Guiding applications like Sodium are best able to deal with
 tracking errors that are
 "slow and steady", not "fast and random." &nbsp;Sources of slow,
 steady, or predictable (correctable) errors include the following: <br><ul><li>Certain kinds of mechanical imperfections in right ascension gears, including those that cause&nbsp;periodic error.</li><li>Small errors in the sidereal tracking rate of the mount</li><li>Reasonable amounts of declination backlash</li><li>Atmospheric refraction - stars appear to&nbsp;move more slowly as they near the horizon</li><li>Limited kinds of mechanical deflection and flexure - but <span style="font-weight: bold;">not </span>differential flexure</li><li>Mis-alignment of the right ascension axis on the celestial pole (polar alignment error)</li></ul>So
@@ -55,8 +55,8 @@ change in direction or amplitude. &nbsp;Resistance to changes in
 direction is particularly important in declination, where&nbsp;backlash
 is a common problem. &nbsp;Hopefully, this background will give you
 enough insight into the basics of guiding so that the various guiding
-parameters used in <span style="font-style: italic;">LightGuider</span> will make sense.<br><h3><a name="Guide_Algorithm_Parameters"></a>Guide Algorithm Parameters</h3>In
-<span style="font-style: italic;">LightGuider</span>, the various guide algorithms can be applied to either the right
+parameters used in <span style="font-style: italic;">Sodium</span> will make sense.<br><h3><a name="Guide_Algorithm_Parameters"></a>Guide Algorithm Parameters</h3>In
+<span style="font-style: italic;">Sodium</span>, the various guide algorithms can be applied to either the right
 ascension or declination axes. &nbsp;Most of these&nbsp;algorithms
 include a&nbsp;<span style="font-weight: bold;"><a name="minimum_move"></a>minimum move</span>
 parameter. &nbsp;This is used to avoid making guide corrections that
@@ -88,7 +88,7 @@ out the corrections at the risk of being too slow to react to a
 legitimate change in direction. &nbsp;The hysteresis algorithms also
 include an <a name="aggressiveness"></a><span style="font-weight: bold;">aggressiveness </span>parameter,
 again expressed as a percentage,&nbsp; that is&nbsp;used to reduce
-over-correcting. &nbsp; On each frame, <span style="font-style: italic;">LightGuider</span>
+over-correcting. &nbsp; On each frame, <span style="font-style: italic;">Sodium</span>
 computes how far&nbsp;and in what direction the mount should be moved.&nbsp;The aggressiveness
 parameter scales this. For example, take a case where the star
 deflection
@@ -99,7 +99,7 @@ aggressiveness is set to 60%, the mount will be asked to move only 60%
 of that amount, or 0.3 pixels. &nbsp;If you've done a reasonable job of
 setting Min-Move values, there is generally no need to modify these
 parameters, and any modifications you attempt should be based on a
-careful analysis of&nbsp;long guiding sessions using the LightGuider LogViewer tool.<br><br>The&nbsp;<a name="ResistSwitch"></a><span style="font-weight: bold;">ResistSwitch</span>
+careful analysis of&nbsp;long guiding sessions using the Sodium LogViewer tool.<br><br>The&nbsp;<a name="ResistSwitch"></a><span style="font-weight: bold;">ResistSwitch</span>
 algorithm behaves much as its name implies. &nbsp;Like the hysteresis
 algorithms, it also maintains a
 history of past guide corrections, and any change of direction must be
@@ -115,13 +115,13 @@ fur controlling the ResistSwitch algorithm. &nbsp;The first is
 amount that behaves like the hysteresis aggressiveness described above.
 The second parameter is a
 checkbox labeled "Fast switch for large deflections." &nbsp;If this is
-checked, LightGuider will react immediately to a large change of direction
+checked, Sodium will react immediately to a large change of direction
 rather than waiting for three consecutive deflections in the new
 direction, which is the normal behavior. &nbsp;This can help to more
 quickly recover
 from large excursions in Dec, perhaps caused by wind, cable snags, or
 other mechanical shifts &nbsp;The definition of a "large deflection" is
-3x the minimum-move value. &nbsp;So if LightGuider is over-reacting to
+3x the minimum-move value. &nbsp;So if Sodium is over-reacting to
 direction changes, you can tune the behavior with the min-move
 parameter or disable the "fast switch" option altogether. &nbsp;It is
 worth remembering that "less is usually better" when it comes to Dec
@@ -214,11 +214,11 @@ most mounts, so it is not generally recommended.</p>
 <br>
 <br>
 
-<a name="Predictive_PEC"></a><b style="">LightGuider Predictive PEC Guide Algorithm (PPEC)</b>
+<a name="Predictive_PEC"></a><b style="">Sodium Predictive PEC Guide Algorithm (PPEC)</b>
 
 <p class="MsoNormal"><o:p>&nbsp;</o:p><b style="">Overview<o:p></o:p></b></p>
 
-<p class="MsoNormal"><o:p>&nbsp;</o:p>The PPEC algorithm is different from the others in LightGuider because
+<p class="MsoNormal"><o:p>&nbsp;</o:p>The PPEC algorithm is different from the others in Sodium because
 of its modeling and predictive capabilities.<span style="">&nbsp;
 </span>The algorithm analyzes the tracking performance of the mount in
 real-time and once the analysis is complete, it will compute guiding
@@ -263,7 +263,7 @@ to identify components that are predictable.<span style="">&nbsp;
 important.<span style="">&nbsp; </span>If you&#8217;re following best
 practices, you will have programmed periodic error correction in your mount (assuming
 that feature is available to you).<span style="">&nbsp; </span>Doing
-this reduces the amount of work that needs to be done by LightGuider, and the PEC
+this reduces the amount of work that needs to be done by Sodium, and the PEC
 correction in the mount is normally saved permanently.<span style="">&nbsp; </span>This approach is preferable to having to
 measure and infer the periodic error behavior every time you set up your
 equipment.<span style="">&nbsp; </span>That said, PEC in the mount

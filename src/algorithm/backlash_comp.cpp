@@ -33,8 +33,8 @@
  *
  */
 
-#include "backlash_comp.h"
-#include "phd.h"
+#include "backlash_comp.hpp"
+#include "sodium.hpp"
 
 
 #include <algorithm>
@@ -900,11 +900,11 @@ BacklashTool::MeasurementResults BacklashTool::ComputeBacklashPx(
     return rslt;
 }
 
-void BacklashTool::DecMeasurementStep(const PHD_Point &currentCamLoc) {
+void BacklashTool::DecMeasurementStep(const SodiumPoint &currentCamLoc) {
     double decDelta = 0.;
     double amt = 0;
     // double fakeDeltas []= {0, -5, -2, 2, 4, 5, 5, 5, 5 };
-    PHD_Point currMountLocation;
+    SodiumPoint currMountLocation;
     double tol;
     try {
         if (m_scope->TransformCameraCoordinatesToMountCoordinates(

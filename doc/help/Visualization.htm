@@ -2,7 +2,7 @@
 <html><head><title>Visualization Tools</title></head>
 <body>
 <h2>Monitoring Tools</h2>
-<span style="font-style: italic;">LightGuider</span> provides numerous monitoring and
+<span style="font-style: italic;">Sodium</span> provides numerous monitoring and
 display tools to help you see how your guider is performing.
 &nbsp;All
 of these tools are accessed under the 'View' pull-down menu and are described below.<br><ul><li><a href="#Overlays">Overlays</a></li><li><a href="#Graphical_Display">Graphical Display</a></li><li><a href="#Stats_Display">Stats Display</a></li><li><a href="#Star_Profile_and_Target_Displays">Star Profile and Target Displays</a></li><li><a href="#Adaptive_Optics_AO_Graph">AO Graph</a></li><li><a href="#DockableMoveable_Graphical_Windows">Dockable Windows</a></li></ul>
@@ -100,7 +100,7 @@ to actual directions in the sky, particularly for Dec, but that doesn't matter.<
 performance is to use units of arc-seconds rather than pixels.
 &nbsp;Doing this allows an equipment-independent way of evaluating
 performance because it transcends questions of focal length and image
-scale. &nbsp;To do this, you&nbsp;need to provide <span style="font-style: italic;">LightGuider</span> with sufficient
+scale. &nbsp;To do this, you&nbsp;need to provide <span style="font-style: italic;">Sodium</span> with sufficient
 information to determine your guider image scale: namely, the focal
 length of the guide scope, the size of the guide camera pixels, and whatever binning level you're using.
 &nbsp;Using the new-profile-wizard is the best way to insure these settings are correct.&nbsp;<br><br>At
@@ -115,7 +115,7 @@ guiding parameters. &nbsp;Although these controls are prominently
 displayed, it is generally not productive to change them substantially
 during&nbsp;guiding. &nbsp;Guiding
 improvements normally require long guiding intervals and careful
-analysis using the LightGuider LogViewer tool. &nbsp;Poor guiding results
+analysis using the Sodium LogViewer tool. &nbsp;Poor guiding results
 usually arise
 from user error,&nbsp;from mechanical problems in the mount, or from
 movement of the gear on the mount. &nbsp;Blindly changing guiding
@@ -180,7 +180,7 @@ recent guide exposure, while the blue dots show the recent history.
 &nbsp;You can zoom in or out with the controls at the upper left of the
 window, as well as change the number of points shown in the history.
 &nbsp;&nbsp;If you are using an ASCOM connection for either the 'mount' or
-'aux-mount', LightGuider will also show the directions (SkyNorth, SkyEast)
+'aux-mount', Sodium will also show the directions (SkyNorth, SkyEast)
 associated with the star movement, as shown in the example above.
 &nbsp;This can be helpful if you are looking at overall drift and want to
 determine how to set uni-directional guiding for declination. &nbsp;The
@@ -191,7 +191,7 @@ AO graph is equivalent to the 'target' display, but shows the history
 of corrections relative to the axes of the adaptive optics device.
 &nbsp;The red rectangle indicates the outer edges of the AO device,
 while the interior yellow rectangle shows the "bump" region. &nbsp;If
-the star moves outside the yellow rectangle, <span style="font-style: italic;">LightGuider</span> will send a sequence
+the star moves outside the yellow rectangle, <span style="font-style: italic;">Sodium</span> will send a sequence
 of&nbsp;move commands to the mount - the "bump" - to smoothly place the guide star back
 near the center position. &nbsp;When this occurs, green and blue lines
 will show the incremental bump and the remaining bump respectively.
@@ -203,7 +203,7 @@ plotted in the history.
 the various performance windows are initially displayed, they are
 "docked" in the main window. &nbsp;This means they are sized in a
 particular way and are aligned with two edges of the window - they are
-entirely contained within the bounds of the main <span style="font-style: italic;">LightGuider</span> window.
+entirely contained within the bounds of the main <span style="font-style: italic;">Sodium</span> window.
 &nbsp;However, you can move them around and resize them by clicking and
 dragging on the title bar of the window you want to examine. &nbsp;This
 will often let you get a better view of the details being shown in the
@@ -216,6 +216,6 @@ restore all of the dockable/moveable windows to their default, docked
 positions. &nbsp;This can be useful , for example, if you are switching
 between screens with different resolutions and one or more of the
 dockable windows has been "lost." &nbsp;This function also restores the
-main LightGuider window to its default size, with a position near the upper
+main Sodium window to its default size, with a position near the upper
 lefthand corner of the screen.
 </body></html>

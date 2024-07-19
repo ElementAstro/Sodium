@@ -33,7 +33,7 @@
 *
 */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 class FitsFname
 {
@@ -104,17 +104,17 @@ FitsFname::FitsFname(const wxString& path, bool create, bool clobber)
 #endif // __WINDOWS__
 }
 
-int PHD_fits_open_diskfile(fitsfile **fptr, const wxString& filename, int iomode, int *status)
+int SODIUM_fits_open_diskfile(fitsfile **fptr, const wxString& filename, int iomode, int *status)
 {
     return fits_open_diskfile(fptr, FitsFname(filename, false, false), iomode, status);
 }
 
-int PHD_fits_create_file(fitsfile **fptr, const wxString& filename, bool clobber, int *status)
+int SODIUM_fits_create_file(fitsfile **fptr, const wxString& filename, bool clobber, int *status)
 {
     return fits_create_file(fptr, FitsFname(filename, true, clobber), status);
 }
 
-void PHD_fits_close_file(fitsfile *fptr)
+void SODIUM_fits_close_file(fitsfile *fptr)
 {
     int status = 0;
     fits_close_file(fptr, &status);

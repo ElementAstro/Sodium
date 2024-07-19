@@ -39,7 +39,7 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "gaussian_process_guider.h"
+#include "gaussian_process_guider.hpp"
 
 #include <cmath>
 #include <ctime>

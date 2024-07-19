@@ -32,7 +32,7 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 #include <wx/progdlg.h>
 

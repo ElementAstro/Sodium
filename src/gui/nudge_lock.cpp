@@ -32,9 +32,9 @@
  *
  */
 
-#include "phd.h"
-#include "nudge_lock.h"
-#include "comet_tool.h"
+#include "sodium.hpp"
+#include "nudge_lock.hpp"
+#include "comet_tool.hpp"
 
 #include <wx/valnum.h>
 
@@ -226,7 +226,7 @@ void NudgeLockDialog::UpdateSliderLabel()
 
 void NudgeLockDialog::UpdateLockPosCtrls()
 {
-    const PHD_Point& pos = pFrame->pGuider->LockPosition();
+    const SodiumPoint& pos = pFrame->pGuider->LockPosition();
     lockPosIsValid = pos.IsValid();
     if (lockPosIsValid)
     {
@@ -247,7 +247,7 @@ void NudgeLockDialog::UpdateLockPosCtrls()
     stickyLockPos->SetValue(pFrame->pGuider->LockPosIsSticky());
 }
 
-static bool UpdateLockPos(const PHD_Point& newPos)
+static bool UpdateLockPos(const SodiumPoint& newPos)
 {
     if (pFrame->pGuider->IsValidLockPosition(newPos))
     {
@@ -261,7 +261,7 @@ static bool UpdateLockPos(const PHD_Point& newPos)
 
 static void DoMove(double dx, double dy)
 {
-    PHD_Point newPos = pFrame->pGuider->LockPosition();
+    SodiumPoint newPos = pFrame->pGuider->LockPosition();
     newPos.X += dx;
     newPos.Y += dy;
     UpdateLockPos(newPos);
@@ -321,7 +321,7 @@ void NudgeLockDialog::OnStickyChecked(wxCommandEvent& evt)
 void NudgeLockDialog::OnSetLockPosClicked(wxCommandEvent& evt)
 {
     TransferDataFromWindow();
-    PHD_Point newPos(lockPosX, lockPosY);
+    SodiumPoint newPos(lockPosX, lockPosY);
     if (!UpdateLockPos(newPos))
     {
         UpdateLockPosCtrls();
@@ -330,7 +330,7 @@ void NudgeLockDialog::OnSetLockPosClicked(wxCommandEvent& evt)
 
 void NudgeLockDialog::OnSaveLockPosClicked(wxCommandEvent& evt)
 {
-    const PHD_Point& pos = pFrame->pGuider->LockPosition();
+    const SodiumPoint& pos = pFrame->pGuider->LockPosition();
     if (pos.IsValid())
     {
         pConfig->Profile.SetDouble("/NudgeLock/SavedLockPosX", pos.X);
@@ -348,7 +348,7 @@ void NudgeLockDialog::OnRestoreLockPosClicked(wxCommandEvent& evt)
     if (ConfirmDialog::Confirm(wxString::Format(_("Set lock position to saved value (%.2f,%.2f)?"), x, y),
         "/RestoreSavedLockPosOK", _("Restore saved Lock Pos")))
     {
-        UpdateLockPos(PHD_Point(x, y));
+        UpdateLockPos(SodiumPoint(x, y));
     }
 }
 

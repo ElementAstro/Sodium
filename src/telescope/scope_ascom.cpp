@@ -36,11 +36,11 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 #ifdef GUIDE_ASCOM
 
-#include "comdispatch.h"
+#include "comdispatch.hpp"
 
 #include <wx/msw/ole/oleutils.h>
 #include <comdef.h>

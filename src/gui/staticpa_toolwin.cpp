@@ -32,9 +32,9 @@
  *
  */
 
-#include "phd.h"
-#include "staticpa_tool.h"
-#include "staticpa_toolwin.h"
+#include "sodium.hpp"
+#include "staticpa_tool.hpp"
+#include "staticpa_toolwin.hpp"
 
 #include <wx/gbsizer.h>
 #include <wx/valnum.h>
@@ -215,7 +215,7 @@ wxCAPTION | wxCLOSE_BOX | wxMINIMIZE_BOX | wxSYSTEM_MENU | wxTAB_TRAVERSAL | wxF
         Star("H: HD98784", 134.64254, -89.8312, 8.9),
     };
     for (int is = 0; is < c_SthStars.size(); is++) {
-        PHD_Point radec_now = J2000Now(PHD_Point(c_SthStars.at(is).ra2000, c_SthStars.at(is).dec2000));
+        SodiumPoint radec_now = J2000Now(SodiumPoint(c_SthStars.at(is).ra2000, c_SthStars.at(is).dec2000));
         c_SthStars.at(is).ra = radec_now.X;
         c_SthStars.at(is).dec = radec_now.Y;
     }
@@ -231,7 +231,7 @@ wxCAPTION | wxCLOSE_BOX | wxMINIMIZE_BOX | wxSYSTEM_MENU | wxTAB_TRAVERSAL | wxF
         Star("H: TYC-4629-37-1", 70.70722, 89.6301, 9.15),
     };
     for (int is = 0; is < c_NthStars.size(); is++) {
-        PHD_Point radec_now = J2000Now(PHD_Point(c_NthStars.at(is).ra2000, c_NthStars.at(is).dec2000));
+        SodiumPoint radec_now = J2000Now(SodiumPoint(c_NthStars.at(is).ra2000, c_NthStars.at(is).dec2000));
         c_NthStars.at(is).ra = radec_now.X;
         c_NthStars.at(is).dec = radec_now.Y;
     }
@@ -572,8 +572,8 @@ void StaticPaToolWin::OnGoto(wxCommandEvent& evt)
     int is = m_refStar;
     double scale = 320.0 / m_camWidth;
 
-    PHD_Point stardeg = PHD_Point(m_poleStars->at(is).ra, m_poleStars->at(is).dec);
-    PHD_Point starpx = Radec2Px(stardeg);
+    SodiumPoint stardeg = SodiumPoint(m_poleStars->at(is).ra, m_poleStars->at(is).dec);
+    SodiumPoint starpx = Radec2Px(stardeg);
     m_polePanel->m_currPt = wxPoint(starpx.X*scale, starpx.Y*scale);
     FillPanel();
     return;
@@ -771,8 +771,8 @@ void StaticPaToolWin::CalcRotationCentre(void)
 void StaticPaToolWin::CalcAdjustments(void)
 {
     // Caclulate pixel values for the alignment stars relative to the CoR
-    PHD_Point starpx, stardeg;
-    stardeg = PHD_Point(m_poleStars->at(m_refStar).ra, m_poleStars->at(m_refStar).dec);
+    SodiumPoint starpx, stardeg;
+    stardeg = SodiumPoint(m_poleStars->at(m_refStar).ra, m_poleStars->at(m_refStar).dec);
     starpx = Radec2Px(stardeg);
     // Convert to display pixel values by adding the CoR pixel coordinates
     double xt = starpx.X + m_pxCentre.X;
@@ -821,7 +821,7 @@ void StaticPaToolWin::CalcAdjustments(void)
         fabs(alt_r)*m_pxScale/60, fabs(az_r)*m_pxScale/60, fabs(hcor_r)*m_pxScale/60));
 }
 
-PHD_Point StaticPaToolWin::Radec2Px(const PHD_Point& radec)
+SodiumPoint StaticPaToolWin::Radec2Px(const SodiumPoint& radec)
 {
     // Convert dec to pixel radius
     double r = (90.0 - fabs(radec.Y)) * 3600 / m_pxScale;
@@ -866,11 +866,11 @@ PHD_Point StaticPaToolWin::Radec2Px(const PHD_Point& radec)
     l_camAngle = norm((m_flip ? m_camAngle + 180.0 : m_camAngle), 0, 360);
     double a = l_camAngle - a1 * m_hemi;
 
-    PHD_Point px(r * cos(radians(a)), -r * sin(radians(a)));
+    SodiumPoint px(r * cos(radians(a)), -r * sin(radians(a)));
     return px;
 }
 
-PHD_Point StaticPaToolWin::J2000Now(const PHD_Point& radec)
+SodiumPoint StaticPaToolWin::J2000Now(const SodiumPoint& radec)
 {
     tm j2000_info;
     j2000_info.tm_year = 100;
@@ -933,7 +933,7 @@ PHD_Point StaticPaToolWin::J2000Now(const PHD_Point& radec)
     double radeg, decdeg;
     radeg = norm(degrees(atan2(y, x)), 0, 360);
     decdeg = degrees(atan2(z, sqrt(1 - z * z)));
-    return PHD_Point(radeg, decdeg);
+    return SodiumPoint(radeg, decdeg);
 }
 
 void StaticPaToolWin::PaintHelper(wxAutoBufferedPaintDCBase& dc, double scale)
@@ -976,7 +976,7 @@ void StaticPaToolWin::PaintHelper(wxAutoBufferedPaintDCBase& dc, double scale)
 
     // Draw orbits for each reference star
     // Caclulate pixel values for the reference stars
-    PHD_Point starpx, stardeg;
+    SodiumPoint starpx, stardeg;
     double radpx;
     const std::string alpha = "ABCDEFGHIJKL";
     const wxFont& SmallFont =
@@ -988,7 +988,7 @@ void StaticPaToolWin::PaintHelper(wxAutoBufferedPaintDCBase& dc, double scale)
     dc.SetFont(SmallFont);
     for (int is = 0; is < m_poleStars->size(); is++)
     {
-        stardeg = PHD_Point(m_poleStars->at(is).ra, m_poleStars->at(is).dec);
+        stardeg = SodiumPoint(m_poleStars->at(is).ra, m_poleStars->at(is).dec);
         starpx = Radec2Px(stardeg);
         radpx = hypot(starpx.X, starpx.Y);
         wxColor line_color = (is == m_refStar) ? wxColor(0, intens, 0) : wxColor(intens, intens, 0);
@@ -1208,7 +1208,7 @@ bool StaticPaToolWin::SetStar(int npos)
     }
     m_pxPos[idx].X = -1;
     m_pxPos[idx].Y = -1;
-    PHD_Point star = pFrame->pGuider->CurrentPosition();
+    SodiumPoint star = pFrame->pGuider->CurrentPosition();
     if (!star.IsValid())
     {
         return false;
@@ -1261,7 +1261,7 @@ bool StaticPaToolWin::MoveWestBy(double thetadeg)
     }
 
     m_nStep++;
-    PHD_Point lockpos = pFrame->pGuider->CurrentPosition();
+    SodiumPoint lockpos = pFrame->pGuider->CurrentPosition();
     if (pFrame->pGuider->SetLockPosToStarAtPosition(lockpos))
     {
         Debug.AddLine("StaticPA: MoveWestBy: Failed to lock star position");
@@ -1288,12 +1288,12 @@ void StaticPaToolWin::CreateStarTemplate(wxDC& dc, const wxPoint& m_currPt)
     dc.SetFont(SmallFont);
 
     const std::string alpha = "ABCDEFGHIJKL";
-    PHD_Point starpx, stardeg;
+    SodiumPoint starpx, stardeg;
     double starsz, starmag;
     // Draw position of each alignment star
     for (int is = 0; is < m_poleStars->size(); is++)
         {
-        stardeg = PHD_Point(m_poleStars->at(is).ra, m_poleStars->at(is).dec);
+        stardeg = SodiumPoint(m_poleStars->at(is).ra, m_poleStars->at(is).dec);
         starmag = m_poleStars->at(is).mag;
 
         starsz = 356.0*exp(-0.3*starmag) / m_pxScale;

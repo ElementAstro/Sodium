@@ -32,13 +32,13 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 #ifdef STEPGUIDER_SXAO_INDI
 
-#include "stepguider_sxao_indi.h"
+#include "stepguider_sxao_indi.hpp"
 #include <libindi/baseclient.h>
-#include "config_indi.h"
+#include "config_indi.hpp"
 
 #include <libindi/basedevice.h>
 #include <libindi/indiproperty.h>

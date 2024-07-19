@@ -32,8 +32,8 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *
  */
- #include "phd.h"
- #include "starcross_test.h"
+ #include "sodium.hpp"
+ #include "starcross_test.hpp"
 
 // clang-format off
 wxBEGIN_EVENT_TABLE(StarCrossDialog, wxDialog)

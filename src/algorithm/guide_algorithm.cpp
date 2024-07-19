@@ -37,7 +37,7 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 wxString GuideAlgorithm::GetConfigPath() const
 {

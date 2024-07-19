@@ -32,8 +32,8 @@
  *
  */
 
-#include "phd.h"
-#include "drift_tool.h"
+#include "sodium.hpp"
+#include "drift_tool.hpp"
 
 #include <wx/gbsizer.h>
 #include <wx/valnum.h>
@@ -82,7 +82,7 @@ struct DriftToolWin : public wxFrame
 
     bool m_can_slew;
     bool m_slewing;
-    PHD_Point m_siteLatLong;
+    SodiumPoint m_siteLatLong;
 
     wxStaticBitmap *m_bmp;
     wxBitmap *m_azArrowBmp;

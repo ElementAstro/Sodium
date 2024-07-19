@@ -33,20 +33,20 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 #if defined(ASCOM_CAMERA)
 
-#include "camera.h"
-#include "comdispatch.h"
-#include "time.h"
-#include "image_math.h"
+#include "camera.hpp"
+#include "comdispatch.hpp"
+#include "time.hpp"
+#include "image_math.hpp"
 #include <wx/stopwatch.h>
 #include <wx/wfstream.h>
 #include <wx/txtstrm.h>
 #include <wx/stdpaths.h>
 
-#include "cam_ascom.h"
+#include "cam_ascom.hpp"
 
 #include <wx/msw/ole/oleutils.h>
 #include <comdef.h>

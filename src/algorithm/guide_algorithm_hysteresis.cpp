@@ -37,7 +37,7 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 static const double DefaultMinMove    = 0.2;
 static const double DefaultHysteresis = 0.1;

@@ -32,12 +32,12 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 // windows only ASCOM helper code
 #if defined(__WINDOWS__)
 
-#include "comdispatch.h"
+#include "comdispatch.hpp"
 #include <comdef.h>
 
 wxString ExcepMsg(const EXCEPINFO& excep)

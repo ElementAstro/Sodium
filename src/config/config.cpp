@@ -34,8 +34,8 @@
  *
  */
 
-#include "phd.h"
-#include "event_server.h"
+#include "sodium.hpp"
+#include "event_server.hpp"
 #include <wx/wfstream.h>
 #include <wx/txtstrm.h>
 #include <wx/tokenzr.h>

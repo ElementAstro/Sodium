@@ -29,43 +29,8 @@ Description: Socket server
 
 **************************************************/
 
-/*
- *  event_server.cpp
- *  LGuider Guiding
- *
- *  Created by Andy Galasso.
- *  Copyright (c) 2013 Andy Galasso.
- *  All rights reserved.
- *
- *  This source code is distributed under the following "BSD" license
- *  Redistribution and use in source and binary forms, with or without
- *  modification, are permitted provided that the following conditions are met:
- *    Redistributions of source code must retain the above copyright notice,
- *     this list of conditions and the following disclaimer.
- *    Redistributions in binary form must reproduce the above copyright notice,
- *     this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution.
- *    Neither the name of Craig Stark, Stark Labs nor the names of its
- *     contributors may be used to endorse or promote products derived from
- *     this software without specific prior written permission.
- *
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
- *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- *  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- *  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- *  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- *  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- *  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- *  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- *  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- *  POSSIBILITY OF SUCH DAMAGE.
- *
- */
-
-#include "gui/darks_dialog.h"
-#include "lightguider.h"
-
+#include "darks_dialog.hpp"
+#include "sodium.hpp"
 
 #include <spdlog/spdlog.h>
 
@@ -74,7 +39,6 @@ Description: Socket server
 #include <wx/sstream.h>
 #include <sstream>
 
-
 #include <algorithm>
 #include <atomic>
 #include <chrono>
@@ -82,7 +46,6 @@ Description: Socket server
 #include <stdexcept>
 #include <string>
 #include <vector>
-
 
 EventServer EvtServer;
 
@@ -245,7 +208,7 @@ struct NV {
     NV(const wxString &n_, JAry &ary) : n(n_), v(ary.str()) {}
     NV(const wxString &n_, JObj &obj) : n(n_), v(obj.str()) {}
     NV(const wxString &n_, const json_value *v_) : n(n_), v(json_format(v_)) {}
-    NV(const wxString &n_, const LGuider_Point &p) : n(n_) {
+    NV(const wxString &n_, const SodiumPoint &p) : n(n_) {
         JAry ary;
         ary << p.X << p.Y;
         v = ary.str();
@@ -287,7 +250,7 @@ static JObj &operator<<(JObj &j, const NV &nv) {
 
 static NV NVMount(const Mount *mount) { return NV("Mount", mount->Name()); }
 
-static JObj &operator<<(JObj &j, const LGuider_Point &pt) {
+static JObj &operator<<(JObj &j, const SodiumPoint &pt) {
     return j << NV("X", pt.X, 3) << NV("Y", pt.Y, 3);
 }
 
@@ -304,13 +267,13 @@ struct Ev : public JObj {
 
 static Ev ev_message_version() {
     Ev ev("Version");
-    ev << NV("LGuiderVersion", LGuiderVERSION)
-       << NV("LGuiderSubver", LGuiderSUBVER) << NV("OverlapSupport", true)
+    ev << NV("LGuiderVersion", SODIUM_VERSION)
+       << NV("LGuiderSubver", SODIUM_SUBVER) << NV("OverlapSupport", true)
        << NV("MsgVersion", MSG_PROTOCOL_VERSION);
     return ev;
 }
 
-static Ev ev_set_lock_position(const LGuider_Point &xy) {
+static Ev ev_set_lock_position(const SodiumPoint &xy) {
     Ev ev("LockPositionSet");
     ev << xy;
     return ev;
@@ -327,7 +290,7 @@ static Ev ev_calibration_complete(const Mount *mount) {
     return ev;
 }
 
-static Ev ev_star_selected(const LGuider_Point &pos) {
+static Ev ev_star_selected(const SodiumPoint &pos) {
     Ev ev("StarSelected");
     ev << pos;
     return ev;
@@ -660,8 +623,9 @@ static void deselect_star(JObj &response, const json_value *params) {
 static void get_exposure(JObj &response, const json_value *params) {
     try {
         response << jrpc_result(
-            pFrame->RequestedExposureDuration());  // 返回响应结果为当前曝光时间的
-                                                   // JSON 对象
+            pFrame
+                ->RequestedExposureDuration());  // 返回响应结果为当前曝光时间的
+                                                 // JSON 对象
         spdlog::debug("Current Exposure time : {}",
                       pFrame->RequestedExposureDuration());  // 打印调试信息
     } catch (const std::exception &e) {                      // 异常捕获
@@ -1021,9 +985,9 @@ static void get_paused(JObj &response, const json_value *params) {
         VERIFY_GUIDER(response);
         bool status = pFrame->pGuider->IsPaused();
         if (status)
-            spdlog::debug("LightGuider paused successfully");
+            spdlog::debug("Sodium paused successfully");
         else
-            spdlog::debug("LightGuider is not paused");
+            spdlog::debug("Sodium is not paused");
         response << jrpc_result(status);
     } catch (std::exception &e) {
         // 捕获异常
@@ -1138,7 +1102,7 @@ static void find_star(JObj &response, const json_value *params) {
         }
         bool error = pFrame->AutoSelectStar(roi);
         if (!error) {
-            const LGuider_Point &lockPos = pFrame->pGuider->LockPosition();
+            const SodiumPoint &lockPos = pFrame->pGuider->LockPosition();
             if (lockPos.IsValid()) {
                 spdlog::debug("Found a star at [{}, {}]", lockPos.X, lockPos.Y);
                 response << jrpc_result(lockPos);
@@ -1184,7 +1148,7 @@ static void get_app_state(JObj &response, const json_value *params) {
 static void get_lock_position(JObj &response, const json_value *params) {
     try {
         VERIFY_GUIDER(response);
-        const LGuider_Point &lockPos = pFrame->pGuider->LockPosition();
+        const SodiumPoint &lockPos = pFrame->pGuider->LockPosition();
         if (lockPos.IsValid()) {
             response << jrpc_result(lockPos);
         } else {
@@ -1226,10 +1190,10 @@ static void set_lock_position(JObj &response, const json_value *params) {
         bool error;
         // 设置锁定位置
         if (exact) {
-            error = pFrame->pGuider->SetLockPosition(LGuider_Point(x, y));
+            error = pFrame->pGuider->SetLockPosition(SodiumPoint(x, y));
         } else {
-            error = pFrame->pGuider->SetLockPosToStarAtPosition(
-                LGuider_Point(x, y));
+            error =
+                pFrame->pGuider->SetLockPosToStarAtPosition(SodiumPoint(x, y));
         }
         if (error) {
             spdlog::error("Failed to set lock position");
@@ -1438,7 +1402,7 @@ static bool get_double(double *d, const json_value *j) {
     return false;
 }
 
-static bool parse_point(LGuider_Point *pt, const json_value *j) {
+static bool parse_point(SodiumPoint *pt, const json_value *j) {
     if (j->type != JSON_ARRAY)
         return false;
     const json_value *jx = j->first_child;
@@ -1727,7 +1691,7 @@ static void get_star_image(JObj &response, const json_value *params) {
         VERIFY_GUIDER(response);
         Guider *guider = pFrame->pGuider;
         const usImage *img = guider->CurrentImage();
-        const LGuider_Point &star = guider->CurrentPosition();
+        const SodiumPoint &star = guider->CurrentPosition();
         if (guider->GetState() < GUIDER_STATE::STATE_SELECTED ||
             !img->ImageData || !star.IsValid()) {
             spdlog::error("No star selected!");
@@ -1749,7 +1713,7 @@ static void get_star_image(JObj &response, const json_value *params) {
                 img->ImageData + y * img->Size.GetWidth() + rect.GetLeft();
             enc.append(p, rect.GetWidth() * sizeof(unsigned short));
         }
-        LGuider_Point pos(star);
+        SodiumPoint pos(star);
         pos.X -= rect.GetLeft();
         pos.Y -= rect.GetTop();
         JObj rslt;
@@ -1904,11 +1868,11 @@ static void dither(JObj &response, const json_value *params) {
     }
 }
 
-/// @brief Shutdown LightGuider via socket connection
+/// @brief Shutdown Sodium via socket connection
 /// @param response
 /// @param params
 static void shutdown(JObj &response, const json_value *params) {
-    spdlog::info("Shutdown LightGuider by client , goodbye!");
+    spdlog::info("Shutdown Sodium by client , goodbye!");
     wxGetApp().TerminateApp();
 
     response << jrpc_result(0);
@@ -2950,7 +2914,7 @@ static void delete_all_profiles(JObj &response, const json_value *params) {
     try {
         // 删除所有配置文件
         pConfig->DeleteAll();
-        spdlog::debug("Deleted all of the profiles LightGuider found");
+        spdlog::debug("Deleted all of the profiles Sodium found");
         rslt << NV("status", true);
         response << jrpc_result(rslt);
     } catch (const std::exception &e) {
@@ -3533,7 +3497,7 @@ void EventServer::NotifyLoopingStopped() {
     SIMPLE_NOTIFY("LoopingExposuresStopped");
 }
 
-void EventServer::NotifyStarSelected(const LGuider_Point &pt) {
+void EventServer::NotifyStarSelected(const SodiumPoint &pt) {
     SIMPLE_NOTIFY_EV(ev_star_selected(pt));
 }
 
@@ -3621,7 +3585,7 @@ void EventServer::NotifyGuidingDithered(double dx, double dy) {
     do_notify(m_eventServerClients, ev);
 }
 
-void EventServer::NotifySetLockPosition(const LGuider_Point &xy) {
+void EventServer::NotifySetLockPosition(const SodiumPoint &xy) {
     if (m_eventServerClients.empty())
         return;
 

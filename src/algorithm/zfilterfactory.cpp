@@ -37,15 +37,15 @@ https://www-users.cs.york.ac.uk/~fisher/mkfilter/
 <fisher@minster.york.ac.uk>
 */
 
-#include "phd.h"
+#include "sodium.hpp"
 
-#include "zfilterfactory.h"
+#include "zfilterfactory.hpp"
 
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
 
-#include "zfilterfactory.h"
+#include "zfilterfactory.hpp"
 
 ZFilterFactory::ZFilterFactory(FILTER_DESIGN f, int o, double p, bool mzt )
 {

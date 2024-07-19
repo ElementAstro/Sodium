@@ -1,18 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html><head><meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Glossary of Terms</title></head>
 <body><h2>Glossary of Technical Terms</h2><br>Although
-LightGuider strives for ease-of-use, the underlying task of guiding a
+Sodium strives for ease-of-use, the underlying task of guiding a
 telescope is actually quite complicated. &nbsp;If you're trying to
 resolve equipment-related problems or fine-tune your guiding, you may
 brush up against unfamiliar topics and terminology from statistics,
 astronomy, and mechanical engineering. &nbsp;Some of these terms appear
-in the LightGuider user interfaces as well as in the support forums and
+in the Sodium user interfaces as well as in the support forums and
 discussion groups, so it's worthwhile to have a basic knowledge of what
 they mean. &nbsp;Some of the terms you are&nbsp;likely to encounter are
 discussed below.<br><br><span style="font-weight: bold;"><a name="RMS"></a>RMS</span>
 -
 is a shorthand for "root-mean-square", a statistical quantity used to
-characterize a set of data. &nbsp;In the context of LightGuider, it is the
+characterize a set of data. &nbsp;In the context of Sodium, it is the
 same as standard deviation. &nbsp;It is a useful quantity to describe
 the spread of the data points around some average value. &nbsp;If we
 concentrate on the task of guiding, we're interested in knowing how
@@ -38,7 +38,7 @@ the 25 points in this example), the underlying mathematics tells us we
 would expect&nbsp;68% of the excursions to be smaller than +- 1.5 px,
 and&nbsp;95% of the excursions to fall within +/- 2*RMS (3.0) arc-sec.
 &nbsp;Obviously, this tells us a lot more about the guiding performance,
-and it's why RMS is used in the LightGuider visualization tools.<br><br><span style="font-weight: bold;"><a name="Backlash"></a>Backlash</span>
+and it's why RMS is used in the Sodium visualization tools.<br><br><span style="font-weight: bold;"><a name="Backlash"></a>Backlash</span>
 - is a typical shortcoming of most telescope mounts that use gears to
 drive the two axes (most but not all amateur mounts use gears).
 &nbsp;It is caused by a
@@ -68,7 +68,7 @@ for
 intermittent commands to move north or south to track the star.
 &nbsp;Direction reversals in Dec will quite often trigger backlash
 delays.
-&nbsp; The Guiding Assistant in LightGuider can measure this, and you will
+&nbsp; The Guiding Assistant in Sodium can measure this, and you will
 quite often see discussions about backlash in the support forums.
 &nbsp;As a general rule, backlash is best addressed by re-meshing or
 otherwise improving the gear train on your declination axis. &nbsp;Do
@@ -89,10 +89,10 @@ proactive corrections as the worm reaches various points in its cycle.
 &nbsp;This correction mechanism is called periodic error correction,
 usually abbreviated as PEC. &nbsp;The PEC is usually programmed into
 the mount firmware through use of a separate application (e.g.&nbsp;PecPrep). &nbsp; Since the PE corrections are applied
-by the mount firmware proactively, they do not interfere with LightGuider
+by the mount firmware proactively, they do not interfere with Sodium
 guiding.
 &nbsp;In fact, they&nbsp;help it substantially - there will usually be
-a smaller range of motion for which LightGuider needs to correct..<br><br><span style="font-weight: bold;"><a name="Image_Scale"></a>Image Scale </span>-
+a smaller range of motion for which Sodium needs to correct..<br><br><span style="font-weight: bold;"><a name="Image_Scale"></a>Image Scale </span>-
 is a fairly simple property of the imaging or guiding system, although
 not something most users want to calculate. &nbsp;It is expressed in
 units of arc-sec/pixel and basically describes how angular distances in
@@ -112,7 +112,7 @@ camera pixel is looking at a smaller angular distance in the sky.
 comparatively large linear movement on the sensor. &nbsp;If the same
 guide camera is used on a shorter focal length scope, the image scale
 is larger and the star deflections will appear smaller - each pixel is
-looking at a larger region of the sky. &nbsp;LightGuider computes the image
+looking at a larger region of the sky. &nbsp;Sodium computes the image
 scale for you if you correctly enter the guide scope focal length and
 guide camera pixel sizes. &nbsp;Once this is known, the guiding
 performance shown with tools like the guiding graph can be displayed in
@@ -121,7 +121,7 @@ improve, and discuss your guiding performance because they address the
 real, physical behavior of your guiding system and aren't dependent on
 the specifics of your optical configuration.<br><br><span style="font-weight: bold;"><a name="SNR"></a>SNR </span>-
 is the acronym used for signal-to-noise-ratio. &nbsp;This is a
-specialized measurement used by LightGuider to determine how well
+specialized measurement used by Sodium to determine how well
 the star can be distinguished from the background. It is similar but
 not identical to the signal-to-noise ratio used in photometry.
 In the absence of other factors, the accuracy of determining the
@@ -137,7 +137,7 @@ values are clipped (truncated) at the maximum value for the sensor.
 star position is degraded. &nbsp;You can see this by using the Star
 Profile tool, and you should try to avoid this situation whenever
 possible.<br><br><span style="font-weight: bold;"><a name="Star_Mass"></a>Star Mass - </span>is
-an internal LightGuider metric that indicates the overall brightness and
+an internal Sodium metric that indicates the overall brightness and
 apparent size of the guide star. &nbsp;It can be a rough indicator of
 star-dimming events such as passing clouds or fog, and it is used
 primarily in the "star mass detection" control on the Guide tab of the

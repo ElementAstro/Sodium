@@ -33,7 +33,7 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 void wxMessageBoxProxy::showMessageBox(void)
 {

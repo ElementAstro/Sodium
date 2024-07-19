@@ -32,9 +32,9 @@
  *
  */
 
-#include "phd.h"
-#include "polardrift_tool.h"
-#include "polardrift_toolwin.h"
+#include "sodium.hpp"
+#include "polardrift_tool.hpp"
+#include "polardrift_toolwin.hpp"
 
 #include <wx/gbsizer.h>
 #include <wx/valnum.h>
@@ -424,7 +424,7 @@ bool PolarDriftToolWin::WatchDrift()
 
     m_alpha = theta + m_hemi * 90 * m_mirror; // direction to the pole
     m_offset = hypot(xslope, yslope)*factor;  //polar alignment error in pixels
-    m_target = PHD_Point(m_current.X + m_offset*cos(radians(m_alpha)), m_current.Y + m_offset*(sin(radians(m_alpha))));
+    m_target = SodiumPoint(m_current.X + m_offset*cos(radians(m_alpha)), m_current.Y + m_offset*(sin(radians(m_alpha))));
 
     Debug.AddLine(wxString::Format("Polar Drift: m_hemi %d m_mirror %d m_pxScale %.1f", m_hemi, m_mirror, m_pxScale));
     Debug.AddLine(wxString::Format("Polar Drift: m_num %d m_t0 %.1f tnow %.1f m_current(X,Y): %.1f,%.1f", m_num, m_t0, tnow,

@@ -1,7 +1,7 @@
-LightGuider
+Sodium
 ===========
 
-LightGuider是基于LGuider2修改之后为LightAPT提供的导星模块，变更情况请见LightGuider.pdf
+Sodium是基于LGuider2修改之后为LightAPT提供的导星模块，变更情况请见Sodium.pdf
 
 ## API 
 
@@ -20,19 +20,19 @@ LightGuider是基于LGuider2修改之后为LightAPT提供的导星模块，变�
 |`Event`    | string | 事件名称 |
 | `Timestamp` | number | 时间戳 |
 | `Host`    | string | 主机名 |
-| `Inst`    | number | LightGuider实例数（默认为1） |
+| `Inst`    | number | Sodium实例数（默认为1） |
 
-#### LightGuider添加事件描述 ####
+#### Sodium添加事件描述 ####
 
-LightGuider在LGuider2原有API的基础上添加一些函数，使之功能更加丰富
+Sodium在LGuider2原有API的基础上添加一些函数，使之功能更加丰富
 
 #### `lightapt_modify_response` ####
 
-检查此服务器是否为LightGuider，在某些情况下，可能会与原版LGuider2混用，所以做一个验证
+检查此服务器是否为Sodium，在某些情况下，可能会与原版LGuider2混用，所以做一个验证
 
 | Attribute | Type | Description |
 |:----------|:-----|:------------|
-| `version` | string | LightGuider 版本 |
+| `version` | string | Sodium 版本 |
 | `modified` | boolean | 如果为真则已修改 |
 
 #### `is_darklib_loaded` ####
@@ -181,7 +181,7 @@ LightGuider在LGuider2原有API的基础上添加一些函数，使之功能更�
 
 #### `Version` ####
 
-描述LightGuider的版本
+描述Sodium的版本
 
 | Attribute | Type | Description |
 |:----------|:-----|:------------|

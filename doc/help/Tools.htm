@@ -5,10 +5,10 @@
   <a href="Tools.htm#Star_cross_tool">Star Cross Tool</a><br><a href="Tools.htm#pierflip_cal_tool">Meridian Flip Calibration Tool</a><br>
   <a href="Tools.htm#Polar_alignment_tools"><span style="text-decoration: underline;"></span></a><a href="Tools.htm#Comet_Tracking">Comet Tracking</a><br>
   <a href="#Lock_Positions">Lock Positions</a><br>
-  <a href="#LightGuider_Server">LightGuider Server</a><br>
+  <a href="#Sodium_Server">Sodium Server</a><br>
   <br><h3><a name="Polar_alignment_tools"></a>Polar Alignment Tools</h3>
 
-LightGuider offers three different polar alignment tools.<span style="">&nbsp; </span>The three approaches share the same basic
+Sodium offers three different polar alignment tools.<span style="">&nbsp; </span>The three approaches share the same basic
 objective: to help you physically align the RA axis of your mount to the
 celestial pole.<span style="">&nbsp; </span>These polar alignment
 tools are different from the &#8220;two-star&#8221; or &#8220;three-star&#8221; alignment procedures
@@ -55,7 +55,7 @@ experiment with them and choose the one that best suits their
 needs.<span style="">&nbsp; </span>The importance of alignment
 accuracy is often over-emphasized, so users need to keep things in
 perspective.<span style="">&nbsp; </span>Most declination drift can
-be well-managed by LightGuider guiding assuming the mount behaves well and doesn&#8217;t
+be well-managed by Sodium guiding assuming the mount behaves well and doesn&#8217;t
 have a lot of declination backlash.<span style="">&nbsp;&nbsp;
 </span>However, at some point, the amount of polar alignment error can create
 field rotation in the images, something that can&#8217;t be corrected.<span style="">&nbsp; </span>The larger the imaging sensor and the closer
@@ -81,9 +81,9 @@ is to click&nbsp;on the 'Auto-Select Stars' icon in the main window,
 next to the 'Guide' icon.&nbsp; Auto-selection can also be triggered by&nbsp;using
 the keyboard
 shortcut of &lt;Alt&gt;S or by clicking on the 'Auto-select stars' item
-under the 'Tools' menu. &nbsp;Taking any of these actions tells <span style="font-style: italic;">LightGuider</span>
+under the 'Tools' menu. &nbsp;Taking any of these actions tells <span style="font-style: italic;">Sodium</span>
 to scan the current guide image
-and identify&nbsp;stars most suitable for guiding. &nbsp;LightGuider will try
+and identify&nbsp;stars most suitable for guiding. &nbsp;Sodium will try
 to select stars of sufficient brightness that are not
 saturated, have sufficient size, and are not too near other stars
 nor&nbsp;too close to the edge of the
@@ -102,7 +102,7 @@ however it was chosen.
 &nbsp;To get the best results from&nbsp;Auto-Select, you should&nbsp;
 use either a bad-pixel map or dark library and specify a
 Min-HFD value (Advanced Settings/Guiding tab) to reduce the
-likelihood of LightGuider mistakenly choosing a hot pixel. &nbsp;It also works
+likelihood of Sodium mistakenly choosing a hot pixel. &nbsp;It also works
 better if you set the option to measure saturation by Max-ADU value
 (Advanced Settings/Camera tab), assuming you know or can determine the
 maximum ADU value of your camera. &nbsp;For example, a 16-bit guide
@@ -126,7 +126,7 @@ guiding because they occur at a much higher frequency than you
 can&nbsp;measure. Trying to correct for them with conventional
 guiding&nbsp;is often called "chasing the seeing" and usually leads to
 poor results. &nbsp;Avoiding it is best accomplished by
-setting a minimum-move level that will cause LightGuider to ignore most of
+setting a minimum-move level that will cause Sodium to ignore most of
 this high-frequency behavior. &nbsp;The GA can also show
 you other behavior of your system such as overall drift
 rates in right ascension and declination as well as peak-to-peak and
@@ -150,7 +150,7 @@ buttons also summarizes what's happening. &nbsp;The three buttons are
 enabled or disabled based on the operating state of the GA. &nbsp;In
 this case, 'Start' is disabled because the measurement is already
 underway.<br><br>If you launch the GA when guiding is inactive, the initial form will look different:<br><br><img style="width: 959px; height: 609px;" alt="" src="Guiding_Assistant_Start_a.png"><br><br>In
-this case, you'll need to first start guiding in LightGuider - start looping,
+this case, you'll need to first start guiding in Sodium - start looping,
 auto-select a star, and guide. &nbsp;Once that's done, the 'Start' button in
 the GA will be enabled and you can begin measurement.<br><br>When
 GA measurement is active, guiding commands will be disabled, so the
@@ -197,7 +197,7 @@ will continue to sample until the 2-minute period has expired. &nbsp; A
 new group of status messages will be
 shown immediately above the 'Start' and 'Stop' buttons so you can see
 what's being done:<br><br><img style="width: 772px; height: 511px;" alt="" src="Guiding_Assistant_MeasuringBL.png"><br><br>To
-do backlash measurement, LightGuider will move the star by large amounts,
+do backlash measurement, Sodium will move the star by large amounts,
 first in the north direction, then back to the south. &nbsp;There is
 some risk the star will be lost during this process or the star might
 already be&nbsp; too close to the north edge of the sensor. &nbsp;You
@@ -248,7 +248,7 @@ declination backlash and the measurement uncertainty (or a status line
 that says the test failed):<br><br><img style="width: 776px; height: 622px;" alt="" src="Guiding_Assistant_Finish.png"><br><br>Depending
 on the amount of backlash, you may see a recommendation for setting a
 backlash compensation factor - 230 ms in the example shown above.
-This type of backlash compensation is different from the feature offered in many mount controllers and is described here: &nbsp;<a href="Advanced_settings.htm#Declination_backlash_comp">LightGuider backlash compensation</a> &nbsp; &nbsp;If the measured amount is less than 100 ms, no recommendation
+This type of backlash compensation is different from the feature offered in many mount controllers and is described here: &nbsp;<a href="Advanced_settings.htm#Declination_backlash_comp">Sodium backlash compensation</a> &nbsp; &nbsp;If the measured amount is less than 100 ms, no recommendation
 will be made because such a small amount probably doesn't warrant any
 compensation. &nbsp;If the backlash is very large, over 3 seconds,
 you'll see a different recommendation to use uni-directional guiding in
@@ -261,7 +261,7 @@ measurements, be sure to disable any backlash compensation that's
 previously been
 enabled in the mount software. &nbsp;If this isn't done, the
 measurements and
-any subsequent attempts at compensation by LightGuider will be invalid.
+any subsequent attempts at compensation by Sodium will be invalid.
 &nbsp;If you want to try uni-directional guiding, you can find
 instructions here: &nbsp;<a href="Supplemental_Info.htm#Declination-Uni-directional_guiding">Uni-directional guiding</a><br><br>You
 can look at a graphical display of the backlash measurement results to
@@ -287,7 +287,7 @@ results from the selected GA run, including active buttons for applying
 the recommendations.<br><span style="font-weight: bold;"></span><br><br><h3><a name="Calibration_Details"></a>Calibration Review and Modification</h3>Most of the calibration-related windows, including calibration sanity-checks, will open a window that looks something like this:<br><br><img style="width: 763px; height: 421px;" alt="" src="Calib_Review.png"><br><br>The
 first thing to look at is the graph to the left, which shows the guide
 star
-movements as a result of the guide pulses that LightGuider sent during
+movements as a result of the guide pulses that Sodium sent during
 calibration. &nbsp;The lines show how the RA and Dec mount axes relate
 to the camera sensor X/Y axes - these lines should be
 roughly perpendicular but their overall orientation is unimportant.
@@ -335,7 +335,7 @@ option is intended for development work or for use by experts, and is mostly the
 <img style="width: 437px; height: 251px;" alt="" src="ManualGuide.png">&nbsp;&nbsp;&nbsp; <br>
 <br>
 If you are encountering calibration
-problems, you should be sure that <span style="font-style: italic;">LightGuider</span>'s
+problems, you should be sure that <span style="font-style: italic;">Sodium</span>'s
 commands are&nbsp;getting to the mount and the mount is responding accordingly. Or you may want to nudge the mount or
 experiment with manual dithering. &nbsp;In the 'Tools' menu, click on
 'Manual
@@ -355,9 +355,9 @@ the Advanced Settings dialog. &nbsp;If you are debugging
 mount/calibration
 problems in the daytime, listen to (rather than watch) your mount to
 determine if it is getting
-the commands from <span style="font-style: italic;">LightGuider</span>. The idea here is just to determine if the
+the commands from <span style="font-style: italic;">Sodium</span>. The idea here is just to determine if the
 mount is responding
-to <span style="font-style: italic;">LightGuider</span>'s guide commands. You won't be able to see the mount move (it's moving
+to <span style="font-style: italic;">Sodium</span>'s guide commands. You won't be able to see the mount move (it's moving
 at guide speed)
 but you may be able to hear the motors. Other options include watching
 the
@@ -367,11 +367,11 @@ fairly far away (to amplify your motions). &nbsp;A better&nbsp;approach
 for nighttime testing is to run the "star-cross" test described <a href="Trouble_shooting.htm#Star_cross_test">here</a>.&nbsp;
 &nbsp;Beginners often make the mistake of confusing the slewing-type
 operations done by planetarium and imaging applications with the
-completely different guiding operations done by LightGuider. &nbsp;Knowing&nbsp;that an imaging app can slew your telescope correctly
+completely different guiding operations done by Sodium. &nbsp;Knowing&nbsp;that an imaging app can slew your telescope correctly
 doesn't tell you anything useful about whether the mount is guidable.<br>
 <br>
 <a name="Dithering_Manual"></a>Dithering
-is used primarily with image capture or automation applications using the LightGuider server interface. &nbsp;However, you can do
+is used primarily with image capture or automation applications using the Sodium server interface. &nbsp;However, you can do
 manual dithering or experiment with dither settings using the controls
 at the bottom of the dialog. &nbsp;The 'dither' amount field at the
 left controls the&nbsp;amount the mount will be moved, in units of
@@ -379,7 +379,7 @@ pixels. &nbsp;You can scale this amount - i.e. multiply it by a
 constant - by using the 'scale' spin control to the right. &nbsp;These
 two controls establish a maximum amount of movement that will be used
 for dithering - the product of 'scale' x 'dither'.&nbsp; When you click
-on the 'Dither' button, LightGuider will move the mount by a random amount
+on the 'Dither' button, Sodium will move the mount by a random amount
 that is less than or equal to the limit you have set, in one of the
 north/south/east/west directions. &nbsp;The 'RA Only' checkbox will
 constrain the dither adjustments to only east or west. &nbsp;Obviously,
@@ -389,7 +389,7 @@ your imaging camera is not in the middle of an exposure.<br>
 The Star-Cross tool can help you test the mount's response to guide commands as described in this&nbsp;<a href="Trouble_shooting.htm#Problems-_Mount_Control">Trouble-shooting</a>
 section. Although the test is easy to perform manually, you may prefer
 to use this tool. &nbsp;The star-cross tool will show the following
-dialog: <br><br><img style="width: 603px; height: 309px;" alt="" src="Star_cross_tool.png"><br><br><span style="font-weight: bold;">This test presumes you're using the main image camera to expose the image</span>, and LightGuider doesn't know what image scale is being used for that.
+dialog: <br><br><img style="width: 603px; height: 309px;" alt="" src="Star_cross_tool.png"><br><br><span style="font-weight: bold;">This test presumes you're using the main image camera to expose the image</span>, and Sodium doesn't know what image scale is being used for that.
 &nbsp;You need to be sure the settings are large enough to show a
 distinct
 pattern on the main camera image but not so large that all the stars will move
@@ -412,20 +412,20 @@ on the East side of the pier, and one on the West. You will be
 instructed to slew (meridian flip) the telescope when needed.
 &nbsp;This only needs to be done once for each type of mount you use. &nbsp;You <span style="font-weight: bold;">must carefully follow all the instructions</span> shown in the wizard's dialogs - failing to do so or taking short-cuts will invalidate the results and will siimply waste time.<br><br><h3><a name="Comet_Tracking"></a>Comet Tracking</h3>
 
-One way to image a comet is to have LightGuider use the head of the comet as the guide
+One way to image a comet is to have Sodium use the head of the comet as the guide
 "star", but this approach may not always work. For example, the head
 of the comet may not present a star-like center suitable for
 guiding. Or, when using an off-axis guider, the comet may not even be
 visible in the guide camera.<br>
 <br>
-LightGuider provides a Comet Tracking tool for use when guiding on the comet
+Sodium provides a Comet Tracking tool for use when guiding on the comet
 itself is not feasible.  The idea is to guide on an ordinary star, but
 to gradually shift the lock position to match the comet's motion,
 or <i>tracking rate</i>.<br>
 <br>
-There are a three different ways to provide the comet tracking rate to LightGuider.<br>
+There are a three different ways to provide the comet tracking rate to Sodium.<br>
 <br>
-<ul><li>Some planetarium applications, especially Cartes du Ciel, can send the rate directly to LightGuider;</li><li>You can enter the tracking rate manually, or,</li><li>You can train the rate in LightGuider by following the comet for a period of time in the imaging camera.</li></ul>
+<ul><li>Some planetarium applications, especially Cartes du Ciel, can send the rate directly to Sodium;</li><li>You can enter the tracking rate manually, or,</li><li>You can train the rate in Sodium by following the comet for a period of time in the imaging camera.</li></ul>
 <br>
 <br>
 <img style="width: 426px; height: 408px;" alt="" src="CometTrackingTool.png"><br>
@@ -435,7 +435,7 @@ To enter the rates manually, you would select "Arcsec/hr" for units and
 "RA/Dec" for axes, then enter the rates from the comet's ephemeris.
 &nbsp;If you are getting the rates from the MinorPlanetCenter web site,
 you should choose the option for 'Separate RA and Declination
-coordinate motions'. &nbsp;LightGuider will automatically adjust the rates to
+coordinate motions'. &nbsp;Sodium will automatically adjust the rates to
 compute the apparent motions in the sky.<br>
 <br>
 Comet rate training works like this:<br>
@@ -443,22 +443,22 @@ Comet rate training works like this:<br>
 First, center the comet in your imaging camera. If your imaging
 application has some kind of reticle display, you should use that to
 note the precise position of the comet on the imaging sensor. Once
-this is ready, select a guide star in LightGuider and start guiding. Next
+this is ready, select a guide star in Sodium and start guiding. Next
 click "Start" in the Comet Tracking tool to begin training.<br>
 <br>
 Take a continuous series of short exposures in your imaging camera
 using your imaging application's Frame and Focus feature. Over time,
-the comet will drift away from the starting location. Use LightGuider's
+the comet will drift away from the starting location. Use Sodium's
 "Adjust Lock Position" controls to move the comet back to the starting
 location. You may have to experiment a bit to determine which way the
 comet moves on the imaging camera sensor in response to the
-Up/Down/Left/Right controls in LightGuider. You may find it useful to enable
+Up/Down/Left/Right controls in Sodium. You may find it useful to enable
 the "Always on top" button in the Adjust Lock Position window so the
 controls stay visible on top of your imaging application.<br>
 <br>
-LightGuider will quickly learn the comet tracking rate as you re-center the
-comet. Once you are satisfied that LightGuider is tracking the comet, you can
-click Stop to end the training. LightGuider will continue shifting the lock
+Sodium will quickly learn the comet tracking rate as you re-center the
+comet. Once you are satisfied that Sodium is tracking the comet, you can
+click Stop to end the training. Sodium will continue shifting the lock
 position to track the comet until you disable comet tracking by
 toggling the Enable/Disable button.<br>
 <br>
@@ -468,7 +468,7 @@ simulator will display a comet. Use a bookmark to mark the comet's
 starting location, and use the Adjust Lock Position controls to move
 the comet back to the bookmark location.
 <br><h3><a name="Lock_Positions"></a>Lock Positions</h3>
-<span style="font-style: italic;">LightGuider</span> normally
+<span style="font-style: italic;">Sodium</span> normally
 sets a 'lock position' where the guide star is located at the end of
 a calibration. &nbsp;Depending on the details of the calibration
 sequence, this may not be exactly where the star was located at the
@@ -477,13 +477,13 @@ are trying to precisely center your target after calibration, you may want to us
 '<span style="font-weight: bold;">sticky lock position.</span>' &nbsp;You do this by clicking on your guide
 star <span style="font-style: italic;">before calibration</span>, then
 setting the 'Sticky Lock Position' under the 'Tools' menu. &nbsp;After
-calibration is complete, <span style="font-style: italic;">LightGuider</span> will continue to move the mount until the
+calibration is complete, <span style="font-style: italic;">Sodium</span> will continue to move the mount until the
 star is located at the sticky lock&nbsp;position. &nbsp;So you may see
-an additional delay after the calibration while <span style="font-style: italic;">LightGuider</span> repositions the
+an additional delay after the calibration while <span style="font-style: italic;">Sodium</span> repositions the
 scope at guide speed. &nbsp;The sticky lock position will continue to
 be used even as guiding is stopped and subsequently resumed unless you change the lock point through actions such as dithering.
 &nbsp;Again, this insures a rigorous positioning of the guide star (and
-presumably your image target) at the expense of delays needed for <span style="font-style: italic;">LightGuider</span>
+presumably your image target) at the expense of delays needed for <span style="font-style: italic;">Sodium</span>
 to reposition the mount.<br><br>If
 you need to &nbsp;fine-tune the position of the guide star on the
 camera sensor after guiding has begun, you can use the 'Adjust Lock
@@ -498,22 +498,22 @@ If you type in a new lock position,&nbsp;you run the risk of losing
 the guide star if the new&nbsp;position falls outside the current
 search region. &nbsp;This tool is&nbsp;useful if you need to achieve
 precise positioning of either the guide star or the imaging target, for
-example with spectroscopy - but it is unnecessary for most users.<br><h3><a name="LightGuider_Server"></a><span style="font-style: italic;">LightGuider</span> Server Interface</h3>
-<span style="font-style: italic;">LightGuider</span> supports third-party
+example with spectroscopy - but it is unnecessary for most users.<br><h3><a name="Sodium_Server"></a><span style="font-style: italic;">Sodium</span> Server Interface</h3>
+<span style="font-style: italic;">Sodium</span> supports third-party
 imaging and automation applications that need to control&nbsp;guiding
 operations. &nbsp;In recent years, many new automation applications
-have become available and nearly all of them use the LightGuider server
+have become available and nearly all of them use the Sodium server
 interface. &nbsp;By using this API, these applications can control all
-the typical activities relating to LightGuider guiding: starting/stopping,
+the typical activities relating to Sodium guiding: starting/stopping,
 pausing/resuming, dithering/settling, calibrating, profile-loading, and
 many others.
 &nbsp;To use automation applications of this type, you should be
-sure&nbsp;the LightGuider '<a name="Enable_Server"></a>Enable
+sure&nbsp;the Sodium '<a name="Enable_Server"></a>Enable
 Server' option under the 'Tools'
 menu is enabled. &nbsp;With the option enabled, the operating system
-firewall must be configured to let LightGuider use network connections,
-something that is typically done as part of the LightGuider
+firewall must be configured to let Sodium use network connections,
+something that is typically done as part of the Sodium
 installation.&nbsp; Documentation for the
 server API is available on
-the <a href="https://github.com/OpenLGuiderGuiding/phd2/wiki">LightGuider
+the <a href="https://github.com/OpenLGuiderGuiding/phd2/wiki">Sodium
 Wiki</a>.</body></html>

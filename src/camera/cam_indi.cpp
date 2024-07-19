@@ -34,15 +34,15 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 #ifdef INDI_CAMERA
 
-#include "cam_indi.h"
-#include "camera.h"
-#include "config_indi.h"
-#include "image_math.h"
-#include "indi_gui.h"
+#include "cam_indi.hpp"
+#include "camera.hpp"
+#include "config_indi.hpp"
+#include "image_math.hpp"
+#include "indi_gui.hpp"
 #include <libindi/baseclient.h>
 
 #include <libindi/basedevice.h>
@@ -868,7 +868,7 @@ bool CameraINDI::ReadFITS(CapturedFrame *frame, usImage& img, bool takeSubframe,
     if (fits_get_hdu_type(fptr, &hdutype, &status) || hdutype != IMAGE_HDU)
     {
         pFrame->Alert(_("FITS file is not of an image"));
-        PHD_fits_close_file(fptr);
+        SODIUM_fits_close_file(fptr);
         return true;
     }
 
@@ -887,13 +887,13 @@ bool CameraINDI::ReadFITS(CapturedFrame *frame, usImage& img, bool takeSubframe,
     if (naxis == 3)
     {
         pFrame->Alert(_("RGB images are not supported, please switch the INDI driver to Mono"));
-        PHD_fits_close_file(fptr);
+        SODIUM_fits_close_file(fptr);
         return true;
     }
     if (nhdus != 1 || naxis != 2)
     {
         pFrame->Alert(_("Unsupported FITS file"));
-        PHD_fits_close_file(fptr);
+        SODIUM_fits_close_file(fptr);
         return true;
     }
 
@@ -906,13 +906,13 @@ bool CameraINDI::ReadFITS(CapturedFrame *frame, usImage& img, bool takeSubframe,
             // should never happen since we arranged not to take a subframe
             // unless full frame size is known
             Debug.Write("internal error: taking subframe before full frame\n");
-            PHD_fits_close_file(fptr);
+            SODIUM_fits_close_file(fptr);
             return true;
         }
         if (img.Init(FullSize))
         {
             pFrame->Alert(_("Memory allocation error"));
-            PHD_fits_close_file(fptr);
+            SODIUM_fits_close_file(fptr);
             return true;
         }
 
@@ -924,7 +924,7 @@ bool CameraINDI::ReadFITS(CapturedFrame *frame, usImage& img, bool takeSubframe,
         if (fits_read_pix(fptr, TUSHORT, fpixel, xsize * ysize, nullptr, rawdata, nullptr, &status))
         {
             pFrame->Alert(_("Error reading data"));
-            PHD_fits_close_file(fptr);
+            SODIUM_fits_close_file(fptr);
             delete[] rawdata;
             return true;
         }
@@ -946,7 +946,7 @@ bool CameraINDI::ReadFITS(CapturedFrame *frame, usImage& img, bool takeSubframe,
         if (img.Init(FullSize))
         {
             pFrame->Alert(_("Memory allocation error"));
-            PHD_fits_close_file(fptr);
+            SODIUM_fits_close_file(fptr);
             return true;
         }
 
@@ -954,12 +954,12 @@ bool CameraINDI::ReadFITS(CapturedFrame *frame, usImage& img, bool takeSubframe,
         if (fits_read_pix(fptr, TUSHORT, fpixel, xsize * ysize, nullptr, img.ImageData, nullptr, &status))
         {
             pFrame->Alert(_("Error reading data"));
-            PHD_fits_close_file(fptr);
+            SODIUM_fits_close_file(fptr);
             return true;
         }
     }
 
-    PHD_fits_close_file(fptr);
+    SODIUM_fits_close_file(fptr);
     return false;
 }
 

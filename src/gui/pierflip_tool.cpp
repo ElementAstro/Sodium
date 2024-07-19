@@ -32,8 +32,8 @@
  *
  */
 
-#include "phd.h"
-#include "pierflip_tool.h"
+#include "sodium.hpp"
+#include "pierflip_tool.hpp"
 
 enum State
 {

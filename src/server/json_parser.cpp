@@ -54,8 +54,8 @@
  * IN THE SOFTWARE.
  */
 
-#include "json_parser.h"
-#include "lightguider.h"
+#include "json_parser.hpp"
+#include "sodium.hpp"
 
 
 #include <memory.h>

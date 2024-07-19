@@ -32,7 +32,7 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 ConfigDialogPane::ConfigDialogPane(const wxString& heading, wxWindow *pParent)
     : wxStaticBoxSizer(new wxStaticBox(pParent, wxID_ANY, heading), wxVERTICAL)

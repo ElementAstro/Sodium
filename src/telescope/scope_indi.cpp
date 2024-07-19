@@ -34,11 +34,11 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#include "phd.h"
+#include "sodium.hpp"
 
 #ifdef GUIDE_INDI
 
-#include "config_indi.h"
+#include "config_indi.hpp"
 #include <libindi/baseclient.h>
 
 #ifdef LIBNOVA

@@ -32,8 +32,8 @@
  *
  */
 
-#include "phd.h"
-#include "about_dialog.h"
+#include "sodium.hpp"
+#include "about_dialog.hpp"
 #include <wx/fs_mem.h>
 #include <wx/html/htmlwin.h>
 
@@ -51,7 +51,7 @@ AboutDialog::AboutDialog()
 
     wxBoxSizer *pSizer = new wxBoxSizer(wxHORIZONTAL);
 
-    #include "icons/phd2_64.png.h"
+    #include "icons/phd2_64.png.hpp"
     wxBitmap phd2(wxBITMAP_PNG_FROM_DATA(phd2_64));
     wxStaticBitmap *pImage = new wxStaticBitmap(this, wxID_ANY, phd2);
 

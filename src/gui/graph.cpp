@@ -37,7 +37,7 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 #include <wx/dcbuffer.h>
 #include <wx/utils.h>
 #include <wx/colordlg.h>
@@ -659,7 +659,7 @@ void GraphLogWindow::OnCheckboxTrendlines(wxCommandEvent& WXUNUSED(evt))
     if (!m_pClient->m_showTrendlines)
     {
         // clear the polar alignment circle
-        pFrame->pGuider->SetPolarAlignCircle(PHD_Point(), 0.0);
+        pFrame->pGuider->SetPolarAlignCircle(SodiumPoint(), 0.0);
     }
     Refresh();
 }
@@ -1532,7 +1532,7 @@ void GraphLogClientWindow::OnPaint(wxPaintEvent& WXUNUSED(evt))
         }
         // when drifting, center the polar align circle on the star; when adjusting, center the polar
         // align circle at the lock position
-        const PHD_Point& center = pFrame->pGuider->IsCalibratingOrGuiding() ?
+        const SodiumPoint& center = pFrame->pGuider->IsCalibratingOrGuiding() ?
             pFrame->pGuider->CurrentPosition() : pFrame->pGuider->LockPosition();
         pFrame->pGuider->SetPolarAlignCircle(center, polarAlignCircleRadius);
 

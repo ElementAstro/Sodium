@@ -32,8 +32,8 @@
  *
  */
 
-#include "phd.h"
-#include "image_math.h"
+#include "sodium.hpp"
+#include "image_math.hpp"
 
 #include <algorithm>
 
@@ -280,7 +280,7 @@ bool usImage::Save(const wxString& fname, const wxString& hdrNote) const
         fitsfile *fptr;  // FITS file pointer
         int status = 0;  // CFITSIO status value MUST be initialized to zero!
 
-        PHD_fits_create_file(&fptr, fname, true, &status);
+        SODIUM_fits_create_file(&fptr, fname, true, &status);
 
         long fsize[] = {
             (long) Size.GetWidth(),
@@ -364,7 +364,7 @@ bool usImage::Save(const wxString& fname, const wxString& hdrNote) const
         hdr.write("PEDESTAL", (unsigned int) Pedestal, "dark subtraction bias value");
         hdr.write("SATURATE", (1U << BitsPerPixel) - 1, "Data value at which saturation occurs");
 
-        const PHD_Point& lockPos = pFrame->pGuider->LockPosition();
+        const SodiumPoint& lockPos = pFrame->pGuider->LockPosition();
         if (lockPos.IsValid())
         {
             hdr.write("PHDLOCKX", (float) lockPos.X, "PHD2 lock position x");
@@ -382,7 +382,7 @@ bool usImage::Save(const wxString& fname, const wxString& hdrNote) const
         long fpixel[3] = { 1, 1, 1 };
         fits_write_pix(fptr, TUSHORT, fpixel, NPixels, ImageData, &status);
 
-        PHD_fits_close_file(fptr);
+        SODIUM_fits_close_file(fptr);
 
         bError = status ? true : false;
     }
@@ -417,7 +417,7 @@ bool usImage::Load(const wxString& fname)
 
         int status = 0;  // CFITSIO status value MUST be initialized to zero!
         fitsfile *fptr;  // FITS file pointer
-        if (!PHD_fits_open_diskfile(&fptr, fname, READONLY, &status))
+        if (!SODIUM_fits_open_diskfile(&fptr, fname, READONLY, &status))
         {
             int hdutype;
             if (fits_get_hdu_type(fptr, &hdutype, &status) || hdutype != IMAGE_HDU)
@@ -474,7 +474,7 @@ bool usImage::Load(const wxString& fname)
             if (ok) ok = fhdr_int(fptr, "PHDSUBFH", &subf.height);
             if (ok) Subframe = subf;
 
-            PHD_fits_close_file(fptr);
+            SODIUM_fits_close_file(fptr);
 
             CalcStats();
         }

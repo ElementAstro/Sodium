@@ -5,8 +5,8 @@
 // PLEASE DO *NOT* EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#include "server_dialog_base.h"
-#include "lightguider.h"
+#include "server_dialog_base.hpp"
+#include "sodium.hpp"
 
 ///////////////////////////////////////////////////////////////////////////
 ServerDialog::ServerDialog(wxWindow* parent, wxWindowID id,

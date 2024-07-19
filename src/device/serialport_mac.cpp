@@ -34,7 +34,7 @@
 
 #ifdef __APPLE__
 
-#include "phd.h"
+#include "sodium.hpp"
 #include <IOKit/serial/IOSerialKeys.h>
 
 #if __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__ < 120000

@@ -32,11 +32,11 @@
 *
 */
 
-#include "phd.h"
-#include "guiding_assistant.h"
-#include "backlash_comp.h"
-#include "guiding_stats.h"
-#include "optionsbutton.h"
+#include "sodium.hpp"
+#include "guiding_assistant.hpp"
+#include "backlash_comp.hpp"
+#include "guiding_stats.hpp"
+#include "optionsbutton.hpp"
 
 #include <wx/textwrapper.h>
 #include <wx/tokenzr.h>
@@ -223,7 +223,7 @@ struct GuidingAsstWin : public wxDialog
     bool m_measuring;
     wxLongLong_t m_startTime;
     long m_elapsedSecs;
-    PHD_Point m_startPos;
+    SodiumPoint m_startPos;
     wxString startStr;
     DescriptiveStats m_hpfRAStats;
     DescriptiveStats m_lpfRAStats;
@@ -293,7 +293,7 @@ struct GuidingAsstWin : public wxDialog
     void MakeRecommendations();
     void DisplayStaticRecommendations(const GADetails& details);
     void LogResults();
-    void BacklashStep(const PHD_Point& camLoc);
+    void BacklashStep(const SodiumPoint& camLoc);
     void EndBacklashTest(bool completed);
     void BacklashError();
     void StatsReset();
@@ -695,7 +695,7 @@ void GuidingAsstWin::FillInstructions(DialogState eState)
     m_instructions->Layout();
 }
 
-void GuidingAsstWin::BacklashStep(const PHD_Point& camLoc)
+void GuidingAsstWin::BacklashStep(const SodiumPoint& camLoc)
 {
     BacklashTool::MeasurementResults qual;
     m_backlashTool->DecMeasurementStep(camLoc);
@@ -1841,7 +1841,7 @@ void GuidingAsstWin::UpdateInfo(const GuideStepInfo& info)
     double dec = info.mountOffset.Y;
     if (pMount->IsStepGuider())
     {
-        PHD_Point mountLoc;
+        SodiumPoint mountLoc;
         TheScope()->TransformCameraCoordinatesToMountCoordinates(info.cameraOffset, mountLoc);
         ra = mountLoc.X;
         dec = mountLoc.Y;
@@ -1966,7 +1966,7 @@ void GuidingAssistant::NotifyFrameDropped(const FrameDroppedInfo& info)
     }
 }
 
-void GuidingAssistant::NotifyBacklashStep(const PHD_Point& camLoc)
+void GuidingAssistant::NotifyBacklashStep(const SodiumPoint& camLoc)
 {
     if (pFrame && pFrame->pGuidingAssistant)
     {

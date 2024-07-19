@@ -32,16 +32,16 @@
  *
  */
 
-#include "phd.h"
-#include "drift_tool.h"
-#include "polardrift_tool.h"
-#include "staticpa_tool.h"
-#include "manualcal_dialog.h"
-#include "calreview_dialog.h"
-#include "nudge_lock.h"
-#include "comet_tool.h"
-#include "guiding_assistant.h"
-#include "calibration_assistant.h"
+#include "sodium.hpp"
+#include "drift_tool.hpp"
+#include "polardrift_tool.hpp"
+#include "staticpa_tool.hpp"
+#include "manualcal_dialog.hpp"
+#include "calreview_dialog.hpp"
+#include "nudge_lock.hpp"
+#include "comet_tool.hpp"
+#include "guiding_assistant.hpp"
+#include "calibration_assistant.hpp"
 
 static wxString FlipCalEnabledKey()
 {
@@ -240,6 +240,22 @@ void MyFrame::OnCalibrationAssistant(wxCommandEvent& WXUNUSED(evt))
     if (!pCalibrationAssistant)
         pCalibrationAssistant = CalibrationAssistantFactory::MakeCalibrationAssistant();
     pCalibrationAssistant->Show();
+}
+
+void MyFrame::OnServerAssistant(wxCommandEvent& WXUNUSED(evt))
+{
+    if (!pServerAssistant){
+        pServerAssistant = ServerAssistantFactory::MakeServerAssistant();
+    }
+    pServerAssistant->Show();
+}
+
+void MyFrame::OnSolverAssistant(wxCommandEvent& WXUNUSED(evt))
+{
+    if (!pSolverAssistant){
+        pSolverAssistant = SolverAssistantFactory::MakeSolverAssistant();
+    }
+    pSolverAssistant->Show();
 }
 
 void MyFrame::OnStaticPaTool(wxCommandEvent& WXUNUSED(evt))

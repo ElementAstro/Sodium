@@ -32,7 +32,7 @@
 *
 */
 
-#include "phd.h"
+#include "sodium.hpp"
 static const double DefaultMinMove = 0.1;
 static const double DefaultExpFactor = 2.0;
 

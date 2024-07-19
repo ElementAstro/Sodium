@@ -33,8 +33,8 @@
  *
  */
 
-#include "phd.h"
-#include "logger.h"
+#include "sodium.hpp"
+#include "logger.hpp"
 #include <wx/dir.h>
 #include <wx/filefn.h>
 

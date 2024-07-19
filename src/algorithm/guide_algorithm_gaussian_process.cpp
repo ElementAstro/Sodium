@@ -39,16 +39,16 @@
 *  POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "phd.h"
+#include "sodium.hpp"
 
-#include "guide_algorithm_gaussian_process.h"
-#include "gaussian_process_guider.h"
+#include "guide_algorithm_gaussian_process.hpp"
+#include "gaussian_process_guider.hpp"
 
 #include <ctime>
 
-#include "math_tools.h"
-#include "gaussian_process.h"
-#include "covariance_functions.h"
+#include "math_tools.hpp"
+#include "gaussian_process.hpp"
+#include "covariance_functions.hpp"
 
 /** Default values for the parameters of this algorithm */
 

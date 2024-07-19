@@ -3,15 +3,15 @@
 <meta name="GENERATOR" content="Microsoft� HTML Help Workshop 4.1"><title>Main Screen</title></head>
 <body>
 <h2>Main Screen</h2>
-The <span style="font-style: italic;">LightGuider</span> main window is designed for ease of use and clarity.
+The <span style="font-style: italic;">Sodium</span> main window is designed for ease of use and clarity.
 &nbsp;Its intent is to support a quick and natural sequence of
 interactions to start and control guiding. &nbsp;The basic steps
 for doing this are as follows:<br>
 <ol>
-<li>Connect to the LightGuider configuration profile that establishes your guide camera and mount connections</li>
+<li>Connect to the Sodium configuration profile that establishes your guide camera and mount connections</li>
 <li>Start a sequence of guide exposures to see what stars are
 available in the field of view</li>
-<li>Let LightGuider auto-select&nbsp;suitable stars and calibrate the guider</li>
+<li>Let Sodium auto-select&nbsp;suitable stars and calibrate the guider</li>
 <li>Continue guiding on the target stars while using various
 display tools to see how things are going</li>
 <li>Stop and resume guiding as necessary</li>
@@ -24,7 +24,7 @@ automatically
 adjusted for size, brightness, and contrast so you can view
 the&nbsp;available stars. &nbsp;However, these adjustments are done
 only
-for display purposes. &nbsp;Internally, <span style="font-style: italic;">LightGuider</span>
+for display purposes. &nbsp;Internally, <span style="font-style: italic;">Sodium</span>
 operates on the raw,
 un-adjusted data in order to maximize guiding accuracy. &nbsp;This
 display can also be used to manually select a guide star by&nbsp;clicking
@@ -32,7 +32,7 @@ on it although it's better to use the 'Auto-select star' feature..
 &nbsp;You can adjust the slider control to&nbsp;see
 even the faintest stars in the field.<br></p>
 <h3><a name="Basic_control"></a>Basic control</h3>Near the bottom of the screen are the main
-controls. &nbsp;<span style="font-style: italic;">LightGuider</span> is largely controlled by these buttons and
+controls. &nbsp;<span style="font-style: italic;">Sodium</span> is largely controlled by these buttons and
 sliders, with additional pull-down menus at the top of the window for
 more detailed functions. Moving from left to right in the
 window, the primary buttons are as follows: <br>
@@ -47,7 +47,7 @@ window, the primary buttons are as follows: <br>
 <td style="border-style: solid; width: 405px;">
 <p style="margin-left: 10px;">
 
-<b>Connect equipment button</b><br>Activates the LightGuider profile that
+<b>Connect equipment button</b><br>Activates the Sodium profile that
 defines your equipment connections.&nbsp; If you want to connect the
 same equipment that was last connected, you can <span style="color: black;"><span style="font-weight: bold;">shift-click</span></span> this button.
 </p>
@@ -80,7 +80,7 @@ window. &nbsp;If guiding is subsequently started, clicking on the <b>Loop Exposu
 Triggers an automatic selection of the best guide star candidates in the display
  window. This selection is  done quantitatively, taking many things into
  account - star saturation, minimum star size, signal-to-noise ratio, 
-proximity to other stars, proximity to the edge of the display<b style="font-weight: bold;"> </b><span style="font-weight: bold;"></span>window. etc. &nbsp;<a href="../../../OpenLGuider_Mods/Gerry_HelpRework/Gary_Submissions/08_00_LightGuider_Tools.htm#08%202%20-%20Auto-select%20Star" style="color: blue;"><b><i></i></b></a>You can&nbsp;<span style="color: black;"><span style="font-weight: bold;">shift-click</span></span> on this button to de-select the star.
+proximity to other stars, proximity to the edge of the display<b style="font-weight: bold;"> </b><span style="font-weight: bold;"></span>window. etc. &nbsp;<a href="../../../OpenLGuider_Mods/Gerry_HelpRework/Gary_Submissions/08_00_Sodium_Tools.htm#08%202%20-%20Auto-select%20Star" style="color: blue;"><b><i></i></b></a>You can&nbsp;<span style="color: black;"><span style="font-weight: bold;">shift-click</span></span> on this button to de-select the star.
 </p>
 </td>
 </tr>
@@ -121,10 +121,10 @@ Stops both guiding and looping.
 <b>Exposure duration drop-down</b><br>
 A drop-down list of exposure durations in seconds (<b>Auto</b>, <b>0.01s</b> to <b>15s</b>, and a <b>Custom:</b> option which you can assign your own value to using the <b>Edit Custom...</b>
  option). &nbsp;Use this drop-down to set the guide camera's exposure 
-duration. &nbsp;If your camera does not support an exposure duration, <b><i>LightGuider</i></b>
+duration. &nbsp;If your camera does not support an exposure duration, <b><i>Sodium</i></b>
  will do its best to emulate that duration. &nbsp;For example, if you use a 
 short exposure webcam, your maximum true exposure duration might be only
- 1/30th of a second. &nbsp;If you select one second as the exposure time, <b><i>LightGuider</i></b> will automatically acquire images for one second and stack them to create a composite image for guiding.&nbsp;
+ 1/30th of a second. &nbsp;If you select one second as the exposure time, <b><i>Sodium</i></b> will automatically acquire images for one second and stack them to create a composite image for guiding.&nbsp;
 </p>
 </td>
 </tr>
@@ -137,14 +137,14 @@ short exposure webcam, your maximum true exposure duration might be only
 <p style="margin-left: 10px;">
 
 <b>Gamma adjustment slider</b><br>
-A slider control for adjusting screen stretch and contrast, essentially a "gamma" adjustment. &nbsp;<b><i>LightGuider</i></b>
+A slider control for adjusting screen stretch and contrast, essentially a "gamma" adjustment. &nbsp;<b><i>Sodium</i></b>
 automatically adjusts the display to account for the darkest and
 brightest pixels in the image, and the slider is used to fine-tune
 the&nbsp;display to better see the stars. &nbsp;This may be useful, for
 example, if you are trying to focus the guide camera for the first time
 and need to see the large, out-of-focus star image. &nbsp;Moving the
 gamma slider only makes the&nbsp;display brighter or dimmer for your
-viewing. &nbsp;<b><i>LightGuider</i></b>
+viewing. &nbsp;<b><i>Sodium</i></b>
 always uses the raw pixels from the camera for guiding, and moving the
 gamma slider has no effect on guiding. &nbsp;A&nbsp;display of
 completely white or completely black is usually an indication that no
@@ -164,7 +164,7 @@ slider properly to see faint stars on the&nbsp;display window.
 <p style="margin-left: 10px;">
 
 <b>Advanced settings (Brain Button)</b><br>
-This brings up the <b>Advanced Settings</b> dialog for making detailed adjustments to the guiding operations. &nbsp;An important design goal of <b><i>LightGuider</i></b>
+This brings up the <b>Advanced Settings</b> dialog for making detailed adjustments to the guiding operations. &nbsp;An important design goal of <b><i>Sodium</i></b>
  is to minimise your need to change these parameters, but there are 
 adjustments available here that can help you understand and improve your
  guiding.
@@ -218,7 +218,7 @@ use for visualizing your guiding performance. &nbsp;These status
 fields are there only to give you a quick visual clue when something is behaving
 unusually.<br><br>The rightmost panels in the status
 bar show icons that give you visual clues about the current state of
-LightGuider. &nbsp;These icons are color-coded to give you a dashboard view of current status and have the following meanings:<br><br>'Dark'
+Sodium. &nbsp;These icons are color-coded to give you a dashboard view of current status and have the following meanings:<br><br>'Dark'
 - red means neither a dark library nor a bad-pixel map is being used,
 green means one or the other is&nbsp;in-use. &nbsp;If you're
 using a bad-pixel map, the text will say 'BPM' rather than 'Dark'<br><br>'Cal'
@@ -226,7 +226,7 @@ using a bad-pixel map, the text will say 'BPM' rather than 'Dark'<br><br>'Cal'
 currently uncalibrated, while yellow means there is a calibration but it
 isn't being adjusted automatically to account for scope pointing
 position. &nbsp;This will happen when you aren't using&nbsp;an ASCOM
-or 'aux' mount connection in LightGuider or if you have mistakenly disabled declination compensation. &nbsp;If the icon is yellow, you
+or 'aux' mount connection in Sodium or if you have mistakenly disabled declination compensation. &nbsp;If the icon is yellow, you
 will generally need to recalibrate when you move the scope to different
 declination positions.<br><br>"The Ball" - shows whether all the
 equipment in your profile has been successfully connected. &nbsp;If the

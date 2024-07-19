@@ -43,7 +43,7 @@
  * toolbox.
  */
 
-#include "math_tools.h"
+#include "math_tools.hpp"
 #include <cmath>
 #include <cstdint>
 #include <stdexcept>

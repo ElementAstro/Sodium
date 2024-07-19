@@ -33,7 +33,7 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 #include <wx/wfstream.h>
 #include <wx/txtstrm.h>
@@ -282,7 +282,7 @@ void GuidingLog::EnableLogging()
 
         assert(m_file.IsOpened());
 
-        m_file.Write(_T("PHD2 version ") FULLVER _T(" [") PHD_OSNAME _T("]") _T(", Log version ") GUIDELOG_VERSION _T(". Log enabled at ") +
+        m_file.Write(_T("PHD2 version ") FULLVER _T(" [") SODIUM_OSNAME _T("]") _T(", Log version ") GUIDELOG_VERSION _T(". Log enabled at ") +
             logFileTime.Format(_T("%Y-%m-%d %H:%M:%S")) + "\n");
 
         m_enabled = true;
@@ -661,7 +661,7 @@ void GuidingLog::NotifySetLockPosition(Guider *guider)
     m_keepFile = true;
 }
 
-void GuidingLog::NotifyLockShiftParams(const LockPosShiftParams& shiftParams, const PHD_Point& cameraRate)
+void GuidingLog::NotifyLockShiftParams(const LockPosShiftParams& shiftParams, const SodiumPoint& cameraRate)
 {
     if (!m_enabled || !m_isGuiding)
         return;

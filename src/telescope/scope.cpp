@@ -31,13 +31,13 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#include "phd.h"
+#include "sodium.hpp"
 
-#include "backlash_comp.h"
-#include "calreview_dialog.h"
-#include "calstep_dialog.h"
-#include "image_math.h"
-#include "socket_server.h"
+#include "backlash_comp.hpp"
+#include "calreview_dialog.hpp"
+#include "calstep_dialog.hpp"
+#include "image_math.hpp"
+#include "socket_server.hpp"
 
 #include <wx/textfile.h>
 
@@ -1010,7 +1010,7 @@ void Scope::CheckCalibrationDuration(int currDuration)
     SetCalibrationDuration(rslt);
 }
 
-bool Scope::BeginCalibration(const PHD_Point& currentLocation)
+bool Scope::BeginCalibration(const SodiumPoint& currentLocation)
 {
     bool bError = false;
 
@@ -1122,17 +1122,17 @@ int Scope::CalibrationTotDistance()
 }
 
 // Convert camera coords to mount coords
-static PHD_Point MountCoords(const PHD_Point& cameraVector, double xCalibAngle, double yCalibAngle)
+static SodiumPoint MountCoords(const SodiumPoint& cameraVector, double xCalibAngle, double yCalibAngle)
 {
     double hyp = cameraVector.Distance();
     double cameraTheta = cameraVector.Angle();
     double yAngleError = norm_angle((xCalibAngle - yCalibAngle) + M_PI / 2);
     double xAngle = cameraTheta - xCalibAngle;
     double yAngle = cameraTheta - (xCalibAngle + yAngleError);
-    return PHD_Point(hyp * cos(xAngle), hyp * sin(yAngle));
+    return SodiumPoint(hyp * cos(xAngle), hyp * sin(yAngle));
 }
 
-static void GetRADecCoordinates(PHD_Point *coords)
+static void GetRADecCoordinates(SodiumPoint *coords)
 {
     double ra, dec, lst;
     bool err = pPointingSource->GetCoordinates(&ra, &dec, &lst);
@@ -1160,7 +1160,7 @@ static void CalibrationStatus(CalibrationStepInfo& info, const wxString& msg)
     EvtServer.NotifyCalibrationStep(info);
 }
 
-bool Scope::UpdateCalibrationState(const PHD_Point& currentLocation)
+bool Scope::UpdateCalibrationState(const SodiumPoint& currentLocation)
 {
     bool bError = false;
 
@@ -1229,7 +1229,7 @@ bool Scope::UpdateCalibrationState(const PHD_Point& currentLocation)
                 m_calibration.raGuideParity = GUIDE_PARITY_UNKNOWN;
                 if (m_calibrationStartingCoords.IsValid())
                 {
-                    PHD_Point endingCoords;
+                    SodiumPoint endingCoords;
                     GetRADecCoordinates(&endingCoords);
                     if (endingCoords.IsValid())
                     {
@@ -1509,7 +1509,7 @@ bool Scope::UpdateCalibrationState(const PHD_Point& currentLocation)
                 m_calibration.decGuideParity = GUIDE_PARITY_UNKNOWN;
                 if (m_calibrationStartingCoords.IsValid())
                 {
-                    PHD_Point endingCoords;
+                    SodiumPoint endingCoords;
                     GetRADecCoordinates(&endingCoords);
                     if (endingCoords.IsValid())
                     {

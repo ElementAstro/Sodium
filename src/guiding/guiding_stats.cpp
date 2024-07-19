@@ -33,10 +33,10 @@
 *
 */
 
-#include "phd.h"
+#include "sodium.hpp"
 #include <math.h>
 #include <algorithm>
-#include "guiding_stats.h"
+#include "guiding_stats.hpp"
 
 // Descriptive stats and axial stats classes
 

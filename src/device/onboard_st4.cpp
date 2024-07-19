@@ -33,7 +33,7 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 bool OnboardST4::ST4HasGuideOutput(void)
 {

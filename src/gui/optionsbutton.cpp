@@ -32,8 +32,8 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#include "phd.h"
-#include "optionsbutton.h"
+#include "sodium.hpp"
+#include "optionsbutton.hpp"
 
 #include "icons/down_arrow.xpm"
 #include "icons/down_arrow_bold.xpm"

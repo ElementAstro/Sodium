@@ -32,7 +32,7 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 #if defined (__linux__) || defined (__APPLE__) || defined (__FreeBSD__)
 

@@ -43,8 +43,8 @@
  * GP class.
  */
 
-#include "covariance_functions.h"
-#include "math_tools.h"
+#include "covariance_functions.hpp"
+#include "math_tools.hpp"
 
 namespace covariance_functions {
 

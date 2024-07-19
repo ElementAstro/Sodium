@@ -33,7 +33,7 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 // clang-format off
 wxBEGIN_EVENT_TABLE(ProfileWindow, wxWindow)

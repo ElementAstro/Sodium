@@ -32,8 +32,8 @@
  *
  */
 
-#include "phd.h"
-#include "calstep_dialog.h"
+#include "sodium.hpp"
+#include "calstep_dialog.hpp"
 
 #include <wx/tipwin.h>
 
@@ -222,7 +222,7 @@ AdvancedDialog::AdvancedDialog(MyFrame *pFrame) :
     wxSizer *bsz = CreateButtonSizer(wxOK | wxCANCEL);
     bsz->PrependStretchSpacer();
     wxButton *helpbtn = new wxButton(this, wxID_ANY, _("Help"));
-#   include "icons/help22.png.h"
+#   include "icons/help22.png.hpp"
     wxBitmap help_bmp(wxBITMAP_PNG_FROM_DATA(help22));
     helpbtn->SetBitmap(help_bmp, wxLEFT);
     helpbtn->Bind(wxEVT_COMMAND_BUTTON_CLICKED, [this](wxCommandEvent& evt) {

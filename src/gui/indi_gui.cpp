@@ -29,8 +29,8 @@
 #pragma warning(disable: 4996)
 #endif
 
-#include "phd.h"
-#include "indi_gui.h"
+#include "sodium.hpp"
+#include "indi_gui.hpp"
 
 #include <stdlib.h>
 #include <stdio.h>

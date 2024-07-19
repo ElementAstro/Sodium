@@ -2,7 +2,7 @@
 <html><head><title>Trouble-shooting</title></head>
 <body>
 <h2>Trouble-shooting and Analysis</h2><h3><a name="Problems-_General_trouble-shooting"></a>General Guide to Resolving Problems</h3>The
-field experience with LightGuider since its initial release in 2013, involving
+field experience with Sodium since its initial release in 2013, involving
 thousands of users worldwide,&nbsp; has shown that 99% of what people
 think of as "guiding problems" are not really that at all.
 &nbsp;Instead, they
@@ -10,16 +10,16 @@ usually&nbsp;come from two sources:<br><div style="margin-left: 40px;">1) Operat
 important to remember this when you encounter difficulties and can't
 get the results you want.&nbsp; Operational
 mistakes can be avoided by carefully studying the documentation on the
-LightGuider web site (or in this built-in Help),&nbsp;following the steps described in the "Best
-Practices" document, and using the 'search' tools on the LightGuider support
-forum. YouTube videos, unless done by someone close to the LightGuider
+Sodium web site (or in this built-in Help),&nbsp;following the steps described in the "Best
+Practices" document, and using the 'search' tools on the Sodium support
+forum. YouTube videos, unless done by someone close to the Sodium
 project, have wildly variable quality, often reflecting misunderstandings and&nbsp;sometimes producing a witches'
 brew of good and bad advice - so be careful what you watch.&nbsp; One
 of the most common mistakes is to
-wildly change the LightGuider guiding parameters in a futile attempt to
+wildly change the Sodium guiding parameters in a futile attempt to
 correct for&nbsp;mechanical problems that exist in your setup.
 &nbsp;This only makes things worse. The default guiding parameters
-calculated by LightGuider reflect the parameters you entered in the
+calculated by Sodium reflect the parameters you entered in the
 new-profile-wizard, so they are already adjusted for your setup. You
 should be able to get reasonable results
 out-of-the-box if the equipment behaves and if you don't, you are
@@ -31,7 +31,7 @@ identify, and understand them before trying to fix&nbsp;them or
 mitigate their effects. &nbsp;Mechanical problems won't simply go away.
 &nbsp;Even if they temporarily subside, they will inevitably come back to bite you. &nbsp;And
 something that worked fine just last week or even last night may no
-longer work - that is the nature of hardware.<br><br>LightGuider or any
+longer work - that is the nature of hardware.<br><br>Sodium or any
 guiding software is often the messenger of bad news because of the
 incredible level of accuracy required for guiding. &nbsp;Modern guide
 cameras are capable of measuring movement on scales of just a few
@@ -51,7 +51,7 @@ sub-arc-second accuracy. &nbsp;Fortunately, most mechanical problems
 can be eliminated or reduced fairly easily or at least without great
 financial expense. &nbsp;Most vendors are willing to help with the
 problems so long as they have been carefully documented and
-demonstrated - and LightGuider is an excellent tool for doing that. &nbsp;For
+demonstrated - and Sodium is an excellent tool for doing that. &nbsp;For
 most people, the cost of eliminating problems comes from time spent
 doing trouble-shooting,&nbsp;lost imaging opportunities, and general
 frustration; but these problems are&nbsp;part of the hobby
@@ -76,16 +76,16 @@ that deliver consistent, reasonable-looking images of the sky. &nbsp;If you
 have problems in this area, follow the procedures in the <a href="Problems-_Camera_Timeouts">Camera Timeout and Connection Problems</a>.<br>3.
 &nbsp;Be sure the guide camera is well-focused and you aren't getting
 frequent lost-star messages when using 2-second guide camera exposures.
-&nbsp;Tips for getting a good focus are discussed here: &nbsp;<a href="Visualization.htm#Star_Profile_and_Target_Displays">Star Profile Tool</a> . &nbsp;If you're using imaging and guide cameras from the same manufacturere, be sure LightGuider is connected to the right one.<br>4.
+&nbsp;Tips for getting a good focus are discussed here: &nbsp;<a href="Visualization.htm#Star_Profile_and_Target_Displays">Star Profile Tool</a> . &nbsp;If you're using imaging and guide cameras from the same manufacturere, be sure Sodium is connected to the right one.<br>4.
 Get a reasonable mechanical polar alignment, one that is within about
 10 arc-min of the celestial pole. &nbsp;Doing this requires mechanical
 adjustments of your mount or wedge - you will be loosening fasteners
 and cranking knobs to get this done, it can't be done by software
 alone. &nbsp;You can use a polar alignment scope, a high-powered eyepiece,
 another app that assists with polar alignment,&nbsp; or one of the polar
-alignment tools in LightGuider. &nbsp;Great precision isn't required, "close
+alignment tools in Sodium. &nbsp;Great precision isn't required, "close
 enough" is "good enough".<br>5. &nbsp;Concentrate on getting a usable
-calibration in LightGuider, one that doesn't generate error messages or
+calibration in Sodium, one that doesn't generate error messages or
 "alert" warnings. &nbsp;If site conditions allow it, calibrate with the
 scope pointing in a declination range of -20 to +20 degrees and a right
 ascension (hour angle) that keeps&nbsp;the scope pointing well above the
@@ -101,13 +101,13 @@ once the measurement session has finished, apply the recommendations
 you'll be given. &nbsp;If you see &nbsp;large, abrupt guide star excursions or
 other inexplicable results during the GA session, resolve those
 problems first.<br>7. Perform a series of 15-20 minute guiding sessions, still in the same region of the sky. &nbsp;Do <span style="font-weight: bold;">NOT</span> modify any of the guiding parameters attempting to make things better. &nbsp;<br>8.
-&nbsp;Use the LightGuider LogViewer tool to analyze your results and develop a
+&nbsp;Use the Sodium LogViewer tool to analyze your results and develop a
 strategy for fixing the problems that have been revealed. &nbsp;You can get
-help doing this on the LightGuider support forum.<h3><a name="Problems-_Guide_star_deflections"></a>Large/Abrupt Guide Star Deflections</h3>Most
+help doing this on the Sodium support forum.<h3><a name="Problems-_Guide_star_deflections"></a>Large/Abrupt Guide Star Deflections</h3>Most
 users eventually encounter situations where the guide star appears to
 make a large, abrupt excursion away from the lock-point. &nbsp;The
 great majority of these problems&nbsp;arise from neither the mount
-nor&nbsp;LightGuider's guide commands. &nbsp;Instead, they usually come
+nor&nbsp;Sodium's guide commands. &nbsp;Instead, they usually come
 from&nbsp;unwanted mechanical movement in the gear that is riding on
 top of the mount, especially the guide camera/guide scope assembly.
 &nbsp;This is especially true if the large deflections occur in
@@ -116,7 +116,7 @@ the very short, relatively infrequent guide commands it receives.
 &nbsp;The unwanted mechanical movement usually comes from several
 sources: <br><ol><li>Tiny movements of the various components in the
 guiding assembly as a result of the changing gravitational forces while
-the mount tracks the target object</li><li>Dragging, binding, or snagging of cables, especially those that are connected to the guide camera</li><li>Wind gusts or less commonly, effects from camera filter changes, auto-focusing, or mirror movement</li><li>Use of mount features for backlash compensation - these should not be used with LightGuider guiding</li></ol>Before
+the mount tracks the target object</li><li>Dragging, binding, or snagging of cables, especially those that are connected to the guide camera</li><li>Wind gusts or less commonly, effects from camera filter changes, auto-focusing, or mirror movement</li><li>Use of mount features for backlash compensation - these should not be used with Sodium guiding</li></ol>Before
 rejecting these things as likely sources of&nbsp; problems, think again
 about the tiny measurement scales and tolerances described in the
 previous section. &nbsp;With many guiding set-ups, a movement of only 5
@@ -134,7 +134,7 @@ interest and see if the deflection was immediately preceded by a
 correspondingly large guide command in the direction of movement.
 &nbsp;In most cases, you will find this didn't happen. &nbsp;It can
 sometimes happen at the beginning of a guide session if you're using
-LightGuider Dec backlash compensation, but those events should disappear
+Sodium Dec backlash compensation, but those events should disappear
 quickly. &nbsp;If the abrupt deflections occur in RA, the analysis is
 less straightforward because the RA motor runs continuously. &nbsp;But
 even then, unusually large, randomly space deflections are more likely
@@ -143,22 +143,22 @@ errors in the RA drive system.<h3><a name="Problems-_Camera_Timeouts"></a>Camera
 
 <p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal;"><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">In some cases, you may experience
 problems where guider images aren't downloaded or displayed. &nbsp;In extreme
-cases, this may even cause <i>LightGuider</i> or other camera-related applications to
+cases, this may even cause <i>Sodium</i> or other camera-related applications to
 be non-responsive (i.e. to "hang"). &nbsp;This is nearly always due
 to hardware, camera driver, or&nbsp;connectivity issues, with one of the most
 common culprits being a faulty USB cable or device. &nbsp;It is highly unlikely
-to be caused by an application like <i>LightGuider</i>, so you should begin your
+to be caused by an application like <i>Sodium</i>, so you should begin your
 investigation at the lower levels of the system. <o:p></o:p></span></p>
 
 
 
 <p class="MsoNormal" style="margin-bottom: 0.0001pt; line-height: normal;"><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">To help detect these problems and
-avoid &#8220;hangs&#8221;, LightGuider uses a camera timeout/retry mechanism. &nbsp;This timeout
+avoid &#8220;hangs&#8221;, Sodium uses a camera timeout/retry mechanism. &nbsp;This timeout
 value is set in the Camera tab of&nbsp;<u><span style="color: blue;"><a href="file:///C:%5Cbwdev%5Copenphd2_gh%5Cphd2%5Chelp%5CAdvanced_settings.htm"><span style="color: blue;">Advanced Settings</span></a></span></u> and uses a default
-value of 15 seconds. &nbsp;This means that LightGuider will wait up to 15 seconds <i>after
+value of 15 seconds. &nbsp;This means that Sodium will wait up to 15 seconds <i>after
 the expected completion of the exposure</i> to receive the image from the
 camera. &nbsp;This is a very generous amount of time and should work well for
-most cameras. When the timeout occurs, LightGuider will automatically disconnect the
+most cameras. When the timeout occurs, Sodium will automatically disconnect the
 camera and try to re-connect.<span style="">&nbsp; </span>An alert
 message at the top of the screen will advise you of the timeout event and
 whether the reconnection attempt was successful.<span style="">&nbsp; </span>Regardless of whether the reconnection
@@ -172,28 +172,28 @@ succeeded, you have a hardware problem of some kind that needs attention.<o:p></
 reproduce and then identify the problem:<o:p>&nbsp;</o:p></span></p>
 
 <ol><li><p><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Make sure you are running the latest
-version of LightGuider &#8211; often a development version &#8211; and the latest versions of the
+version of Sodium &#8211; often a development version &#8211; and the latest versions of the
 camera drivers.<span style="">&nbsp; </span>Some of the camera
 vendors issue frequent software changes that must be matched by corresponding
-changes in the software libraries used by LightGuider.<span style="">&nbsp;
+changes in the software libraries used by Sodium.<span style="">&nbsp;
 </span>When these updates aren&#8217;t backward compatible, you have no choice but to
 run the latest versions of everything.<o:p></o:p></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style=""></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"></span></p></li><li><p><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Confirm that the guide camera is basically
 functional - try using a short, direct cable from the camera to the computer
 and taking exposures with the&nbsp;native&nbsp;or test application that came
-with the camera. <o:p></o:p></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span></p></li><li><p><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Repeat step 2 but use LightGuider as the
+with the camera. <o:p></o:p></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span></p></li><li><p><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Repeat step 2 but use Sodium as the
 application.<span style="">&nbsp; </span>You can do this in the
 daytime by just connecting to the camera and looping 1-2 second exposures for a
-reasonably long time.<span style="">&nbsp; </span>The LightGuider display
+reasonably long time.<span style="">&nbsp; </span>The Sodium display
 will often be all-white in daytime operation, but as long as the looping
 continues with no error messages, things are going ok.<span style="">&nbsp; </span>If you see problems in this step, it doesn&#8217;t
-mean it&#8217;s a LightGuider problem &#8211; it isn&#8217;t.<span style="">&nbsp; </span>The
-difference is that LightGuider is using the camera in single-exposure mode whereas
+mean it&#8217;s a Sodium problem &#8211; it isn&#8217;t.<span style="">&nbsp; </span>The
+difference is that Sodium is using the camera in single-exposure mode whereas
 most other apps use it in video streaming mode.<span style="">&nbsp;
 </span>The single-exposure mode involves more back-and-forth data traffic with
 the camera and can expose timing problems in the drivers.<o:p></o:p></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"></span></p></li><li><p><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">If you can&#8217;t trigger a failure in
 step 3, add the imaging camera into the mix.<span style="">&nbsp;
 </span>Use your imaging application to loop exposures in parallel with what
-LightGuider is doing.<span style="">&nbsp; </span>This will help expose
+Sodium is doing.<span style="">&nbsp; </span>This will help expose
 traffic and bandwidth problems in the USB system.<o:p></o:p></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"></span></p></li><li><p><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">If no problems occur in step 4 over
 extended time periods, use the same USB cables and host computer that you were
 using when you first encountered problems.<span style="">&nbsp;
@@ -242,18 +242,18 @@ ASCOM and a native driver, so try the one you haven&#8217;t been using.<span sty
 drivers to lag the native drivers in terms of bug fixes and compatibility</span></li><li>See if the problem is related to
 overall USB bandwidth and try to reduce the total USB usage:</li></ul><div style="margin-left: 80px;"><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style="">a.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Throttle the USB usage limit of the
 imaging camera if possible &#8211; many of the drivers allow that.</span><br><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style="">b.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Bin the guiding camera unless that
-will result in an image scale greater than 6 arc-sec/px.</span><br><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style="">c.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Use sub-frames in LightGuider if the camera
+will result in an image scale greater than 6 arc-sec/px.</span><br><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;"><span style="">c.<span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></span></span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Use sub-frames in Sodium if the camera
 driver supports that.</span><br><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">d. &nbsp;</span><span style="font-size: 12pt; font-family: &quot;Times New Roman&quot;,serif;">Don&#8217;t run other processor-intensive
 applications while imaging and don&#8217;t allow any of the planetarium applications
 to poll devices and other applications at high rates.</span><br></div></div><h3><a name="Problems-_Mount_Control"></a>Calibration and Mount Control Problems</h3>If
-you are just starting to use <span style="font-style: italic;">LightGuider</span>
+you are just starting to use <span style="font-style: italic;">Sodium</span>
 or are connecting to new equipment
 for the first time, you may have trouble getting&nbsp;calibration
 done. &nbsp;This problem&nbsp;takes one of two forms: 1) outright
 failures of the calibration because the mount didn't move far enough in
 RA and Declination or 2) cases where calibration completes but the
 results are suspect. &nbsp;Both types of results are shown by Alert
-messages at the top of the LightGuider window. &nbsp;For the situation where
+messages at the top of the Sodium window. &nbsp;For the situation where
 the calibration fails, there are, again, two likely reasons:<br><ol><li><span style="font-weight: bold;">Mount/connectivity problems or operational mistakes:</span>&nbsp;These are the most common sources of the problem. &nbsp;The best tools for trouble-shooting them are the
 'Manual Guide' dialog or the Star-Cross test, both under the 'Tools' menu and described in the <a href="Tools.htm">Tools</a>
 section of this help document. &nbsp;Simply use the directional
@@ -264,7 +264,7 @@ can clearly see if the mount is moving. &nbsp;Try to move the mount
 in all four directions and verify the target star is moving by roughly
 equal amounts. &nbsp;If the mount does not respond, you know you have
 either
-hardware or connectivity problems to resolve - nothing to do with <span style="font-style: italic;">LightGuider</span>.
+hardware or connectivity problems to resolve - nothing to do with <span style="font-style: italic;">Sodium</span>.
 Operationally, you cannot complete a calibration if you're pointing
 close to the celestial pole or if the mount isn't properly initialized,
 un-parked, and tracking at the sidereal rate.&nbsp; If you're using a
@@ -294,14 +294,14 @@ The help content there describes how this parameter is used, and you
 should be able to resolve the problem quickly. &nbsp;But if you've used
 the new profile wizard carefully and are seeing problems with too
 little or no guide star movement, the problem probably lies elsewhere.</li></ol><br><a name="Calibration_sanity_check"></a><span style="font-weight: bold;">Calibration Sanity-Checks</span> <span style="font-weight: bold;">and Alerts</span><br>It
-is also possible that the calibration process will complete but LightGuider
+is also possible that the calibration process will complete but Sodium
 will post a calibration alert message saying that some of the results
 are
 questionable. These messages <span style="font-weight: bold;">do not </span>mean
 that the calibration failed or is unusable, but they are warning you
 that some of the results don't look quite right. Such a "sanity check"
 dialog will show an explanation
-of the issue and some details of the calibration results: <br><br><img style="width: 797px; height: 426px;" alt="" src="Calib_Sanity.png"><br><br>There are currently 4 things checked by LightGuider as part of calibration:<br><ul><li><span style="font-weight: bold;">Too
+of the issue and some details of the calibration results: <br><br><img style="width: 797px; height: 426px;" alt="" src="Calib_Sanity.png"><br><br>There are currently 4 things checked by Sodium as part of calibration:<br><ul><li><span style="font-weight: bold;">Too
 few steps</span>
 (shown above) - resolving this issue can be easy assuming the
 mount is actually working correctly.
@@ -325,7 +325,7 @@ this type and the axes are significantly non-orthogonal, you need to
 identify the&nbsp;problem and fix it. &nbsp;Common causes are
 bad polar alignment, large declination backlash, or large periodic error in RA. &nbsp;Any of
 these problems can cause the guide star to move significantly on one
-axis while LightGuider is trying to measure its motion on the other axis. If
+axis while Sodium is trying to measure its motion on the other axis. If
 you suspect these problems, go ahead and accept the calibration, then
 run the Guiding Assistant to measure&nbsp;your polar alignment error, declination backlash,
 and&nbsp;RA tracking error. &nbsp;In other cases, the mount
@@ -345,7 +345,7 @@ related
 to the declination guide rate by approximately a factor
 of&nbsp;cosine (Declination). &nbsp;In other words, the apparent RA
 rate gets
-smaller as you move the scope closer to the pole. &nbsp;LightGuider won't try
+smaller as you move the scope closer to the pole. &nbsp;Sodium won't try
 to identify
 which rate is incorrect - it is simply alerting you that something
 looks wrong with the rates. &nbsp;You can sanity check these rates
@@ -366,7 +366,7 @@ significantly different from your last-used calibration, an alert
 message will be generated. &nbsp;This may happen because you've made a
 change in your configuration. &nbsp;That doesn't imply a real problem,
 but you should probably consider creating a separate profile for the
-new configuration. &nbsp;By doing so,&nbsp; LightGuider will remember settings
+new configuration. &nbsp;By doing so,&nbsp; Sodium will remember settings
 for each of your profiles, letting you switch between them easily.
 &nbsp;If you haven't made a configuration change, you should determine why the results are so different.<span style="font-weight: bold;"></span></li></ul>With
 any
@@ -380,7 +380,7 @@ start guiding with your last good calibration data. &nbsp;If you see
 repeated alerts on the same topic and are convinced there really
 isn't&nbsp;a problem, you can use the 'don't show' checkbox to block
 future alerts of that type. &nbsp;But you should be aware that the
-sanity-checking used by LightGuider works well for a wide range of equipment,
+sanity-checking used by Sodium works well for a wide range of equipment,
 and most users don't see these calibration alerts at all.<br><br><span style="font-weight: bold;"><a name="Declination_backlash"></a>Declination Backlash</span><span style="font-weight: bold;"></span><br>The
 most common source of calibration problems&nbsp;is declination
 backlash, which is present to some degree in most geared mounts.
@@ -419,14 +419,14 @@ mechanical adjustment
 to the mount. &nbsp;If the mount isn't using a guide speed close to
 1x sidereal, you can probably get an immediate improvement by
 increasing the mount guide speed. &nbsp;You can also try using a
-LightGuider backlash compensation setting,
+Sodium backlash compensation setting,
 but this is not likely to work well&nbsp;if the backlash is large -
 more&nbsp; than&nbsp;3 seconds, for example. &nbsp;If you can't correct
 the
 backlash or reduce
 it to manageable levels, you should consider choosing uni-directional
 guiding&nbsp;for declination. To do this, you&nbsp;determine
-which way the mount drifts due to polar alignment error and tell LightGuider
+which way the mount drifts due to polar alignment error and tell Sodium
 to guide only in the opposite direction (see &nbsp;<a href="Advanced_settings.htm#Declination-Uni-directional_guiding">Uni-directional guiding</a>). This is controlled by the 'Dec
 guide mode' control on the'Algorithms' tab of the Advanced Settings dialog.
 &nbsp;For example, if the
@@ -457,10 +457,10 @@ and will have to disable declination guiding to even complete a
 calibration. &nbsp;There are&nbsp; many other permutations of bad
 results, each suggesting a particular problem in the mount, the guide
 cable, or much less likely, the ASCOM driver for the mount. &nbsp;You
-can safely assume it has nothing to do with LightGuider.<br><br>Here are the steps for running the test: <br>
+can safely assume it has nothing to do with Sodium.<br><br>Here are the steps for running the test: <br>
 
 <ol><li>Set the mount guide speed to 1X sidereal.&nbsp; Bring up
-the 'Manual Guide' tool in LightGuider and choose an initial pulse size - start with,
+the 'Manual Guide' tool in Sodium and choose an initial pulse size - start with,
 say, 5 seconds.</li><li>Start a 60 second exposure on the main camera.</li><li>Send
 a 5-second pulse west, then two 5-second pulses east, then a final
 5-second pulse west. &nbsp;This should return the star to its
@@ -476,9 +476,9 @@ total&nbsp; of guide durations plus a margin for error. On most mounts,
 the star will not return to its exact center because of some
 declination backlash - you can see that in the first example&nbsp;image. &nbsp;But
 it should be fairly close or you'll need to look more carefully at how
-much declination backlash you have in the mount. &nbsp;LightGuider also has a star-cross test tool, described here: <a href="Tools.htm#Star_cross_tool">Star-cross Tool</a>. &nbsp;You can use that to automatically perform the test steps described in 1-5 above.<br><br>One benefit to
+much declination backlash you have in the mount. &nbsp;Sodium also has a star-cross test tool, described here: <a href="Tools.htm#Star_cross_tool">Star-cross Tool</a>. &nbsp;You can use that to automatically perform the test steps described in 1-5 above.<br><br>One benefit to
 using this test is that it reduces things to the absolute basics: will
-the mount move as directed or not. &nbsp;It has nothing to do with LightGuider
+the mount move as directed or not. &nbsp;It has nothing to do with Sodium
 guide settings because they aren't involved in the test. &nbsp;You may
 find it helpful to use the test results to communicate with the mount
 manufacturer or other users who understand your type of mount and its typical&nbsp; problems.<br><br><span style="font-weight: bold;"><a name="Measuring_Mount_Behavior"></a>Measuring the Mount's Behavior<br></span>If you're having<span style="font-weight: bold;"> </span>trouble
@@ -495,7 +495,7 @@ understand what the mount is doing, perform the following steps:<br><br><div sty
 Use an ASCOM connection to the mount if one is available and set the
 mount guide speed to 0.5x - 1x sidereal. &nbsp;Disable any backlash
 compensation you have in the mount.<br>3.
-Use&nbsp;2-second exposures and let LightGuider auto-select a guide star near Dec=0 with the scope pointing at least
+Use&nbsp;2-second exposures and let Sodium auto-select a guide star near Dec=0 with the scope pointing at least
 45 degrees above the east and west horizons to minimize seeing effects. <br>4. Run the
 Guiding Assistant for 10-15 minutes and apply whatever recommendations
 it makes, particularly with respect to min-move values. &nbsp;Let it
@@ -517,19 +517,19 @@ If you got calibration alert messages in step 3, you should probably
 remedy those problems before proceeding. &nbsp;Guiding with a bad
 calibration is not likely to produce good results. &nbsp;Also, if your
 polar alignment error is 10 arc-min or more, you should improve on that
-and then repeat the above steps.<br>9. Let LightGuider guide for another 10-15
+and then repeat the above steps.<br>9. Let Sodium guide for another 10-15
 minutes, just letting it run as long as there aren't gross errors from
 wind or other "mistakes." &nbsp;<span style="font-weight: bold;">Do NOT</span> change any of the guiding parameters while this is being done.<br></div><br>If
 you want to analyze the results yourself, use the LGuiderLogView tool and
-the tutorial on "Analyzing LightGuider Guiding Results". &nbsp;You should also
-consult the document on LightGuider Best Practices. &nbsp;All of these
+the tutorial on "Analyzing Sodium Guiding Results". &nbsp;You should also
+consult the document on Sodium Best Practices. &nbsp;All of these
 references are available on the OpenLGuiderGuiding.org web site under the
 'News' tab. &nbsp;If you'd like some help understanding the results,
-post both the guiding and debug log files on the OpenLightGuider Google forum
-and we'll be glad to help you out.<br><span style="font-weight: bold;"><br></span><span style="font-weight: bold;"></span><h3><a name="Problems-_Lost_stars"></a>Lost-Star Events</h3>When LightGuider can't locate the primary guide star in a camera frame, several things happen:<br><ol><li>The
+post both the guiding and debug log files on the OpenSodium Google forum
+and we'll be glad to help you out.<br><span style="font-weight: bold;"><br></span><span style="font-weight: bold;"></span><h3><a name="Problems-_Lost_stars"></a>Lost-Star Events</h3>When Sodium can't locate the primary guide star in a camera frame, several things happen:<br><ol><li>The
 screen will flash and a "beep" tone will sound. &nbsp;The sound can be
 disabled if you wish (Advanced Settings/Guide tab) but the screen will
-always flash</li><li>No guide commands will be issued and the next guide camera exposure will be started</li><li>Lost-star event messages will be sent to any imaging applications that are connected to LightGuider</li><li>Lost-star
+always flash</li><li>No guide commands will be issued and the next guide camera exposure will be started</li><li>Lost-star event messages will be sent to any imaging applications that are connected to Sodium</li><li>Lost-star
 messages will be displayed in the status bar including the reason for
 the loss - low SNR, low HFD, low-mass, or mass-change</li></ol>Lost-star
 events occur when the object in the search region no longer meets the
@@ -541,14 +541,14 @@ you are using "star-mass-detection" as a way to discriminate between
 mutliple similar stars in the search region, a lost-star event will be
 triggered if the star mass value changes by more than the allowed
 amount. &nbsp;This feature is generally unnecessary for current
-versions of LightGuider and can be disabled. &nbsp;In any case, the first
+versions of Sodium and can be disabled. &nbsp;In any case, the first
 steps in trouble-shooting will be to understand the reason for the
 lost-star events and whether they happened because of degraded sky
 conditions, mechanical tracking errors, or inappropriate star selection
 parameters. &nbsp;For beginners, a common cause of lost-star events is
 poor focus of the guide camera, and you should insure that your guide
 camera remains well-focused using the procedures described in the Star
-Profile tool section. &nbsp;<a href="Visualization.htm#Star_Profile_and_Target_Displays">Star Profile Tool</a><br><br>LightGuider doesn't invoke any sort of extended
+Profile tool section. &nbsp;<a href="Visualization.htm#Star_Profile_and_Target_Displays">Star Profile Tool</a><br><br>Sodium doesn't invoke any sort of extended
 guide star recovery process - it simply keeps taking exposures and
 looking to see if the guide star reappears within the current search
 region. &nbsp;This works well for brief or intermittent problems like
@@ -557,22 +557,22 @@ the tracking accuracy of the mount is sufficient to keep a guide star
 within the search region for a reasonable length of time. &nbsp;As the
 elapsed time of the lost-star events grows, the mount will slowly drift
 off-target and a star that re-appears in the search region at a much
-later time is probably a different star. &nbsp;In this case, LightGuider will
+later time is probably a different star. &nbsp;In this case, Sodium will
 resume guiding but the original astronomical target will no longer be
 centered and may not even be in the field of view. &nbsp;Recovery from
 extended lost-star periods is the responsibility of the end-user or the
-imaging automation application, not LightGuider. &nbsp;Doing the recovery
+imaging automation application, not Sodium. &nbsp;Doing the recovery
 properly requires re-slewing the scope to its original sky pointing
-position, a procedure that LightGuider is not equipped to do.<br><br><h3><a name="Problems-_Alerts"></a>Alert Messages</h3>LightGuider
+position, a procedure that Sodium is not equipped to do.<br><br><h3><a name="Problems-_Alerts"></a>Alert Messages</h3>Sodium
 will sometimes display alert messages at the top of the main display
 window. &nbsp;These generally show error or diagnostic information that
 warrant your attention. &nbsp;During normal operation, you probably
 won't see any of these, but if you do, this section can help you decide
 what to do about them.<br><br><span style="font-weight: bold;">Dark-library and Bad-pixel Map Alerts</span><br><br><span style="font-weight: bold;">"Use a Dark Library or a Bad-pixel Map"</span>
 - using a dark library or bad-pixel map reduces the likelihood that
-LightGuider will mistakenly identify hot pixels or other sensor noise as
+Sodium will mistakenly identify hot pixels or other sensor noise as
 a star. &nbsp;If you choose to ignore this message, you'll be
-vulnerable to situations where LightGuider inadvertently switches from the
+vulnerable to situations where Sodium inadvertently switches from the
 guide star to a hot pixel and no longer guides correctly.<br><br><span style="font-weight: bold;">Format/geometry mismatches</span>
 - dark frames and bad-pixel maps must match the format of the sensor in
 the camera being used. &nbsp;If you've changed the camera in an
@@ -585,7 +585,7 @@ the original camera.&nbsp; You might
 also
 see&nbsp;a
 format-incompatibility alert message if you have mistakenly connected
-LightGuider to the wrong camera - this is a particular risk when your guiding
+Sodium to the wrong camera - this is a particular risk when your guiding
 and imaging cameras come from the same vendor. You can completely
 specify the camera you are using for guiding in the Connection
 Dialog&nbsp;<a href="Basic_use.htm#Camera_id_specification">Specifying camera ids</a> &nbsp;. Unless you're
@@ -607,14 +607,14 @@ ineffective." &nbsp;This is usually caused by a bug or timing
 sensitivity in the ASCOM mount driver, and there is generally no way to
 know if the guide command was executed properly or not. &nbsp;If
 you&nbsp;rarely see the alert and your guiding results are acceptable,
-you can probably ignore it. &nbsp;Despite the alert condition, LightGuider
+you can probably ignore it. &nbsp;Despite the alert condition, Sodium
 will continue to issue guide commands, so you don't need to take any
 immediate action. &nbsp;If you see the alert frequently, you should
 send us your debug log so we can help you communicate the problem&nbsp; to the author of the ASCOM driver.<br>2.
 "Guiding stopped: the scope started slewing." &nbsp;This is pretty
 self-explanatory, but the determination that the scope was slewing is
-something reported to LightGuider by the ASCOM mount driver. &nbsp;Whether it
-was actually slewing isn't known to LightGuider. &nbsp;Assuming you didn't
+something reported to Sodium by the ASCOM mount driver. &nbsp;Whether it
+was actually slewing isn't known to Sodium. &nbsp;Assuming you didn't
 mistakenly slew the scope with guiding active, there is probably a
 timing problem in the driver. &nbsp;If you want to sidestep the problem
 temporarily, you can disable the logic to check for slewing - go into
@@ -626,14 +626,14 @@ ASCOM driver.<br>3.
 "Mount is reporting invalid guide speeds." &nbsp;Some new drivers don't
 follow the standards and report &nbsp;nonsense guide speeds, often
 because they aren't using the correct units of degrees/sec. When this
-occurs, LightGuider will treat the reported guide speeds as "unknown" and will
-ignore them. &nbsp;This degrades the accuracy of the LightGuider PPEC guide
+occurs, Sodium will treat the reported guide speeds as "unknown" and will
+ignore them. &nbsp;This degrades the accuracy of the Sodium PPEC guide
 algorithm and otherwise reduces the effectiveness of calibration review
-and other diagnostic tools. &nbsp;This is not a LightGuider problem, it must
+and other diagnostic tools. &nbsp;This is not a Sodium problem, it must
 be fixed by the author of the driver.<br></div><span style="font-weight: bold;"><span style="font-weight: bold;"><br>Camera Timeout Alerts<br><span style="font-weight: bold;"><span style="font-weight: bold;"></span></span></span></span>Alert messages associated with camera timing/timeout problems are discussed above: <span style="font-weight: bold;"><span style="font-weight: bold;"><span style="font-weight: bold;"><span style="font-weight: bold;"></span></span><a href="Trouble_shooting.htm#Problems-_Camera_Timeouts">Camera Timeouts</a><br><br>Calibration Alerts<br></span></span>A number of alerts<span style="font-weight: bold;"><span style="font-weight: bold;"> </span></span>may appear during the mount calibration process. &nbsp;These are described here: <a href="Trouble_shooting.htm#Problems-_Mount_Control">Calibration Alerts</a><br><span style="font-weight: bold;"><br>Maximum-Duration Limit Alerts<br><span style="font-weight: bold;"></span></span>During
 normal guiding, you may see an alert message saying that your settings
 for maximum-duration limits in RA or Dec&nbsp;are preventing
-LightGuider from keeping the guide star locked. &nbsp;If you've decreased
+Sodium from keeping the guide star locked. &nbsp;If you've decreased
 these parameters from their default values, you should restore them. &nbsp;However, if the limits are well above one
 second,
 this alert probably indicates you've encountered a mechanical problem
@@ -644,7 +644,7 @@ cases, you simply need to correct the problem if you can and proceed
 with guiding. &nbsp;But in other cases, the alert may be triggered by a
 steadily growing guide star displacement that is not being corrected at
 all.
-&nbsp;For example, if LightGuider can't move the mount correctly in either the
+&nbsp;For example, if Sodium can't move the mount correctly in either the
 north or south directions, the cumulative uncorrected error will
 eventually reach a point that triggers the alert. &nbsp;Or you may be
 encountering "runaway" Dec guiding because the setting for 'reverse Dec
@@ -659,7 +659,7 @@ often caused by the absence of any usable stars in the frame. &nbsp;For
 example, trying to test the camera indoors or in daylight will almost always create
 these conditions. &nbsp;The appearance of the image display window in
 these situations provides no useful information and should be
-discounted. &nbsp;LightGuider uses an automatic screen-stretching function
+discounted. &nbsp;Sodium uses an automatic screen-stretching function
 that is intended to help you see real stars under a nighttime sky.
 &nbsp;When no stars are present, the display will be stretched to show
 the range of minimum-to-maximum brightness values of whatever is in the
@@ -670,13 +670,13 @@ also encounter display problems if the guider is not well-focused.
 but it's critical to getting good guiding results. &nbsp;A good
 technique is to start with a bright <span style="font-style: italic;">but unsaturated</span>
 star and try to reach focus with that. &nbsp;Then move to successively
-fainter stars to fine-tune the focus position using the LightGuider Star
+fainter stars to fine-tune the focus position using the Sodium Star
 Profile tool to measure the size of the guide star. &nbsp;Good results
 can also be obtained using a Bahtinov focusing mask or focusing tools
 in other applications. &nbsp;It doesn't matter what you use, but just
 trying to judge focus by looking at the display is not likely to
 produce a good result.<br><h3><a name="Problems-Hot_Pixels"></a>Hot-pixel and Star-Selection Problems</h3>With most guide cameras, you can encounter problems where
-clumps of hot pixels are mistaken by LightGuider as guide stars. &nbsp;This
+clumps of hot pixels are mistaken by Sodium as guide stars. &nbsp;This
 can be especially troublesome&nbsp; if you're using automation tools and&nbsp;
 the 'auto-select' guide star selection is mistakenly choosing hot pixels. &nbsp;For many cameras, a
 simple dark frame will suffice for reducing or eliminating hot-pixel
@@ -691,8 +691,8 @@ chapter of this document. &nbsp;These problems are different from
 transient hot pixels, which can be caused by cosmic ray strikes on the
 sensor. &nbsp;Although cosmic ray hits can disrupt guiding, there's
 really little you can do about them. &nbsp;<br><br>Since
-the recommended practice is to let LightGuider choose the guide star
-("auto-select"), you should use the available UI controls to help LightGuider
+the recommended practice is to let Sodium choose the guide star
+("auto-select"), you should use the available UI controls to help Sodium
 do the best possible job. &nbsp;The Minimum-HFD property on the Guiding
 tab of the Advanced Settings dialog is probably the most
 effective&nbsp;tool for
@@ -704,7 +704,7 @@ set the Minimum-HFD value to accept those stars while rejecting smaller
 bright spots that are really just sensor defects. &nbsp;At the other
 end of the &nbsp;scale, you should also specify&nbsp;the brightest
 pixel value your system will deliver - the ADU value that represents
-saturation. &nbsp;By doing this, you will prevent LightGuider from rejecting
+saturation. &nbsp;By doing this, you will prevent Sodium from rejecting
 stars that have a flattened profile but aren't really saturated. The
 saturation control resides on the Camera tab of the Advanced Settings
 dialog and
@@ -719,7 +719,7 @@ see in that window is the 'Peak Value' - that's the ADU value for the
 brightest pixel &nbsp;and will tell you whether your images are 8-bit
 or 16-bit.. &nbsp;Using both of these controls is likely to produce
 much
-better results for LightGuider guide star selection.<br><br><h3><a name="Problems-Restore_Guiding_Parameters"></a>Restoring a Working Baseline</h3>Despite&nbsp;advice to the contrary, you may have made rapid, uninformed
+better results for Sodium guide star selection.<br><br><h3><a name="Problems-Restore_Guiding_Parameters"></a>Restoring a Working Baseline</h3>Despite&nbsp;advice to the contrary, you may have made rapid, uninformed
 changes to your guiding parameters only to find the performance stayed
 the same or even got worse. &nbsp;Before proceeding, you should restore the
 settings to their default values. &nbsp;If you used the
@@ -758,7 +758,7 @@ tempting to just start blindly adjusting the various guide parameters
 in an effort to make things better. &nbsp;There is nothing wrong with
 adjusting the parameters - that's why they're there - but it should be
 done carefully based on an understanding of what they do and what problem you're trying to solve. &nbsp;The
-LightGuider default settings are carefully chosen to produce reasonable
+Sodium default settings are carefully chosen to produce reasonable
 results for most amateur equipment and locations. &nbsp;Optimal
 settings are entirely dependent on the image scale, seeing conditions,
 and behavior of your specific mount. &nbsp;In other words, they are
@@ -773,7 +773,7 @@ settings to avoid chasing the seeing. &nbsp;You can also use either the
 Guiding Assistant or the Manual Guiding tool to see how much backlash
 is present in your mount, something that can be important to understanding your declination guiding results.<br><br><span style="font-weight: bold;"></span><br><h3><a name="Log_analysis"></a>Log Analysis</h3>Any
 sort of problem isolation or&nbsp;tuning will invariably require use of
-the LightGuider log files. &nbsp;Both are formatted for straightforward
+the Sodium log files. &nbsp;Both are formatted for straightforward
 interpretation by a human reader, and the guide log is constructed to
 enable easy import into other applications. &nbsp;As mentioned in the
 'Tools' section, applications such as LGuiderLogViewer or Excel
@@ -783,17 +783,17 @@ statistics, and examine time periods when guiding was problematic.
 &nbsp;With Excel or similar applications, simply specify that the guide
 log uses a comma as a column separator. &nbsp;That said, LGuiderLogViewer
 is strongly recommended for log analysis and is the tool used by the
-developers to provide support on the LightGuider Google forum.<br><h4>Guiding Log Contents</h4>The
+developers to provide support on the Sodium Google forum.<br><h4>Guiding Log Contents</h4>The
 contents of the guiding log will continue to evolve as new capabilities
 are added. &nbsp;But the basic content is stable, and considerable care
 is taken to not "break" applications that parse it. &nbsp;If you wish
 to analyze the log yourself, the following information will be helpful.
 &nbsp;<br><br>
 
-<p class="MsoNormal">The LightGuider guide log will contain zero or more sequences of
+<p class="MsoNormal">The Sodium guide log will contain zero or more sequences of
 calibration and zero or more sequences of guiding.<span style="">&nbsp; </span>Each of these&nbsp;sections has a
 header that provides most of the information about the guiding algorithms being
-used and the internal parameters used by LightGuider for guiding.<span style="">&nbsp;&nbsp;</span>At the start of either a calibration run or
+used and the internal parameters used by Sodium for guiding.<span style="">&nbsp;&nbsp;</span>At the start of either a calibration run or
 a guiding sequence, the last line of the header information defines a set of
 column headings.<span style="">&nbsp;&nbsp; </span>The meanings of those
 columns are shown below:</p>
@@ -811,7 +811,7 @@ columns are shown below:</p>
 system</li><li>x, y are the camera x/y coordinates of the guide
 star at the end of each calibration step</li><li>Dist is the total distance moved in the camera
 coordinate system (dist = sqrt(dx*dx + dy*dy).<span style="">&nbsp;
-</span>This is the value used by LightGuider to compute the calibration parameters<o:p></o:p></li></ul><o:p>&nbsp;</o:p><b style="">Guiding columns:<o:p></o:p></b>
+</span>This is the value used by Sodium to compute the calibration parameters<o:p></o:p></li></ul><o:p>&nbsp;</o:p><b style="">Guiding columns:<o:p></o:p></b>
 
 
 
@@ -848,16 +848,16 @@ lengths of the guide pulses, in milliseconds, needed to move the mount by the
 distances specified by RAGuideDistance and DECGuideDistance</li><li><span style="font-family: Symbol;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span>XStep, YStep - step-adjustment durations for the
 adaptive optics device if one is being used</li><li><span style="font-family: Symbol;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span>StarMass - a brightness measure of the guide
 star image</li><li><span style="font-family: Symbol;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span>SNR
-- an internal "star-detection ratio"&nbsp;used by LightGuider - essentially a
+- an internal "star-detection ratio"&nbsp;used by Sodium - essentially a
 measure of how well the star can be distinguished from the sky
 background</li><li><span style="font-family: Symbol;"><span style=""><span style="font-family: &quot;Times New Roman&quot;; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;"></span></span></span>ErrorCode - an integer value representing the quality of the guide star measurement:</li><ul><li>0 - no error</li><li>1 - star is saturated</li><li>2 - star has low SNR</li><li>3 - star mass is too low for accurate measurement</li><li>4 - star has drifted too near the edge of the frame</li><li>5 - star mass has changed beyond the specified amount</li><li>6 - unexpected error</li></ul></ul>
 
 
 
 <p class="MsoNormal">All&nbsp;distance values are in units of pixels.<span style="">&nbsp; </span>The header for the guiding section will show
-the image scale as it is known by LightGuider, and that can be used to scale the pixel
+the image scale as it is known by Sodium, and that can be used to scale the pixel
 distance values into units of arc-seconds if desired.</p><h3><a name="Problem_Reporting"></a>Problem Reporting</h3>If
-you encounter application problems that&nbsp;are specific to <span style="font-style: italic;">LightGuider</span>, you
+you encounter application problems that&nbsp;are specific to <span style="font-style: italic;">Sodium</span>, you
 are encouraged to report them to the open-phd-guiding Google group: <span style="font-weight: bold;">https://groups.google.com/forum/?fromgroups=#!forum/open-phd-guiding</span>.
 &nbsp;Obviously, the more information you can provide, the more likely
 we will be able to resolve the problem. &nbsp;Using the following
@@ -866,10 +866,10 @@ problem - if we have a clear set of steps to follow, we are more likely
 to find a solution quickly. &nbsp;If you can reproduce it, try to
 reduce things to the minimum number of steps. &nbsp;Remember, we won't
 have your hardware or computer environment when we try to reproduce it
-ourselves.</li><li>Try to be complete about describing your configuration - operating system, equipment types, <span style="font-style: italic;">LightGuider</span> version, etc.</li><li>Attach
-the <span style="font-style: italic;">LightGuider</span>
+ourselves.</li><li>Try to be complete about describing your configuration - operating system, equipment types, <span style="font-style: italic;">Sodium</span> version, etc.</li><li>Attach
+the <span style="font-style: italic;">Sodium</span>
 debug log from the session in which you encountered the
-problem. &nbsp;You can find the debug log in the LightGuider folder in your
+problem. &nbsp;You can find the debug log in the Sodium folder in your
 Documents folder.&nbsp;If you can't reproduce the problem, try to
 estimate the
 time of day when you first saw it - this could help us find evidence in

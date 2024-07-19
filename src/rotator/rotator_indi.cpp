@@ -32,16 +32,16 @@
 *
 */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 #ifdef ROTATOR_INDI
 
-#include "rotator_indi.h"
-#include "rotator.h"
-#include "config_indi.h"
-#include "indi_gui.h"
-#include "libindi/baseclient.h"
+#include "rotator_indi.hpp"
+#include "rotator.hpp"
+#include "config_indi.hpp"
+#include "indi_gui.hpp"
 
+#include <libindi/baseclient.h>
 #include <libindi/basedevice.h>
 #include <libindi/indiproperty.h>
 

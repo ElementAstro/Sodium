@@ -35,7 +35,7 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 #include <algorithm>
 
 Star::Star()
@@ -61,7 +61,7 @@ void Star::Invalidate()
     SNR = 0.0;
     HFD = 0.0;
     m_lastFindResult = STAR_ERROR;
-    PHD_Point::Invalidate();
+    SodiumPoint::Invalidate();
 }
 
 void Star::SetError(FindResult error)
@@ -1062,7 +1062,7 @@ bool GuideStar::AutoFind(const usImage& image, int extraEdgeAllowance, int searc
                 {
                     // Find the chosen star in the list and compute the offsetFromPrimary for all secondary stars
                     int primaryLoc = -1;
-                    PHD_Point primaryRef(it->x, it->y);
+                    SodiumPoint primaryRef(it->x, it->y);
                     for (auto pGS = foundStars.begin(); pGS != foundStars.end(); ++pGS)
                     {
                         if (pGS->X == tmp.X && pGS->Y == tmp.Y)

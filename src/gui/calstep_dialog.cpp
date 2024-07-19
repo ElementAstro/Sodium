@@ -33,8 +33,8 @@
  *
  */
 
-#include "phd.h"
-#include "calstep_dialog.h"
+#include "sodium.hpp"
+#include "calstep_dialog.hpp"
 #include <wx/valnum.h>
 #include <cmath>
 

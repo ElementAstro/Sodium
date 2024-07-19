@@ -40,7 +40,7 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 #include <wx/dir.h>
 #include <algorithm>
@@ -369,7 +369,7 @@ bool GuiderMultiStar::SetSearchRegion(int searchRegion)
     return bError;
 }
 
-bool GuiderMultiStar::SetCurrentPosition(const usImage *pImage, const PHD_Point& position)
+bool GuiderMultiStar::SetCurrentPosition(const usImage *pImage, const SodiumPoint& position)
 {
     bool bError = true;
 
@@ -533,7 +533,7 @@ bool GuiderMultiStar::AutoSelect(const wxRect& roi)
     return error;
 }
 
-inline static wxRect SubframeRect(const PHD_Point& pos, int halfwidth)
+inline static wxRect SubframeRect(const SodiumPoint& pos, int halfwidth)
 {
     return wxRect(ROUND(pos.X) - halfwidth,
                   ROUND(pos.Y) - halfwidth,
@@ -548,7 +548,7 @@ wxRect GuiderMultiStar::GetBoundingBox() const
     GUIDER_STATE state = GetState();
 
     bool subframe;
-    PHD_Point pos;
+    SodiumPoint pos;
 
     switch (state) {
     case STATE_SELECTED:
@@ -758,7 +758,7 @@ bool GuiderMultiStar::RefineOffset(const usImage *pImage, GuiderOffset *pOffset)
                             Debug.Write("MultiStar: updating star positions after lock position change\n");
                             for (auto pGS = m_guideStars.begin() + 1; pGS != m_guideStars.end();)
                             {
-                                PHD_Point expectedLoc = m_primaryStar + pGS->offsetFromPrimary;
+                                SodiumPoint expectedLoc = m_primaryStar + pGS->offsetFromPrimary;
                                 bool found;
                                 if (IsValidSecondaryStarPosition (expectedLoc))
                                     found = pGS->Find(pImage, m_searchRegion, expectedLoc.X, expectedLoc.Y, pFrame->GetStarFindMode(),
@@ -799,7 +799,7 @@ bool GuiderMultiStar::RefineOffset(const usImage *pImage, GuiderOffset *pOffset)
                     if (pGS->wasLost)
                     {
                         // Look for it based on its original offset from the primary star
-                        PHD_Point expectedLoc = m_primaryStar + pGS->offsetFromPrimary;
+                        SodiumPoint expectedLoc = m_primaryStar + pGS->offsetFromPrimary;
                         found = pGS->Find(pImage, m_searchRegion, expectedLoc.X, expectedLoc.Y, pFrame->GetStarFindMode(),
                             GetMinStarHFD(), GetMaxStarHFD(), pCamera->GetSaturationADU(), Star::FIND_LOGGING_MINIMAL);
                     }
@@ -979,7 +979,7 @@ bool GuiderMultiStar::UpdateCurrentPosition(const usImage *pImage, GuiderOffset 
             }
         }
 
-        const PHD_Point& lockPos = LockPosition();
+        const SodiumPoint& lockPos = LockPosition();
         double distance;
         bool raOnly = MyFrame::GuidingRAOnly();
         if (lockPos.IsValid())
@@ -1048,7 +1048,7 @@ bool GuiderMultiStar::UpdateCurrentPosition(const usImage *pImage, GuiderOffset 
     return bError;
 }
 
-bool GuiderMultiStar::SetLockPosition(const PHD_Point& position)
+bool GuiderMultiStar::SetLockPosition(const SodiumPoint& position)
 {
     if (!Guider::SetLockPosition(position))
     {
@@ -1064,7 +1064,7 @@ bool GuiderMultiStar::SetLockPosition(const PHD_Point& position)
         return true;
 }
 
-bool GuiderMultiStar::IsValidLockPosition(const PHD_Point& pt)
+bool GuiderMultiStar::IsValidLockPosition(const SodiumPoint& pt)
 {
     const usImage *pImage = CurrentImage();
     if (!pImage)
@@ -1076,7 +1076,7 @@ bool GuiderMultiStar::IsValidLockPosition(const PHD_Point& pt)
         pt.Y + 1 + m_searchRegion < pImage->Size.GetY();
 }
 
-bool GuiderMultiStar::IsValidSecondaryStarPosition(const PHD_Point& pt)
+bool GuiderMultiStar::IsValidSecondaryStarPosition(const SodiumPoint& pt)
 {
     const usImage *pImage = CurrentImage();
     if (!pImage)
@@ -1137,7 +1137,7 @@ void GuiderMultiStar::OnLClick(wxMouseEvent &mevent)
             double StarX = (double) mevent.m_x / scaleFactor;
             double StarY = (double) mevent.m_y / scaleFactor;
 
-            SetCurrentPosition(pImage, PHD_Point(StarX, StarY));
+            SetCurrentPosition(pImage, SodiumPoint(StarX, StarY));
 
             if (!m_primaryStar.IsValid())
             {
@@ -1171,7 +1171,7 @@ void GuiderMultiStar::OnLClick(wxMouseEvent &mevent)
     }
 }
 
-inline static void DrawBox(wxDC& dc, const PHD_Point& star, int halfW, double scale)
+inline static void DrawBox(wxDC& dc, const SodiumPoint& star, int halfW, double scale)
 {
     dc.SetBrush(*wxTRANSPARENT_BRUSH);
     double w = ROUND((halfW * 2 + 1) * scale);
@@ -1297,12 +1297,12 @@ void GuiderMultiStar::SaveStarFITS()
     imgLogDirectory = Debug.GetLogDir() + PATHSEPSTR + "PHD2_Stars";
     if (!wxDirExists(imgLogDirectory))
         wxFileName::Mkdir(imgLogDirectory, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
-    wxString fname = imgLogDirectory + PATHSEPSTR + "PHD_GuideStar" + wxDateTime::Now().Format(_T("_%j_%H%M%S")) + ".fit";
+    wxString fname = imgLogDirectory + PATHSEPSTR + "SODIUM_GuideStar" + wxDateTime::Now().Format(_T("_%j_%H%M%S")) + ".fit";
 
     fitsfile *fptr;  // FITS file pointer
     int status = 0;  // CFITSIO status value MUST be initialized to zero!
 
-    PHD_fits_create_file(&fptr, fname, false, &status);
+    SODIUM_fits_create_file(&fptr, fname, false, &status);
 
     if (!status)
     {
@@ -1326,7 +1326,7 @@ void GuiderMultiStar::SaveStarFITS()
         }
     }
 
-    PHD_fits_close_file(fptr);
+    SODIUM_fits_close_file(fptr);
 }
 
 wxString GuiderMultiStar::GetSettingsSummary() const

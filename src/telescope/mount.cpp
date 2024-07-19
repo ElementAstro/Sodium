@@ -33,10 +33,10 @@
  *
  */
 
-#include "phd.h"
-#include "backlash_comp.h"
-#include "guiding_assistant.h"
-#include "gaussian_process_guider.h"
+#include "sodium.hpp"
+#include "backlash_comp.hpp"
+#include "guiding_assistant.hpp"
+#include "gaussian_process_guider.hpp"
 
 #include <wx/tokenzr.h>
 #include <cstdarg>
@@ -782,13 +782,13 @@ void Mount::TestTransforms()
                     double cameraAngle = ((double)i) * M_PI/12.0;
                     cameraAngle = atan2(sin(cameraAngle), cos(cameraAngle));
 
-                    PHD_Point p0(cos(cameraAngle), sin(cameraAngle));
+                    SodiumPoint p0(cos(cameraAngle), sin(cameraAngle));
                     assert(fabs((p0.X*p0.X + p0.Y*p0.Y) - 1.00) < 0.01);
 
                     double p0Angle = p0.Angle();
                     assert(fabs(cameraAngle - p0Angle) < 0.01);
 
-                    PHD_Point p1, p2;
+                    SodiumPoint p1, p2;
 
                     if (TransformCameraCoordinatesToMountCoordinates(p0, p1))
                     {
@@ -1116,8 +1116,8 @@ Mount::MOVE_RESULT Mount::MoveOffset(GuiderOffset *ofs, unsigned int moveOptions
  *
  */
 
-bool Mount::TransformCameraCoordinatesToMountCoordinates(const PHD_Point& cameraVectorEndpoint,
-                                                         PHD_Point& mountVectorEndpoint, bool logged)
+bool Mount::TransformCameraCoordinatesToMountCoordinates(const SodiumPoint& cameraVectorEndpoint,
+                                                         SodiumPoint& mountVectorEndpoint, bool logged)
 {
     bool bError = false;
 
@@ -1162,8 +1162,8 @@ bool Mount::TransformCameraCoordinatesToMountCoordinates(const PHD_Point& camera
     return bError;
 }
 
-bool Mount::TransformMountCoordinatesToCameraCoordinates(const PHD_Point& mountVectorEndpoint,
-                                                        PHD_Point& cameraVectorEndpoint, bool logged)
+bool Mount::TransformMountCoordinatesToCameraCoordinates(const SodiumPoint& mountVectorEndpoint,
+                                                        SodiumPoint& cameraVectorEndpoint, bool logged)
 {
     bool bError = false;
 
@@ -1678,8 +1678,8 @@ void Mount::NotifyGuidingDithered(double dx, double dy, bool mountCoords)
 
     if (!mountCoords)
     {
-        PHD_Point cam(dx, dy);
-        PHD_Point mnt;
+        SodiumPoint cam(dx, dy);
+        SodiumPoint mnt;
         bool err = TransformCameraCoordinatesToMountCoordinates(cam, mnt, false);
         if (!err)
         {
@@ -1704,7 +1704,7 @@ void Mount::NotifyGuidingDitherSettleDone(bool success)
         m_pYGuideAlgorithm->GuidingDitherSettleDone(success);
 }
 
-void Mount::NotifyDirectMove(const PHD_Point& dist)
+void Mount::NotifyDirectMove(const SodiumPoint& dist)
 {
     Debug.Write(wxString::Format("Mount: notify direct move %.2f,%.2f\n", dist.X, dist.Y));
     if (m_pXGuideAlgorithm)

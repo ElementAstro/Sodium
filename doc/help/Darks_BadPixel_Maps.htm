@@ -5,17 +5,17 @@ used for guiding are typically not temperature-regulated and may
 produce&nbsp;images that appear quite&nbsp;noisy. &nbsp;As a result, guide
 exposures frequently show obvious&nbsp;defects in the form of &nbsp;hot
 (or "warm") pixels or regions with spurious brightness levels. &nbsp;If
-there are too many of these defects, LightGuider may have trouble identifying
+there are too many of these defects, Sodium may have trouble identifying
 and selecting&nbsp;guide stars. &nbsp;Even after guiding has begun, a
 spurious hot pixel close to the guide star can disrupt the calculations
 needed for smooth guiding and may cause the software to "jump" between
 the real star and the hot pixel. &nbsp;These sorts of problems can be
-mitigated by using either of two approaches in LightGuider: dark frames and
-bad pixel maps. &nbsp;All functions related to dark frames and bad-pixel maps are located under the top-level 'Darks' menu.<br><br>&nbsp;&nbsp;<h3><a name="Dark_Frames"></a>Dark Frames</h3>LightGuider will
+mitigated by using either of two approaches in Sodium: dark frames and
+bad pixel maps. &nbsp;All functions related to dark frames and bad-pixel maps are located under the top-level 'Darks' menu.<br><br>&nbsp;&nbsp;<h3><a name="Dark_Frames"></a>Dark Frames</h3>Sodium will
 build and use a&nbsp;library of dark frames that match the range of
 exposures you use for guiding. &nbsp;Once the library is built, it will
 be saved automatically and will be available for use across multiple
-LightGuider sessions. &nbsp;As a result, you can spend a modest amount of time
+Sodium sessions. &nbsp;As a result, you can spend a modest amount of time
 to build a good dark library, then use that library for an extended
 period of time. &nbsp;Once you have connected to your camera, you can
 build a dark library from the 'Dark Library...' item under the
@@ -24,7 +24,7 @@ this: <br><br><span style="font-size: 10pt; font-family: Arial;"></span><span st
 use the two controls at the top to specify the minimum and maximum
 exposure times that will be used to acquire dark frames. &nbsp;The
 starting, ending, and intermediate values match the exposure times used
-in the main LightGuider window, so you can acquire dark frames that will match
+in the main Sodium window, so you can acquire dark frames that will match
 any exposure time you choose for guiding. &nbsp;The third control
 specifies the number of dark frames that will be acquired and averaged
 for each exposure time. &nbsp;The averaged image is referred to as a
@@ -44,9 +44,9 @@ library by taking new dark frames at the specified exposure times<br><br>Once
 you've set your
 parameters, click on 'Start' to begin the process. &nbsp;If your guide
 camera does not have a shutter - most do not - you'll be prompted by
-LightGuider to cover the guide scope. &nbsp;To get the best results, be sure
+Sodium to cover the guide scope. &nbsp;To get the best results, be sure
 there is no light leakage into the guide camera - doing this in
-daylight is not likely to work well. &nbsp;LightGuider will systematically
+daylight is not likely to work well. &nbsp;Sodium will systematically
 work through the range of exposure times you've chosen, taking the
 specified number of frames for each exposure time. &nbsp;Progress will
 be displayed on the status bar at the bottom of the window. &nbsp;Once you've started the
@@ -55,7 +55,7 @@ process, the 'Cancel' button above will change to a 'Stop' button.
 change the parameters before the entire sequence completes.
 &nbsp;Stopping in this way will discard whatever data has already been
 collected, so you'll need to make your corrections and then restart the
-process. &nbsp; Once all the frames have been collected, LightGuider will
+process. &nbsp; Once all the frames have been collected, Sodium will
 compute the master dark frames, store them in a dark library data file,
 then show a message box summarizing the results. &nbsp;If your
 camera has no shutter, you'll also be prompted to uncover the guide
@@ -64,13 +64,13 @@ library has been built, you control its use by the 'Use Dark Library'
 &nbsp;item under the 'Darks' menu. &nbsp;The checkbox on the menu item
 will toggle on or off each time you click on it. &nbsp;The setting of
 the item is retained across program executions, so if you choose to
-leave the menu item checked, LightGuider will automatically load the dark
+leave the menu item checked, Sodium will automatically load the dark
 library and resume its use the next time you run the application.
 &nbsp;The dark library itself is retained on disk until you build a new
 library, so you can freely change the setting on the 'Use Dark Library'
 menu item without loss of any data. &nbsp;If you are using a dark
 library and there is no master dark frame that exactly matches your
-guide exposure time, LightGuider will use the&nbsp;nearest fit. &nbsp;However,
+guide exposure time, Sodium will use the&nbsp;nearest fit. &nbsp;However,
 you should use matching master dark frames for best
 results. &nbsp;If you have a dark library that has&nbsp;missing exposure
 times, you can simply acquire the missing data and it will be added to
@@ -78,7 +78,7 @@ the existing dark library - there is no need to start over. &nbsp;By
 changing the setting of the 'Use Dark Library' menu item, you'll be
 able to see the effect of using the dark library and determine whether your guider images are sufficiently improved.<br><br>Remember
 that a dark library is associated with a particular camera and binning
-level. &nbsp;LightGuider
+level. &nbsp;Sodium
 will check to be sure that the dark library matches the camera you are
 currently using. &nbsp;If it does not, you will see an alert message
 telling you the dark library can't be used and must be rebuilt.
@@ -104,10 +104,10 @@ locations on the guide image is replaced by a statistical sample of the
 surrounding pixels, thus eliminating all or most of the effect of the
 "bad" pixel. &nbsp;The final result is usually an image with a smoother
 background and fewer obvious defects. &nbsp;For any defects that
-remain, LightGuider also provides a way&nbsp;to manually click on
+remain, Sodium also provides a way&nbsp;to manually click on
 bad pixel locations and add them to the map. &nbsp;This entire process
 of obtaining and analyzing dark frames&nbsp;is handled for
-you by&nbsp;LightGuider, so it's easy to build a bad-pixel map.<br><br>Building
+you by&nbsp;Sodium, so it's easy to build a bad-pixel map.<br><br>Building
 a bad-pixel map is done by clicking on the 'Bad Pixel Map...' item
 under the top-level 'Darks' menu. &nbsp;If you are doing this for the
 first time, you will be prompted to obtain a sequence of dark frames
@@ -119,13 +119,13 @@ is based on statistics, you should use relatively long exposure times
 be re-used for fairly long time periods, you won't have to repeat this
 operation very often, and it's worth spending some time to get higher
 quality data. <br><br>Once
-the dark frames have been captured, LightGuider
+the dark frames have been captured, Sodium
 will compute the statistics and identify an initial set of defective
 or&nbsp;suspect pixel locations. &nbsp;After a short delay,
 you'll&nbsp;then
 see a dialog that looks something like this: <br><br><span style="font-size: 10pt; font-family: Arial;"></span><span style="font-size: 10pt; font-family: Arial;"></span><span style="font-size: 10pt; font-family: Arial;"></span><span style="font-size: 10pt; font-family: Arial;"></span><span style="font-size: 10pt; font-family: Arial;"></span><img style="width: 653px; height: 514px;" alt="Bad-pixel Map" src="DefectUI.png"><br><br>The
 'General Information' section shows a summary of the statistics
-computed by LightGuider during the identification of bad pixel locations.
+computed by Sodium during the identification of bad pixel locations.
 &nbsp;Normally, you won't need to look at these, and you can hide this
 portion of the display by clearing&nbsp;the 'Show Master Dark Details'
 checkbox. &nbsp;The "Results" group shows the counts for hot and cold
@@ -136,24 +136,24 @@ the range of 0 to 100. &nbsp;You'll need to experiment or make some
 judgment about whether the counts look reasonable based on what you see
 on your normal guide frames. &nbsp;If you adjust the aggressiveness
 sliders left and right, you'll see the hot and cold pixel counts
-change. &nbsp;The sliders&nbsp;control how "aggressive" LightGuider
+change. &nbsp;The sliders&nbsp;control how "aggressive" Sodium
 should be in identifying suspect pixels and flagging them as being
 defective - so higher aggressiveness settings will result in higher
 pixel counts. &nbsp; Once the settings are where you want them, click
 on the 'Generate' button to compute and load the new defect map. &nbsp;<br><br>At
 this point, you'll probably want to examine the results. &nbsp;The main
-window of LightGuider is still active, so you can take a normal guide exposure
+window of Sodium is still active, so you can take a normal guide exposure
 to see how things look. &nbsp;If you want to quickly see the result of
 using the defect map, just toggle the 'Use Bad-pixel Map' menu item
 under the 'Darks' menu. &nbsp; Keep in mind that you don't need to
 achieve a perfectly smooth, black background in the guider image - you
 just need to have a sufficiently small number of remaining hot/cold
-pixels that neither you nor the LightGuider guiding algorithms will mistake a
+pixels that neither you nor the Sodium guiding algorithms will mistake a
 bad pixel for a star. &nbsp;If you&nbsp;over-correct with very aggressive
 settings, you may create so many bad pixel areas that they interfere
 with detection of usable guide stars. &nbsp;It's easy to make
 adjustments with the sliders &nbsp;- just change the slider settings,
-click on 'Generate' again, and look at the results in the main LightGuider
+click on 'Generate' again, and look at the results in the main Sodium
 window.<br><br>You
 may find&nbsp; this&nbsp;approach still leaves some hot pixels that you'd&nbsp;like to eliminate. &nbsp; Since the
 default approach relies on statistics and needs to apply to a wide
@@ -172,7 +172,7 @@ pixels not covered. &nbsp;Click the 'Generate' button</li><li>Now pick up the re
 your bad-pixel
 map has been built, you control its use by the 'Use Bad-pixel Map'
 &nbsp;item under the 'Darks' menu. &nbsp;This setting is retained
-across program executions, so leaving it checked will tell LightGuider to
+across program executions, so leaving it checked will tell Sodium to
 automatically load the defect map and use it for all guide exposures.
 &nbsp;The settings for 'Use Dark Library' and 'Use Bad-pixel Map' are
 mutually exclusive - you can&nbsp;use one or neither, but not both at
@@ -184,14 +184,14 @@ over time. &nbsp;As a result, you may want to rebuild the dark library
 or bad-pixel maps at periodic intervals or when you start to see a
 degradation in the appearance of your normal guide images. &nbsp;In
 these cases, it is also advisable to click on the checkbox for 'Rebuild
-Master Dark Frame', which will tell LightGuider to reacquire the underlying
+Master Dark Frame', which will tell Sodium to reacquire the underlying
 dark frames and recompute a baseline bad-pixel map. &nbsp;You'll then
 need to refine the map as you did before until you're happy with the
 results. &nbsp;There is no reason you should need to interact with
 either the dark library or bad-pixel map data files, but you can find
 them located in the 'AppData\Local' logical directory used by your
 operating system.<br><br>Like dark libraries, bad-pixel maps are&nbsp;associated with a particular camera and binning level.
-&nbsp;LightGuider will check to be sure that the bad-pixel map matches the camera
+&nbsp;Sodium will check to be sure that the bad-pixel map matches the camera
 you are currently using. &nbsp;If it does not, you will see an alert message telling you the bad-pixel map can't be
 used and must be rebuilt. &nbsp;This can happen when you've changed cameras
 or binning factors inside an existing equipment profile, something you shouldn't do unless

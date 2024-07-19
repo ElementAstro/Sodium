@@ -36,12 +36,12 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
 #ifdef STEPGUIDER_SBIGAO_INDI
 
-#include "stepguider_sbigao_indi.h"
-#include "config_indi.h"
+#include "stepguider_sbigao_indi.hpp"
+#include "config_indi.hpp"
 #include <libindi/baseclient.h>
 
 #include <libindi/basedevice.h>

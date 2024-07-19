@@ -34,15 +34,15 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 
-#include "aui_controls.h"
-#include "comet_tool.h"
-#include "config_indi.h"
-#include "guiding_assistant.h"
-#include "phdupdate.h"
-#include "pierflip_tool.h"
-#include "Refine_DefMap.h"
+#include "aui_controls.hpp"
+#include "comet_tool.hpp"
+#include "config_indi.hpp"
+#include "guiding_assistant.hpp"
+#include "update.hpp"
+#include "pierflip_tool.hpp"
+#include "Refine_DefMap.hpp"
 
 #include <algorithm>
 #include <memory>
@@ -90,6 +90,8 @@ wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
     EVT_MENU(EEGG_CLEARCAL, MyFrame::OnEEGG)
     EVT_MENU(EEGG_REVIEWCAL, MyFrame::OnEEGG)
     EVT_MENU(MENU_CALIBRATIONASSIST, MyFrame::OnCalibrationAssistant)
+    EVT_MENU(MENU_SERVERASSIST, MyFrame::OnServerAssistant)
+    EVT_MENU(MENU_SOLVERASSIST, MyFrame::OnSolverAssistant)
     EVT_MENU(EEGG_MANUALLOCK, MyFrame::OnEEGG)
     EVT_MENU(EEGG_STICKY_LOCK, MyFrame::OnEEGG)
     EVT_MENU(EEGG_FLIPCAL, MyFrame::OnEEGG)
@@ -234,7 +236,7 @@ MyFrame::MyFrame()
 
     m_sampling = 1.0;
 
-    #include "icons/phd2_128.png.h"
+    #include "icons/phd2_128.png.hpp"
     wxBitmap phd2(wxBITMAP_PNG_FROM_DATA(phd2_128));
     wxIcon icon;
     icon.CopyFromBitmap(phd2);
@@ -364,6 +366,8 @@ MyFrame::MyFrame()
     pNudgeLock = nullptr;
     pCometTool = nullptr;
     pGuidingAssistant = nullptr;
+    pServerAssistant = nullptr;
+    pSolverAssistant = nullptr;
     pRefineDefMap = nullptr;
     pCalSanityCheckDlg = nullptr;
     pCalReviewDlg = nullptr;
@@ -512,7 +516,8 @@ void MyFrame::SetupMenuBar()
     m_autoSelectStarMenuItem = tools_menu->Append(MENU_AUTOSTAR, _("&Auto-select Star\tAlt-S"), _("Automatically select star"));
     tools_menu->Append(MENU_CALIBRATIONASSIST, _("Calibration Assistant..."), _("Slew to a preferred calibration position"));
     tools_menu->Append(EEGG_REVIEWCAL, _("&Review Calibration Data\tAlt-C"), _("Review calibration data from last successful calibration"));
-
+    tools_menu->Append(MENU_SERVERASSIST, _("Server Assistant"), _("Manage socket server and web server"));
+    tools_menu->Append(MENU_SOLVERASSIST, _("Solver Assistant"), _("Using astrometry or astap as the platesolve engine"));
     wxMenu *calib_menu = new wxMenu;
     calib_menu->Append(EEGG_RESTORECAL, _("Restore Calibration Data..."), _("Restore calibration data from last successful calibration"));
     calib_menu->Append(EEGG_MANUALCAL, _("Enter Calibration Data..."), _("Manually enter the calibration data"));
@@ -936,43 +941,43 @@ void MyFrame::SetupToolBar()
 {
     MainToolbar = new wxAuiToolBar(this, -1, wxDefaultPosition, wxDefaultSize, wxAUI_TB_DEFAULT_STYLE);
 
-#   include "icons/loop.png.h"
+#   include "icons/loop.png.hpp"
     wxBitmap loop_bmp(wxBITMAP_PNG_FROM_DATA(loop));
 
-#   include "icons/loop_disabled.png.h"
+#   include "icons/loop_disabled.png.hpp"
     wxBitmap loop_bmp_disabled(wxBITMAP_PNG_FROM_DATA(loop_disabled));
 
-#   include "icons/guide.png.h"
+#   include "icons/guide.png.hpp"
     wxBitmap guide_bmp(wxBITMAP_PNG_FROM_DATA(guide));
 
-#   include "icons/guide_disabled.png.h"
+#   include "icons/guide_disabled.png.hpp"
     wxBitmap guide_bmp_disabled(wxBITMAP_PNG_FROM_DATA(guide_disabled));
 
-#   include "icons/stop.png.h"
+#   include "icons/stop.png.hpp"
     wxBitmap stop_bmp(wxBITMAP_PNG_FROM_DATA(stop));
 
-#   include "icons/stop_disabled.png.h"
+#   include "icons/stop_disabled.png.hpp"
     wxBitmap stop_bmp_disabled(wxBITMAP_PNG_FROM_DATA(stop_disabled));
 
-#   include "icons/auto_select.png.h"
+#   include "icons/auto_select.png.hpp"
     wxBitmap auto_select_bmp(wxBITMAP_PNG_FROM_DATA(auto_select));
 
-#   include "icons/auto_select_disabled.png.h"
+#   include "icons/auto_select_disabled.png.hpp"
     wxBitmap auto_select_disabled_bmp(wxBITMAP_PNG_FROM_DATA(auto_select_disabled));
 
-#   include "icons/connect.png.h"
+#   include "icons/connect.png.hpp"
     wxBitmap connect_bmp(wxBITMAP_PNG_FROM_DATA(connect));
 
-#   include "icons/connect_disabled.png.h"
+#   include "icons/connect_disabled.png.hpp"
     wxBitmap connect_bmp_disabled(wxBITMAP_PNG_FROM_DATA(connect_disabled));
 
-#   include "icons/brain.png.h"
+#   include "icons/brain.png.hpp"
     wxBitmap brain_bmp(wxBITMAP_PNG_FROM_DATA(brain));
 
-#   include "icons/cam_setup.png.h"
+#   include "icons/cam_setup.png.hpp"
     wxBitmap cam_setup_bmp(wxBITMAP_PNG_FROM_DATA(cam_setup));
 
-#   include "icons/cam_setup_disabled.png.h"
+#   include "icons/cam_setup_disabled.png.hpp"
     wxBitmap cam_setup_bmp_disabled(wxBITMAP_PNG_FROM_DATA(cam_setup_disabled));
 
     int dur_values[] = {
@@ -2091,7 +2096,7 @@ bool MyFrame::Dither(double amount, bool raOnly)
 
         Debug.Write(wxString::Format("dither: size=%.2f, dRA=%.2f dDec=%.2f\n", amount, dRa, dDec));
 
-        bool err = pGuider->MoveLockPosition(PHD_Point(dRa, dDec));
+        bool err = pGuider->MoveLockPosition(SodiumPoint(dRa, dDec));
         if (err)
         {
             throw ERROR_INFO("move lock failed");
@@ -2347,7 +2352,7 @@ static bool save_multi_darks(const ExposureImgMap& darks, const wxString& fname,
         fitsfile *fptr;  // FITS file pointer
         int status = 0;  // CFITSIO status value MUST be initialized to zero!
 
-        PHD_fits_create_file(&fptr, fname, true, &status);
+        SODIUM_fits_create_file(&fptr, fname, true, &status);
         if (status)
             throw ERROR_INFO("fits_create_file failed");
 
@@ -2381,7 +2386,7 @@ static bool save_multi_darks(const ExposureImgMap& darks, const wxString& fname,
             Debug.Write(wxString::Format("saving dark frame exposure = %d\n", img->ImgExpDur));
         }
 
-        PHD_fits_close_file(fptr);
+        SODIUM_fits_close_file(fptr);
         bError = status ? true : false;
     }
     catch (const wxString& Msg)
@@ -2407,7 +2412,7 @@ static bool load_multi_darks(GuideCamera *camera, const wxString& fname)
             throw ERROR_INFO("File does not exist");
         }
 
-        if (PHD_fits_open_diskfile(&fptr, fname, READONLY, &status) == 0)
+        if (SODIUM_fits_open_diskfile(&fptr, fname, READONLY, &status) == 0)
         {
             int nhdus = 0;
             fits_get_num_hdus(fptr, &nhdus, &status);
@@ -2499,7 +2504,7 @@ static bool load_multi_darks(GuideCamera *camera, const wxString& fname)
 
     if (fptr)
     {
-        PHD_fits_close_file(fptr);
+        SODIUM_fits_close_file(fptr);
     }
 
     return bError;
@@ -2539,7 +2544,7 @@ bool MyFrame::DarkLibExists(int profileId, bool showAlert)
             fitsfile *fptr;
             int status = 0;  // CFITSIO status value MUST be initialized to zero!
 
-            if (PHD_fits_open_diskfile(&fptr, fileName, READONLY, &status) == 0)
+            if (SODIUM_fits_open_diskfile(&fptr, fileName, READONLY, &status) == 0)
             {
                 long fsize[2];
                 fits_get_img_size(fptr, 2, fsize, &status);
@@ -2555,7 +2560,7 @@ bool MyFrame::DarkLibExists(int profileId, bool showAlert)
                         "connected to the camera you want to use for guiding."));
                 }
 
-                PHD_fits_close_file(fptr);
+                SODIUM_fits_close_file(fptr);
             }
             else
                 Debug.Write(wxString::Format("DarkLib check: fitsio error on open_diskfile = %d\n", status));
@@ -2928,7 +2933,7 @@ static wxString TranslateStrToLang(const wxString& s, int langid)
         langid = wxLocale::GetSystemLanguage();
     if (langid == wxLANGUAGE_ENGLISH_US)
         return s;
-    for (const auto& tr : wxTranslations::Get()->GetAvailableTranslations(PHD_MESSAGES_CATALOG))
+    for (const auto& tr : wxTranslations::Get()->GetAvailableTranslations(SODIUM_MESSAGES_CATALOG))
     {
         const wxLanguageInfo *info = wxLocale::FindLanguageInfo(tr);
         if (info && info->Language == langid)
@@ -2955,7 +2960,7 @@ class AvailableLanguages
     void Init()
     {
         wxArrayString availableTranslations =
-                wxTranslations::Get()->GetAvailableTranslations(PHD_MESSAGES_CATALOG);
+                wxTranslations::Get()->GetAvailableTranslations(SODIUM_MESSAGES_CATALOG);
 
         availableTranslations.Sort();
 

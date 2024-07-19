@@ -36,8 +36,8 @@
 // Handles import of camera calibration files (dark library, bad-pix map files) from user-selected profile to the current profile
 // Source profile choices are limited to camera data with compatible geometry
 
-#include "phd.h"
-#include "camcal_import_dialog.h"
+#include "sodium.hpp"
+#include "camcal_import_dialog.hpp"
 #include <wx/file.h>
 
 // Utility function to add the <label, input> pairs to a flexgrid

@@ -32,7 +32,7 @@
  *
  */
 
-#include "phd.h"
+#include "sodium.hpp"
 #include <assert.h>
 #include <wx/dcbuffer.h>
 #include <wx/utils.h>
@@ -50,8 +50,8 @@ public:
         int dy;
     } m_history[m_maxHistorySize];
 
-    PHD_Point m_avgPos;
-    PHD_Point m_curBump;
+    SodiumPoint m_avgPos;
+    SodiumPoint m_curBump;
 
     wxPen   *m_pPens[m_maxHistorySize];
     wxBrush *m_pBrushes[m_maxHistorySize];
@@ -71,7 +71,7 @@ public:
     virtual ~GraphStepguiderClient(void);
 
     void SetLimits(unsigned int xMax, unsigned int yMax, unsigned int xBump, unsigned int yBump);
-    void AppendData(const wxPoint& pos, const PHD_Point& avgPos);
+    void AppendData(const wxPoint& pos, const SodiumPoint& avgPos);
 
     wxDECLARE_EVENT_TABLE();
 };
@@ -198,7 +198,7 @@ void GraphStepguiderWindow::OnButtonClear(wxCommandEvent& WXUNUSED(evt))
     }
 }
 
-void GraphStepguiderWindow::AppendData(const wxPoint& pos, const PHD_Point& avgPos)
+void GraphStepguiderWindow::AppendData(const wxPoint& pos, const SodiumPoint& avgPos)
 {
     assert(wxThread::IsMain());
 
@@ -222,7 +222,7 @@ void GraphStepguiderWindow::AppendData(const wxPoint& pos, const PHD_Point& avgP
     }
 }
 
-void GraphStepguiderWindow::ShowBump(const PHD_Point& curBump)
+void GraphStepguiderWindow::ShowBump(const SodiumPoint& curBump)
 {
     assert(wxThread::IsMain());
 
@@ -277,7 +277,7 @@ void GraphStepguiderClient::SetLimits(unsigned int xMax, unsigned int yMax,
     m_yBump = yBump;
 }
 
-void GraphStepguiderClient::AppendData(const wxPoint& pos, const PHD_Point& avgPos)
+void GraphStepguiderClient::AppendData(const wxPoint& pos, const SodiumPoint& avgPos)
 {
     memmove(&m_history, &m_history[1], sizeof(m_history[0]) * (m_maxHistorySize - 1));
 
@@ -377,7 +377,7 @@ void GraphStepguiderClient::OnPaint(wxPaintEvent& WXUNUSED(evt))
     if (pMount && pMount->IsCalibrated() && pSecondaryMount && pSecondaryMount->IsCalibrated())
     {
         double const LEN = 8.0;
-        PHD_Point mnt, cam, ao;
+        SodiumPoint mnt, cam, ao;
 
         // RA vector
         mnt.SetXY(1., 0.);

@@ -4,7 +4,7 @@
 <h2>Advanced Settings</h2>
 Advanced settings are accessed by clicking on
 the 'Brain button' in the main display.
-&nbsp;<span style="font-style: italic;">LightGuider</span> has a large set of parameters that can be
+&nbsp;<span style="font-style: italic;">Sodium</span> has a large set of parameters that can be
 adjusted to optimize your guiding experience. &nbsp;Although these
 are
 called "advanced" settings, they are not particularly difficult to
@@ -15,7 +15,7 @@ that describe each&nbsp;field in some detail. &nbsp;Simply
 "hover" the
 cursor over the field to see the tool-tip. &nbsp;In many cases,
 this
-will provide all the information you need. &nbsp; Because there are so many parameters available, the Advanced Dialog in <span style="font-style: italic;">LightGuider</span>
+will provide all the information you need. &nbsp; Because there are so many parameters available, the Advanced Dialog in <span style="font-style: italic;">Sodium</span>
 is organized
 into notebook tabs that are activated by clicking on the tab names.
 &nbsp;All of the tabs share a common set of 'Ok' and 'Cancel' buttons
@@ -29,42 +29,42 @@ The&nbsp;controls on the
 are summarized here for completeness:<br>
 <ul>
 <li>'<a name="Language"></a>Language' - determines the language
-used in the <span style="font-style: italic;">LightGuider</span> user interface, subject to available localization.
+used in the <span style="font-style: italic;">Sodium</span> user interface, subject to available localization.
 &nbsp;Changing this requires a program restart.</li><li>'<a name="Reset_Configuration"></a>Reset Configuration' - restores all settings to their
-    initial values as if <span style="font-style: italic;">LightGuider</span> had been freshly installed.</li><li>'<a name="Reset_Dont_Ask"></a>Reset Don't Show Again messages' - restores the display of alert messages if you have previously chosen to not show them.</li>
+    initial values as if <span style="font-style: italic;">Sodium</span> had been freshly installed.</li><li>'<a name="Reset_Dont_Ask"></a>Reset Don't Show Again messages' - restores the display of alert messages if you have previously chosen to not show them.</li>
   <li><a name="Check_for_updates"></a>Software Update</li>
   <ul>
-    <li><a name="Automatically_check_for_updates"></a>Automatically check for updates - allow <span style="font-style: italic;">LightGuider</span>
+    <li><a name="Automatically_check_for_updates"></a>Automatically check for updates - allow <span style="font-style: italic;">Sodium</span>
 to check for software updates when the program starts up. If no
 internet connection is available, checking will be deferred until the
-next time LightGuider is run.</li>
+next time Sodium is run.</li>
     <li><a name="Only_check_for_major_releases"></a>Only check for major releases - don't include development builds when checking for software updates.</li>
   </ul>
-See the <a href="Supplemental_info.htm#Software_Update">Software Update</a> section for more information about <span style="font-style: italic;">LightGuider</span> software updates.
+See the <a href="Supplemental_info.htm#Software_Update">Software Update</a> section for more information about <span style="font-style: italic;">Sodium</span> software updates.
 <li>'<a name="Log_File_Location"></a>Log
-File Location' - specifies a&nbsp;directory where LightGuider guide logs,
+File Location' - specifies a&nbsp;directory where Sodium guide logs,
 debug logs, and any diagnostic image files will be stored. The default
 location on Windows is the "My Documents" folder associated with the
 logged-in user..</li><li><a name="Dither_Settings"></a>Dither Settings</li><ul><li><a name="Dither_Random_Mode"></a>'Random
-mode' - tells LightGuider to use a random-number generator to compute both the
+mode' - tells Sodium to use a random-number generator to compute both the
 size and the direction of the dither, subject to any constraints
-imposed by RA-only mode or by the Dec guiding mode being set to 'Off'.</li><li><a name="Dither_Spiral_Mode"></a>'Spiral mode' - tells LightGuider to dither with fixed-size amounts in a clockwise spiral pattern.
+imposed by RA-only mode or by the Dec guiding mode being set to 'Off'.</li><li><a name="Dither_Spiral_Mode"></a>'Spiral mode' - tells Sodium to dither with fixed-size amounts in a clockwise spiral pattern.
 &nbsp;This can be a good choice when the imaging camera has
 significant fixed-pattern noise or the mount has a troublesome amount
 of Dec backlash.</li></ul>
 
 <ul><li>'<a name="Dither_RA_only"></a>Dither
-RA only' - tells LightGuider to dither&nbsp;only on the RA axis.</li></ul>
+RA only' - tells Sodium to dither&nbsp;only on the RA axis.</li></ul>
 <ul><li>'<a name="Dither_scale"></a>Dither scale' - an optional multiplier used to adjust the maximum-dither amount specified by the image application. See <a href="Supplemental_info.htm#Dithering_Ops">Dithering Operations</a>&nbsp;</li></ul><li><a name="Image_Logging"></a>'Enable
 diagnostic image logging' - used primarily for product support and
-diagnosis of problems dealing with the guide camera or LightGuider
+diagnosis of problems dealing with the guide camera or Sodium
 star-recognition and
 measurement. &nbsp;Guide frame images
 are captured and logged in a FITs format subject to the filter/trigger
 controls in the group-box. &nbsp;Images are saved in sub-folders of the
-LightGuider logging directory with the date and time encoded as part of the
+Sodium logging directory with the date and time encoded as part of the
 sub-folder name. For example, a folder named
-'LightGuider_CameraFrames_2022-03-03-184542' refers to a logging event that
+'Sodium_CameraFrames_2022-03-03-184542' refers to a logging event that
 began on March 3, 2022 at 18:45:42 local time. Individual guide frames
 are saved with filenames
 that indicate the time the image was captured and the reason the frame
@@ -108,11 +108,11 @@ the field of view. &nbsp;You can just do a web search to find a list of
 applications that support the FITs format for whatever platform you're
 using. &nbsp;If you simply want to look at the images to check focus or
 see the general quality of the images being returned from your camera,
-you can use LightGuider for that. &nbsp;With LightGuider&nbsp;in an idle state -
+you can use Sodium for that. &nbsp;With Sodium&nbsp;in an idle state -
 neither looping nor guiding - just drag-and-drop one of your saved FITs
 image onto the main window. The display will then update to show the
 image you just dropped. &nbsp;There's
-no need for LightGuider to be connected to any of the hardware. &nbsp;You can
+no need for Sodium to be connected to any of the hardware. &nbsp;You can
 adjust the gamma slider, select a star (manually or automatically), and
 use the Star Profile tool to view the HFD and profile of the selected
 star.</div><h3><a name="Camera_Tab"></a>Camera Tab</h3>
@@ -145,18 +145,18 @@ being handled&nbsp;by the mount encoders or by its pointing model.
 these goals while avoiding unnecessary delays when the system is engaged in
 actions other than "steady-state" guiding for imaging/science
 operations.</li><ul><li>'Use Variable Exposure Delays - enables the feature</li><li>Short
-delay (sec) - sets the exposure delay when&nbsp; LightGuider is&nbsp;looping,
+delay (sec) - sets the exposure delay when&nbsp; Sodium is&nbsp;looping,
 star-selecting, calibrating, dithering and settling, or running the
 Guiding Assistant. &nbsp;For some mounts, this value should be non-zero
 to give the mount encoders enough time to complete their position
 adjustments.</li><li>Long delay (sec) - sets the exposure delay when
-LightGuider is guiding and not in any of the other states named above.
+Sodium is guiding and not in any of the other states named above.
 &nbsp;This delay actually defines the time between the completion of
 the last guide command, if any, and the start of the next camera
 exposure.</li><li>For both the long and short delay scenarios, the interval
 between successive guide camera exposures (and guide commands) will be
 exposure_time + guide_pulse_times + delay_value.</li></ul><li><a name="Auto_exposure_settings"></a>'Auto Exposure' - these are the settings that control Auto exposure time:, useful for automated imaging or AO guiding:</li><ul><li>Min
-Exposure - the minimum exposure time.&nbsp; LightGuider will not set the
+Exposure - the minimum exposure time.&nbsp; Sodium will not set the
 exposure
 time
 less than this value, even if the guide star SNR is higher than the
@@ -169,24 +169,24 @@ corrections are more manageable with an AO. &nbsp;Lower values, down to
 0.5-sec, can also be tried if multiple guide stars are normally
 available in the field of view.</li><li>Max
 Exposure - the maximum exposure time. Before a guide star is selected,
-LightGuider
-will set the exposure time to the maximum value. After selection is completed, LightGuider
+Sodium
+will set the exposure time to the maximum value. After selection is completed, Sodium
 will then incrementally decrease the exposure time until the desired
 SNR is reached. &nbsp;The setting should be sufficiently small to allow
-LightGuider to adequately handle the tracking errors in your mount.</li><li>Target SNR - this is the average SNR value that LightGuider will attempt
+Sodium to adequately handle the tracking errors in your mount.</li><li>Target SNR - this is the average SNR value that Sodium will attempt
 to achieve
 by adjusting the exposure time. SNR often fluctuates from frame to frame
 even with a
 fixed exposure duration, so be sure to account for that when choosing a
 target SNR
-value. LightGuider will always reject frames when SNR drops below 3.0. The default
+value. Sodium will always reject frames when SNR drops below 3.0. The default
 value of 6.0 may provide enough of a cushion to prevent fluctuations from causing
 the SNR to
 go below 3.0 - but double-digit values are recommended. &nbsp;As mentioned in the 'Basic Use' section, SNR is
 similar but not identical to the signal-to-noise ratio used in
 photometry.</li></ul><li><a name="Star_saturation_detection"></a>'Star
 Saturation Detection'
-- &nbsp;when identifying candidate guide stars, LightGuider tries to avoid
+- &nbsp;when identifying candidate guide stars, Sodium tries to avoid
 saturated stars in order to get the most accurate calculations of their
 positions. &nbsp;You can assist this process by specifying how the
 assessment of saturation should be done:</li><ul><li>Saturation
@@ -204,7 +204,7 @@ set the saturation value accordingly.</li><li>Saturation via star-profile -
 this relies on a less accurate judgment of saturation based on whether
 the star profile has a flat top. &nbsp;It is not recommended for normal
 applications.</li></ul><li>'<a name="Pixel_size"></a>Pixel
-size' - The guide camera pixel size in microns. This is needed by <span style="font-style: italic;">LightGuider</span>
+size' - The guide camera pixel size in microns. This is needed by <span style="font-style: italic;">Sodium</span>
 to compute the
 guider image scale and thus report guider statistics in units of
 arc-seconds. &nbsp;Refer to your camera documentation to determine
@@ -217,33 +217,33 @@ problems. &nbsp;If you're using the binning setting in this dialog to
 control camera binning, the pixel size should be the native, un-binned
 size. &nbsp;<span style="font-weight: bold;">Note:&nbsp;</span>
 <span style="font-weight: bold;">this control may be disabled</span> if the camera and camera driver can report
-the pixel size to LightGuider (most can). &nbsp;In that case, the value displayed in the
+the pixel size to Sodium (most can). &nbsp;In that case, the value displayed in the
 disabled control represents the device-reported pixel size - it is what
 it is. &nbsp;If you're also specifying a binning factor at the camera
-driver level rather than in LightGuider, the reported pixel size may change as
-a result. &nbsp;It is generally better to use LightGuider to set binning (see
+driver level rather than in Sodium, the reported pixel size may change as
+a result. &nbsp;It is generally better to use Sodium to set binning (see
 below).</li><li>'<a name="Camera_gain"></a>Camera
 gain' - Sets the gain level for the&nbsp;cameras
 that support this feature. &nbsp;Reducing this parameter can help to
 reduce the noise level or may allow use of a bright star without
 saturation. &nbsp;The range of values and their specific effects are
-dependent on the individual camera, so this LightGuider parameter is treated
+dependent on the individual camera, so this Sodium parameter is treated
 as a percentage of the range between the minimum and maximum gain
 values supported by the camera. &nbsp;For example, if the camera uses
 absolute
-gain values in the range of 40 to 80, a LightGuider gain value of 50% would
+gain values in the range of 40 to 80, a Sodium gain value of 50% would
 translate to a camera gain of 60. &nbsp;Adjusting the gain level is not
 usually required once the configuration has been stabilized, and doing
 so will require replacement of dark libraries and bad-pixel maps.</li><li>'<a name="Disconnect_nonresponsive_camera"></a>Disconnect
 nonresponsive camera after (seconds) - Camera malfunctions will
 sometimes occur, often because of faulty USB connections. &nbsp;In many
-cases, the camera will not return the requested image data, and LightGuider
+cases, the camera will not return the requested image data, and Sodium
 will appear to "hang." &nbsp;This parameter determines
-how long LightGuider should wait for a response after the expected exposure
+how long Sodium should wait for a response after the expected exposure
 time has expired. &nbsp;For example, a timeout value of 5 seconds in
-conjunction with an exposure time of 2 seconds will tell LightGuider to wait
+conjunction with an exposure time of 2 seconds will tell Sodium to wait
 up to 7 seconds for a response. &nbsp;If the data are not received
-within that period, LightGuider will attempt to halt the operation, disconnect
+within that period, Sodium will attempt to halt the operation, disconnect
 the camera,&nbsp;display an alert message in the main window, then try to reconnect the camera.
 &nbsp;Since a hardware/power problem is nearly always the underlying issue, this
 recovery attempt won't always succeed. &nbsp;You should&nbsp;be
@@ -253,7 +253,7 @@ electronics with the main imaging camera, you should set this timeout
 to a large
 value, well above the maximum expected time for a full-frame download
 from the main imager. This is a consideration for users of some of the SBIG dual-chip cameras.
-&nbsp;Regardless of whether LightGuider is able to handle the situation
+&nbsp;Regardless of whether Sodium is able to handle the situation
 gracefully, the underlying problem is almost certainly in&nbsp;the
 hardware or the camera driver and will need to be resolved before
 guiding is continued.</li><li><a name="Binning_setting"></a>Binning
@@ -261,10 +261,10 @@ guiding is continued.</li><li><a name="Binning_setting"></a>Binning
 specify the binning that will be used while taking guide exposures.
 &nbsp;Detailed information is available here: <a href="Supplemental_info.htm#Binning_usage">Use of Binning</a>. &nbsp;This control will
 appear only if the camera is capable of on-chip binning and only if the
-camera is connected to LightGuider. &nbsp;You should always use a separate LightGuider
+camera is connected to Sodium. &nbsp;You should always use a separate Sodium
 profile for each different binning setting because it affects many
 downstream guiding parameters, too many to try to adjust manually.</li><li>'<a name="Use_subframes"></a>Use subframes' - For&nbsp;cameras that support this
-feature, <span style="font-style: italic;">LightGuider</span>
+feature, <span style="font-style: italic;">Sodium</span>
 will download only a subframe of each guide
 exposure. The subframe shows the region around the star bounded by
 the tracking region limits. This is&nbsp;useful for cameras with slow download
@@ -282,7 +282,7 @@ controls - a few guide cameras support sensor cooling. &nbsp;These
 controls let you specify whether the cooler is on and what the cooler
 set-point should be.</li></ul><span style="font-weight: bold;">Note
 that some of the controls in this list will be disabled if the camera
-isn't connected to LightGuider or if the camera driver doesn't support the
+isn't connected to Sodium or if the camera driver doesn't support the
 feature</span>.<br><span style="font-weight: bold;"><br></span><h3><a name="Guiding_Tab"></a>Guiding Tab</h3><span style="font-size: 10pt; font-family: Arial;"></span><img style="width: 632px; height: 572px;" alt="" src="Advanced_guiding.png"><br><br>The
 guiding tab shows the&nbsp; parameters used for calibration,
 star-tracking, and guiding behavior shared by all of the guide algorithms..<br><br>Guide Star Tracking<br><ul><li>'<a name="Search_region"></a>Search
@@ -297,14 +297,14 @@ losing the guide star. &nbsp;Just remember that an overly large search
 region also increases the likelihood that multiple stars will live
 within its boundaries, which could lead to guiding problems. &nbsp;The
 value is actually a "radius" amount, so a search region of 15 pixels
-translates to a square of 30x30 pixels.</li><li>'<a name="Star_mass_change_detection"></a>Star mass&nbsp;detection' - tells <span style="font-style: italic;">LightGuider</span>
+translates to a square of 30x30 pixels.</li><li>'<a name="Star_mass_change_detection"></a>Star mass&nbsp;detection' - tells <span style="font-style: italic;">Sodium</span>
 to monitor the
 brightness and size of the guide star compared to the sky background.
 &nbsp; This feature has been deprecated and can generally be left un-checked (default value) for most configurations.</li><li>'<a name="Star_mass_tolerance"></a>Star mass tolerance' - if the 'Enable' box
-is checked, <span style="font-style: italic;">LightGuider</span> will trigger a 'lost star' error if the measured
+is checked, <span style="font-style: italic;">Sodium</span> will trigger a 'lost star' error if the measured
 brightness and size vary by more than this percentage. &nbsp;This
 might be useful if you have two stars inside the tracking rectangle and
-you want to be sure&nbsp;<span style="font-style: italic;">LightGuider</span>
+you want to be sure&nbsp;<span style="font-style: italic;">Sodium</span>
 doesn't mistakenly&nbsp;switch stars.
 &nbsp;It can also
 prevent errors caused by thin clouds, high camera noise, or alpha
@@ -315,7 +315,7 @@ visible on the display, try increasing the value of this setting or disable it e
 .</li><li>'<a name="Minimum_star_HFD"></a>Minimum
 star HFD' - specifies the minimum half-flux-diameter (roughly the
 'size') of a suitable guide star. &nbsp;This is
-probably the best way to prevent&nbsp;LightGuider from
+probably the best way to prevent&nbsp;Sodium from
 mis-identifying clumps of hot pixels as usable guide stars. &nbsp;You
 can
 determine a suitable value for your system by manually selecting
@@ -335,13 +335,13 @@ too large can result in no stars being selected. &nbsp;It can be used
 of a faint star that you know from experience will prove to be
 unusable. &nbsp;However, many of these situations can be avoided by
 getting better guide camera focus, refreshing the dark library, or
-slightly increasing the exposure times.</li><li>'<a name="Multi-Star_Option"></a>Use multiple stars' - determines whether LightGuider will use more than one star for guiding. &nbsp;See&nbsp;<a href="Basic_use.htm#Multi-star_guiding"></a><a href="Basic_use.htm#Multi-star_Guiding">Multi-star Guiding</a> for details.</li><li>'Auto-selection frame downsample' - can
-be used in unusual situations where LightGuider guide star auto-selection is
+slightly increasing the exposure times.</li><li>'<a name="Multi-Star_Option"></a>Use multiple stars' - determines whether Sodium will use more than one star for guiding. &nbsp;See&nbsp;<a href="Basic_use.htm#Multi-star_guiding"></a><a href="Basic_use.htm#Multi-star_Guiding">Multi-star Guiding</a> for details.</li><li>'Auto-selection frame downsample' - can
+be used in unusual situations where Sodium guide star auto-selection is
 not recognizing misshapen stars. &nbsp;If this happens, you can try
 values greater than 1 to improve the chances of recognizing such stars.
 &nbsp;For most users, this property should be left at its default value
-of 'Auto'.</li><li>'Beep on lost star' - specifies whether LightGuider will produce an audible 'beep' sound when the guide star is lost during guiding.</li></ul>Calibration<br><ul><li>'<a name="Focal_length"></a>Focal length' - the focal length of the guide scope (millimeters). This provides one of
-two parameters needed by <span style="font-style: italic;">LightGuider</span>
+of 'Auto'.</li><li>'Beep on lost star' - specifies whether Sodium will produce an audible 'beep' sound when the guide star is lost during guiding.</li></ul>Calibration<br><ul><li>'<a name="Focal_length"></a>Focal length' - the focal length of the guide scope (millimeters). This provides one of
+two parameters needed by <span style="font-style: italic;">Sodium</span>
 to compute the image scale and thus
 report guiding performance in units of arc-seconds.&nbsp;If the focal length value is wrong, some
 of the default guiding parameters will not be set correctly, and we
@@ -350,7 +350,7 @@ you assess performance and resolve problems. &nbsp;You should use the
 new-profile-wizard to specify focal length as part of defining your
 equiipment configuration.</li><li>'<a name="Calibration_step-size"></a>Calibration
 step-size' -&nbsp;specifies the duration of the guide pulse that
-<span style="font-style: italic;">LightGuider</span>
+<span style="font-style: italic;">Sodium</span>
 will use during calibration. &nbsp;Its use is described in the
 'Auto
 Calibration' section of the 'Basic Use' help page. &nbsp;You can
@@ -367,12 +367,12 @@ you
 compute an appropriate value (see below) . &nbsp;As with other
 parameters, this value is computed for you as part of running the
 new-profile-wizard so there is usually no need to adjust it.</li><li>'<a name="Auto_restore_calibration"></a>Auto restore calibration' - tells
-<span style="font-style: italic;">LightGuider</span> to automatically reload
+<span style="font-style: italic;">Sodium</span> to automatically reload
 the most recent calibration data as soon
 as the equipment is connected. &nbsp;If
 you're using an ASCOM (or Indi) mount connection or have an 'aux-mount'
 connection, you probably want to set this option.
-&nbsp;Conversely, if LightGuider has no scope pointing
+&nbsp;Conversely, if Sodium has no scope pointing
 information available, this option should be reset.
 &nbsp;The new-profile wizard will ask you how you want to set this
 option.
@@ -380,7 +380,7 @@ option.
 profile,&nbsp;and it only has an effect when you load the profile and
 connect to the equipment. &nbsp;If you want to force a recalibration
 before an individual guiding session begins, there are multiple ways to do that - doing a Shift-Click on
-the LightGuider/guiding 'Guide' button is the easiest. <span style="font-weight: bold;">&nbsp;If you have set the auto-restore
+the Sodium/guiding 'Guide' button is the easiest. <span style="font-weight: bold;">&nbsp;If you have set the auto-restore
 option, you must be sure that the guide camera is not rotated with
 respect to the guide scope or the sky.</span></li><li>'<a name="Assert_Dec_Orthogonal"></a>Assume
 Dec orthogonal to RA' - Normally, the calibration process independently
@@ -389,10 +389,10 @@ computes the camera angles for both right ascension and declination.
 default behavior normally works well. &nbsp;However, if your mount has
 very high periodic error, very large Dec backlash, or you are dealing with very bad seeing
 conditions, you may want to force the RA and Declination angles to be
-perpendicular. &nbsp;If you choose that option, LightGuider will compute the
+perpendicular. &nbsp;If you choose that option, Sodium will compute the
 camera angle for RA, then assert a declination angle that is orthogonal
 to it.</li><li>'<a name="Clear_calibration"></a>Clear mount calibration'
--&nbsp;tells <span style="font-style: italic;">LightGuider</span>&nbsp;
+-&nbsp;tells <span style="font-style: italic;">Sodium</span>&nbsp;
 you want to clear the calibration data currently being used for the mount and
 re-calibrate
 before
@@ -400,8 +400,8 @@ guiding is restarted. &nbsp;You might do this for a variety of
 reasons
 - rotating the guide camera or seeing that guiding results are substantially worse than normal, for example.
 &nbsp;You can&nbsp;accomplish the same result by doing a Shift-Click on
-the LightGuider guiding icon on the main page, which will force a re-calibration.</li><li>'<a name="Declination_compensation"></a>Use
-Declination Compensation' - if LightGuider can get pointing information from
+the Sodium guiding icon on the main page, which will force a re-calibration.</li><li>'<a name="Declination_compensation"></a>Use
+Declination Compensation' - if Sodium can get pointing information from
 the mount via an ASCOM/Indi connection ('Mount' or 'Aux'), it will
 automatically adjust the RA guide rate based on the current
 declination.
@@ -410,7 +410,7 @@ cases where the mount controller is making the adjustment.&nbsp;Don't confuse th
 compensation', which is an entirely different feature.</li></ul>Shared Guiding Parameters<ul><li>'<a name="Fast_Re-center"></a>Fast
 re-center after calibration or dither' - during calibration or
 dithering, the mount may be moved a significant distance from the
-initial "lock" position. &nbsp;If you click this checkbox, LightGuider will
+initial "lock" position. &nbsp;If you click this checkbox, Sodium will
 move the mount&nbsp;back to the lock position as quickly as possible,
 using the largest guide commands permitted by the 'Max Duration'
 settings of
@@ -427,13 +427,13 @@ error in RA. &nbsp;You can run the Guiding Assistant to help see what's
 causing the problem.</li>
 
   <li>'<a name="Reverse_Dec_output_after_meridian_flip"></a>Reverse Dec output after meridian flip' -&nbsp;
-    tells <span style="font-style: italic;">LightGuider</span> how to adjust the
+    tells <span style="font-style: italic;">Sodium</span> how to adjust the
 calibration data after a meridian flip. &nbsp;Some
 newer mounts track their 'side of pier' state and automatically reverse the
-direction of the declination motor after a meridian flip. &nbsp;Older mounts do not do this. &nbsp;In either case, <span style="font-style: italic;">LightGuider</span>
+direction of the declination motor after a meridian flip. &nbsp;Older mounts do not do this. &nbsp;In either case, <span style="font-style: italic;">Sodium</span>
 needs to know if the mount will automatically change its behavior based on
 side-of-pier. &nbsp;You may have difficulty finding information about
-    how your mount behaves in this respect, so LightGuider provides the <a href="Tools.htm#pierflip_cal_tool">Meridian flip calibration tool</a> to determine the correct setting automatically.
+    how your mount behaves in this respect, so Sodium provides the <a href="Tools.htm#pierflip_cal_tool">Meridian flip calibration tool</a> to determine the correct setting automatically.
     It's also easy to figure out the setting manually with this quick experiment:
 
     <ul>
@@ -441,7 +441,7 @@ side-of-pier. &nbsp;You may have difficulty finding information about
         side.</li>
       <li>If you are guiding via ASCOM or Indi or are using an 'aux mount' connection, just start guiding.</li>
       <li>If
-you're guiding only via ST-4 and LightGuider has no scope pointing
+you're guiding only via ST-4 and Sodium has no scope pointing
 information, first select 'Flip Calibration' under the 'Tools' menu,
 and then start guiding.</li>
       <li>In either case, if the guiding works normally, leave the box un-checked; but</li>
@@ -454,7 +454,7 @@ only determines what will happen <span style="font-weight: bold;">in the future<
   </li>
 
   <li>'<a name="Enable_guide_output"></a>Enable mount guide output'
-- this is normally checked because it tells <span style="font-style: italic;">LightGuider</span>
+- this is normally checked because it tells <span style="font-style: italic;">Sodium</span>
 to send guide
 commands&nbsp;to the mount. There are some
 circumstances
@@ -462,7 +462,7 @@ where you might want to disable this, usually because you want to
 observe the uncorrected behavior of the mount. &nbsp;In most cases, you will be better
 off running the Guiding Assistant for these purposes, which
 automatically handles this setting for you.</li><li>'<a name="Stop_guiding_on_slew"></a>Stop
-guiding when mount slews' - prevents LightGuider from trying to continue
+guiding when mount slews' - prevents Sodium from trying to continue
 guiding when the mount is being slewed, often by an imaging automation
 app. &nbsp;It should normally be left checked..</li></ul><a name="Calculator_auto-step-size"></a>Advanced Calibration Calculator<br><br><img style="width: 600px; height: 441px;" alt="" src="Advanced_calstep_calculator.png"><br><span style="font-size: 10pt; font-family: Arial;"></span><br>
 To review or change&nbsp;calibration parameters,
@@ -493,7 +493,7 @@ about increasing this value above 12&nbsp;because
 values,&nbsp;&nbsp;uncorrected periodic error in RA or large drift in
 Dec will degrade the accuracy of the calibration. &nbsp; As you
 change the values
-in these fields,&nbsp; <span style="font-style: italic;">LightGuider</span>
+in these fields,&nbsp; <span style="font-style: italic;">Sodium</span>
 will recalculate the&nbsp;value for
 the
 calibration step-size. &nbsp;If you then click on 'Ok', that value
@@ -507,7 +507,7 @@ made in the calculator will be reflected there as well. &nbsp;Don't do
 this if you are just using the calculator to experiment or check
 settings for someone else's system. Clicking on the 'Cancel' button
 will close the calculator without changing any of the values in the
-curren profile. &nbsp;Again, LightGuider never changes the guide speed setting
+curren profile. &nbsp;Again, Sodium never changes the guide speed setting
 in
 your mount regardless of what may be entered in the 'Guide Speed' field.<br><br>If you've used the
 new-profile-wizard to build your equipment profile, there's rarely any
@@ -531,8 +531,8 @@ below the default value if you want to avoid&nbsp;chasing a large
 deflection that could be caused by a spurious event (e.g. wind gust,
 hot pixel, etc.) .' &nbsp;However, there is rarely any reason for
 changing it if you have protected yourself against hot pixels (Minimum
-star HFD).</li><li>'Enable' LightGuider Backlash Compensation - this
-controls whether LightGuider will apply a compensation factor when the
+star HFD).</li><li>'Enable' Sodium Backlash Compensation - this
+controls whether Sodium will apply a compensation factor when the
 direction of declination guiding needs to be reversed.
 <span style="font-weight: bold;">&nbsp;See section below</span>.</li><li>'<a name="Max_Duration_Declination"></a>Max Dec. duration' - specifies the
 maximum allowed guide pulse duration for declination (same as above but
@@ -548,7 +548,7 @@ unwanted movement of the guiding assembly.
 &nbsp;Absent these mechanical&nbsp;problems, declination
 tracking&nbsp;should be smooth and mostly uni-directional assuming
 there is no&nbsp;over-shoot from an
-earlier correction. &nbsp;The default value of 'auto' tells <span style="font-style: italic;">LightGuider</span>
+earlier correction. &nbsp;The default value of 'auto' tells <span style="font-style: italic;">Sodium</span>
 that
 some reversals in direction are acceptable, subject to the behavior of
 the various guiding algorithms. &nbsp;However, if your mount has severe
@@ -585,7 +585,7 @@ time depends on the pointing position and the mechanical load on the
 system, a fixed value will usually result in oscillations that never
 stabilize. &nbsp;Reasons for the positional dependency&nbsp;include
 uneven gear wear&nbsp;or&nbsp;significant imbalance of the scope in
-declination.&nbsp; The backlash compensation implemented by LightGuider is
+declination.&nbsp; The backlash compensation implemented by Sodium is
 adaptive, meaning that the compensation amount is adjusted up or down
 depending on the measured results. &nbsp;Before enabling this feature,
 you should run the Guiding Assistant and measure the declination
@@ -610,17 +610,17 @@ because the initial state of the Dec gear system is unknown - just let
 it stabilize before you actually start imaging. &nbsp;If you see
 recurring periods of Dec oscillation or the axis won't settle down,
 disable the compensation feature and submit your debug log file to the
-LightGuider support forum.&nbsp;<h3><a name="Other_Devices_Tab"></a>Other Devices Tab</h3><span style="font-size: 10pt; font-family: Arial;"></span><img style="width: 597px; height: 329px;" alt="" src="Advanced_other.png"><br><br>If
+Sodium support forum.&nbsp;<h3><a name="Other_Devices_Tab"></a>Other Devices Tab</h3><span style="font-size: 10pt; font-family: Arial;"></span><img style="width: 597px; height: 329px;" alt="" src="Advanced_other.png"><br><br>If
 you are using either an adaptive optics or rotator device, the "Other
 Devices" tab will be shown. &nbsp;A general discussion of using an AO for guiding can be found here: <a href="Supplemental_Info.htm#AO_Devices">AO Guiding</a>&nbsp;&nbsp; The upper section deals with the AO
 device if one is being used. &nbsp;You
 can use these parameters&nbsp;to control the
 calibration process and the manner in which 'bump' operations are done.
-&nbsp;The 'calibration step' field tells <span style="font-style: italic;">LightGuider</span> the amount to move the
+&nbsp;The 'calibration step' field tells <span style="font-style: italic;">Sodium</span> the amount to move the
 tip/tilt element&nbsp;in each of the up/down/left/right directions, in
 units of AO steps, during calibration. &nbsp;The guide star position is measured at the
 beginning and end of each&nbsp;leg of the calibration, and the 'samples to
-average' parameter tells <span style="font-style: italic;">LightGuider</span>
+average' parameter tells <span style="font-style: italic;">Sodium</span>
 how many samples to take at each of these
 points. &nbsp;Averaging images is important because the seeing will
 always cause the guide star to "bounce around" a bit. &nbsp;As
@@ -631,7 +631,7 @@ are actually reached, and the 'bump percentage' field is used for that
 purpose. &nbsp;To move the mount, the full bump correction is
 accomplished in&nbsp;steps - the 'bump step' field controls the size of
 these increments. &nbsp;If the bump operation has begun and the guide
-star remains outside the "bump percentage" area, <span style="font-style: italic;">LightGuider</span>
+star remains outside the "bump percentage" area, <span style="font-style: italic;">Sodium</span>
 will increase the
 bump size until the guide star is back within that range.
 &nbsp;Additional movement from that point to the&nbsp;center position
@@ -646,7 +646,7 @@ axis. &nbsp;The default value works well for most SX AO devices but in
 some cases it may be too large. &nbsp;If you encounter problems during
 AO calibration where the AO hits its limits, you can adjust the 'AO
 Travel' amount downward. &nbsp; <br><br>The
-'Bump on dither' option tells LightGuider to bump the mount when a dither
+'Bump on dither' option tells Sodium to bump the mount when a dither
 command is received and thus move the guide star back closer to the
 center position of the AO. &nbsp;The
 option to enable or disable AO guide commands operates independently
@@ -658,7 +658,7 @@ device or the
 'bump' guide commands to the mount. &nbsp;The same principle holds for
 the 'Clear AO calibration' option - that will force a recalibration of
 the AO without affecting calibration of the mount. &nbsp;The 'Mount
-Backlash Compensation' controls let you apply LightGuider Dec backlash
+Backlash Compensation' controls let you apply Sodium Dec backlash
 compensation when mount bumps are done. &nbsp;This can help speed up
 large dither operations, but it's only appropriate if the mount has a
 limited amount of Dec backlash. You should use the Guiding Assistant to
@@ -684,7 +684,7 @@ ASCOM notion of positive and negative angles. &nbsp;The "Reversed"
 checkbox can be used for
 optical systems that reverse the image, usually because they have an odd number
 of mirrors. &nbsp;The direction and amount of rotation&nbsp;is used to
-adjust the calibration data, so LightGuider follows the ASCOM standard:
+adjust the calibration data, so Sodium follows the ASCOM standard:
 &nbsp;"the rotator position is expressed as an angle from 0 up to but
 not including 360 degrees, counter-clockwise against the sky."
 &nbsp;Experimentation is likely to be the quickest way to determine if
