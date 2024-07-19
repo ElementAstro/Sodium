@@ -35,27 +35,23 @@
 #ifndef PHDUPDATE_INCLUDED
 #define PHDUPDATE_INCLUDED
 
-enum UpdateSeries
-{
+enum UpdateSeries {
     UPD_SERIES_MAIN,
     UPD_SERIES_DEV,
 };
 
-struct UpdaterSettings
-{
+struct UpdaterSettings {
     bool enabled;
     UpdateSeries series;
 };
 
-class PHD2Updater
-{
+class PHD2Updater {
 public:
-
     // start the updater process at app init
     static void InitUpdater();
 
     // for Brain dialog UI
-    static void GetSettings(UpdaterSettings *settings);
+    static void GetSettings(UpdaterSettings* settings);
     static void SetSettings(const UpdaterSettings& settings);
 
     // explicitly check for updates now
@@ -64,7 +60,8 @@ public:
     // stop the updater process at app exit
     static void StopUpdater();
 
-    // MyFrame needs to call this when it receives thread messages from the updater
+    // MyFrame needs to call this when it receives thread messages from the
+    // updater
     static void OnUpdaterStateChanged();
 };
 

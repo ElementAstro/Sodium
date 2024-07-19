@@ -40,47 +40,36 @@
 #define ALWAYS_FLUSH_DEBUGLOG
 const int RetentionPeriod = 30;
 
-DebugLog::DebugLog()
-    :
-    m_enabled(false),
-    m_lastWriteTime(wxDateTime::UNow())
-{
-}
+DebugLog::DebugLog() : m_enabled(false), m_lastWriteTime(wxDateTime::UNow()) {}
 
-DebugLog::~DebugLog()
-{
+DebugLog::~DebugLog() {
     wxFFile::Flush();
     wxFFile::Close();
 }
 
-static bool ParseLogTimestamp(wxDateTime *p, const wxString& s)
-{
+static bool ParseLogTimestamp(wxDateTime* p, const wxString& s) {
     wxDateTime dt;
     wxString::const_iterator iter;
     if (dt.ParseFormat(s, "%Y-%m-%d_%H%M%S", wxDateTime(), &iter) &&
-        iter == s.end())
-    {
+        iter == s.end()) {
         *p = dt;
         return true;
     }
     return false;
 }
 
-wxDateTime DebugLog::GetLogFileTime()
-{
+wxDateTime DebugLog::GetLogFileTime() {
     // find the latest log file time
     wxDir dir(Debug.GetLogDir());
     wxString filename;
     // PHD2_DebugLog_YYYY-mm-dd_HHMMSS.txt
     bool cont = dir.GetFirst(&filename, "PHD2_DebugLog_*.txt", wxDIR_FILES);
     wxDateTime latest;
-    while (cont)
-    {
+    while (cont) {
         wxDateTime dt;
         if (filename.length() == 35 &&
-            ParseLogTimestamp(&dt, filename.substr(14, 17))
-            && (!latest.IsValid() || dt.IsLaterThan(latest)))
-        {
+            ParseLogTimestamp(&dt, filename.substr(14, 17)) &&
+            (!latest.IsValid() || dt.IsLaterThan(latest))) {
             latest = dt;
         }
         cont = dir.GetNext(&filename);
@@ -93,8 +82,7 @@ wxDateTime DebugLog::GetLogFileTime()
     return res;
 }
 
-bool DebugLog::Enable(bool enable)
-{
+bool DebugLog::Enable(bool enable) {
     bool prevState = m_enabled;
 
     m_enabled = enable;
@@ -102,26 +90,23 @@ bool DebugLog::Enable(bool enable)
     return prevState;
 }
 
-void DebugLog::InitDebugLog(bool enable, bool forceOpen)
-{
+void DebugLog::InitDebugLog(bool enable, bool forceOpen) {
     const wxDateTime& logFileTime = wxGetApp().GetLogFileTime();
 
     wxCriticalSectionLocker lock(m_criticalSection);
 
-    if (m_enabled)
-    {
+    if (m_enabled) {
         wxFFile::Flush();
         wxFFile::Close();
 
         m_enabled = false;
     }
 
-    if (enable && (m_path.IsEmpty() || forceOpen))
-    {
-        m_path = GetLogDir() + PATHSEPSTR + logFileTime.Format(_T("PHD2_DebugLog_%Y-%m-%d_%H%M%S.txt"));
+    if (enable && (m_path.IsEmpty() || forceOpen)) {
+        m_path = GetLogDir() + PATHSEPSTR +
+                 logFileTime.Format(_T("PHD2_DebugLog_%Y-%m-%d_%H%M%S.txt"));
 
-        if (!wxFFile::Open(m_path, "a"))
-        {
+        if (!wxFFile::Open(m_path, "a")) {
             wxMessageBox(wxString::Format(_("unable to open file %s"), m_path));
         }
     }
@@ -129,15 +114,15 @@ void DebugLog::InitDebugLog(bool enable, bool forceOpen)
     m_enabled = enable;
 }
 
-bool DebugLog::ChangeDirLog(const wxString& newdir)
-{
+bool DebugLog::ChangeDirLog(const wxString& newdir) {
     bool enabled = IsEnabled();
     bool ok = true;
 
-    if (!SetLogDir(newdir))
-    {
-        Debug.Write(wxString::Format("Error: unable to set new log dir %s\n", newdir));
-        wxMessageBox(wxString::Format("invalid folder name %s, debug log folder unchanged", newdir));
+    if (!SetLogDir(newdir)) {
+        Debug.Write(
+            wxString::Format("Error: unable to set new log dir %s\n", newdir));
+        wxMessageBox(wxString::Format(
+            "invalid folder name %s, debug log folder unchanged", newdir));
         ok = false;
     }
 
@@ -147,22 +132,17 @@ bool DebugLog::ChangeDirLog(const wxString& newdir)
     return ok;
 }
 
-void DebugLog::RemoveOldFiles()
-{
+void DebugLog::RemoveOldFiles() {
     Logger::RemoveMatchingFiles("PHD2_DebugLog*.txt", RetentionPeriod);
 }
 
-wxString DebugLog::AddLine(const wxString& str)
-{
-    return Write(str + "\n");
-}
+wxString DebugLog::AddLine(const wxString& str) { return Write(str + "\n"); }
 
-wxString DebugLog::AddBytes(const wxString& str, const unsigned char *pBytes, unsigned int count)
-{
+wxString DebugLog::AddBytes(const wxString& str, const unsigned char* pBytes,
+                            unsigned int count) {
     wxString Line = str + " - ";
 
-    for (unsigned int i=0; i < count; i++)
-    {
+    for (unsigned int i = 0; i < count; i++) {
         unsigned char ch = pBytes[i];
         Line += wxString::Format("%2.2X (%c) ", ch, isprint(ch) ? ch : '?');
     }
@@ -170,12 +150,10 @@ wxString DebugLog::AddBytes(const wxString& str, const unsigned char *pBytes, un
     return Write(Line + "\n");
 }
 
-bool DebugLog::Flush()
-{
+bool DebugLog::Flush() {
     bool ret = true;
 
-    if (m_enabled)
-    {
+    if (m_enabled) {
         wxCriticalSectionLocker lock(m_criticalSection);
 
         ret = wxFFile::Flush();
@@ -184,19 +162,17 @@ bool DebugLog::Flush()
     return ret;
 }
 
-wxString DebugLog::Write(const wxString& str)
-{
-    if (m_enabled)
-    {
+wxString DebugLog::Write(const wxString& str) {
+    if (m_enabled) {
         wxCriticalSectionLocker lock(m_criticalSection);
 
         wxDateTime now = wxDateTime::UNow();
         wxTimeSpan deltaTime = now - m_lastWriteTime;
         m_lastWriteTime = now;
-        wxString outputLine = wxString::Format("%s %s %lu %s", now.Format("%H:%M:%S.%l"),
-                                                              deltaTime.Format("%S.%l"),
-                                                              (unsigned long) wxThread::GetCurrentId(),
-                                                              str);
+        wxString outputLine =
+            wxString::Format("%s %s %lu %s", now.Format("%H:%M:%S.%l"),
+                             deltaTime.Format("%S.%l"),
+                             (unsigned long)wxThread::GetCurrentId(), str);
 
         wxFFile::Write(outputLine);
 #if defined(ALWAYS_FLUSH_DEBUGLOG)
@@ -210,26 +186,22 @@ wxString DebugLog::Write(const wxString& str)
     return str;
 }
 
-DebugLog& operator<< (DebugLog& out, const wxString &str)
-{
+DebugLog& operator<<(DebugLog& out, const wxString& str) {
     out.Write(str);
     return out;
 }
 
-DebugLog& operator<< (DebugLog& out, const char *str)
-{
+DebugLog& operator<<(DebugLog& out, const char* str) {
     out.Write(str);
     return out;
 }
 
-DebugLog& operator<< (DebugLog& out, const int i)
-{
+DebugLog& operator<<(DebugLog& out, const int i) {
     out.Write(wxString::Format(_T("%d"), i));
     return out;
 }
 
-DebugLog& operator<< (DebugLog& out, const double d)
-{
+DebugLog& operator<<(DebugLog& out, const double d) {
     out.Write(wxString::Format(_T("%f"), d));
     return out;
 }

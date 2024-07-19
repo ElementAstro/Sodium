@@ -36,7 +36,6 @@
 #include "backlash_comp.hpp"
 #include "sodium.hpp"
 
-
 #include <algorithm>
 
 static const unsigned int MIN_COMP_AMOUNT =

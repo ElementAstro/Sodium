@@ -34,11 +34,11 @@
 #ifndef STATICPA_TOOL_H
 #define STATICPA_TOOL_H
 
-class StaticPaTool
-{
+class StaticPaTool {
     StaticPaTool() = delete;
+
 public:
-    static wxWindow *CreateStaticPaToolWindow();
+    static wxWindow* CreateStaticPaToolWindow();
     static void PaintHelper(wxAutoBufferedPaintDCBase& dc, double scale);
     static void NotifyStarLost();
     static bool UpdateState();

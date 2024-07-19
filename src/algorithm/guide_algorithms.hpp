@@ -40,9 +40,8 @@
 #ifndef GUIDE_ALGORITHMS_H_INCLUDED
 #define GUIDE_ALGORITHMS_H_INCLUDED
 
-enum GUIDE_ALGORITHM
-{
-    GUIDE_ALGORITHM_NONE=-1,
+enum GUIDE_ALGORITHM {
+    GUIDE_ALGORITHM_NONE = -1,
     GUIDE_ALGORITHM_IDENTITY,
     GUIDE_ALGORITHM_HYSTERESIS,
     GUIDE_ALGORITHM_LOWPASS,
@@ -53,12 +52,13 @@ enum GUIDE_ALGORITHM
 };
 
 #include "guide_algorithm.hpp"
-#include "guide_algorithm_identity.hpp"
+#include "guide_algorithm_gaussian_process.hpp"
 #include "guide_algorithm_hysteresis.hpp"
+#include "guide_algorithm_identity.hpp"
 #include "guide_algorithm_lowpass.hpp"
 #include "guide_algorithm_lowpass2.hpp"
 #include "guide_algorithm_resistswitch.hpp"
-#include "guide_algorithm_gaussian_process.hpp"
 #include "guide_algorithm_zfilter.hpp"
+
 
 #endif /* GUIDE_ALGORITHMS_H_INCLUDED */

@@ -34,11 +34,11 @@
 #ifndef POLARDRIFT_TOOL_H
 #define POLARDRIFT_TOOL_H
 
-class PolarDriftTool
-{
+class PolarDriftTool {
     PolarDriftTool() = delete;
+
 public:
-    static wxWindow *CreatePolarDriftToolWindow();
+    static wxWindow* CreatePolarDriftToolWindow();
     static bool UpdateState();
     static void PaintHelper(wxAutoBufferedPaintDCBase& dc, double scale);
 };

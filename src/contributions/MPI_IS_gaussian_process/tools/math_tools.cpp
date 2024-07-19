@@ -48,7 +48,6 @@
 #include <cstdint>
 #include <stdexcept>
 
-
 namespace math_tools {
 
 Eigen::MatrixXd squareDistance(const Eigen::MatrixXd& a,

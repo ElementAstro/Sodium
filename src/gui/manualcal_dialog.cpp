@@ -33,65 +33,74 @@
  *
  */
 
-#include "sodium.hpp"
 #include "manualcal_dialog.hpp"
+#include "sodium.hpp"
 
-ManualCalDialog::ManualCalDialog(const Calibration& cal)
-    : wxDialog(pFrame, wxID_ANY, _("Manual Calibration"), wxDefaultPosition, wxDefaultSize, wxCAPTION | wxCLOSE_BOX)
-{
+
+ManualCalDialog::ManualCalDialog(const Calibration &cal)
+    : wxDialog(pFrame, wxID_ANY, _("Manual Calibration"), wxDefaultPosition,
+               wxDefaultSize, wxCAPTION | wxCLOSE_BOX) {
     int width = StringWidth("0.0000") + 15;
     wxBoxSizer *pVSizer = new wxBoxSizer(wxVERTICAL);
     wxFlexGridSizer *pGridSizer = new wxFlexGridSizer(2, 10, 10);
 
-    wxStaticText *pLabel = new wxStaticText(this, wxID_ANY, _("Camera binning:"));
+    wxStaticText *pLabel =
+        new wxStaticText(this, wxID_ANY, _("Camera binning:"));
     wxArrayString opts;
     pCamera->GetBinningOpts(&opts);
-    m_binning = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, opts);
+    m_binning =
+        new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, opts);
     m_binning->Select(cal.binning - 1);
     pGridSizer->Add(pLabel);
     pGridSizer->Add(m_binning);
 
-    pLabel = new wxStaticText(this,wxID_ANY, _("RA rate, px/sec (e.g. 5.0):"));
-    m_pXRate = new wxTextCtrl(this,wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(width, -1));
+    pLabel = new wxStaticText(this, wxID_ANY, _("RA rate, px/sec (e.g. 5.0):"));
+    m_pXRate = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition,
+                              wxSize(width, -1));
     m_pXRate->SetValue(wxString::Format("%.3f", cal.xRate * 1000.0));
     pGridSizer->Add(pLabel);
     pGridSizer->Add(m_pXRate);
 
-    pLabel = new wxStaticText(this,wxID_ANY, _("Dec rate, px/sec (e.g. 5.0):"));
-    m_pYRate = new wxTextCtrl(this,wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(width, -1));
+    pLabel =
+        new wxStaticText(this, wxID_ANY, _("Dec rate, px/sec (e.g. 5.0):"));
+    m_pYRate = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition,
+                              wxSize(width, -1));
     m_pYRate->SetValue(wxString::Format("%.3f", cal.yRate * 1000.0));
     pGridSizer->Add(pLabel);
     pGridSizer->Add(m_pYRate);
 
-    pLabel = new wxStaticText(this,wxID_ANY, _("RA angle (degrees):"));
-    m_pXAngle = new wxTextCtrl(this,wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(width, -1));
+    pLabel = new wxStaticText(this, wxID_ANY, _("RA angle (degrees):"));
+    m_pXAngle = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition,
+                               wxSize(width, -1));
     m_pXAngle->SetValue(wxString::Format("%.1f", degrees(cal.xAngle)));
     pGridSizer->Add(pLabel);
     pGridSizer->Add(m_pXAngle);
 
-    pLabel = new wxStaticText(this,wxID_ANY, _("Dec angle (degrees):"));
-    m_pYAngle = new wxTextCtrl(this,wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(width, -1));
+    pLabel = new wxStaticText(this, wxID_ANY, _("Dec angle (degrees):"));
+    m_pYAngle = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition,
+                               wxSize(width, -1));
     m_pYAngle->SetValue(wxString::Format("%.1f", degrees(cal.yAngle)));
     pGridSizer->Add(pLabel);
     pGridSizer->Add(m_pYAngle);
 
-    pLabel = new wxStaticText(this,wxID_ANY, _("Declination (e.g. 2.1):"));
-    m_pDeclination = new wxTextCtrl(this,wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(width, -1));
+    pLabel = new wxStaticText(this, wxID_ANY, _("Declination (e.g. 2.1):"));
+    m_pDeclination = new wxTextCtrl(this, wxID_ANY, wxEmptyString,
+                                    wxDefaultPosition, wxSize(width, -1));
     double dec = cal.declination == UNKNOWN_DECLINATION ? 0.0 : cal.declination;
     m_pDeclination->SetValue(wxString::Format("%.1f", dec));
     pGridSizer->Add(pLabel);
     pGridSizer->Add(m_pDeclination);
 
     pVSizer->Add(pGridSizer, wxSizerFlags(0).Border(wxALL, 10));
-    pVSizer->Add(CreateButtonSizer(wxOK | wxCANCEL), wxSizerFlags(0).Right().Border(wxALL, 10));
+    pVSizer->Add(CreateButtonSizer(wxOK | wxCANCEL),
+                 wxSizerFlags(0).Right().Border(wxALL, 10));
 
-    SetSizerAndFit (pVSizer);
+    SetSizerAndFit(pVSizer);
 
     m_pXRate->SetFocus();
 }
 
-int ManualCalDialog::StringWidth(const wxString& string)
-{
+int ManualCalDialog::StringWidth(const wxString &string) {
     int width, height;
 
     GetTextExtent(string, &width, &height);
@@ -99,8 +108,7 @@ int ManualCalDialog::StringWidth(const wxString& string)
     return width;
 }
 
-void ManualCalDialog::GetValues(Calibration *cal)
-{
+void ManualCalDialog::GetValues(Calibration *cal) {
     double t;
     m_pXRate->GetValue().ToDouble(&t);
     cal->xRate = t / 1000.0;
@@ -114,6 +122,4 @@ void ManualCalDialog::GetValues(Calibration *cal)
     cal->binning = m_binning->GetSelection() + 1;
 }
 
-ManualCalDialog::~ManualCalDialog(void)
-{
-}
+ManualCalDialog::~ManualCalDialog(void) {}

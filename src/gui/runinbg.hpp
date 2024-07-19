@@ -37,70 +37,69 @@
 
 struct RunInBgImpl;
 
-class RunInBg
-{
+class RunInBg {
     RunInBgImpl *m_impl;
 
-    RunInBg(const RunInBg&); // not implemented
-    RunInBg& operator= (const RunInBg&); // not implemented
+    RunInBg(const RunInBg &);             // not implemented
+    RunInBg &operator=(const RunInBg &);  // not implemented
 
 public:
-
-    RunInBg(wxWindow *parent, const wxString& title, const wxString& message);
+    RunInBg(wxWindow *parent, const wxString &title, const wxString &message);
     virtual ~RunInBg(void);
     void SetPopupDelay(unsigned int millis);
     bool Run();
-    void SetMessage(const wxString& message);
+    void SetMessage(const wxString &message);
 
     // sub-classes implement the background activity in Entry()
     virtual bool Entry(void) = 0;
 
-    // sub-classes should check IsCanceled() frequently in Entry() to see if the user clicked "Cancel"
+    // sub-classes should check IsCanceled() frequently in Entry() to see if the
+    // user clicked "Cancel"
     bool IsCanceled(void);
 
-    void SetErrorMsg(const wxString& msg);
+    void SetErrorMsg(const wxString &msg);
     wxString GetErrorMsg(void);
 
-    // Sub-classes can override OnCancel() to do something when the cancel button is clicked (in
-    // the main thread)
+    // Sub-classes can override OnCancel() to do something when the cancel
+    // button is clicked (in the main thread)
     virtual void OnCancel();
 
-    // If cancel is requested and the background thread does not exit after a short grace period,
-    // the backdound thread will be killed. Sub-classes can override OnKill() to do something right
-    // before the background thread is killed
+    // If cancel is requested and the background thread does not exit after a
+    // short grace period, the backdound thread will be killed. Sub-classes can
+    // override OnKill() to do something right before the background thread is
+    // killed
     virtual void OnKill();
 };
 
-inline static wxWindow *GetConnectGearParentWindow(void)
-{
+inline static wxWindow *GetConnectGearParentWindow(void) {
     if (pFrame->pGearDialog->IsActive())
         return pFrame->pGearDialog;
     else
         return pFrame;
 }
 
-class ConnectMountInBg : public RunInBg
-{
+class ConnectMountInBg : public RunInBg {
 public:
-    ConnectMountInBg(wxWindow *parent = GetConnectGearParentWindow()) : RunInBg(parent, _("Connect"), _("Connecting to Mount...")) { }
+    ConnectMountInBg(wxWindow *parent = GetConnectGearParentWindow())
+        : RunInBg(parent, _("Connect"), _("Connecting to Mount...")) {}
 };
 
-class ConnectAoInBg : public RunInBg
-{
+class ConnectAoInBg : public RunInBg {
 public:
-    ConnectAoInBg(wxWindow *parent = GetConnectGearParentWindow()) : RunInBg(parent, _("Connect"), _("Connecting to AO...")) { }
+    ConnectAoInBg(wxWindow *parent = GetConnectGearParentWindow())
+        : RunInBg(parent, _("Connect"), _("Connecting to AO...")) {}
 };
 
-class ConnectCameraInBg : public RunInBg
-{
+class ConnectCameraInBg : public RunInBg {
 public:
-    ConnectCameraInBg(wxWindow *parent = GetConnectGearParentWindow()) : RunInBg(parent, _("Connect"), _("Connecting to Camera...")) { }
+    ConnectCameraInBg(wxWindow *parent = GetConnectGearParentWindow())
+        : RunInBg(parent, _("Connect"), _("Connecting to Camera...")) {}
 };
 
-class ConnectRotatorInBg : public RunInBg
-{
+class ConnectRotatorInBg : public RunInBg {
 public:
-    ConnectRotatorInBg(wxWindow *parent = GetConnectGearParentWindow()) : RunInBg(parent, _("Connect"), _("Connecting to Rotator...")) { }
+    ConnectRotatorInBg(wxWindow *parent = GetConnectGearParentWindow())
+        : RunInBg(parent, _("Connect"), _("Connecting to Rotator...")) {}
 };
 
-#endif // RUNINBG_INLCUDED
+#endif  // RUNINBG_INLCUDED

@@ -46,4 +46,4 @@
 #include "rotator_ascom.hpp"
 #include "rotator_indi.hpp"
 
-#endif // ROTATORS_INCLUDED
+#endif  // ROTATORS_INCLUDED

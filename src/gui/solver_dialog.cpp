@@ -3,8 +3,7 @@
 SodiumSolverAssistant::SodiumSolverAssistant(wxWindow* parent)
     : SolverAssistant(parent) {}
 
-void SodiumSolverAssistant::on_solver_changed(
-    wxFileDirPickerEvent& event) {
+void SodiumSolverAssistant::on_solver_changed(wxFileDirPickerEvent& event) {
     // TODO: Implement on_solver_changed
 }
 
@@ -32,8 +31,7 @@ void SodiumSolverAssistant::on_fov_enter(wxCommandEvent& event) {
     // TODO: Implement on_fov_enter
 }
 
-void SodiumSolverAssistant::check_template_downloaded(
-    wxCommandEvent& event) {
+void SodiumSolverAssistant::check_template_downloaded(wxCommandEvent& event) {
     // TODO: Implement check_template_downloaded
 }
 
@@ -45,8 +43,7 @@ void SodiumSolverAssistant::on_download_template(wxCommandEvent& event) {
     // TODO: Implement on_download_template
 }
 
-void SodiumSolverAssistant::on_open_template_folder(
-    wxCommandEvent& event) {
+void SodiumSolverAssistant::on_open_template_folder(wxCommandEvent& event) {
     // TODO: Implement on_open_template_folder
 }
 
@@ -74,8 +71,7 @@ void SodiumSolverAssistant::on_copy_solver_result_ra(wxMouseEvent& event) {
     // TODO: Implement on_copy_solver_result_ra
 }
 
-void SodiumSolverAssistant::on_copy_solver_result_dec(
-    wxMouseEvent& event) {
+void SodiumSolverAssistant::on_copy_solver_result_dec(wxMouseEvent& event) {
     // TODO: Implement on_copy_solver_result_dec
 }
 
@@ -84,13 +80,11 @@ void SodiumSolverAssistant::on_copy_solver_result_rotation(
     // TODO: Implement on_copy_solver_result_rotation
 }
 
-void SodiumSolverAssistant::on_copy_solver_result_fovx(
-    wxMouseEvent& event) {
+void SodiumSolverAssistant::on_copy_solver_result_fovx(wxMouseEvent& event) {
     // TODO: Implement on_copy_solver_result_fovx
 }
 
-void SodiumSolverAssistant::on_copy_solver_result_fovy(
-    wxMouseEvent& event) {
+void SodiumSolverAssistant::on_copy_solver_result_fovy(wxMouseEvent& event) {
     // TODO: Implement on_copy_solver_result_fovy
 }
 

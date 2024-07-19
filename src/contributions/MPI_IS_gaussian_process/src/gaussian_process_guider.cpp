@@ -47,7 +47,6 @@
 #include <iomanip>
 #include <iostream>
 
-
 #define SAVE_FFT_DATA_ 0
 #define PRINT_TIMINGS_ 0
 

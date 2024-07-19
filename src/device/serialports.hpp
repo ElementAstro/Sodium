@@ -37,12 +37,13 @@
 #define SERIALPORTS_H_INCLUDED
 
 #include "serialport.hpp"
-#include "serialport_win32.hpp"
 #include "serialport_mac.hpp"
 #include "serialport_posix.hpp"
+#include "serialport_win32.hpp"
+
 
 #ifdef USE_LOOPBACK_SERIAL
 #include "serialport_loopback.hpp"
 #endif
 
-#endif // SERIALPORTS_H_INCLUDED
+#endif  // SERIALPORTS_H_INCLUDED

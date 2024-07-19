@@ -36,36 +36,35 @@
 #ifndef IMAGE_MATH_INCLUDED
 #define IMAGE_MATH_INCLUDED
 
-class DefectMap : public std::vector<wxPoint>
-{
+class DefectMap : public std::vector<wxPoint> {
     int m_profileId;
     DefectMap(int profileId);
+
 public:
     static void DeleteDefectMap(int profileId);
     static bool DefectMapExists(int profileId, bool showAlert);
-    static DefectMap *LoadDefectMap(int profileId);
+    static DefectMap* LoadDefectMap(int profileId);
     static wxString DefectMapFileName(int profileId);
     static bool ImportFromProfile(int sourceId, int destId);
     DefectMap();
     void Save(const wxArrayString& mapInfo) const;
     bool FindDefect(const wxPoint& pt) const;
     void AddDefect(const wxPoint& pt);
-
 };
 
 extern bool QuickLRecon(usImage& img);
-extern void Median3(unsigned short *dst, const unsigned short *src, const wxSize& size, const wxRect& rect);
+extern void Median3(unsigned short* dst, const unsigned short* src,
+                    const wxSize& size, const wxRect& rect);
 extern bool Median3(usImage& img);
 extern bool SquarePixels(usImage& img, float xsize, float ysize);
-extern int dbl_sort_func(double *first, double *second);
+extern int dbl_sort_func(double* first, double* second);
 extern bool Subtract(usImage& light, const usImage& dark);
 extern double CalcSlope(const ArrayOfDbl& y);
 extern bool RemoveDefects(usImage& light, const DefectMap& defectMap);
 
 struct DefectMapBuilderImpl;
 
-struct DefectMapDarks
-{
+struct DefectMapDarks {
     usImage masterDark;
     usImage filteredDark;
 
@@ -74,20 +73,17 @@ struct DefectMapDarks
     void LoadDarks();
 };
 
-struct ImageStats
-{
+struct ImageStats {
     double mean;
     double stdev;
     unsigned short median;
     unsigned short mad;
 };
 
-class DefectMapBuilder
-{
-    DefectMapBuilderImpl *m_impl;
+class DefectMapBuilder {
+    DefectMapBuilderImpl* m_impl;
 
 public:
-
     DefectMapBuilder();
     ~DefectMapBuilder();
 
@@ -100,140 +96,107 @@ public:
     const wxArrayString& GetMapInfo() const;
 };
 
-inline static double norm(double val, double start, double end)
-{
+inline static double norm(double val, double start, double end) {
     double const range = end - start;
     double const ofs = val - start;
     return val - floor(ofs / range) * range;
 }
 
-// Param in radians, return equivalent angle value in units of radians within range of -PI to PI
-inline static double norm_angle(double val)
-{
-    return norm(val, -M_PI, M_PI);
-}
+// Param in radians, return equivalent angle value in units of radians within
+// range of -PI to PI
+inline static double norm_angle(double val) { return norm(val, -M_PI, M_PI); }
 
-inline static double norm_ra(double val)
-{
-    return norm(val, 0., 24.);
-}
+inline static double norm_ra(double val) { return norm(val, 0., 24.); }
 
-inline static double degrees(double radians)
-{
-    return radians * 180. / M_PI;
-}
+inline static double degrees(double radians) { return radians * 180. / M_PI; }
 
-inline static double radians(double degrees)
-{
-    return degrees * M_PI / 180.;
-}
+inline static double radians(double degrees) { return degrees * M_PI / 180.; }
 
-inline static double norm24(double t)
-{
-    return norm(t, 0.0, 24.0);
-}
+inline static double norm24(double t) { return norm(t, 0.0, 24.0); }
 
-inline static double GST(time_t t)
-{
-    double d = (double) t / 86400.0 - 10957.5;
+inline static double GST(time_t t) {
+    double d = (double)t / 86400.0 - 10957.5;
     return 18.697374558 + 24.06570982441908 * d;
 }
 
 // Note: this is only intended for use a fallback if the scope (INDI/ASCOM)
 // cannot provide LST
-inline static double LST(time_t t, double longitude)
-{
+inline static double LST(time_t t, double longitude) {
     return norm24(GST(t) + longitude / 15.0);
 }
 
-inline static double LST(double longitude)
-{
-    return LST(time(0), longitude);
-}
+inline static double LST(double longitude) { return LST(time(0), longitude); }
 
-template<typename T>
-static void BinPixels(T *dst, const T *src, const wxSize& srcsize, unsigned int binning)
-{
+template <typename T>
+static void BinPixels(T* dst, const T* src, const wxSize& srcsize,
+                      unsigned int binning) {
     int const srcw = srcsize.x;
     int const srch = srcsize.y;
 
-    T *dstp = dst;
+    T* dstp = dst;
 
-    if (binning == 2)
-    {
-        for (int srcy = 0; srcy < srch; srcy += 2)
-        {
-            for (int srcx = 0; srcx < srcw; srcx += 2)
-            {
-                *dstp++ =
-                    ((unsigned int) src[srcy * srcw + srcx] +
-                     (unsigned int) src[srcy * srcw + srcx + 1] +
-                     (unsigned int) src[(srcy + 1) * srcw + srcx] +
-                     (unsigned int) src[(srcy + 1) * srcw + srcx + 1]) / 4;
+    if (binning == 2) {
+        for (int srcy = 0; srcy < srch; srcy += 2) {
+            for (int srcx = 0; srcx < srcw; srcx += 2) {
+                *dstp++ = ((unsigned int)src[srcy * srcw + srcx] +
+                           (unsigned int)src[srcy * srcw + srcx + 1] +
+                           (unsigned int)src[(srcy + 1) * srcw + srcx] +
+                           (unsigned int)src[(srcy + 1) * srcw + srcx + 1]) /
+                          4;
             }
         }
-    }
-    else if (binning == 3)
-    {
+    } else if (binning == 3) {
         int tw = (srcw / binning) * binning;
         int th = (srch / binning) * binning;
-        for (int srcy = 0; srcy < th; srcy += 3)
-        {
-            for (int srcx = 0; srcx < tw; srcx += 3)
-            {
-                *dstp++ =
-                    ((unsigned int) src[srcy * srcw + srcx] +
-                     (unsigned int) src[srcy * srcw + srcx + 1] +
-                     (unsigned int) src[srcy * srcw + srcx + 2] +
-                     (unsigned int) src[(srcy + 1) * srcw + srcx] +
-                     (unsigned int) src[(srcy + 1) * srcw + srcx + 1] +
-                     (unsigned int) src[(srcy + 1) * srcw + srcx + 2] +
-                     (unsigned int) src[(srcy + 2) * srcw + srcx] +
-                     (unsigned int) src[(srcy + 2) * srcw + srcx + 1] +
-                     (unsigned int) src[(srcy + 2) * srcw + srcx + 2]) / 9;
+        for (int srcy = 0; srcy < th; srcy += 3) {
+            for (int srcx = 0; srcx < tw; srcx += 3) {
+                *dstp++ = ((unsigned int)src[srcy * srcw + srcx] +
+                           (unsigned int)src[srcy * srcw + srcx + 1] +
+                           (unsigned int)src[srcy * srcw + srcx + 2] +
+                           (unsigned int)src[(srcy + 1) * srcw + srcx] +
+                           (unsigned int)src[(srcy + 1) * srcw + srcx + 1] +
+                           (unsigned int)src[(srcy + 1) * srcw + srcx + 2] +
+                           (unsigned int)src[(srcy + 2) * srcw + srcx] +
+                           (unsigned int)src[(srcy + 2) * srcw + srcx + 1] +
+                           (unsigned int)src[(srcy + 2) * srcw + srcx + 2]) /
+                          9;
             }
         }
-    }
-    else if (binning == 4)
-    {
-        for (int srcy = 0; srcy < srch; srcy += 4)
-        {
-            for (int srcx = 0; srcx < srcw; srcx += 4)
-            {
-                *dstp++ =
-                    ((unsigned int) src[srcy * srcw + srcx] +
-                     (unsigned int) src[srcy * srcw + srcx + 1] +
-                     (unsigned int) src[srcy * srcw + srcx + 2] +
-                     (unsigned int) src[srcy * srcw + srcx + 3] +
-                     (unsigned int) src[(srcy + 1) * srcw + srcx] +
-                     (unsigned int) src[(srcy + 1) * srcw + srcx + 1] +
-                     (unsigned int) src[(srcy + 1) * srcw + srcx + 2] +
-                     (unsigned int) src[(srcy + 1) * srcw + srcx + 3] +
-                     (unsigned int) src[(srcy + 2) * srcw + srcx] +
-                     (unsigned int) src[(srcy + 2) * srcw + srcx + 1] +
-                     (unsigned int) src[(srcy + 2) * srcw + srcx + 2] +
-                     (unsigned int) src[(srcy + 2) * srcw + srcx + 3] +
-                     (unsigned int) src[(srcy + 3) * srcw + srcx] +
-                     (unsigned int) src[(srcy + 3) * srcw + srcx + 1] +
-                     (unsigned int) src[(srcy + 3) * srcw + srcx + 2] +
-                     (unsigned int) src[(srcy + 3) * srcw + srcx + 3]) / 16;
+    } else if (binning == 4) {
+        for (int srcy = 0; srcy < srch; srcy += 4) {
+            for (int srcx = 0; srcx < srcw; srcx += 4) {
+                *dstp++ = ((unsigned int)src[srcy * srcw + srcx] +
+                           (unsigned int)src[srcy * srcw + srcx + 1] +
+                           (unsigned int)src[srcy * srcw + srcx + 2] +
+                           (unsigned int)src[srcy * srcw + srcx + 3] +
+                           (unsigned int)src[(srcy + 1) * srcw + srcx] +
+                           (unsigned int)src[(srcy + 1) * srcw + srcx + 1] +
+                           (unsigned int)src[(srcy + 1) * srcw + srcx + 2] +
+                           (unsigned int)src[(srcy + 1) * srcw + srcx + 3] +
+                           (unsigned int)src[(srcy + 2) * srcw + srcx] +
+                           (unsigned int)src[(srcy + 2) * srcw + srcx + 1] +
+                           (unsigned int)src[(srcy + 2) * srcw + srcx + 2] +
+                           (unsigned int)src[(srcy + 2) * srcw + srcx + 3] +
+                           (unsigned int)src[(srcy + 3) * srcw + srcx] +
+                           (unsigned int)src[(srcy + 3) * srcw + srcx + 1] +
+                           (unsigned int)src[(srcy + 3) * srcw + srcx + 2] +
+                           (unsigned int)src[(srcy + 3) * srcw + srcx + 3]) /
+                          16;
             }
         }
     }
 }
 
-inline static void BinPixels8(void *dst, const void *src, const wxSize& srcsize, unsigned int binning)
-{
-    BinPixels(static_cast<unsigned char *>(dst),
-              static_cast<const unsigned char *>(src),
-              srcsize, binning);
+inline static void BinPixels8(void* dst, const void* src, const wxSize& srcsize,
+                              unsigned int binning) {
+    BinPixels(static_cast<unsigned char*>(dst),
+              static_cast<const unsigned char*>(src), srcsize, binning);
 }
 
-inline static void BinPixels16(void *dst, const void *src, const wxSize& srcsize, unsigned int binning)
-{
-    BinPixels(static_cast<unsigned short *>(dst),
-              static_cast<const unsigned short *>(src),
-              srcsize, binning);
+inline static void BinPixels16(void* dst, const void* src,
+                               const wxSize& srcsize, unsigned int binning) {
+    BinPixels(static_cast<unsigned short*>(dst),
+              static_cast<const unsigned short*>(src), srcsize, binning);
 }
 
 #endif

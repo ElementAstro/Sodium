@@ -57,10 +57,8 @@
 #include "json_parser.hpp"
 #include "sodium.hpp"
 
-
 #include <memory.h>
 #include <algorithm>
-
 
 class block_allocator {
 private:

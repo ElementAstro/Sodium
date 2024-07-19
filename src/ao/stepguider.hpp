@@ -38,10 +38,11 @@
 
 class StepGuider;
 
-// The AO has two representations in AdvancedDialog.  One is as a 'mount' sub-class where the AO algorithms are shown in the Algos tab.  The second
-// is as a unique device appearing on the Other_Devices tab.  So there are two distinct ConfigDialogCtrlSet classes to support these two views
-class AOConfigDialogCtrlSet : ConfigDialogCtrlSet
-{
+// The AO has two representations in AdvancedDialog.  One is as a 'mount'
+// sub-class where the AO algorithms are shown in the Algos tab.  The second is
+// as a unique device appearing on the Other_Devices tab.  So there are two
+// distinct ConfigDialogCtrlSet classes to support these two views
+class AOConfigDialogCtrlSet : ConfigDialogCtrlSet {
     StepGuider *m_pStepGuider;
     wxSpinCtrl *m_travel;
     wxSpinCtrl *m_pCalibrationStepsPerIteration;
@@ -53,36 +54,35 @@ class AOConfigDialogCtrlSet : ConfigDialogCtrlSet
     wxCheckBox *m_pEnableAOGuide;
 
 public:
-    AOConfigDialogCtrlSet(wxWindow *pParent, Mount *pStepGuider, AdvancedDialog* pAdvancedDialog, BrainCtrlIdMap& CtrlMap);
-    ~AOConfigDialogCtrlSet() {};
+    AOConfigDialogCtrlSet(wxWindow *pParent, Mount *pStepGuider,
+                          AdvancedDialog *pAdvancedDialog,
+                          BrainCtrlIdMap &CtrlMap);
+    ~AOConfigDialogCtrlSet(){};
 
     virtual void LoadValues();
     virtual void UnloadValues();
 };
 
-class AOConfigDialogPane : public ConfigDialogPane
-{
+class AOConfigDialogPane : public ConfigDialogPane {
     StepGuider *m_pStepGuider;
 
 public:
     AOConfigDialogPane(wxWindow *pParent, StepGuider *pStepGuider);
-    ~AOConfigDialogPane() {};
+    ~AOConfigDialogPane(){};
 
     virtual void LoadValues() {};
     virtual void UnloadValues() {};
-    virtual void LayoutControls(wxPanel *pParent, BrainCtrlIdMap& CtrlMap);
+    virtual void LayoutControls(wxPanel *pParent, BrainCtrlIdMap &CtrlMap);
 };
 
-struct StepInfo
-{
+struct StepInfo {
     int x;
     int y;
     int dx;
     int dy;
 };
 
-class StepGuider : public Mount, public OnboardST4
-{
+class StepGuider : public Mount, public OnboardST4 {
     int m_samplesToAverage;
     int m_bumpPercentage;
     double m_bumpMaxStepsPerCycle;
@@ -108,17 +108,16 @@ class StepGuider : public Mount, public OnboardST4
     StepInfo m_failedStep;  // position info for failed ao step
 
     // Calibration variables
-    int   m_calibrationStepsPerIteration;
-    int   m_calibrationIterations;
+    int m_calibrationStepsPerIteration;
+    int m_calibrationIterations;
     SodiumPoint m_calibrationStartingLocation;
-    int   m_calibrationAverageSamples;
+    int m_calibrationAverageSamples;
     SodiumPoint m_calibrationAveragedLocation;
 
     Calibration m_calibration;
     CalibrationDetails m_calibrationDetails;
 
-    enum CALIBRATION_STATE
-    {
+    enum CALIBRATION_STATE {
         CALIBRATION_STATE_CLEARED,
         CALIBRATION_STATE_GOTO_LOWER_RIGHT_CORNER,
         CALIBRATION_STATE_AVERAGE_STARTING_LOCATION,
@@ -132,30 +131,31 @@ class StepGuider : public Mount, public OnboardST4
 
     // Things related to the Advanced Config Dialog
 protected:
-    class StepGuiderConfigDialogPane : public MountConfigDialogPane
-    {
+    class StepGuiderConfigDialogPane : public MountConfigDialogPane {
         StepGuider *m_pStepGuider;
 
     public:
         StepGuiderConfigDialogPane(wxWindow *pParent, StepGuider *pStepGuider);
-        ~StepGuiderConfigDialogPane() {};
+        ~StepGuiderConfigDialogPane(){};
 
         virtual void LoadValues();
         virtual void UnloadValues();
-        virtual void LayoutControls(wxPanel *pParent, BrainCtrlIdMap& CtrlMap);
+        virtual void LayoutControls(wxPanel *pParent, BrainCtrlIdMap &CtrlMap);
     };
 
     virtual int GetSamplesToAverage() const;
     virtual bool SetSamplesToAverage(int samplesToAverage);
 
     virtual int GetBumpPercentage() const;
-    virtual bool SetBumpPercentage(int bumpPercentage, bool updateGraph=false);
+    virtual bool SetBumpPercentage(int bumpPercentage,
+                                   bool updateGraph = false);
 
     virtual double GetBumpMaxStepsPerCycle() const;
     virtual bool SetBumpMaxStepsPerCycle(double maxBumpPerCycle);
 
     virtual int GetCalibrationStepsPerIteration() const;
-    virtual bool SetCalibrationStepsPerIteration(int calibrationStepsPerIteration);
+    virtual bool SetCalibrationStepsPerIteration(
+        int calibrationStepsPerIteration);
 
     GUIDE_ALGORITHM DefaultXGuideAlgorithm() const override;
     GUIDE_ALGORITHM DefaultYGuideAlgorithm() const override;
@@ -166,12 +166,16 @@ protected:
 
 public:
     MountConfigDialogPane *GetConfigDialogPane(wxWindow *pParent) override;
-    MountConfigDialogCtrlSet *GetConfigDialogCtrlSet(wxWindow *pParent, Mount *pStepGuider, AdvancedDialog *pAdvancedDialog, BrainCtrlIdMap& CtrlMap) override { return nullptr; };
+    MountConfigDialogCtrlSet *GetConfigDialogCtrlSet(
+        wxWindow *pParent, Mount *pStepGuider, AdvancedDialog *pAdvancedDialog,
+        BrainCtrlIdMap &CtrlMap) override {
+        return nullptr;
+    };
     wxString GetSettingsSummary() const override;
     wxString CalibrationSettingsSummary() const override;
     wxString GetMountClassName() const override;
     void AdjustCalibrationForScopePointing() override;
-    bool IsStepGuider() const  override;
+    bool IsStepGuider() const override;
     wxPoint GetAoPos() const override;
     wxPoint GetAoMaxPos() const override;
     const char *DirectionStr(GUIDE_DIRECTION d) const override;
@@ -182,12 +186,13 @@ public:
     virtual ~StepGuider();
 
     static wxArrayString AOList();
-    static StepGuider *Factory(const wxString& choice);
+    static StepGuider *Factory(const wxString &choice);
 
-    void SetCalibration(const Calibration& cal) override;
-    void SetCalibrationDetails(const CalibrationDetails& calDetails, double xAngle, double yAngle, double binning);
-    bool BeginCalibration(const SodiumPoint& currentLocation) override;
-    bool UpdateCalibrationState(const SodiumPoint& currentLocation) override;
+    void SetCalibration(const Calibration &cal) override;
+    void SetCalibrationDetails(const CalibrationDetails &calDetails,
+                               double xAngle, double yAngle, double binning);
+    bool BeginCalibration(const SodiumPoint &currentLocation) override;
+    bool UpdateCalibrationState(const SodiumPoint &currentLocation) override;
     void ClearCalibration() override;
 
     bool Connect() override;
@@ -206,26 +211,31 @@ public:
     void ForceStartBump();
     bool IsBumpInProgress() const;
 
-    const StepInfo& GetFailedStepInfo() const;
+    const StepInfo &GetFailedStepInfo() const;
 
     // functions with an implemenation in StepGuider that cannot be over-ridden
     // by a subclass
 private:
-    MOVE_RESULT MoveOffset(GuiderOffset *guiderOffset, unsigned int moveOptions) final;
-    MOVE_RESULT MoveAxis(GUIDE_DIRECTION direction, int amount, unsigned int moveOptions, MoveResultInfo *moveResultInfo) final;
-    MOVE_RESULT MoveAxis(GUIDE_DIRECTION direction, int steps, unsigned int moveOptions) final;
+    MOVE_RESULT MoveOffset(GuiderOffset *guiderOffset,
+                           unsigned int moveOptions) final;
+    MOVE_RESULT MoveAxis(GUIDE_DIRECTION direction, int amount,
+                         unsigned int moveOptions,
+                         MoveResultInfo *moveResultInfo) final;
+    MOVE_RESULT MoveAxis(GUIDE_DIRECTION direction, int steps,
+                         unsigned int moveOptions) final;
     int CalibrationMoveSize() override;
     int CalibrationTotDistance() override;
     void InitBumpPositions();
 
     double CalibrationTime(int nCalibrationSteps);
+
 protected:
     void ZeroCurrentPosition();
 
     enum STEP_RESULT {
-        STEP_OK,              // step succeeded
-        STEP_LIMIT_REACHED,   // step failed and limit was reached, must recenter
-        STEP_ERROR,           // step failed for some other unspecified reason
+        STEP_OK,             // step succeeded
+        STEP_LIMIT_REACHED,  // step failed and limit was reached, must recenter
+        STEP_ERROR,          // step failed for some other unspecified reason
     };
 
     // pure virutal functions -- these MUST be overridden by a subclass
@@ -244,18 +254,11 @@ public:
     virtual bool MoveToCenter();
 };
 
-inline bool StepGuider::IsBumpInProgress() const
-{
-    return m_bumpInProgress;
-}
+inline bool StepGuider::IsBumpInProgress() const { return m_bumpInProgress; }
 
-inline bool StepGuider::GetBumpOnDither() const
-{
-    return m_bumpOnDither;
-}
+inline bool StepGuider::GetBumpOnDither() const { return m_bumpOnDither; }
 
-inline const StepInfo& StepGuider::GetFailedStepInfo() const
-{
+inline const StepInfo &StepGuider::GetFailedStepInfo() const {
     return m_failedStep;
 }
 

@@ -38,8 +38,7 @@ class GuideCamera;
 class StepGuider;
 class Rotator;
 
-class GearSimulator
-{
+class GearSimulator {
 public:
     static GuideCamera *MakeCamSimulator();
     static void FlipPierSide(GuideCamera *camera);

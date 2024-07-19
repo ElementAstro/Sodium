@@ -47,7 +47,6 @@
 #include "guiding/circbuf.hpp"
 #include "math_tools.hpp"
 
-
 #include <chrono>
 
 enum Hyperparameters {

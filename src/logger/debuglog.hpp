@@ -38,8 +38,7 @@
 
 #include "logger.hpp"
 
-class DebugLog : public wxFFile, public Logger
-{
+class DebugLog : public wxFFile, public Logger {
     bool m_enabled;
     wxCriticalSection m_criticalSection;
     wxDateTime m_lastWriteTime;
@@ -54,8 +53,9 @@ public:
     bool Enable(bool enable);
     bool IsEnabled() const;
     void InitDebugLog(bool enable, bool forceOpen);
-    wxString AddLine(const wxString& str); // adds a newline
-    wxString AddBytes(const wxString& str, const unsigned char *bytes, unsigned count);
+    wxString AddLine(const wxString& str);  // adds a newline
+    wxString AddBytes(const wxString& str, const unsigned char* bytes,
+                      unsigned count);
     wxString Write(const wxString& str);
     bool Flush();
 
@@ -63,15 +63,12 @@ public:
     void RemoveOldFiles();
 };
 
-extern DebugLog& operator<< (DebugLog& out, const wxString& str);
-extern DebugLog& operator<< (DebugLog& out, const char *str);
-extern DebugLog& operator<< (DebugLog& out, const int i);
-extern DebugLog& operator<< (DebugLog& out, const double d);
+extern DebugLog& operator<<(DebugLog& out, const wxString& str);
+extern DebugLog& operator<<(DebugLog& out, const char* str);
+extern DebugLog& operator<<(DebugLog& out, const int i);
+extern DebugLog& operator<<(DebugLog& out, const double d);
 
-inline bool DebugLog::IsEnabled() const
-{
-    return m_enabled;
-}
+inline bool DebugLog::IsEnabled() const { return m_enabled; }
 
 extern DebugLog Debug;
 

@@ -35,39 +35,39 @@
 #ifndef IMAGELOGGER_INCLUDED
 #define IMAGELOGGER_INCLUDED
 
-struct ImageLoggerSettings
-{
+struct ImageLoggerSettings {
     bool loggingEnabled;
     bool logFramesOverThreshRel;
     bool logFramesOverThreshPx;
     bool logFramesDropped;
     bool logAutoSelectFrames;
     bool logNextNFrames;
-    double guideErrorThreshRel; // relative error theshold
-    double guideErrorThreshPx; // pixel error theshold
+    double guideErrorThreshRel;  // relative error theshold
+    double guideErrorThreshPx;   // pixel error theshold
     unsigned int logNextNFramesCount;
 
-    ImageLoggerSettings() :
-        loggingEnabled(false), logFramesOverThreshRel(false), logFramesOverThreshPx(false),
-        logFramesDropped(false), logAutoSelectFrames(false), logNextNFrames(false)
-    { }
+    ImageLoggerSettings()
+        : loggingEnabled(false),
+          logFramesOverThreshRel(false),
+          logFramesOverThreshPx(false),
+          logFramesDropped(false),
+          logAutoSelectFrames(false),
+          logNextNFrames(false) {}
 };
 
-class ImageLogger
-{
+class ImageLogger {
 public:
-
     static void Init();
     static void Destroy();
 
     static void GetSettings(ImageLoggerSettings *settings);
-    static void ApplySettings(const ImageLoggerSettings& settings);
+    static void ApplySettings(const ImageLoggerSettings &settings);
 
     static void SaveImage(usImage *img);
-    static void LogImage(const usImage *img, const FrameDroppedInfo& info);
+    static void LogImage(const usImage *img, const FrameDroppedInfo &info);
     static void LogImage(const usImage *img, double distance);
     static void LogImageStarDeselected(const usImage *img);
     static void LogAutoSelectImage(const usImage *img, bool succeeded);
 };
 
-#endif // IMAGELOGGER_INCLUDED
+#endif  // IMAGELOGGER_INCLUDED

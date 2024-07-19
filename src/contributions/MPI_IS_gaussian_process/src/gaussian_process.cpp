@@ -48,7 +48,6 @@
 #include "gaussian_process.hpp"
 #include "math_tools.hpp"
 
-
 // A functor for special orderings
 struct covariance_ordering {
     covariance_ordering(Eigen::VectorXd const& cov) : covariance_(cov) {}

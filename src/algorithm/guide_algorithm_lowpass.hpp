@@ -42,8 +42,7 @@
 
 #include "guiding_stats.hpp"
 
-class GuideAlgorithmLowpass : public GuideAlgorithm
-{
+class GuideAlgorithmLowpass : public GuideAlgorithm {
     static const unsigned int HISTORY_SIZE = 10;
     double m_slopeWeight;
     double m_minMove;
@@ -51,14 +50,14 @@ class GuideAlgorithmLowpass : public GuideAlgorithm
     int m_timeBase;
 
 protected:
-    class GuideAlgorithmLowpassConfigDialogPane : public ConfigDialogPane
-    {
+    class GuideAlgorithmLowpassConfigDialogPane : public ConfigDialogPane {
         GuideAlgorithmLowpass *m_pGuideAlgorithm;
         wxSpinCtrlDouble *m_pSlopeWeight;
         wxSpinCtrlDouble *m_pMinMove;
 
     public:
-        GuideAlgorithmLowpassConfigDialogPane(wxWindow *pParent, GuideAlgorithmLowpass *pGuideAlgorithm);
+        GuideAlgorithmLowpassConfigDialogPane(
+            wxWindow *pParent, GuideAlgorithmLowpass *pGuideAlgorithm);
         ~GuideAlgorithmLowpassConfigDialogPane();
 
         void LoadValues() override;
@@ -67,10 +66,11 @@ protected:
         void EnableDecControls(bool enable) override;
     };
 
-    class GuideAlgorithmLowpassGraphControlPane : public GraphControlPane
-    {
+    class GuideAlgorithmLowpassGraphControlPane : public GraphControlPane {
     public:
-        GuideAlgorithmLowpassGraphControlPane(wxWindow *pParent, GuideAlgorithmLowpass *pGuideAlgorithm, const wxString& label);
+        GuideAlgorithmLowpassGraphControlPane(
+            wxWindow *pParent, GuideAlgorithmLowpass *pGuideAlgorithm,
+            const wxString &label);
         ~GuideAlgorithmLowpassGraphControlPane();
         void EnableDecControls(bool enable) override;
 
@@ -79,8 +79,8 @@ protected:
         wxSpinCtrlDouble *m_pSlopeWeight;
         wxSpinCtrlDouble *m_pMinMove;
 
-        void OnSlopeWeightSpinCtrlDouble(wxSpinDoubleEvent& evt);
-        void OnMinMoveSpinCtrlDouble(wxSpinDoubleEvent& evt);
+        void OnSlopeWeightSpinCtrlDouble(wxSpinDoubleEvent &evt);
+        void OnMinMoveSpinCtrlDouble(wxSpinDoubleEvent &evt);
     };
 
     double GetMinMove() const override;
@@ -98,23 +98,19 @@ public:
     void reset() override;
     double result(double input) override;
     ConfigDialogPane *GetConfigDialogPane(wxWindow *pParent) override;
-    GraphControlPane *GetGraphControlPane(wxWindow *pParent, const wxString& label) override;
+    GraphControlPane *GetGraphControlPane(wxWindow *pParent,
+                                          const wxString &label) override;
     wxString GetSettingsSummary() const override;
     wxString GetGuideAlgorithmClassName() const override { return "Lowpass"; }
-    void GetParamNames(wxArrayString& names) const override;
-    bool GetParam(const wxString& name, double *val) const override;
-    bool SetParam(const wxString& name, double val) override;
+    void GetParamNames(wxArrayString &names) const override;
+    bool GetParam(const wxString &name, double *val) const override;
+    bool SetParam(const wxString &name, double val) override;
 };
 
-inline double GuideAlgorithmLowpass::GetMinMove() const
-{
-    return m_minMove;
-}
+inline double GuideAlgorithmLowpass::GetMinMove() const { return m_minMove; }
 
-inline double GuideAlgorithmLowpass::GetSlopeWeight() const
-{
+inline double GuideAlgorithmLowpass::GetSlopeWeight() const {
     return m_slopeWeight;
 }
 
 #endif /* GUIDE_ALGORITHM_LOWPASS_H_INCLUDED */
-

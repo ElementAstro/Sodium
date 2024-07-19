@@ -38,26 +38,40 @@
 
 #include <cassert>
 
-template<typename T>
-class circular_buffer
-{
-    T *m_ary;
+template <typename T>
+class circular_buffer {
+    T* m_ary;
     unsigned int m_head;
     unsigned int m_tail;
     unsigned int m_size;
     unsigned int m_capacity;
+
 public:
-    class iterator
-    {
+    class iterator {
         friend class circular_buffer<T>;
         circular_buffer<T>& m_cb;
         unsigned int m_pos;
-        iterator(circular_buffer<T>& cb, unsigned int pos) : m_cb(cb), m_pos(pos) { }
+        iterator(circular_buffer<T>& cb, unsigned int pos)
+            : m_cb(cb), m_pos(pos) {}
+
     public:
-        iterator& operator++() { ++m_pos; return *this; }
-        iterator operator++(int) { iterator it(*this); m_pos++; return it; }
-        bool operator==(const iterator& rhs) const { assert(&m_cb == &rhs.m_cb); return m_pos == rhs.m_pos; }
-        bool operator!=(const iterator& rhs) const { assert(&m_cb == &rhs.m_cb); return m_pos != rhs.m_pos; }
+        iterator& operator++() {
+            ++m_pos;
+            return *this;
+        }
+        iterator operator++(int) {
+            iterator it(*this);
+            m_pos++;
+            return it;
+        }
+        bool operator==(const iterator& rhs) const {
+            assert(&m_cb == &rhs.m_cb);
+            return m_pos == rhs.m_pos;
+        }
+        bool operator!=(const iterator& rhs) const {
+            assert(&m_cb == &rhs.m_cb);
+            return m_pos != rhs.m_pos;
+        }
         T& operator*() const { return m_cb.m_ary[m_pos % m_cb.m_capacity]; }
         T* operator->() const { return &m_cb.m_ary[m_pos % m_cb.m_capacity]; }
     };
@@ -76,74 +90,58 @@ public:
     iterator end() { return iterator(*this, m_tail + m_size); }
 };
 
-template<typename T>
+template <typename T>
 circular_buffer<T>::circular_buffer()
-    : m_ary(0),
-    m_head(0),
-    m_tail(0),
-    m_size(0),
-    m_capacity(0)
-{
-}
+    : m_ary(0), m_head(0), m_tail(0), m_size(0), m_capacity(0) {}
 
-template<typename T>
+template <typename T>
 circular_buffer<T>::circular_buffer(unsigned int capacity)
     : m_ary(new T[capacity]),
-    m_head(0),
-    m_tail(0),
-    m_size(0),
-    m_capacity(capacity)
-{
+      m_head(0),
+      m_tail(0),
+      m_size(0),
+      m_capacity(capacity) {
     assert(capacity > 0);
 }
 
-template<typename T>
-circular_buffer<T>::~circular_buffer()
-{
-    delete [] m_ary;
+template <typename T>
+circular_buffer<T>::~circular_buffer() {
+    delete[] m_ary;
 }
 
-template<typename T>
-void circular_buffer<T>::resize(unsigned int capacity)
-{
+template <typename T>
+void circular_buffer<T>::resize(unsigned int capacity) {
     assert(capacity > 0);
     assert(m_ary == 0);
     m_ary = new T[capacity];
     m_capacity = capacity;
 }
 
-template<typename T>
-void circular_buffer<T>::clear()
-{
+template <typename T>
+void circular_buffer<T>::clear() {
     m_head = m_tail = m_size = 0;
 }
 
-template<typename T>
-void circular_buffer<T>::push_front(const T& t)
-{
+template <typename T>
+void circular_buffer<T>::push_front(const T& t) {
     m_ary[m_head] = t;
     m_head = (m_head + 1) % m_capacity;
-    if (m_size == m_capacity)
-    {
+    if (m_size == m_capacity) {
         m_tail = (m_tail + 1) % m_capacity;
-    }
-    else
-    {
+    } else {
         ++m_size;
     }
 }
 
-template<typename T>
-void circular_buffer<T>::pop_back(unsigned int n)
-{
+template <typename T>
+void circular_buffer<T>::pop_back(unsigned int n) {
     assert(m_size >= n);
     m_tail = (m_tail + n) % m_capacity;
     m_size -= n;
 }
 
-template<typename T>
-T& circular_buffer<T>::operator[](unsigned int n) const
-{
+template <typename T>
+T& circular_buffer<T>::operator[](unsigned int n) const {
     assert(n < m_size);
     return m_ary[(m_tail + n) % m_capacity];
 }

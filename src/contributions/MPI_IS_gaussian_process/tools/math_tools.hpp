@@ -56,7 +56,6 @@
 #include <unsupported/Eigen/FFT>
 #include <vector>
 
-
 // M_PI not part of the standard
 #ifndef M_PI
 #define M_PI 3.14159265358979323846

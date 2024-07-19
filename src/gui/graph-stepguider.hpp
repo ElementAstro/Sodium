@@ -14,7 +14,8 @@
  *    Redistributions in binary form must reproduce the above copyright notice,
  *     this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *    Neither the name of Bret McKee, Dad Dog Development Ltd, nor the names of its
+ *    Neither the name of Bret McKee, Dad Dog Development Ltd, nor the names of
+ its
  *     contributors may be used to endorse or promote products derived from
  *     this software without specific prior written permission.
  *
@@ -38,27 +39,27 @@
 
 class GraphStepguiderClient;
 
-class GraphStepguiderWindow : public wxWindow
-{
+class GraphStepguiderWindow : public wxWindow {
 public:
-    GraphStepguiderWindow(wxWindow *parent);
+    GraphStepguiderWindow(wxWindow* parent);
     ~GraphStepguiderWindow(void);
 
     void OnButtonLength(wxCommandEvent& evt);
     void OnMenuLength(wxCommandEvent& evt);
     void OnButtonClear(wxCommandEvent& evt);
 
-    void SetLimits(unsigned int xMax, unsigned int yMax, unsigned int xBump, unsigned int yBump);
+    void SetLimits(unsigned int xMax, unsigned int yMax, unsigned int xBump,
+                   unsigned int yBump);
     void AppendData(const wxPoint& pos, const SodiumPoint& avgPos);
     void ShowBump(const SodiumPoint& curBump);
 
     bool SetState(bool is_active);
 
 private:
-    OptionsButton *LengthButton;
-    wxButton *ClearButton;
-    wxStaticText *m_hzText;
-    GraphStepguiderClient *m_pClient;
+    OptionsButton* LengthButton;
+    wxButton* ClearButton;
+    wxStaticText* m_hzText;
+    GraphStepguiderClient* m_pClient;
 
     wxLongLong_t m_prevTimestamp;
 
@@ -67,4 +68,4 @@ private:
     wxDECLARE_EVENT_TABLE();
 };
 
-#endif // GRAPH_STEPGUIDER_H_INCLUDED
+#endif  // GRAPH_STEPGUIDER_H_INCLUDED

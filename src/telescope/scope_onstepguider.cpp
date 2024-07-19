@@ -37,30 +37,23 @@
 
 #ifdef GUIDE_ONSTEPGUIDER
 
-ScopeOnStepGuider::ScopeOnStepGuider(void)
-{
-    m_Name =  "On StepGuider";
-}
+ScopeOnStepGuider::ScopeOnStepGuider(void) { m_Name = "On StepGuider"; }
 
-ScopeOnStepGuider::~ScopeOnStepGuider(void)
-{
-}
+ScopeOnStepGuider::~ScopeOnStepGuider(void) {}
 
-bool ScopeOnStepGuider::Connect(void)
-{
+bool ScopeOnStepGuider::Connect(void) {
     bool bError = false;
 
-    try
-    {
-        if (!pSecondaryMount)
-        {
-            throw ERROR_INFO("ScopeOnStepGuider::ScopeOnStepGuider() called with pSecondaryMount == NULL");
+    try {
+        if (!pSecondaryMount) {
+            throw ERROR_INFO(
+                "ScopeOnStepGuider::ScopeOnStepGuider() called with "
+                "pSecondaryMount == NULL");
         }
 
-        bError = ScopeOnboardST4::ConnectOnboardST4(dynamic_cast<StepGuider *>(pMount));
-    }
-    catch (const wxString& Msg)
-    {
+        bError = ScopeOnboardST4::ConnectOnboardST4(
+            dynamic_cast<StepGuider*>(pMount));
+    } catch (const wxString& Msg) {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -68,14 +61,8 @@ bool ScopeOnStepGuider::Connect(void)
     return bError;
 }
 
-bool ScopeOnStepGuider::RequiresStepGuider(void)
-{
-    return true;
-}
+bool ScopeOnStepGuider::RequiresStepGuider(void) { return true; }
 
-bool ScopeOnStepGuider::HasNonGuiMove(void)
-{
-    return true;
-}
+bool ScopeOnStepGuider::HasNonGuiMove(void) { return true; }
 
-#endif // GUIDE_ONSTEPGUIDER
+#endif  // GUIDE_ONSTEPGUIDER

@@ -54,7 +54,6 @@
 #include <vector>
 #include "covariance_functions.hpp"
 
-
 // Constants
 
 // Jitter is the minimal "noise" on the otherwise noiseless kernel matrices to

@@ -39,4 +39,4 @@
 #include "parallelport.hpp"
 #include "parallelport_win32.hpp"
 
-#endif // PARALLELPORTS_H_INCLUDED
+#endif  // PARALLELPORTS_H_INCLUDED

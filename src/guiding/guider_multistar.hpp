@@ -48,10 +48,11 @@ class MassChecker;
 class GuiderMultiStar;
 class GuiderConfigDialogCtrlSet;
 
-class GuiderMultiStarConfigDialogCtrlSet : public GuiderConfigDialogCtrlSet
-{
+class GuiderMultiStarConfigDialogCtrlSet : public GuiderConfigDialogCtrlSet {
 public:
-    GuiderMultiStarConfigDialogCtrlSet(wxWindow *pParent, Guider *pGuider, AdvancedDialog *pAdvancedDialog, BrainCtrlIdMap& CtrlMap);
+    GuiderMultiStarConfigDialogCtrlSet(wxWindow *pParent, Guider *pGuider,
+                                       AdvancedDialog *pAdvancedDialog,
+                                       BrainCtrlIdMap &CtrlMap);
     virtual ~GuiderMultiStarConfigDialogCtrlSet();
 
     GuiderMultiStar *m_pGuiderMultiStar;
@@ -67,12 +68,11 @@ public:
 
     virtual void LoadValues();
     virtual void UnloadValues();
-    void OnStarMassEnableChecked(wxCommandEvent& event);
-    void OnMultiStarChecked(wxCommandEvent& evt);
+    void OnStarMassEnableChecked(wxCommandEvent &event);
+    void OnMultiStarChecked(wxCommandEvent &evt);
 };
 
-class GuiderMultiStar : public Guider
-{
+class GuiderMultiStar : public Guider {
     Star m_primaryStar;
     std::vector<GuideStar> m_guideStars;
     DescriptiveStats *m_primaryDistStats;
@@ -93,17 +93,16 @@ class GuiderMultiStar : public Guider
     double m_stabilitySigmaX;
 
 public:
-    class GuiderMultiStarConfigDialogPane : public GuiderConfigDialogPane
-    {
+    class GuiderMultiStarConfigDialogPane : public GuiderConfigDialogPane {
     protected:
-
-        public:
-        GuiderMultiStarConfigDialogPane(wxWindow *pParent, GuiderMultiStar *pGuider);
-        ~GuiderMultiStarConfigDialogPane() {};
+    public:
+        GuiderMultiStarConfigDialogPane(wxWindow *pParent,
+                                        GuiderMultiStar *pGuider);
+        ~GuiderMultiStarConfigDialogPane(){};
 
         virtual void LoadValues() {};
         virtual void UnloadValues() {};
-        void LayoutControls(Guider *pGuider, BrainCtrlIdMap& CtrlMap);
+        void LayoutControls(Guider *pGuider, BrainCtrlIdMap &CtrlMap);
     };
 
     bool GetMassChangeThresholdEnabled() const;
@@ -112,7 +111,7 @@ public:
     bool SetMassChangeThreshold(double starMassChangeThreshold);
     bool SetTolerateJumps(bool enable, double threshold);
     bool SetSearchRegion(int searchRegion);
-    bool RefineOffset(const usImage *pImage, GuiderOffset* pOffset);
+    bool RefineOffset(const usImage *pImage, GuiderOffset *pOffset);
 
     friend class GuiderMultiStarConfigDialogPane;
     friend class GuiderMultiStarConfigDialogCtrlSet;
@@ -121,67 +120,60 @@ public:
     GuiderMultiStar(wxWindow *parent);
     virtual ~GuiderMultiStar();
 
-    void OnPaint(wxPaintEvent& evt) override;
+    void OnPaint(wxPaintEvent &evt) override;
 
-    virtual bool SetLockPosition(const SodiumPoint& position) override;
+    virtual bool SetLockPosition(const SodiumPoint &position) override;
     bool IsLocked() const override;
-    bool AutoSelect(const wxRect& roi) override;
-    const SodiumPoint& CurrentPosition() const override;
+    bool AutoSelect(const wxRect &roi) override;
+    const SodiumPoint &CurrentPosition() const override;
     wxRect GetBoundingBox() const override;
     int GetMaxMovePixels() const override;
-    const Star& PrimaryStar() const override;
+    const Star &PrimaryStar() const override;
     bool GetMultiStarMode() const override;
     wxString GetStarCount() const override;
     void SetMultiStarMode(bool val) override;
     void ClearSecondaryStars();
     wxString GetSettingsSummary() const override;
 
-    Guider::GuiderConfigDialogPane *GetConfigDialogPane(wxWindow *pParent) override;
-    GuiderConfigDialogCtrlSet *GetConfigDialogCtrlSet(wxWindow *pParent, Guider *pGuider, AdvancedDialog *pAdvancedDialog, BrainCtrlIdMap& CtrlMap) override;
+    Guider::GuiderConfigDialogPane *GetConfigDialogPane(
+        wxWindow *pParent) override;
+    GuiderConfigDialogCtrlSet *GetConfigDialogCtrlSet(
+        wxWindow *pParent, Guider *pGuider, AdvancedDialog *pAdvancedDialog,
+        BrainCtrlIdMap &CtrlMap) override;
 
     void LoadProfileSettings() override;
 
 private:
-    bool IsValidLockPosition(const SodiumPoint& pt) final;
-    bool IsValidSecondaryStarPosition(const SodiumPoint& pt) final;
+    bool IsValidLockPosition(const SodiumPoint &pt) final;
+    bool IsValidSecondaryStarPosition(const SodiumPoint &pt) final;
     void InvalidateCurrentPosition(bool fullReset = false) final;
-    bool UpdateCurrentPosition(const usImage *pImage, GuiderOffset *ofs, FrameDroppedInfo *errorInfo) final;
-    bool SetCurrentPosition(const usImage *pImage, const SodiumPoint& position) final;
+    bool UpdateCurrentPosition(const usImage *pImage, GuiderOffset *ofs,
+                               FrameDroppedInfo *errorInfo) final;
+    bool SetCurrentPosition(const usImage *pImage,
+                            const SodiumPoint &position) final;
 
-    void OnLClick(wxMouseEvent& evt);
+    void OnLClick(wxMouseEvent &evt);
 
     void SaveStarFITS();
 
     wxDECLARE_EVENT_TABLE();
 };
 
-inline int
-GuiderMultiStar::GetMaxMovePixels() const
-{
-    return m_searchRegion;
-}
+inline int GuiderMultiStar::GetMaxMovePixels() const { return m_searchRegion; }
 
-inline const Star&
-GuiderMultiStar::PrimaryStar() const
-{
+inline const Star &GuiderMultiStar::PrimaryStar() const {
     return m_primaryStar;
 }
 
-inline bool
-GuiderMultiStar::GetMultiStarMode() const
-{
+inline bool GuiderMultiStar::GetMultiStarMode() const {
     return m_multiStarMode;
 }
 
-inline bool
-GuiderMultiStar::IsLocked() const
-{
+inline bool GuiderMultiStar::IsLocked() const {
     return m_primaryStar.WasFound();
 }
 
-inline const SodiumPoint&
-GuiderMultiStar::CurrentPosition() const
-{
+inline const SodiumPoint &GuiderMultiStar::CurrentPosition() const {
     return m_primaryStar;
 }
 

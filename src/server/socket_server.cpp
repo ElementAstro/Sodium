@@ -37,7 +37,6 @@
 #include "ao/gear_simulator.hpp"
 #include "socket_server.hpp"
 
-
 #include <spdlog/spdlog.h>
 
 #include <algorithm>

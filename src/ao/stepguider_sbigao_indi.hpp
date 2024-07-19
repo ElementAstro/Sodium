@@ -36,10 +36,9 @@
 #ifndef STEPGUIDER_SBIGAO_INDI_H_INCLUDED
 #define STEPGUIDER_SBIGAO_INDI_H_INCLUDED
 
-class StepGuiderSbigAoIndiFactory
-{
+class StepGuiderSbigAoIndiFactory {
 public:
     static StepGuider *MakeStepGuiderSbigAoIndi();
 };
 
-#endif // #ifndef STEPGUIDER_SBIGAO_INDI_H_INCLUDED
+#endif  // #ifndef STEPGUIDER_SBIGAO_INDI_H_INCLUDED

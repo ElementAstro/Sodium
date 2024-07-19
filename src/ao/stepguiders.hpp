@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#if defined (GUIDE_INDI)
+#if defined(GUIDE_INDI)
 #define STEPGUIDER_SXAO_INDI
 #define STEPGUIDER_SBIGAO_INDI
 #endif
@@ -26,7 +26,8 @@
 #define STEPGUIDER_SIMULATOR
 
 #include "stepguider.hpp"
-#include "stepguider_sxao_indi.hpp"
 #include "stepguider_sbigao_indi.hpp"
+#include "stepguider_sxao_indi.hpp"
+
 
 #endif /* STEPGUIDERS_H_INCLUDED */

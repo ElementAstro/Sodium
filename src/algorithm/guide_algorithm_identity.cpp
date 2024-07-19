@@ -40,60 +40,44 @@
 #include "sodium.hpp"
 
 GuideAlgorithmIdentity::GuideAlgorithmIdentity(Mount *pMount, GuideAxis axis)
-    : GuideAlgorithm(pMount, axis)
-{
+    : GuideAlgorithm(pMount, axis) {
     reset();
 }
 
-GuideAlgorithmIdentity::~GuideAlgorithmIdentity(void)
-{
-}
+GuideAlgorithmIdentity::~GuideAlgorithmIdentity(void) {}
 
-GUIDE_ALGORITHM GuideAlgorithmIdentity::Algorithm() const
-{
+GUIDE_ALGORITHM GuideAlgorithmIdentity::Algorithm() const {
     return GUIDE_ALGORITHM_IDENTITY;
 }
 
-void GuideAlgorithmIdentity::reset(void)
-{
-}
+void GuideAlgorithmIdentity::reset(void) {}
 
 // the default algorithm simply returns its input
-double GuideAlgorithmIdentity::result(double input)
-{
+double GuideAlgorithmIdentity::result(double input) {
     double dReturn = input;
 
     return dReturn;
 }
 
-ConfigDialogPane *GuideAlgorithmIdentity::GetConfigDialogPane(wxWindow *pParent)
-{
+ConfigDialogPane *GuideAlgorithmIdentity::GetConfigDialogPane(
+    wxWindow *pParent) {
     return new GuideAlgorithmIdentityConfigDialogPane(pParent, this);
 }
 
-GuideAlgorithmIdentity::
-GuideAlgorithmIdentityConfigDialogPane::
-GuideAlgorithmIdentityConfigDialogPane(wxWindow *pParent, GuideAlgorithmIdentity *pGuideAlgorithm)
-    : ConfigDialogPane(_("Guide Algorithm"), pParent)
-{
+GuideAlgorithmIdentity::GuideAlgorithmIdentityConfigDialogPane::
+    GuideAlgorithmIdentityConfigDialogPane(
+        wxWindow *pParent, GuideAlgorithmIdentity *pGuideAlgorithm)
+    : ConfigDialogPane(_("Guide Algorithm"), pParent) {
     m_pGuideAlgorithm = pGuideAlgorithm;
-    DoAdd(new wxStaticText(pParent, wxID_ANY, _("Nothing to Configure"),wxPoint(-1,-1),wxSize(-1,-1)));
+    DoAdd(new wxStaticText(pParent, wxID_ANY, _("Nothing to Configure"),
+                           wxPoint(-1, -1), wxSize(-1, -1)));
 }
 
-GuideAlgorithmIdentity::
-GuideAlgorithmIdentityConfigDialogPane::
-~GuideAlgorithmIdentityConfigDialogPane(void)
-{
-}
+GuideAlgorithmIdentity::GuideAlgorithmIdentityConfigDialogPane::
+    ~GuideAlgorithmIdentityConfigDialogPane(void) {}
 
-void GuideAlgorithmIdentity::
-GuideAlgorithmIdentityConfigDialogPane::
-LoadValues(void)
-{
-}
+void GuideAlgorithmIdentity::GuideAlgorithmIdentityConfigDialogPane::LoadValues(
+    void) {}
 
-void GuideAlgorithmIdentity::
-GuideAlgorithmIdentityConfigDialogPane::
-UnloadValues(void)
-{
-}
+void GuideAlgorithmIdentity::GuideAlgorithmIdentityConfigDialogPane::
+    UnloadValues(void) {}

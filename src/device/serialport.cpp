@@ -35,16 +35,11 @@
 
 #include "sodium.hpp"
 
-SerialPort::SerialPort(void)
-{
-}
+SerialPort::SerialPort(void) {}
 
-SerialPort::~SerialPort(void)
-{
-}
+SerialPort::~SerialPort(void) {}
 
-SerialPort *SerialPort::SerialPortFactory(void)
-{
+SerialPort *SerialPort::SerialPortFactory(void) {
 #if defined(_WINDOWS_)
     return new SerialPortWin32();
 #elif defined(__APPLE__)

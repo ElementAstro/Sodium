@@ -67,9 +67,8 @@
 
 class PhdConfig;
 
-class ConfigSection
-{
-    wxConfig *m_pConfig;
+class ConfigSection {
+    wxConfig* m_pConfig;
     wxString m_prefix;
 
     friend class PhdConfig;
@@ -80,11 +79,11 @@ public:
 
     void SelectProfile(int profileId);
 
-    bool     GetBoolean(const wxString& name, bool defaultValue);
+    bool GetBoolean(const wxString& name, bool defaultValue);
     wxString GetString(const wxString& name, const wxString& defaultValue);
-    double   GetDouble(const wxString& name, double defaultValue);
-    long     GetLong(const wxString& name, long defaultValue);
-    int      GetInt(const wxString& name, int defaultValue);
+    double GetDouble(const wxString& name, double defaultValue);
+    long GetLong(const wxString& name, long defaultValue);
+    int GetInt(const wxString& name, int defaultValue);
 
     void SetBoolean(const wxString& name, bool value);
     void SetString(const wxString& name, const wxString& value);
@@ -99,11 +98,10 @@ public:
 
     std::vector<wxString> GetGroupNames(const wxString& baseName);
 
-    wxConfig *GetWxConfig() const { return m_pConfig; }
+    wxConfig* GetWxConfig() const { return m_pConfig; }
 };
 
-class PhdConfig
-{
+class PhdConfig {
     static const long CURRENT_CONFIG_VERSION = 2001;
 
     long m_configVersion;
@@ -111,7 +109,6 @@ class PhdConfig
     int m_currentProfileId;
 
 public:
-
     PhdConfig(int instance);
     ~PhdConfig();
 
@@ -146,7 +143,7 @@ public:
     ConfigSection Profile;
 };
 
-extern PhdConfig *pConfig;
+extern PhdConfig* pConfig;
 
 // helper class for managing a temporary profile
 // usage:
@@ -155,13 +152,13 @@ extern PhdConfig *pConfig;
 //     // call Commit() to give the profile a real name and make it permanent
 //     if (!profile.Commit(newName))
 //     { ... /* newName already exists */ }
-//     // if Commit is not called, the temporary profile will be removed and the previous profile will be
+//     // if Commit is not called, the temporary profile will be removed and the
+//     previous profile will be
 //     // activated when the AutoTempProfile instance is destroyed
 
-class AutoTempProfile
-{
-    wxString m_prev; // previous profile to be restored
-    wxString m_name; // name of the current, temporary profile
+class AutoTempProfile {
+    wxString m_prev;  // previous profile to be restored
+    wxString m_name;  // name of the current, temporary profile
 
     // non-copyable
     AutoTempProfile(const AutoTempProfile&) = delete;

@@ -2,8 +2,8 @@
  *  scope_INDI.cpp
  *  PHD Guiding
  *
- *  Ported by Hans Lambermont in 2014 from tele_INDI.h which has Copyright (c) 2009 Geoffrey Hausheer.
- *  All rights reserved.
+ *  Ported by Hans Lambermont in 2014 from tele_INDI.h which has Copyright (c)
+ * 2009 Geoffrey Hausheer. All rights reserved.
  *
  *  Redraw for libindi/baseclient by Patrick Chevalley
  *  Copyright (c) 2014 Patrick Chevalley
@@ -38,10 +38,9 @@
 #ifndef SCOPE_INDI_INCLUDED
 #define SCOPE_INDI_INCLUDED
 
-class INDIScopeFactory
-{
-    public:
-        static Scope *MakeINDIScope();
+class INDIScopeFactory {
+public:
+    static Scope *MakeINDIScope();
 };
 
 #endif

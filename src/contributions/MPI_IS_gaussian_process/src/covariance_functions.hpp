@@ -52,7 +52,6 @@
 #include <utility>
 #include <vector>
 
-
 namespace covariance_functions {
 /*!@brief Base class definition for covariance functions
  */

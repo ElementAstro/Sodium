@@ -36,10 +36,9 @@
 
 class GuideCamera;
 
-class INDICameraFactory
-{
+class INDICameraFactory {
 public:
     static GuideCamera *MakeINDICamera();
 };
 
-#endif // CAM_INDI_INCLUDED
+#endif  // CAM_INDI_INCLUDED
