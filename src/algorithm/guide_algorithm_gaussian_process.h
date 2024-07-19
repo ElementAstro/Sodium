@@ -43,7 +43,7 @@
 #define GUIDE_GAUSSIAN_PROCESS
 
 #include "guide_algorithm.h"
-#include "telescope/mount.h" // for PierSide
+#include "telescope/mount.h"  // for PierSide
 
 #include <chrono>
 
@@ -57,33 +57,36 @@ class GaussianProcessGuider;
  * robustness of the overall guiding system.
  */
 
-class GuideAlgorithmGaussianProcess : public GuideAlgorithm
-{
+class GuideAlgorithmGaussianProcess : public GuideAlgorithm {
 protected:
-    class GPExpertDialog : public wxDialog
-    {
+    class GPExpertDialog : public wxDialog {
         wxSpinCtrlDouble *m_pPeriodLengthsInference;
         wxSpinCtrlDouble *m_pPeriodLengthsPeriodEstimation;
-        wxSpinCtrl       *m_pNumPointsApproximation;
+        wxSpinCtrl *m_pNumPointsApproximation;
         wxSpinCtrlDouble *m_pSE0KLengthScale;
         wxSpinCtrlDouble *m_pSE0KSignalVariance;
         wxSpinCtrlDouble *m_pPKLengthScale;
         wxSpinCtrlDouble *m_pPKSignalVariance;
         wxSpinCtrlDouble *m_pSE1KLengthScale;
         wxSpinCtrlDouble *m_pSE1KSignalVariance;
-        void AddTableEntry(wxFlexGridSizer *Grid, const wxString& Label, wxWindow *Ctrl, const wxString& ToolTip);
+        void AddTableEntry(wxFlexGridSizer *Grid, const wxString &Label,
+                           wxWindow *Ctrl, const wxString &ToolTip);
 
     public:
         GPExpertDialog(wxWindow *Parent);
-        void LoadExpertValues(GuideAlgorithmGaussianProcess *m_pGuideAlgorithm, const std::vector<double>& hyperParams);
-        void UnloadExpertValues(GuideAlgorithmGaussianProcess *m_pGuideAlgorithm, std::vector<double>& hyperParams);
+        void LoadExpertValues(GuideAlgorithmGaussianProcess *m_pGuideAlgorithm,
+                              const std::vector<double> &hyperParams);
+        void UnloadExpertValues(
+            GuideAlgorithmGaussianProcess *m_pGuideAlgorithm,
+            std::vector<double> &hyperParams);
     };
 
 protected:
-    class GuideAlgorithmGPGraphControlPane : public GraphControlPane
-    {
+    class GuideAlgorithmGPGraphControlPane : public GraphControlPane {
     public:
-        GuideAlgorithmGPGraphControlPane(wxWindow *pParent, GuideAlgorithmGaussianProcess *pAlgorithm, const wxString& label);
+        GuideAlgorithmGPGraphControlPane(
+            wxWindow *pParent, GuideAlgorithmGaussianProcess *pAlgorithm,
+            const wxString &label);
         ~GuideAlgorithmGPGraphControlPane();
 
     private:
@@ -92,15 +95,15 @@ protected:
         wxSpinCtrl *m_pAggressiveness;
         wxSpinCtrlDouble *m_pMinMove;
 
-        void OnWeightSpinCtrl(wxSpinEvent& evt);
-        void OnAggressivenessSpinCtrl(wxSpinEvent& evt);
-        void OnMinMoveSpinCtrlDouble(wxSpinDoubleEvent& evt);
+        void OnWeightSpinCtrl(wxSpinEvent &evt);
+        void OnAggressivenessSpinCtrl(wxSpinEvent &evt);
+        void OnMinMoveSpinCtrlDouble(wxSpinDoubleEvent &evt);
     };
 
-    GPExpertDialog *m_expertDialog;       // Exactly one per GP instance independent from ConfigDialogPane lifetimes
+    GPExpertDialog *m_expertDialog;  // Exactly one per GP instance independent
+                                     // from ConfigDialogPane lifetimes
 
 private:
-
     /**
      * Holds all data that is needed for the GP guiding.
      */
@@ -117,13 +120,16 @@ private:
     GaussianProcessGuider *GPG;
 
     /**
-     * Dark tracking mode is for debugging: only deduceResult is called if enabled.
+     * Dark tracking mode is for debugging: only deduceResult is called if
+     * enabled.
      */
     bool dark_tracking_mode_;
-    bool block_updates_;             // Don't update GP if guiding is disabled
-    double guiding_ra_;              // allow resuming guiding after guiding stopped if there is no change in RA
+    bool block_updates_;  // Don't update GP if guiding is disabled
+    double guiding_ra_;   // allow resuming guiding after guiding stopped if
+                          // there is no change in RA
     PierSide guiding_pier_side_;
-    std::chrono::system_clock::time_point guiding_stopped_time_; // time guiding stopped
+    std::chrono::system_clock::time_point
+        guiding_stopped_time_;  // time guiding stopped
 
 protected:
     double GetControlGain() const;
@@ -145,7 +151,7 @@ protected:
     bool SetBoolComputePeriod(bool);
 
     std::vector<double> GetGPHyperparameters() const;
-    bool SetGPHyperparameters(const std::vector<double>& hyperparameters);
+    bool SetGPHyperparameters(const std::vector<double> &hyperparameters);
 
     double GetPredictionGain() const;
     bool SetPredictionGain(double);
@@ -159,7 +165,8 @@ public:
     GUIDE_ALGORITHM Algorithm() const override;
 
     ConfigDialogPane *GetConfigDialogPane(wxWindow *pParent) override;
-    GraphControlPane *GetGraphControlPane(wxWindow *pParent, const wxString& label) override;
+    GraphControlPane *GetGraphControlPane(wxWindow *pParent,
+                                          const wxString &label) override;
 
     /**
      * Calculates the control value based on the current input. 1. The input is
@@ -231,11 +238,12 @@ public:
     void GuidingDisabled() override;
 
     wxString GetSettingsSummary() const override;
-    wxString GetGuideAlgorithmClassName() const override { return "Predictive PEC"; }
-    void GetParamNames(wxArrayString& names) const override;
-    bool GetParam(const wxString& name, double *val) const override;
-    bool SetParam(const wxString& name, double val) override;
-
+    wxString GetGuideAlgorithmClassName() const override {
+        return "Predictive PEC";
+    }
+    void GetParamNames(wxArrayString &names) const override;
+    bool GetParam(const wxString &name, double *val) const override;
+    bool SetParam(const wxString &name, double val) override;
 };
 
 #endif  // GUIDE_GAUSSIAN_PROCESS

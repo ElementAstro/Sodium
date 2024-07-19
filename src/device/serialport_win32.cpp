@@ -37,96 +37,79 @@
 
 #ifdef __WINDOWS__
 
-wxArrayString SerialPortWin32::GetSerialPortList(void)
-{
+wxArrayString SerialPortWin32::GetSerialPortList(void) {
     wxArrayString ret;
-    char *pBuffer = NULL;
+    char* pBuffer = NULL;
 
-    try
-    {
+    try {
         int bufferSize = 4096;
         DWORD res = 0;
 
-        do
-        {
+        do {
             bufferSize *= 2;
-            delete [] pBuffer;
+            delete[] pBuffer;
             pBuffer = new char[bufferSize];
-            if (pBuffer == NULL)
-            {
+            if (pBuffer == NULL) {
                 throw ERROR_INFO("new failed in GetSerialPortList");
             }
             res = QueryDosDeviceA(NULL, pBuffer, bufferSize);
         } while (res == 0 && GetLastError() == ERROR_INSUFFICIENT_BUFFER);
 
-        if (res == 0)
-        {
+        if (res == 0) {
             throw ERROR_INFO("QueryDosDevice failed");
         }
 
-        for (char *pEntry=pBuffer;*pEntry; pEntry += strlen(pEntry) + 1)
-        {
-            if (strncmp(pEntry, "COM", 3) == 0)
-            {
+        for (char* pEntry = pBuffer; *pEntry; pEntry += strlen(pEntry) + 1) {
+            if (strncmp(pEntry, "COM", 3) == 0) {
                 ret.Add(pEntry);
             }
         }
-    }
-    catch (const wxString& Msg)
-    {
+    } catch (const wxString& Msg) {
         POSSIBLY_UNUSED(Msg);
     }
 
-    delete [] pBuffer;
+    delete[] pBuffer;
 
     return ret;
 }
 
-SerialPortWin32::SerialPortWin32(void)
-{
-    m_handle = INVALID_HANDLE_VALUE;
-}
+SerialPortWin32::SerialPortWin32(void) { m_handle = INVALID_HANDLE_VALUE; }
 
-SerialPortWin32::~SerialPortWin32(void)
-{
-    if (m_handle != INVALID_HANDLE_VALUE)
-    {
+SerialPortWin32::~SerialPortWin32(void) {
+    if (m_handle != INVALID_HANDLE_VALUE) {
         CloseHandle(m_handle);
     }
 }
 
-bool SerialPortWin32::Connect(const wxString& portName, int baud, int dataBits, int stopBits, PARITY Parity, bool useRTS, bool useDTR)
-{
+bool SerialPortWin32::Connect(const wxString& portName, int baud, int dataBits,
+                              int stopBits, PARITY Parity, bool useRTS,
+                              bool useDTR) {
     bool bError = false;
 
-    try
-    {
+    try {
         wxString portPath = "\\\\.\\" + portName;
-        m_handle = CreateFile(portPath,
-                               GENERIC_READ | GENERIC_WRITE,
-                               0,    // must be opened with exclusive-access
-                               NULL, // no security attributes
-                               OPEN_EXISTING, // must use OPEN_EXISTING
-                               0,    // not overlapped I/O
-                               NULL  // hTemplate must be NULL for comm devices
-                               );
-        if (m_handle == INVALID_HANDLE_VALUE)
-        {
-            throw ERROR_INFO("SerialPortWin32: CreateFile("+portName+") failed");
+        m_handle = CreateFile(portPath, GENERIC_READ | GENERIC_WRITE,
+                              0,     // must be opened with exclusive-access
+                              NULL,  // no security attributes
+                              OPEN_EXISTING,  // must use OPEN_EXISTING
+                              0,              // not overlapped I/O
+                              NULL  // hTemplate must be NULL for comm devices
+        );
+        if (m_handle == INVALID_HANDLE_VALUE) {
+            throw ERROR_INFO("SerialPortWin32: CreateFile(" + portName +
+                             ") failed");
         }
 
         DCB dcb;
 
-        if (!GetCommState(m_handle, &dcb))
-        {
+        if (!GetCommState(m_handle, &dcb)) {
             throw ERROR_INFO("SerialPortWin32: GetCommState failed");
         }
 
         dcb.BaudRate = baud;
         dcb.ByteSize = dataBits;
 
-        switch (stopBits)
-        {
+        switch (stopBits) {
             case 1:
                 dcb.StopBits = ONESTOPBIT;
                 break;
@@ -144,13 +127,10 @@ bool SerialPortWin32::Connect(const wxString& portName, int baud, int dataBits, 
         dcb.fDtrControl = useDTR ? DTR_CONTROL_HANDSHAKE : DTR_CONTROL_ENABLE;
         dcb.fRtsControl = useRTS ? RTS_CONTROL_HANDSHAKE : RTS_CONTROL_ENABLE;
 
-        if (!SetCommState(m_handle, &dcb))
-        {
+        if (!SetCommState(m_handle, &dcb)) {
             throw ERROR_INFO("SerialPortWin32: GetCommState failed");
         }
-    }
-    catch (const wxString& Msg)
-    {
+    } catch (const wxString& Msg) {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -158,19 +138,14 @@ bool SerialPortWin32::Connect(const wxString& portName, int baud, int dataBits, 
     return bError;
 }
 
-bool SerialPortWin32::Disconnect(void)
-{
+bool SerialPortWin32::Disconnect(void) {
     bool bError = false;
 
-    try
-    {
-        if (!CloseHandle(m_handle))
-        {
+    try {
+        if (!CloseHandle(m_handle)) {
             throw ERROR_INFO("SerialPortWin32: CloseHandle failed");
         }
-    }
-    catch (const wxString& Msg)
-    {
+    } catch (const wxString& Msg) {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -180,12 +155,10 @@ bool SerialPortWin32::Disconnect(void)
     return bError;
 }
 
-bool SerialPortWin32::SetReceiveTimeout(int timeoutMs)
-{
+bool SerialPortWin32::SetReceiveTimeout(int timeoutMs) {
     bool bError = false;
 
-    try
-    {
+    try {
         COMMTIMEOUTS timeouts;
 
         timeouts.ReadIntervalTimeout = 0;
@@ -194,13 +167,11 @@ bool SerialPortWin32::SetReceiveTimeout(int timeoutMs)
         timeouts.WriteTotalTimeoutMultiplier = 0;
         timeouts.WriteTotalTimeoutConstant = 0;
 
-        if (!SetCommTimeouts(m_handle, &timeouts))
-        {
-            throw ERROR_INFO("SerialPortWin32: unable to set serial port timeouts");
+        if (!SetCommTimeouts(m_handle, &timeouts)) {
+            throw ERROR_INFO(
+                "SerialPortWin32: unable to set serial port timeouts");
         }
-    }
-    catch (const wxString& Msg)
-    {
+    } catch (const wxString& Msg) {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -208,29 +179,23 @@ bool SerialPortWin32::SetReceiveTimeout(int timeoutMs)
     return bError;
 }
 
-bool SerialPortWin32::Send(const unsigned char *pData, unsigned count)
-{
+bool SerialPortWin32::Send(const unsigned char* pData, unsigned count) {
     bool bError = false;
 
-    try
-    {
+    try {
         DWORD nBytesWritten = 0;
 
         Debug.AddBytes("Sending", pData, count);
 
-        if (!WriteFile(m_handle, pData, count, &nBytesWritten, NULL))
-        {
+        if (!WriteFile(m_handle, pData, count, &nBytesWritten, NULL)) {
             throw ERROR_INFO("SerialPortWin32: WriteFile failed");
         }
 
-        if (nBytesWritten != count)
-        {
+        if (nBytesWritten != count) {
             throw ERROR_INFO("SerialPortWin32: nBytesWritten != count");
         }
 
-    }
-    catch (const wxString& Msg)
-    {
+    } catch (const wxString& Msg) {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -238,28 +203,22 @@ bool SerialPortWin32::Send(const unsigned char *pData, unsigned count)
     return bError;
 }
 
-bool SerialPortWin32::Receive(unsigned char *pData, unsigned count)
-{
+bool SerialPortWin32::Receive(unsigned char* pData, unsigned count) {
     bool bError = false;
 
-    try
-    {
+    try {
         DWORD receiveCount;
 
-        if (!ReadFile(m_handle, pData, count, &receiveCount, NULL))
-        {
+        if (!ReadFile(m_handle, pData, count, &receiveCount, NULL)) {
             throw ERROR_INFO("SerialPortWin32: Readfile Failed");
         }
 
-        if (receiveCount != count)
-        {
+        if (receiveCount != count) {
             throw ERROR_INFO("SerialPortWin32: recieveCount != count");
         }
 
         Debug.AddBytes("Received", pData, receiveCount);
-    }
-    catch (const wxString& Msg)
-    {
+    } catch (const wxString& Msg) {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -267,21 +226,16 @@ bool SerialPortWin32::Receive(unsigned char *pData, unsigned count)
     return bError;
 }
 
-bool SerialPortWin32::EscapeFunction(DWORD command)
-{
+bool SerialPortWin32::EscapeFunction(DWORD command) {
     bool bError = false;
 
-    try
-    {
+    try {
         Debug.Write(wxString::Format("EscapeFunction(0x%x)\n", command));
 
-        if (!EscapeCommFunction(m_handle, command))
-        {
+        if (!EscapeCommFunction(m_handle, command)) {
             throw ERROR_INFO("SerialPortWin32: EscapeCommFunction failed");
         }
-    }
-    catch (const wxString& Msg)
-    {
+    } catch (const wxString& Msg) {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -289,14 +243,12 @@ bool SerialPortWin32::EscapeFunction(DWORD command)
     return bError;
 }
 
-bool SerialPortWin32::SetRTS(bool asserted)
-{
-    return SerialPortWin32::EscapeFunction(asserted?SETRTS:CLRRTS);
+bool SerialPortWin32::SetRTS(bool asserted) {
+    return SerialPortWin32::EscapeFunction(asserted ? SETRTS : CLRRTS);
 }
 
-bool SerialPortWin32::SetDTR(bool asserted)
-{
-    return SerialPortWin32::EscapeFunction(asserted?SETDTR:CLRDTR);
+bool SerialPortWin32::SetDTR(bool asserted) {
+    return SerialPortWin32::EscapeFunction(asserted ? SETDTR : CLRDTR);
 }
 
-#endif // _WINDOWS_
+#endif  // _WINDOWS_

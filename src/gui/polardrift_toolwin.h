@@ -37,25 +37,24 @@
 #include "lightguider.h"
 
 #include <wx/gbsizer.h>
-#include <wx/valnum.h>
 #include <wx/textwrapper.h>
+#include <wx/valnum.h>
 
 //==================================
-struct PolarDriftToolWin : public wxFrame
-{
+struct PolarDriftToolWin : public wxFrame {
     PolarDriftToolWin();
     ~PolarDriftToolWin();
     /*
     Tool window controls
     */
     wxStaticText *m_instructionsText;
-    wxButton *m_startButton;      // Button to start or stop drift
+    wxButton *m_startButton;  // Button to start or stop drift
     wxStaticText *m_notesLabel;
     wxTextCtrl *w_notesText;
-    wxButton *m_closeButton;      // Close button
+    wxButton *m_closeButton;  // Close button
     wxStatusBar *m_statusBar;
-    wxChoice *m_hemiChoice;     // Listbox for manual hemisphere choice 
-    wxCheckBox *m_mirrorCheck;     // Checkbox for mirrored camera
+    wxChoice *m_hemiChoice;     // Listbox for manual hemisphere choice
+    wxCheckBox *m_mirrorCheck;  // Checkbox for mirrored camera
     bool m_savePrimaryMountEnabled;
     bool m_saveSecondaryMountEnabled;
     bool m_guideOutputDisabled;
@@ -65,40 +64,39 @@ struct PolarDriftToolWin : public wxFrame
     */
     wxString c_instr;
 
-    enum PolarDriftCtrlIds
-    {
+    enum PolarDriftCtrlIds {
         ID_HEMI = 10001,
         ID_MIRROR,
         ID_START,
         ID_CLOSE,
     };
 
-    double m_pxScale;   // Camera pixel scale
+    double m_pxScale;  // Camera pixel scale
 
-    int m_hemi;         // Hemisphere of the observer
-    int m_mirror;       // -1 if the image is mirrored e.g. due to OAG
+    int m_hemi;    // Hemisphere of the observer
+    int m_mirror;  // -1 if the image is mirrored e.g. due to OAG
 
-    bool m_drifting;        // Indicates that alignment points are being collected
+    bool m_drifting;  // Indicates that alignment points are being collected
     double m_t0;
-    double m_sumt, m_sumt2, m_sumx, m_sumx2, m_sumy, m_sumy2, m_sumtx, m_sumty, m_sumxy;
+    double m_sumt, m_sumt2, m_sumx, m_sumx2, m_sumy, m_sumy2, m_sumtx, m_sumty,
+        m_sumxy;
     long m_num;
     double m_offset, m_alpha;
     LGuider_Point m_current, m_target;
 
     void FillPanel();
 
-    void OnHemi(wxCommandEvent& evt);
-    void OnMirror(wxCommandEvent& evt);
-    void OnStart(wxCommandEvent& evt);
-    void OnCloseBtn(wxCommandEvent& evt);
-    void OnClose(wxCloseEvent& evt);
+    void OnHemi(wxCommandEvent &evt);
+    void OnMirror(wxCommandEvent &evt);
+    void OnStart(wxCommandEvent &evt);
+    void OnCloseBtn(wxCommandEvent &evt);
+    void OnClose(wxCloseEvent &evt);
 
-    bool IsDrifting(){ return m_drifting; };
+    bool IsDrifting() { return m_drifting; };
     bool WatchDrift();
-    void PaintHelper(wxAutoBufferedPaintDCBase& dc, double scale);
+    void PaintHelper(wxAutoBufferedPaintDCBase &dc, double scale);
 
     DECLARE_EVENT_TABLE()
 };
 
 #endif
-

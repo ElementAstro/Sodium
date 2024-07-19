@@ -35,24 +35,24 @@
 #ifndef QHY5_H_INCLUDED
 #define QHY5_H_INCLUDED
 
-class CameraQHY5 : public GuideCamera
-{
-    unsigned char *RawBuffer;
+class CameraQHY5 : public GuideCamera {
+    unsigned char* RawBuffer;
     bool m_QHY5;
 
 public:
     CameraQHY5();
     ~CameraQHY5();
-    bool    Capture(int duration, usImage& img, int options, const wxRect& subframe) override;
-    bool    Connect(const wxString& camId) override;
-    bool    Disconnect() override;
-    void    InitCapture() override;
+    bool Capture(int duration, usImage& img, int options,
+                 const wxRect& subframe) override;
+    bool Connect(const wxString& camId) override;
+    bool Disconnect() override;
+    void InitCapture() override;
 
-    bool    ST4PulseGuideScope(int direction, int duration) override;
-    bool    ST4HasNonGuiMove() override { return true; }
-    bool    HasNonGuiCapture() override { return true; }
-    void    ClearGuidePort();
-    wxByte  BitsPerPixel() override;
+    bool ST4PulseGuideScope(int direction, int duration) override;
+    bool ST4HasNonGuiMove() override { return true; }
+    bool HasNonGuiCapture() override { return true; }
+    void ClearGuidePort();
+    wxByte BitsPerPixel() override;
 };
 
-#endif // QHY5IIIBASE_H_INCLUDED
+#endif  // QHY5IIIBASE_H_INCLUDED

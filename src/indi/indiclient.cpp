@@ -14,9 +14,9 @@
  *    Redistributions in binary form must reproduce the above copyright notice,
  *     this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *    Neither the name of Open LGuider Guiding, openphdguiding.org, nor the names of its
- *     contributors may be used to endorse or promote products derived from
- *     this software without specific prior written permission.
+ *    Neither the name of Open LGuider Guiding, openphdguiding.org, nor the
+ * names of its contributors may be used to endorse or promote products derived
+ * from this software without specific prior written permission.
  *
  *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -34,34 +34,26 @@
 
 #include "indiclient.h"
 
-LightIndiClient::LightIndiClient()
-    :
-    m_disconnecting(false)
-{
-}
+LightIndiClient::LightIndiClient() : m_disconnecting(false) {}
 
-LightIndiClient::~LightIndiClient()
-{
-}
+LightIndiClient::~LightIndiClient() {}
 
-void LightIndiClient::serverDisconnected(int exit_code)
-{
+void LightIndiClient::serverDisconnected(int exit_code) {
     m_disconnecting = true;
     IndiServerDisconnected(exit_code);
     m_disconnecting = false;
 }
 
-void LightIndiClient::serverConnected()
-{
+void LightIndiClient::serverConnected() {
     // nothing to do yet
-    // for INDI Core 1.9.9, 2.0.0, the function is called before requesting to retrieve device information.
-    // If the function implementation waits for information, a deadlock occurs.
+    // for INDI Core 1.9.9, 2.0.0, the function is called before requesting to
+    // retrieve device information. If the function implementation waits for
+    // information, a deadlock occurs.
     //
     // see LightIndiClient::connectServer override function below
 }
 
-bool LightIndiClient::connectServer()
-{
+bool LightIndiClient::connectServer() {
     // Call the original function.
     bool ok = INDI::BaseClient::connectServer();
 
@@ -70,16 +62,14 @@ bool LightIndiClient::connectServer()
 
     // If connected, inform via the IndiServerConnected function,
     // which replaces the serverConnected function.
-    if (ok)
-    {
+    if (ok) {
         IndiServerConnected();
     }
 
     return ok;
 }
 
-bool LightIndiClient::DisconnectIndiServer()
-{
+bool LightIndiClient::DisconnectIndiServer() {
     // suppress any attempt to call disconnectServer from the
     // serverDisconnected callback.  Some serverDisconnected callbacks
     // in LGuider call disconnectServer which causes a crash (unhandled
@@ -87,8 +77,7 @@ bool LightIndiClient::DisconnectIndiServer()
     // thread since disconnectServer will try to join the listener
     // thread, throwing a C++ runtime exception (deadlock)
 
-    if (m_disconnecting)
-    {
+    if (m_disconnecting) {
         return true;
     }
 

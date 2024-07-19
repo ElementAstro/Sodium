@@ -37,8 +37,7 @@
 
 class GuideCamera;
 
-class ToupTekCameraFactory
-{
+class ToupTekCameraFactory {
 public:
     static GuideCamera *MakeToupTekCamera();
 };

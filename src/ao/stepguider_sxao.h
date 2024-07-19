@@ -35,10 +35,9 @@
 #ifndef STEPGUIDER_SXAO_H_INCLUDED
 #define STEPGUIDER_SXAO_H_INCLUDED
 
-class StepGuiderSxAoFactory
-{
+class StepGuiderSxAoFactory {
 public:
     static StepGuider *MakeStepGuiderSxAo();
 };
 
-#endif // if !defined(STEPGUIDER_SXAO_H_INCLUDED)
+#endif  // if !defined(STEPGUIDER_SXAO_H_INCLUDED)

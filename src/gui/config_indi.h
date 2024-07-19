@@ -36,27 +36,24 @@
  *
  */
 
-
 #ifndef _CONFIG_INDI_H_
 #define _CONFIG_INDI_H_
 
-#include "indi/indiclient.h"
 #include <libindi/basedevice.h>
+#include <libindi/indibasetypes.h>
 #include <libindi/indiproperty.h>
-# include <libindi/indibasetypes.h>
+#include "indi/indiclient.h"
 
 #include "gui/indi_gui.h"
 
-enum IndiDevType
-{
+enum IndiDevType {
     INDI_TYPE_CAMERA,
     INDI_TYPE_MOUNT,
     INDI_TYPE_AUX_MOUNT,
     INDI_TYPE_AO,
 };
 
-class INDIConfig : public wxDialog, public LightIndiClient
-{
+class INDIConfig : public wxDialog, public LightIndiClient {
     static bool s_verbose;
 
     wxTextCtrl *host;
@@ -75,16 +72,15 @@ class INDIConfig : public wxDialog, public LightIndiClient
     IndiDevType dev_type;
 
 public:
-
-    INDIConfig(wxWindow *parent, const wxString& title, IndiDevType devtype);
+    INDIConfig(wxWindow *parent, const wxString &title, IndiDevType devtype);
     ~INDIConfig();
 
-    long     INDIport;
+    long INDIport;
     wxString INDIhost;
     wxString INDIDevName;
-    long     INDIDevCCD;
-    bool     INDIForceVideo;
-    bool     INDIForceExposure;
+    long INDIDevCCD;
+    bool INDIForceVideo;
+    bool INDIForceExposure;
 
     void Connect();
     void Disconnect();
@@ -95,10 +91,9 @@ public:
     static bool Verbose();
     static void SetVerbose(bool val);
 
-    void OnUpdateFromThread(wxThreadEvent& event);
+    void OnUpdateFromThread(wxThreadEvent &event);
 
 protected:
-
     void newDevice(INDI::BaseDevice *dp) override;
     void removeDevice(INDI::BaseDevice *dp) override {};
     void newProperty(INDI::Property *property) override;
@@ -113,20 +108,16 @@ protected:
     void IndiServerDisconnected(int exit_code) override;
 
 private:
-
-    void OnConnectButton(wxCommandEvent& evt);
-    void OnIndiGui(wxCommandEvent& evt);
-    void OnDevSelected(wxCommandEvent& evt);
-    void OnVerboseChecked(wxCommandEvent& evt);
-    void OnForceVideoChecked(wxCommandEvent& evt);
+    void OnConnectButton(wxCommandEvent &evt);
+    void OnIndiGui(wxCommandEvent &evt);
+    void OnDevSelected(wxCommandEvent &evt);
+    void OnVerboseChecked(wxCommandEvent &evt);
+    void OnForceVideoChecked(wxCommandEvent &evt);
     void UpdateControlStates();
 
     wxDECLARE_EVENT_TABLE();
 };
 
-inline bool INDIConfig::Verbose()
-{
-    return INDIConfig::s_verbose;
-}
+inline bool INDIConfig::Verbose() { return INDIConfig::s_verbose; }
 
 #endif

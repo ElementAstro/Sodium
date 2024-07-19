@@ -35,32 +35,32 @@
 #ifndef SCOPES_H_INCLUDED
 #define SCOPES_H_INCLUDED
 
-#if defined (__WINDOWS__)
+#if defined(__WINDOWS__)
 
-    #define GUIDE_ONCAMERA
-    #define GUIDE_ONSTEPGUIDER
-    #define GUIDE_ASCOM
-    #define GUIDE_INDI
+#define GUIDE_ONCAMERA
+#define GUIDE_ONSTEPGUIDER
+#define GUIDE_ASCOM
+#define GUIDE_INDI
 
-#elif defined (__APPLE__)
+#elif defined(__APPLE__)
 
-    #define GUIDE_ONCAMERA
-    #define GUIDE_ONSTEPGUIDER
-    #define GUIDE_INDI
+#define GUIDE_ONCAMERA
+#define GUIDE_ONSTEPGUIDER
+#define GUIDE_INDI
 
-#elif defined (__linux__) || defined (__FreeBSD__)
+#elif defined(__linux__) || defined(__FreeBSD__)
 
-    #define GUIDE_ONCAMERA
-    #define GUIDE_ONSTEPGUIDER
-    #define GUIDE_INDI
+#define GUIDE_ONCAMERA
+#define GUIDE_ONSTEPGUIDER
+#define GUIDE_INDI
 
-#endif // WINDOWS/APPLE/LINUX
+#endif  // WINDOWS/APPLE/LINUX
 
 #include "scope.h"
-#include "scope_oncamera.h"
-#include "scope_onstepguider.h"
 #include "scope_ascom.h"
 #include "scope_indi.h"
 #include "scope_manual_pointing.h"
+#include "scope_oncamera.h"
+#include "scope_onstepguider.h"
 
 #endif /* SCOPES_H_INCLUDED */

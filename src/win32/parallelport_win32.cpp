@@ -41,68 +41,60 @@
 short _stdcall Inp32(short PortAddress);
 void _stdcall Out32(short PortAddress, short data);
 
-ParallelPortWin32::ParallelPortWin32(void)
-{
-    m_portAddr = 0;
-}
+ParallelPortWin32::ParallelPortWin32(void) { m_portAddr = 0; }
 
-ParallelPortWin32::~ParallelPortWin32(void)
-{
-}
+ParallelPortWin32::~ParallelPortWin32(void) {}
 
-struct ParallelPortChooser : public wxDialog
-{
+struct ParallelPortChooser : public wxDialog {
     ParallelPortChooser();
 };
 
-wxString ParallelPortWin32::ChooseParallelPort(const wxString& dflt)
-{
+wxString ParallelPortWin32::ChooseParallelPort(const wxString& dflt) {
     wxArrayString ports;
     ports.Add("LPT1 - 0x3BC");
     ports.Add("LPT2 - 0x378");
     ports.Add("LPT3 - 0x278");
 
-    wxString customPort = pConfig->Global.GetString("/CustomParallelPort", wxEmptyString);
+    wxString customPort =
+        pConfig->Global.GetString("/CustomParallelPort", wxEmptyString);
     if (!customPort.IsEmpty())
         ports.Add(customPort);
 
     wxDialog dlg(NULL, wxID_ANY, _("Select Parallel Port"));
-    wxSizer *sz1 = new wxBoxSizer(wxVERTICAL);
+    wxSizer* sz1 = new wxBoxSizer(wxVERTICAL);
 
-    wxListBox *portlb = new wxListBox(&dlg, wxID_ANY, wxDefaultPosition, wxDefaultSize, ports);
+    wxListBox* portlb =
+        new wxListBox(&dlg, wxID_ANY, wxDefaultPosition, wxDefaultSize, ports);
     portlb->SetStringSelection(dflt);
     sz1->Add(portlb);
 
-    wxWindow *label = new wxStaticText(&dlg, wxID_ANY, _("Custom Port Address:"));
-    wxTextCtrl *customtxt = new wxTextCtrl(&dlg ,wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize(70, -1));
+    wxWindow* label =
+        new wxStaticText(&dlg, wxID_ANY, _("Custom Port Address:"));
+    wxTextCtrl* customtxt = new wxTextCtrl(&dlg, wxID_ANY, wxEmptyString,
+                                           wxDefaultPosition, wxSize(70, -1));
 
-    wxSizer *sz2 = new wxBoxSizer(wxHORIZONTAL);
+    wxSizer* sz2 = new wxBoxSizer(wxHORIZONTAL);
     sz2->Add(label, wxSizerFlags(0).Border(wxALL, 10));
     sz2->Add(customtxt, wxSizerFlags(0).Border(wxALL, 10));
 
     sz1->Add(sz2);
 
     sz1->Add(dlg.CreateButtonSizer(wxOK | wxCANCEL),
-        wxSizerFlags(0).Right().Border(wxALL, 10));
+             wxSizerFlags(0).Right().Border(wxALL, 10));
 
     dlg.SetSizerAndFit(sz1);
 
     wxString choice;
 
-    if (dlg.ShowModal() == wxID_OK)
-    {
+    if (dlg.ShowModal() == wxID_OK) {
         wxString custom = customtxt->GetValue();
-        if (!custom.IsEmpty())
-        {
+        if (!custom.IsEmpty()) {
             long val;
-            if (custom.ToLong(&val, 16) && val != 0)
-            {
+            if (custom.ToLong(&val, 16) && val != 0) {
                 choice = wxString::Format("Custom - 0x%x", val);
                 pConfig->Global.SetString("/CustomParallelPort", choice);
             }
-        }
-        else
-        {
+        } else {
             choice = portlb->GetStringSelection();
         }
     }
@@ -110,26 +102,23 @@ wxString ParallelPortWin32::ChooseParallelPort(const wxString& dflt)
     return choice;
 }
 
-bool ParallelPortWin32::Connect(const wxString& portName)
-{
+bool ParallelPortWin32::Connect(const wxString& portName) {
     bool bError = false;
 
-    try
-    {
+    try {
         wxString address = portName.AfterLast(' ');
         long addr;
 
-        if (!address.ToLong(&addr, 16))
-        {
-            throw ERROR_INFO("unable to convert [" + address + "] to a port number");
+        if (!address.ToLong(&addr, 16)) {
+            throw ERROR_INFO("unable to convert [" + address +
+                             "] to a port number");
         }
 
         m_portAddr = addr;
 
-        Debug.AddLine(wxString::Format("parallel port %s assigned address 0x%x", portName, m_portAddr));
-    }
-    catch (const wxString& Msg)
-    {
+        Debug.AddLine(wxString::Format("parallel port %s assigned address 0x%x",
+                                       portName, m_portAddr));
+    } catch (const wxString& Msg) {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -137,16 +126,12 @@ bool ParallelPortWin32::Connect(const wxString& portName)
     return bError;
 }
 
-bool ParallelPortWin32::Disconnect(void)
-{
+bool ParallelPortWin32::Disconnect(void) {
     bool bError = false;
 
-    try
-    {
+    try {
         m_portAddr = 0;
-    }
-    catch (const wxString& Msg)
-    {
+    } catch (const wxString& Msg) {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -154,20 +139,15 @@ bool ParallelPortWin32::Disconnect(void)
     return bError;
 }
 
-bool ParallelPortWin32::ReadByte(BYTE *pData)
-{
+bool ParallelPortWin32::ReadByte(BYTE* pData) {
     bool bError = false;
 
-    try
-    {
-        if (m_portAddr == 0)
-        {
+    try {
+        if (m_portAddr == 0) {
             throw ERROR_INFO("mPortAddr == 0");
         }
         *pData = Inp32(m_portAddr);
-    }
-    catch (const wxString& Msg)
-    {
+    } catch (const wxString& Msg) {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -175,21 +155,16 @@ bool ParallelPortWin32::ReadByte(BYTE *pData)
     return bError;
 }
 
-bool ParallelPortWin32::WriteByte(UINT8 data)
-{
+bool ParallelPortWin32::WriteByte(UINT8 data) {
     bool bError = false;
 
-    try
-    {
-        if (m_portAddr == 0)
-        {
+    try {
+        if (m_portAddr == 0) {
             throw ERROR_INFO("mPortAddr == 0");
         }
 
         Out32(m_portAddr, data);
-    }
-    catch (const wxString& Msg)
-    {
+    } catch (const wxString& Msg) {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -197,4 +172,4 @@ bool ParallelPortWin32::WriteByte(UINT8 data)
     return bError;
 }
 
-#endif // __WINDOWS__
+#endif  // __WINDOWS__

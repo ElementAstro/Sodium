@@ -2,9 +2,8 @@
  *  Refine_DefMap.h
  *  LGuider Guiding
  *
- *  Created by Bruce Waddington in collaboration with Andy Galasso and David Ault
- *  Copyright (c) 2014 Bruce Waddington
- *  All rights reserved.
+ *  Created by Bruce Waddington in collaboration with Andy Galasso and David
+ * Ault Copyright (c) 2014 Bruce Waddington All rights reserved.
  *
  *  This source code is distributed under the following "BSD" license
  *  Redistribution and use in source and binary forms, with or without
@@ -35,10 +34,8 @@
 #ifndef REFINEDEFMAP_H_INCLUDED
 #define REFINEDEFMAP_H_INCLUDED
 
-class RefineDefMap : public wxDialog
-{
-    struct MiscInfo
-    {
+class RefineDefMap : public wxDialog {
+    struct MiscInfo {
         wxString creationTime;
         wxString cameraName;
         wxString darkExposureTime;
@@ -92,20 +89,20 @@ public:
 private:
     void LoadFromProfile();
     void GetBadPxCounts();
-    void GetMiscInfo(MiscInfo& info);
-    void OnGenerate(wxCommandEvent& evt);
-    void OnHotChange(wxScrollEvent& evt);
-    void OnColdChange(wxScrollEvent& evt);
-    void OnAddDefect(wxCommandEvent& evt);
-    void OnReset(wxCommandEvent& evt);
-    void OnClose(wxCloseEvent& evt);
-    void OnDetails(wxCommandEvent& evt);
-    void OnPreview(wxCommandEvent& evt);
+    void GetMiscInfo(MiscInfo &info);
+    void OnGenerate(wxCommandEvent &evt);
+    void OnHotChange(wxScrollEvent &evt);
+    void OnColdChange(wxScrollEvent &evt);
+    void OnAddDefect(wxCommandEvent &evt);
+    void OnReset(wxCommandEvent &evt);
+    void OnClose(wxCloseEvent &evt);
+    void OnDetails(wxCommandEvent &evt);
+    void OnPreview(wxCommandEvent &evt);
     void LoadPreview();
     void RefreshPreview();
     void Recalc();
     void ApplyNewMap();
-    void ShowStatus(const wxString& msg, bool appending);
+    void ShowStatus(const wxString &msg, bool appending);
     wxString DefectMapTimeString();
     bool RebuildMasterDarks();
     void InitCameraMode();
@@ -114,4 +111,4 @@ private:
     DECLARE_EVENT_TABLE()
 };
 
-#endif // REFINEDEFMAP_H_INCLUDED
+#endif  // REFINEDEFMAP_H_INCLUDED

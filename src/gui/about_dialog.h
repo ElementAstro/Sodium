@@ -35,16 +35,14 @@
 #ifndef ABOUT_DIALOG_H_INCLUDED
 #define ABOUT_DIALOG_H_INCLUDED
 
-class AboutDialog :
-    public wxDialog
-{
+class AboutDialog : public wxDialog {
 public:
     AboutDialog(void);
     ~AboutDialog(void);
 
 private:
-    void OnLink(wxHtmlLinkEvent & event);
+    void OnLink(wxHtmlLinkEvent& event);
     DECLARE_EVENT_TABLE()
 };
 
-#endif // ABOUT_DIALOG_H_INCLUDED
+#endif  // ABOUT_DIALOG_H_INCLUDED

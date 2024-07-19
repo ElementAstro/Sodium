@@ -35,8 +35,7 @@
 #ifndef PIERFLIP_TOOL_INCLUDED
 #define PIERFLIP_TOOL_INCLUDED
 
-class PierFlipTool
-{
+class PierFlipTool {
 public:
     static bool CanRunTool(wxString *error);
     static void ShowPierFlipCalTool();

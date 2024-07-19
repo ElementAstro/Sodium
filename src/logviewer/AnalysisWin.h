@@ -24,45 +24,55 @@
 
 struct GuideSession;
 
-class Spline
-{
-    void *spline;
-    void *accel;
+class Spline {
+    void* spline;
+    void* accel;
+
 public:
-    Spline() : spline(nullptr), accel(nullptr) { }
-    Spline(const double *x, const double *y, size_t n) : spline(nullptr), accel(nullptr) { Init(x, y, n); }
-    void Init(const double *x, const double *y, size_t n);
+    Spline() : spline(nullptr), accel(nullptr) {}
+    Spline(const double* x, const double* y, size_t n)
+        : spline(nullptr), accel(nullptr) {
+        Init(x, y, n);
+    }
+    void Init(const double* x, const double* y, size_t n);
     ~Spline();
     double Eval(double x) const;
 };
 
-struct GARun
-{
+struct GARun {
     wxDateTime starts;
     double pixscale;
     size_t len;
-    double *t;
-    double *rac;  // drift-corrected RA
-    double *decc; // drift-corrected Dec
+    double* t;
+    double* rac;   // drift-corrected RA
+    double* decc;  // drift-corrected Dec
     size_t nfft;
-    double *fftx; // FFT period
-    double *ffty; // FFT amplitude
-    Spline ffts;  // FFT spline for graphing
+    double* fftx;  // FFT period
+    double* ffty;  // FFT amplitude
+    Spline ffts;   // FFT spline for graphing
     double fftymax;
-    GARun() : len(0), t(nullptr), rac(nullptr), decc(nullptr), nfft(0), fftx(nullptr), ffty(nullptr) { }
+    GARun()
+        : len(0),
+          t(nullptr),
+          rac(nullptr),
+          decc(nullptr),
+          nfft(0),
+          fftx(nullptr),
+          ffty(nullptr) {}
     ~GARun();
-    static bool CanAnalyze(const GuideSession& session, size_t begin, size_t end);
-    void Analyze(const GuideSession& session, size_t begin, size_t end, bool undo_ra_corrections);
+    static bool CanAnalyze(const GuideSession& session, size_t begin,
+                           size_t end);
+    void Analyze(const GuideSession& session, size_t begin, size_t end,
+                 bool undo_ra_corrections);
 };
 
-class AnalysisWin : public AnalyzeFrameBase
-{
+class AnalysisWin : public AnalyzeFrameBase {
 public:
     GARun m_garun;
     int m_cursor;
 
 public:
-    AnalysisWin(LogViewFrame *parent);
+    AnalysisWin(LogViewFrame* parent);
     ~AnalysisWin();
 
     static bool CanAnalyzeGA(const GuideSession& session, size_t pos);
@@ -95,9 +105,6 @@ private:
     wxDECLARE_EVENT_TABLE();
 };
 
-inline void AnalysisWin::RefreshGraph()
-{
-    m_graph->Refresh();
-}
+inline void AnalysisWin::RefreshGraph() { m_graph->Refresh(); }
 
 #endif

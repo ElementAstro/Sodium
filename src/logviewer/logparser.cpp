@@ -20,11 +20,12 @@
 #include "logparser.h"
 #include "LogViewApp.h"
 
-#include <algorithm>
+#include <wx/regex.h>
 #include <wx/tokenzr.h>
 #include <wx/txtstrm.h>
 #include <wx/wfstream.h>
-#include <wx/regex.h>
+#include <algorithm>
+
 
 static std::string VERSION_PREFIX("LGuider2 version ");
 static std::string GUIDING_BEGINS("Guiding Begins at ");
@@ -41,9 +42,8 @@ static std::string XALGO("X guide algorithm = ");
 static std::string YALGO("Y guide algorithm = ");
 static std::string MINMOVE("Minimum move = ");
 
-static char *nstrtok(char *str, const char *delims)
-{
-    static char *src;
+static char* nstrtok(char* str, const char* delims) {
+    static char* src;
 
     if (str)
         src = str;
@@ -51,11 +51,10 @@ static char *nstrtok(char *str, const char *delims)
     if (!src)
         return 0;
 
-    char *p;
-    char *ret = 0;
+    char* p;
+    char* ret = 0;
 
-    if ((p = strpbrk(src, delims)) != 0)
-    {
+    if ((p = strpbrk(src, delims)) != 0) {
         *p = 0;
         ret = src;
         src = p + 1;
@@ -64,14 +63,11 @@ static char *nstrtok(char *str, const char *delims)
     return ret;
 }
 
-inline static bool toLong(const char *s, long *p)
-{
-    if (s)
-    {
-        char *endptr;
+inline static bool toLong(const char* s, long* p) {
+    if (s) {
+        char* endptr;
         long l = strtol(s, &endptr, 10);
-        if (endptr != s)
-        {
+        if (endptr != s) {
             *p = l;
             return true;
         }
@@ -79,14 +75,11 @@ inline static bool toLong(const char *s, long *p)
     return false;
 }
 
-inline static bool toDouble(const char *s, double *p)
-{
-    if (s)
-    {
-        char *endptr;
+inline static bool toDouble(const char* s, double* p) {
+    if (s) {
+        char* endptr;
         double d = strtod(s, &endptr);
-        if (endptr != s)
-        {
+        if (endptr != s) {
             *p = d;
             return true;
         }
@@ -94,14 +87,12 @@ inline static bool toDouble(const char *s, double *p)
     return false;
 }
 
-inline static void toDouble(const char *s, double *d, double dflt)
-{
+inline static void toDouble(const char* s, double* d, double dflt) {
     double t;
     *d = toDouble(s, &t) ? t : dflt;
 }
 
-static bool ParseEntry(const std::string& ln, GuideEntry& e)
-{
+static bool ParseEntry(const std::string& ln, GuideEntry& e) {
     char buf[256];
     size_t len = ln.size();
     if (len > sizeof(buf) - 3)
@@ -113,16 +104,18 @@ static bool ParseEntry(const std::string& ln, GuideEntry& e)
     buf[len + 1] = ',';
     buf[len + 2] = '\0';
 
-    const char *s;
+    const char* s;
     long l;
     double d;
 
     s = nstrtok(buf, ",");
-    if (!toLong(s, &l)) return false;
+    if (!toLong(s, &l))
+        return false;
     e.frame = l;
 
     s = nstrtok(0, ",");
-    if (!toDouble(s, &d)) return false;
+    if (!toDouble(s, &d))
+        return false;
     e.dt = (float)d;
 
     s = nstrtok(0, ",");
@@ -130,71 +123,69 @@ static bool ParseEntry(const std::string& ln, GuideEntry& e)
         e.mount = MOUNT;
     else if (strcmp(s, "\"AO\"") == 0)
         e.mount = AO;
-    else
-    {
+    else {
         // older logs have the mount name here; punt on AO for these old logs
         e.mount = MOUNT;
     }
 
     s = nstrtok(0, ",");
-    if (s && *s)
-    {
-        if (!toDouble(s, &d)) return false;
+    if (s && *s) {
+        if (!toDouble(s, &d))
+            return false;
         e.dx = (float)d;
-    }
-    else e.dx = 0.f;
+    } else
+        e.dx = 0.f;
 
     s = nstrtok(0, ",");
-    if (s && *s)
-    {
-        if (!toDouble(s, &d)) return false;
+    if (s && *s) {
+        if (!toDouble(s, &d))
+            return false;
         e.dy = (float)d;
-    }
-    else e.dy = 0.f;
+    } else
+        e.dy = 0.f;
 
     s = nstrtok(0, ",");
-    if (s && *s)
-    {
-        if (!toDouble(s, &d)) return false;
+    if (s && *s) {
+        if (!toDouble(s, &d))
+            return false;
         e.raraw = (float)d;
-    }
-    else e.raraw = 0.f;
+    } else
+        e.raraw = 0.f;
 
     s = nstrtok(0, ",");
-    if (s && *s)
-    {
-        if (!toDouble(s, &d)) return false;
+    if (s && *s) {
+        if (!toDouble(s, &d))
+            return false;
         e.decraw = (float)d;
-    }
-    else e.decraw = 0.f;
+    } else
+        e.decraw = 0.f;
 
     s = nstrtok(0, ",");
-    if (s && *s)
-    {
-        if (!toDouble(s, &d)) return false;
+    if (s && *s) {
+        if (!toDouble(s, &d))
+            return false;
         e.raguide = (float)d;
-    }
-    else e.raguide = 0.f;
+    } else
+        e.raguide = 0.f;
 
     s = nstrtok(0, ",");
-    if (s && *s)
-    {
-        if (!toDouble(s, &d)) return false;
+    if (s && *s) {
+        if (!toDouble(s, &d))
+            return false;
         e.decguide = (float)d;
-    }
-    else e.decguide = 0.f;
+    } else
+        e.decguide = 0.f;
 
     s = nstrtok(0, ",");
-    if (s && *s)
-    {
-        if (!toLong(s, &l)) return false;
+    if (s && *s) {
+        if (!toLong(s, &l))
+            return false;
         e.radur = l;
-    }
-    else e.radur = 0;
+    } else
+        e.radur = 0;
 
     s = nstrtok(0, ",");
-    if (s && *s)
-    {
+    if (s && *s) {
         if (s[0] == 'E')
             ;
         else if (s[0] == 'W')
@@ -204,16 +195,15 @@ static bool ParseEntry(const std::string& ln, GuideEntry& e)
     }
 
     s = nstrtok(0, ",");
-    if (s && *s)
-    {
-        if (!toLong(s, &l)) return false;
+    if (s && *s) {
+        if (!toLong(s, &l))
+            return false;
         e.decdur = l;
-    }
-    else e.decdur = 0;
+    } else
+        e.decdur = 0;
 
     s = nstrtok(0, ",");
-    if (s && *s)
-    {
+    if (s && *s) {
         if (*s == 'N')
             ;
         else if (*s == 'S')
@@ -224,47 +214,46 @@ static bool ParseEntry(const std::string& ln, GuideEntry& e)
 
     // x step
     s = nstrtok(0, ",");
-    if (s && *s)
-    {
-        if (!toLong(s, &l)) return false;
+    if (s && *s) {
+        if (!toLong(s, &l))
+            return false;
         e.radur = l;
     }
 
     // y step
     s = nstrtok(0, ",");
-    if (s && *s)
-    {
-        if (!toLong(s, &l)) return false;
+    if (s && *s) {
+        if (!toLong(s, &l))
+            return false;
         e.decdur = l;
     }
 
     s = nstrtok(0, ",");
-    if (s && *s)
-    {
-        if (!toLong(s, &l)) return false;
+    if (s && *s) {
+        if (!toLong(s, &l))
+            return false;
         e.mass = l;
-    }
-    else e.mass = 0;
+    } else
+        e.mass = 0;
 
     s = nstrtok(0, ",");
-    if (s && *s)
-    {
-        if (!toDouble(s, &d)) return false;
+    if (s && *s) {
+        if (!toDouble(s, &d))
+            return false;
         e.snr = (float)d;
-    }
-    else e.snr = 0.f;
+    } else
+        e.snr = 0.f;
 
     s = nstrtok(0, ",");
-    if (s && *s)
-    {
-        if (!toLong(s, &l)) return false;
+    if (s && *s) {
+        if (!toLong(s, &l))
+            return false;
         e.err = l;
-    }
-    else e.err = 0;
+    } else
+        e.err = 0;
 
     s = nstrtok(0, ",");
-    if (s && *s)
-    {
+    if (s && *s) {
         e.info = s;
         // chop quotes
         if (e.info.length() >= 2)
@@ -274,20 +263,17 @@ static bool ParseEntry(const std::string& ln, GuideEntry& e)
     return true;
 }
 
-inline static void GetDbl(const std::string& ln, const std::string& key, double *d, double dflt)
-{
+inline static void GetDbl(const std::string& ln, const std::string& key,
+                          double* d, double dflt) {
     size_t pos = ln.find(key);
-    if (pos != std::string::npos)
-    {
+    if (pos != std::string::npos) {
         std::string s = ln.substr(pos + key.length());
         toDouble(s.c_str(), d, dflt);
-    }
-    else
+    } else
         *d = dflt;
 }
 
-static void ParseMount(const std::string& ln, Mount& mount)
-{
+static void ParseMount(const std::string& ln, Mount& mount) {
     mount.isValid = true;
 
     GetDbl(ln, ", xAngle = ", &mount.xAngle, 0.0);
@@ -302,35 +288,28 @@ static void ParseMount(const std::string& ln, Mount& mount)
         mount.yRate *= 1000.0;
 }
 
-static void GetMinMo(const std::string& ln, Limits *lim)
-{
+static void GetMinMo(const std::string& ln, Limits* lim) {
     GetDbl(ln, MINMOVE, &lim->minMo, 0.0);
 }
 
-inline static bool StartsWith(const std::string& s, const std::string& pfx)
-{
-    return s.length() >= pfx.length() &&
-        s.compare(0, pfx.length(), pfx) == 0;
+inline static bool StartsWith(const std::string& s, const std::string& pfx) {
+    return s.length() >= pfx.length() && s.compare(0, pfx.length(), pfx) == 0;
 }
 
-inline static bool EndsWith(const std::string& s, const std::string& sfx)
-{
+inline static bool EndsWith(const std::string& s, const std::string& sfx) {
     return s.length() >= sfx.length() &&
-        s.compare(s.length() - sfx.length(), sfx.length(), sfx) == 0;
+           s.compare(s.length() - sfx.length(), sfx.length(), sfx) == 0;
 }
 
-inline static std::string BeforeLast(const std::string& s, char ch)
-{
+inline static std::string BeforeLast(const std::string& s, char ch) {
     return s.substr(0, s.rfind(ch));
 }
 
-inline static bool IsEmpty(const std::string& s)
-{
+inline static bool IsEmpty(const std::string& s) {
     return s.find_first_not_of(" \t\r\n") == std::string::npos;
 }
 
-static void ParseInfo(const std::string& ln, GuideSession *s)
-{
+static void ParseInfo(const std::string& ln, GuideSession* s) {
     InfoEntry e;
     e.idx = s->entries.size();
     e.repeats = 1;
@@ -343,47 +322,42 @@ static void ParseInfo(const std::string& ln, GuideSession *s)
         e.info = e.info.substr(26);
 
     // trim extra dither info
-    if (StartsWith(e.info, "DITHER"))
-    {
+    if (StartsWith(e.info, "DITHER")) {
         size_t pos = e.info.find(", new lock pos");
         if (pos != std::string::npos)
             e.info = e.info.substr(0, pos);
     }
 
     // strip extra trailing zeroes after last "."
-    if (EndsWith(e.info, "00"))
-    {
+    if (EndsWith(e.info, "00")) {
         wxRegEx re("\\.[0-9]+?(0+)$", wxRE_ADVANCED);
-        if (re.Matches(e.info))
-        {
+        if (re.Matches(e.info)) {
             size_t start, len;
             re.GetMatch(&start, &len, 1);
             e.info = e.info.substr(0, start);
         }
     }
 
-    if (s->infos.size() > 0)
-    {
+    if (s->infos.size() > 0) {
         InfoEntry& prev = *s->infos.rbegin();
 
         // coalesce repeated events, like star lost
-        if (e.info == prev.info && e.idx >= prev.idx && e.idx <= prev.idx + prev.repeats)
-        {
+        if (e.info == prev.info && e.idx >= prev.idx &&
+            e.idx <= prev.idx + prev.repeats) {
             ++prev.repeats;
             return;
         }
 
-        if (prev.idx == e.idx)
-        {
+        if (prev.idx == e.idx) {
             // coalesce parameter changes
-            if (prev.info.find('=') != std::string::npos && StartsWith(e.info, BeforeLast(prev.info, '=')))
-            {
+            if (prev.info.find('=') != std::string::npos &&
+                StartsWith(e.info, BeforeLast(prev.info, '='))) {
                 prev = e;
                 return;
             }
             // coalesce set lock pos and dither
-            if (StartsWith(e.info, "DITHER") && StartsWith(prev.info, "SET LOCK POS"))
-            {
+            if (StartsWith(e.info, "DITHER") &&
+                StartsWith(prev.info, "SET LOCK POS")) {
                 prev = e;
                 return;
             }
@@ -393,8 +367,7 @@ static void ParseInfo(const std::string& ln, GuideSession *s)
     s->infos.push_back(e);
 }
 
-static bool ParseCalibration(const std::string& ln, CalibrationEntry& e)
-{
+static bool ParseCalibration(const std::string& ln, CalibrationEntry& e) {
     char buf[256];
     size_t len = ln.size();
     if (len > sizeof(buf) - 1)
@@ -402,7 +375,7 @@ static bool ParseCalibration(const std::string& ln, CalibrationEntry& e)
     memcpy(buf, ln.c_str(), len);
     buf[len] = '\0';
 
-    const char *s;
+    const char* s;
     long l;
     double d;
 
@@ -421,29 +394,30 @@ static bool ParseCalibration(const std::string& ln, CalibrationEntry& e)
         return false;
 
     s = nstrtok(0, ",");
-    if (!toLong(s, &l)) return false;
+    if (!toLong(s, &l))
+        return false;
     e.step = l;
 
     s = nstrtok(0, ",");
-    if (!toDouble(s, &d)) return false;
+    if (!toDouble(s, &d))
+        return false;
     e.dx = d;
 
     s = nstrtok(0, ",");
-    if (!toDouble(s, &d)) return false;
+    if (!toDouble(s, &d))
+        return false;
     e.dy = d;
 
     return true;
 }
 
-static void rtrim(std::string& ln)
-{
+static void rtrim(std::string& ln) {
     auto end = ln.find_last_not_of(" \r\n\t");
     if (end != std::string::npos && end + 1 < ln.size())
         ln = ln.substr(0, end + 1);
 }
 
-static bool is_monotonic(const GuideSession& session)
-{
+static bool is_monotonic(const GuideSession& session) {
     const auto& entries = session.entries;
 
     if (entries.size() <= 1)
@@ -456,12 +430,11 @@ static bool is_monotonic(const GuideSession& session)
     return true;
 }
 
-static void insert_info(GuideSession& session, const GuideSession::EntryVec::iterator& entrypos,
-                        const std::string& info)
-{
+static void insert_info(GuideSession& session,
+                        const GuideSession::EntryVec::iterator& entrypos,
+                        const std::string& info) {
     auto pos = session.infos.begin();
-    while (pos != session.infos.end())
-    {
+    while (pos != session.infos.end()) {
         const auto& e = session.entries[pos->idx];
         if (e.frame >= entrypos->frame)
             break;
@@ -475,8 +448,7 @@ static void insert_info(GuideSession& session, const GuideSession::EntryVec::ite
     session.infos.insert(pos, ie);
 }
 
-static void FixupNonMonotonic(GuideSession& session)
-{
+static void FixupNonMonotonic(GuideSession& session) {
     if (is_monotonic(session))
         return;
 
@@ -486,8 +458,8 @@ static void FixupNonMonotonic(GuideSession& session)
 
     {
         std::vector<double> v;
-        for (auto it = session.entries.begin() + 1; it != session.entries.end(); ++it)
-        {
+        for (auto it = session.entries.begin() + 1; it != session.entries.end();
+             ++it) {
             double d = it->dt - (it - 1)->dt;
             if (d > 0.)
                 v.push_back(d);
@@ -502,11 +474,10 @@ static void FixupNonMonotonic(GuideSession& session)
 
     double corr = 0.;
 
-    for (auto it = session.entries.begin() + 1; it != session.entries.end(); ++it)
-    {
+    for (auto it = session.entries.begin() + 1; it != session.entries.end();
+         ++it) {
         double d = it->dt + corr - (it - 1)->dt;
-        if (d <= 0.)
-        {
+        if (d <= 0.) {
             corr += med - d;
             insert_info(session, it, "Timestamp jumped backwards");
         }
@@ -514,72 +485,76 @@ static void FixupNonMonotonic(GuideSession& session)
     }
 }
 
-static void FixupNonMonotonic(GuideLog& log)
-{
+static void FixupNonMonotonic(GuideLog& log) {
     for (auto& section : log.sections)
         if (section.type == GUIDING_SECTION)
             FixupNonMonotonic(log.sessions[section.idx]);
 }
 
-bool LogParser::Parse(std::istream& is, GuideLog& log)
-{
+bool LogParser::Parse(std::istream& is, GuideLog& log) {
     log.phd_version.clear();
     log.sessions.clear();
     log.calibrations.clear();
     log.sections.clear();
 
-    enum State { SKIP, GUIDING_HDR, GUIDING, CAL_HDR, CALIBRATING, };
+    enum State {
+        SKIP,
+        GUIDING_HDR,
+        GUIDING,
+        CAL_HDR,
+        CALIBRATING,
+    };
     State st = SKIP;
-    enum HdrState { GLOBAL, AO, MOUNT, };
+    enum HdrState {
+        GLOBAL,
+        AO,
+        MOUNT,
+    };
     HdrState hdrst;
     char axis = ' ';
-    GuideSession *s = 0;
-    Calibration *cal = 0;
+    GuideSession* s = 0;
+    Calibration* cal = 0;
     unsigned int nr = 0;
     bool mount_enabled = false;
 
     std::string ln;
-    while (std::getline(is, ln))
-    {
+    while (std::getline(is, ln)) {
         ++nr;
         if (nr % 200 == 0)
             wxGetApp().Yield();
 
         rtrim(ln);
 
-redo:
-        if (st == SKIP)
-        {
-            if (StartsWith(ln, GUIDING_BEGINS))
-            {
+    redo:
+        if (st == SKIP) {
+            if (StartsWith(ln, GUIDING_BEGINS)) {
                 st = GUIDING_HDR;
                 hdrst = GLOBAL;
                 mount_enabled = false;
                 std::string datestr = ln.substr(GUIDING_BEGINS.length());
                 log.sessions.push_back(GuideSession(datestr));
-                log.sections.push_back(LogSectionLoc(GUIDING_SECTION, log.sessions.size() - 1));
+                log.sections.push_back(
+                    LogSectionLoc(GUIDING_SECTION, log.sessions.size() - 1));
                 s = &log.sessions[log.sessions.size() - 1];
                 s->starts.ParseISOCombined(datestr, ' ');
                 goto redo;
             }
 
-            if (StartsWith(ln, CALIBRATION_BEGINS))
-            {
+            if (StartsWith(ln, CALIBRATION_BEGINS)) {
                 st = CAL_HDR;
                 std::string datestr = ln.substr(CALIBRATION_BEGINS.length());
                 log.calibrations.push_back(Calibration(datestr));
-                log.sections.push_back(LogSectionLoc(CALIBRATION_SECTION, log.calibrations.size() - 1));
+                log.sections.push_back(LogSectionLoc(
+                    CALIBRATION_SECTION, log.calibrations.size() - 1));
                 cal = &log.calibrations[log.calibrations.size() - 1];
                 cal->starts.ParseISOCombined(datestr, ' ');
                 goto redo;
             }
 
-            if (StartsWith(ln, VERSION_PREFIX))
-            {
+            if (StartsWith(ln, VERSION_PREFIX)) {
                 auto pos = VERSION_PREFIX.size();
                 auto end = ln.find(", Log version ", pos);
-                if (end == std::string::npos)
-                {
+                if (end == std::string::npos) {
                     end = ln.find_first_of(" \t\r\n", pos);
                     if (end == std::string::npos)
                         end = ln.size();
@@ -587,66 +562,45 @@ redo:
                 log.phd_version = ln.substr(pos, end - pos);
                 // fall through and skip it
             }
-        }
-        else if (st == GUIDING_HDR)
-        {
-            if (StartsWith(ln, GUIDING_HEADING))
-            {
+        } else if (st == GUIDING_HDR) {
+            if (StartsWith(ln, GUIDING_HEADING)) {
                 st = GUIDING;
                 continue;
-            }
-            else if (StartsWith(ln, MOUNT_KEY))
-            {
+            } else if (StartsWith(ln, MOUNT_KEY)) {
                 ParseMount(ln, s->mount);
                 hdrst = MOUNT;
-                mount_enabled = ln.find(", guiding enabled, ") != std::string::npos;
-            }
-            else if (StartsWith(ln, AO_KEY))
-            {
+                mount_enabled =
+                    ln.find(", guiding enabled, ") != std::string::npos;
+            } else if (StartsWith(ln, AO_KEY)) {
                 ParseMount(ln, s->ao);
                 hdrst = AO;
-            }
-            else if (StartsWith(ln, PX_SCALE))
-            {
+            } else if (StartsWith(ln, PX_SCALE)) {
                 GetDbl(ln, "Pixel scale = ", &s->pixelScale, 1.0);
-            }
-            else if (StartsWith(ln, XALGO))
-            {
+            } else if (StartsWith(ln, XALGO)) {
                 GetMinMo(ln, hdrst == MOUNT ? &s->mount.xlim : &s->ao.xlim);
                 axis = 'X';
-            }
-            else if (StartsWith(ln, YALGO))
-            {
+            } else if (StartsWith(ln, YALGO)) {
                 GetMinMo(ln, hdrst == MOUNT ? &s->mount.ylim : &s->ao.ylim);
                 axis = 'Y';
-            }
-            else if (StartsWith(ln, MINMOVE))
-            {
+            } else if (StartsWith(ln, MINMOVE)) {
                 if (axis == 'X')
                     GetMinMo(ln, hdrst == MOUNT ? &s->mount.xlim : &s->ao.xlim);
                 else if (axis == 'Y')
                     GetMinMo(ln, hdrst == MOUNT ? &s->mount.ylim : &s->ao.ylim);
-            }
-            else if (ln.find("Max RA duration = ") != std::string::npos)
-            {
+            } else if (ln.find("Max RA duration = ") != std::string::npos) {
                 // Max RA duration = 2000, Max DEC duration = 2000
                 Mount& mnt = hdrst == MOUNT ? s->mount : s->ao;
                 GetDbl(ln, "Max RA duration = ", &mnt.xlim.maxDur, 0.0);
                 GetDbl(ln, "Max DEC duration = ", &mnt.ylim.maxDur, 0.0);
-            }
-            else if (StartsWith(ln, "RA = "))
-            {
+            } else if (StartsWith(ln, "RA = ")) {
                 double dec;
                 GetDbl(ln, " hr, Dec = ", &dec, 0.);
                 s->declination = dec * M_PI / 180.;
             }
 
             s->hdr.push_back(ln);
-        }
-        else if (st == GUIDING)
-        {
-            if (IsEmpty(ln) || StartsWith(ln, GUIDING_ENDS))
-            {
+        } else if (st == GUIDING) {
+            if (IsEmpty(ln) || StartsWith(ln, GUIDING_ENDS)) {
                 const auto& p = s->entries.rbegin();
                 if (p != s->entries.rend())
                     s->duration = p->dt;
@@ -656,14 +610,12 @@ redo:
                 continue;
             }
 
-            if (ln.at(0) >= '1' && ln.at(0) <= '9')
-            {
+            if (ln.at(0) >= '1' && ln.at(0) <= '9') {
                 GuideEntry e;
                 if (!ParseEntry(ln, e))
                     continue;
 
-                if (!StarWasFound(e.err))
-                {
+                if (!StarWasFound(e.err)) {
                     e.included = false;
 
                     // older logs did not give the error info
@@ -673,9 +625,7 @@ redo:
                     // fake an info event
                     ln = "INFO: " + e.info;
                     ParseInfo(ln, s);
-                }
-                else
-                {
+                } else {
                     e.included = true;
                 }
 
@@ -685,28 +635,21 @@ redo:
                 continue;
             }
 
-            if (StartsWith(ln, INFO_KEY))
-            {
+            if (StartsWith(ln, INFO_KEY)) {
                 ParseInfo(ln, s);
 
                 size_t pos = ln.find("MountGuidingEnabled = ");
                 if (pos != std::string::npos)
                     mount_enabled = ln.compare(pos + 22, 4, "true") == 0;
             }
-        }
-        else if (st == CAL_HDR)
-        {
-            if (StartsWith(ln, CALIBRATION_HEADING))
-            {
+        } else if (st == CAL_HDR) {
+            if (StartsWith(ln, CALIBRATION_HEADING)) {
                 st = CALIBRATING;
                 continue;
             }
             cal->hdr.push_back(ln);
-        }
-        else if (st == CALIBRATING)
-        {
-            if (IsEmpty(ln) || StartsWith(ln, CALIBRATION_ENDS))
-            {
+        } else if (st == CALIBRATING) {
+            if (IsEmpty(ln) || StartsWith(ln, CALIBRATION_ENDS)) {
                 st = SKIP;
                 continue;
             }
@@ -721,37 +664,27 @@ redo:
 
             bool isCalEntry = false;
 
-            if (StartsWith(ln, WEST_KEY) ||
-                StartsWith(ln, EAST_KEY) ||
-                StartsWith(ln, BACKLASH_KEY) ||
-                StartsWith(ln, NORTH_KEY) ||
-                StartsWith(ln, SOUTH_KEY))
-            {
+            if (StartsWith(ln, WEST_KEY) || StartsWith(ln, EAST_KEY) ||
+                StartsWith(ln, BACKLASH_KEY) || StartsWith(ln, NORTH_KEY) ||
+                StartsWith(ln, SOUTH_KEY)) {
                 isCalEntry = true;
                 cal->device = WhichMount::MOUNT;
-            }
-            else if (StartsWith(ln, LEFT_KEY) ||
-                     StartsWith(ln, UP_KEY))
-            {
+            } else if (StartsWith(ln, LEFT_KEY) || StartsWith(ln, UP_KEY)) {
                 isCalEntry = true;
                 cal->device = WhichMount::AO;
             }
 
-            if (isCalEntry)
-            {
+            if (isCalEntry) {
                 CalibrationEntry e;
                 if (ParseCalibration(ln, e))
                     cal->entries.push_back(e);
-            }
-            else
-            {
+            } else {
                 cal->hdr.push_back(ln);
             }
         }
     }
 
-    if (s)
-    {
+    if (s) {
         const auto& p = s->entries.rbegin();
         if (p != s->entries.rend())
             s->duration = p->dt;

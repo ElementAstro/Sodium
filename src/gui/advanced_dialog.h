@@ -53,12 +53,11 @@ enum TAB_PAGES {
     AD_UNASSIGNED_PAGE
 };
 
-class AdvancedDialog : public wxDialog
-{
+class AdvancedDialog : public wxDialog {
     MyFrame *m_pFrame;
     wxBookCtrlBase *m_pNotebook;
     MyFrameConfigDialogPane *m_pGlobalPane;
-    Guider::GuiderConfigDialogPane* m_pGuiderPane;
+    Guider::GuiderConfigDialogPane *m_pGuiderPane;
     CameraConfigDialogPane *m_pCameraPane;
     Mount::MountConfigDialogPane *m_pMountPane;
     AOConfigDialogPane *m_pAOPane;
@@ -81,7 +80,6 @@ class AdvancedDialog : public wxDialog
     wxTimer *m_tipTimer;
 
 public:
-
     static const double MIN_FOCAL_LENGTH;
     static const double MAX_FOCAL_LENGTH;
 
@@ -101,7 +99,7 @@ public:
     void Preload();
 
     bool Validate() override;
-    void ShowInvalid(wxWindow *ctrl, const wxString& message);
+    void ShowInvalid(wxWindow *ctrl, const wxString &message);
 
     int GetFocalLength();
     void SetFocalLength(int val);
@@ -111,7 +109,7 @@ public:
     void SetBinning(int binning);
     void MakeImageScaleAdjustments();
     void ResetGuidingParams();
-    Mount::MountConfigDialogPane* GetCurrentMountPane() { return m_pMountPane; }
+    Mount::MountConfigDialogPane *GetCurrentMountPane() { return m_pMountPane; }
 
     wxWindow *GetTabLocation(BRAIN_CTRL_IDS id);
 
@@ -127,4 +125,4 @@ private:
     void ConfirmLayouts();
 };
 
-#endif // ADVANCED_DIALOG_H_INCLUDED
+#endif  // ADVANCED_DIALOG_H_INCLUDED

@@ -20,7 +20,8 @@
  *
  *    You should have received a copy of the GNU Lesser General Public
  *    License along with this library; if not, write to the Free Software
- *    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ *    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301
+ *USA
  *
  *  Contact Information: gcx@phracturedblue.com <Geoffrey Hausheer>
  *******************************************************************************/
@@ -28,24 +29,24 @@
 #ifndef _INDIGUI_H_
 #define _INDIGUI_H_
 
-#include "indi/indiclient.h"
 #include <libindi/basedevice.h>
 #include <libindi/indiproperty.h>
+#include "indi/indiclient.h"
 
 #include "wxled.h"
 
-#include <wx/wx.h>
-#include <wx/gbsizer.h>
-#include <wx/sizer.h>
-#include <wx/notebook.h>
-#include <wx/textctrl.h>
-#include <wx/string.h>
-#include <wx/hashmap.h>
-#include <wx/stattext.h>
 #include <wx/checkbox.h>
-#include <wx/tglbtn.h>
 #include <wx/choice.h>
+#include <wx/gbsizer.h>
+#include <wx/hashmap.h>
 #include <wx/menu.h>
+#include <wx/notebook.h>
+#include <wx/sizer.h>
+#include <wx/stattext.h>
+#include <wx/string.h>
+#include <wx/textctrl.h>
+#include <wx/tglbtn.h>
+#include <wx/wx.h>
 
 WX_DECLARE_STRING_HASH_MAP(void *, PtrHash);
 
@@ -54,21 +55,20 @@ class IndiProp;
 /*
  *  INDI gui windows
  */
-class IndiGui : public wxDialog , public LightIndiClient
-{
-
+class IndiGui : public wxDialog, public LightIndiClient {
 private:
     // Main thread events called from INDI thread
-    void OnNewDeviceFromThread(wxThreadEvent& event);
-    void OnNewPropertyFromThread(wxThreadEvent& event);
-    void OnNewNumberFromThread(wxThreadEvent& event);
-    void OnNewTextFromThread(wxThreadEvent& event);
-    void OnNewSwitchFromThread(wxThreadEvent& event);
-    void OnNewMessageFromThread(wxThreadEvent& event);
-    void OnRemovePropertyFromThread(wxThreadEvent& event);
+    void OnNewDeviceFromThread(wxThreadEvent &event);
+    void OnNewPropertyFromThread(wxThreadEvent &event);
+    void OnNewNumberFromThread(wxThreadEvent &event);
+    void OnNewTextFromThread(wxThreadEvent &event);
+    void OnNewSwitchFromThread(wxThreadEvent &event);
+    void OnNewMessageFromThread(wxThreadEvent &event);
+    void OnRemovePropertyFromThread(wxThreadEvent &event);
 
     // Widget creation
-    void BuildPropWidget(INDI::Property *property, wxPanel *parent, IndiProp *indiProp);
+    void BuildPropWidget(INDI::Property *property, wxPanel *parent,
+                         IndiProp *indiProp);
     void CreateTextWidget(INDI::Property *property, IndiProp *indiProp);
     void CreateSwitchWidget(INDI::Property *property, IndiProp *indiProp);
     void CreateNumberWidget(INDI::Property *property, IndiProp *indiProp);
@@ -82,14 +82,14 @@ private:
     void CreateSwitchButton(ISwitchVectorProperty *svp, IndiProp *indiProp);
 
     // Button events
-    void SetButtonEvent(wxCommandEvent& event);
-    void SetComboboxEvent(wxCommandEvent& event);
-    void SetToggleButtonEvent(wxCommandEvent& event);
-    void SetCheckboxEvent(wxCommandEvent& event);
+    void SetButtonEvent(wxCommandEvent &event);
+    void SetComboboxEvent(wxCommandEvent &event);
+    void SetToggleButtonEvent(wxCommandEvent &event);
+    void SetCheckboxEvent(wxCommandEvent &event);
 
-    void OnQuit(wxCloseEvent& event);
+    void OnQuit(wxCloseEvent &event);
 
-    void ConnectServer(const wxString& INDIhost, long INDIport);
+    void ConnectServer(const wxString &INDIhost, long INDIport);
     bool allow_connect_disconnect;
 
     wxPanel *panel;
@@ -127,8 +127,9 @@ protected:
 public:
     ~IndiGui();
 
-    static void ShowIndiGui(IndiGui **ret, const wxString& host, long port, bool allow_connect_disconnect, bool modal);
+    static void ShowIndiGui(IndiGui **ret, const wxString &host, long port,
+                            bool allow_connect_disconnect, bool modal);
     static void DestroyIndiGui(IndiGui **holder);
 };
 
-#endif //_INDIGUI_H_
+#endif  //_INDIGUI_H_

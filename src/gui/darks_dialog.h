@@ -2,9 +2,8 @@
  *  darks_dialog.h
  *  LGuider Guiding
  *
- *  Created by Bruce Waddington in collaboration with David Ault and Andy Galasso
- *  Copyright (c) 2014 Bruce Waddington
- *  All rights reserved.
+ *  Created by Bruce Waddington in collaboration with David Ault and Andy
+ * Galasso Copyright (c) 2014 Bruce Waddington All rights reserved.
  *
  *  This source code is distributed under the following "BSD" license
  *  Redistribution and use in source and binary forms, with or without
@@ -36,19 +35,18 @@
 #ifndef DarksDialog_h_included
 #define DarksDialog_h_included
 
-class DarksDialog : public wxDialog
-{
+class DarksDialog : public wxDialog {
 private:
     bool m_cancelling;
     bool m_started;
     // wx UI controls
-    
-    void OnStart(wxCommandEvent& evt);
-    void OnStop(wxCommandEvent& evt);
-    void OnReset(wxCommandEvent& evt);
+
+    void OnStart(wxCommandEvent &evt);
+    void OnStop(wxCommandEvent &evt);
+    void OnReset(wxCommandEvent &evt);
     void SaveProfileInfo();
     void ShowStatus(const wxString msg, bool appending);
-    bool CreateMasterDarkFrame(usImage& dark, int expTime, int frameCount);
+    bool CreateMasterDarkFrame(usImage &dark, int expTime, int frameCount);
 
 public:
     DarksDialog(wxWindow *parent, bool darkLibrary);
@@ -73,7 +71,6 @@ public:
 
 private:
     bool buildDarkLib;
-
 };
 
 #endif

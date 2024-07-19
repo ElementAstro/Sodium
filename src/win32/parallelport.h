@@ -38,10 +38,9 @@
 
 typedef unsigned char BYTE;
 
-class ParallelPort
-{
+class ParallelPort {
 public:
-    static ParallelPort *ParallelPortFactory(void);
+    static ParallelPort* ParallelPortFactory(void);
 
     ParallelPort(void);
     virtual ~ParallelPort(void);
@@ -51,10 +50,10 @@ public:
     virtual bool Connect(const wxString& portName) = 0;
     virtual bool Disconnect(void) = 0;
 
-    virtual bool ReadByte(BYTE *pData) = 0;
+    virtual bool ReadByte(BYTE* pData) = 0;
     virtual bool WriteByte(BYTE data) = 0;
 
     virtual bool ManipulateByte(BYTE clearBits, BYTE setBits);
 };
 
-#endif // PARALLELPORT_H_INCLUDED
+#endif  // PARALLELPORT_H_INCLUDED

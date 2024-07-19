@@ -34,9 +34,8 @@
 #ifndef DRIFT_TOOL_H
 #define DRIFT_TOOL_H
 
-class DriftTool
-{
-    DriftTool(); // not implemented
+class DriftTool {
+    DriftTool();  // not implemented
 public:
     static wxWindow *CreateDriftToolWindow();
 };

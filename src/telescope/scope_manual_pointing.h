@@ -35,12 +35,11 @@
 #ifndef SCOPE_MANUAL_POINTING_INCLUDED
 #define SCOPE_MANUAL_POINTING_INCLUDED
 
-class ScopeManualPointing : public Scope
-{
-    double m_latitude; // degrees
-    double m_longitude; // degrees
-    double m_ra; // hours
-    double m_dec; // radians
+class ScopeManualPointing : public Scope {
+    double m_latitude;   // degrees
+    double m_longitude;  // degrees
+    double m_ra;         // hours
+    double m_dec;        // radians
     PierSide m_sideOfPier;
 
 public:

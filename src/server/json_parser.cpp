@@ -30,16 +30,16 @@
  *  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *
- * This file contains a modified version of vjson, which comes with the following
- * license:
+ * This file contains a modified version of vjson, which comes with the
+ * following license:
  *
  * Copyright (c) 2010, Ivan Vashchaev
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
- *  of this software and associated documentation files (the "Software"), to deal
- *  in the Software without restriction, including without limitation the rights
- *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  copies of the Software, and to permit persons to whom the Software is
+ *  of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is
  *  furnished to do so, subject to the following conditions:
  *
  *  The above copyright notice and this permission notice shall be included in
@@ -49,22 +49,22 @@
  *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- *  THE SOFTWARE.
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
  */
 
-#include "lightguider.h"
 #include "json_parser.h"
+#include "lightguider.h"
 
-#include <algorithm>
+
 #include <memory.h>
+#include <algorithm>
 
-class block_allocator
-{
+
+class block_allocator {
 private:
-    struct block
-    {
+    struct block {
         size_t size;
         size_t used;
         block *next;
@@ -93,28 +93,22 @@ public:
     void free();
 };
 
-block_allocator::block_allocator(size_t blocksize): m_head(0), m_blocksize(blocksize)
-{
-}
+block_allocator::block_allocator(size_t blocksize)
+    : m_head(0), m_blocksize(blocksize) {}
 
-block_allocator::~block_allocator()
-{
-    while (m_head)
-    {
+block_allocator::~block_allocator() {
+    while (m_head) {
         block *temp = m_head->next;
         ::free(m_head);
         m_head = temp;
     }
 }
 
-void block_allocator::reset()
-{
-    if (m_head)
-    {
+void block_allocator::reset() {
+    if (m_head) {
         block *b = m_head->next;
         m_head->next = 0;
-        while (b)
-        {
+        while (b) {
             block *t = b->next;
             ::free(b);
             b = t;
@@ -123,16 +117,13 @@ void block_allocator::reset()
     }
 }
 
-void block_allocator::swap(block_allocator& rhs)
-{
+void block_allocator::swap(block_allocator &rhs) {
     std::swap(m_blocksize, rhs.m_blocksize);
     std::swap(m_head, rhs.m_head);
 }
 
-void *block_allocator::malloc(size_t size)
-{
-    if (!m_head || m_head->used + size > m_head->size)
-    {
+void *block_allocator::malloc(size_t size) {
+    if (!m_head || m_head->used + size > m_head->size) {
         // calc needed size for allocation
         size_t alloc_size = std::max(sizeof(block) + size, m_blocksize);
 
@@ -144,13 +135,12 @@ void *block_allocator::malloc(size_t size)
         m_head = b;
     }
 
-    void *ptr = (char *) m_head + m_head->used;
+    void *ptr = (char *)m_head + m_head->used;
     m_head->used += size;
     return ptr;
 }
 
-void block_allocator::free()
-{
+void block_allocator::free() {
     if (m_head)
         block_allocator(0).swap(*this);
 }
@@ -159,25 +149,19 @@ void block_allocator::free()
 #define IS_DIGIT(c) (c >= '0' && c <= '9')
 
 // convert string to integer
-static char *atoi(char *first, char *last, int *out)
-{
+static char *atoi(char *first, char *last, int *out) {
     int sign = 1;
-    if (first != last)
-    {
-        if (*first == '-')
-        {
+    if (first != last) {
+        if (*first == '-') {
             sign = -1;
             ++first;
-        }
-        else if (*first == '+')
-        {
+        } else if (*first == '+') {
             ++first;
         }
     }
 
     int result = 0;
-    for (; first != last && IS_DIGIT(*first); ++first)
-    {
+    for (; first != last && IS_DIGIT(*first); ++first) {
         result = 10 * result + (*first - '0');
     }
     *out = result * sign;
@@ -186,26 +170,17 @@ static char *atoi(char *first, char *last, int *out)
 }
 
 // convert hexadecimal string to unsigned integer
-static char *hatoui(char *first, char *last, unsigned int *out)
-{
+static char *hatoui(char *first, char *last, unsigned int *out) {
     unsigned int result = 0;
-    for (; first != last; ++first)
-    {
+    for (; first != last; ++first) {
         int digit;
-        if (IS_DIGIT(*first))
-        {
+        if (IS_DIGIT(*first)) {
             digit = *first - '0';
-        }
-        else if (*first >= 'a' && *first <= 'f')
-        {
+        } else if (*first >= 'a' && *first <= 'f') {
             digit = *first - 'a' + 10;
-        }
-        else if (*first >= 'A' && *first <= 'F')
-        {
+        } else if (*first >= 'A' && *first <= 'F') {
             digit = *first - 'A' + 10;
-        }
-        else
-        {
+        } else {
             break;
         }
         result = 16 * result + digit;
@@ -216,38 +191,30 @@ static char *hatoui(char *first, char *last, unsigned int *out)
 }
 
 // convert string to floating point
-static char *atof(char *first, char *last, float *out)
-{
+static char *atof(char *first, char *last, float *out) {
     // sign
     float sign = 1;
-    if (first != last)
-    {
-        if (*first == '-')
-        {
+    if (first != last) {
+        if (*first == '-') {
             sign = -1;
             ++first;
-        }
-        else if (*first == '+')
-        {
+        } else if (*first == '+') {
             ++first;
         }
     }
 
     // integer part
     float result = 0;
-    for (; first != last && IS_DIGIT(*first); ++first)
-    {
+    for (; first != last && IS_DIGIT(*first); ++first) {
         result = 10 * result + (*first - '0');
     }
 
     // fraction part
-    if (first != last && *first == '.')
-    {
+    if (first != last && *first == '.') {
         ++first;
 
         float inv_base = 0.1f;
-        for (; first != last && IS_DIGIT(*first); ++first)
-        {
+        for (; first != last && IS_DIGIT(*first); ++first) {
             result += (*first - '0') * inv_base;
             inv_base *= 0.1f;
         }
@@ -259,40 +226,30 @@ static char *atof(char *first, char *last, float *out)
     // exponent
     bool exponent_negative = false;
     int exponent = 0;
-    if (first != last && (*first == 'e' || *first == 'E'))
-    {
+    if (first != last && (*first == 'e' || *first == 'E')) {
         ++first;
 
-        if (*first == '-')
-        {
+        if (*first == '-') {
             exponent_negative = true;
             ++first;
-        }
-        else if (*first == '+')
-        {
+        } else if (*first == '+') {
             ++first;
         }
 
-        for (; first != last && IS_DIGIT(*first); ++first)
-        {
+        for (; first != last && IS_DIGIT(*first); ++first) {
             exponent = 10 * exponent + (*first - '0');
         }
     }
 
-    if (exponent)
-    {
+    if (exponent) {
         float power_of_ten = 10;
-        for (; exponent > 1; exponent--)
-        {
+        for (; exponent > 1; exponent--) {
             power_of_ten *= 10;
         }
 
-        if (exponent_negative)
-        {
+        if (exponent_negative) {
             result /= power_of_ten;
-        }
-        else
-        {
+        } else {
             result *= power_of_ten;
         }
     }
@@ -302,41 +259,39 @@ static char *atof(char *first, char *last, float *out)
     return first;
 }
 
-static json_value *json_alloc(block_allocator *allocator)
-{
+static json_value *json_alloc(block_allocator *allocator) {
     json_value *value = (json_value *)allocator->malloc(sizeof(json_value));
     memset(value, 0, sizeof(json_value));
     return value;
 }
 
-static void json_append(json_value *lhs, json_value *rhs)
-{
+static void json_append(json_value *lhs, json_value *rhs) {
     rhs->parent = lhs;
-    if (lhs->last_child)
-    {
+    if (lhs->last_child) {
         lhs->last_child = lhs->last_child->next_sibling = rhs;
-    }
-    else
-    {
+    } else {
         lhs->first_child = lhs->last_child = rhs;
     }
 }
 
-#define JSON_ERROR(it, desc) do { \
-    *error_pos = it; \
-    *error_desc = desc; \
-    *error_line = 1 - escaped_newlines; \
-    for (const char *c = it; c != source; --c) \
-        if (*c == '\n') ++*error_line; \
-    return 0; \
-} while (false)
+#define JSON_ERROR(it, desc)                       \
+    do {                                           \
+        *error_pos = it;                           \
+        *error_desc = desc;                        \
+        *error_line = 1 - escaped_newlines;        \
+        for (const char *c = it; c != source; --c) \
+            if (*c == '\n')                        \
+                ++*error_line;                     \
+        return 0;                                  \
+    } while (false)
 
-#define CHECK_TOP() if (!top) JSON_ERROR(it, "Unexpected character")
+#define CHECK_TOP() \
+    if (!top)       \
+    JSON_ERROR(it, "Unexpected character")
 
 static json_value *json_parse(char *source, const char **error_pos,
                               const char **error_desc, int *error_line,
-                              block_allocator *allocator)
-{
+                              block_allocator *allocator) {
     json_value *root = 0;
     json_value *top = 0;
 
@@ -346,18 +301,14 @@ static json_value *json_parse(char *source, const char **error_pos,
     int escaped_newlines = 0;
 
     // skip leading whitespace
-    while (*it == '\x20' || *it == '\x9' || *it == '\xD' || *it == '\xA')
-    {
+    while (*it == '\x20' || *it == '\x9' || *it == '\xD' || *it == '\xA') {
         ++it;
     }
 
-    while (*it)
-    {
-        switch (*it)
-        {
-        case '{':
-        case '[':
-            {
+    while (*it) {
+        switch (*it) {
+            case '{':
+            case '[': {
                 // create new value
                 json_value *object = json_alloc(allocator);
 
@@ -372,27 +323,20 @@ static json_value *json_parse(char *source, const char **error_pos,
                 ++it;
 
                 // set top and root
-                if (top)
-                {
+                if (top) {
                     json_append(top, object);
-                }
-                else if (!root)
-                {
+                } else if (!root) {
                     root = object;
-                }
-                else
-                {
+                } else {
                     JSON_ERROR(it, "Second root. Only one root allowed");
                 }
                 top = object;
-            }
-            break;
+            } break;
 
-        case '}':
-        case ']':
-            {
-                if (!top || top->type != ((*it == '}') ? JSON_OBJECT : JSON_ARRAY))
-                {
+            case '}':
+            case ']': {
+                if (!top ||
+                    top->type != ((*it == '}') ? JSON_OBJECT : JSON_ARRAY)) {
                     JSON_ERROR(it, "Mismatch closing brace/bracket");
                 }
 
@@ -401,24 +345,21 @@ static json_value *json_parse(char *source, const char **error_pos,
 
                 // set top
                 top = top->parent;
-            }
-            break;
+            } break;
 
-        case ':':
-            if (!top || top->type != JSON_OBJECT || !name)
-            {
-                JSON_ERROR(it, "Unexpected character");
-            }
-            ++it;
-            break;
+            case ':':
+                if (!top || top->type != JSON_OBJECT || !name) {
+                    JSON_ERROR(it, "Unexpected character");
+                }
+                ++it;
+                break;
 
-        case ',':
-            CHECK_TOP();
-            ++it;
-            break;
+            case ',':
+                CHECK_TOP();
+                ++it;
+                break;
 
-        case '"':
-            {
+            case '"': {
                 CHECK_TOP();
 
                 // skip '"' character
@@ -426,93 +367,78 @@ static json_value *json_parse(char *source, const char **error_pos,
 
                 char *first = it;
                 char *last = it;
-                while (*it)
-                {
-                    if ((unsigned char)*it < '\x20')
-                    {
-                        JSON_ERROR(first, "Control characters not allowed in strings");
-                    }
-                    else if (*it == '\\')
-                    {
-                        switch (it[1])
-                        {
-                        case '"':
-                            *last = '"';
-                            break;
-                        case '\\':
-                            *last = '\\';
-                            break;
-                        case '/':
-                            *last = '/';
-                            break;
-                        case 'b':
-                            *last = '\b';
-                            break;
-                        case 'f':
-                            *last = '\f';
-                            break;
-                        case 'n':
-                            *last = '\n';
-                            ++escaped_newlines;
-                            break;
-                        case 'r':
-                            *last = '\r';
-                            break;
-                        case 't':
-                            *last = '\t';
-                            break;
-                        case 'u':
-                            {
+                while (*it) {
+                    if ((unsigned char)*it < '\x20') {
+                        JSON_ERROR(first,
+                                   "Control characters not allowed in strings");
+                    } else if (*it == '\\') {
+                        switch (it[1]) {
+                            case '"':
+                                *last = '"';
+                                break;
+                            case '\\':
+                                *last = '\\';
+                                break;
+                            case '/':
+                                *last = '/';
+                                break;
+                            case 'b':
+                                *last = '\b';
+                                break;
+                            case 'f':
+                                *last = '\f';
+                                break;
+                            case 'n':
+                                *last = '\n';
+                                ++escaped_newlines;
+                                break;
+                            case 'r':
+                                *last = '\r';
+                                break;
+                            case 't':
+                                *last = '\t';
+                                break;
+                            case 'u': {
                                 unsigned int codepoint;
-                                if (hatoui(it + 2, it + 6, &codepoint) != it + 6)
-                                {
+                                if (hatoui(it + 2, it + 6, &codepoint) !=
+                                    it + 6) {
                                     JSON_ERROR(it, "Bad unicode codepoint");
                                 }
 
-                                if (codepoint <= 0x7F)
-                                {
+                                if (codepoint <= 0x7F) {
                                     *last = (char)codepoint;
-                                }
-                                else if (codepoint <= 0x7FF)
-                                {
+                                } else if (codepoint <= 0x7FF) {
                                     *last++ = (char)(0xC0 | (codepoint >> 6));
                                     *last = (char)(0x80 | (codepoint & 0x3F));
-                                }
-                                else if (codepoint <= 0xFFFF)
-                                {
+                                } else if (codepoint <= 0xFFFF) {
                                     *last++ = (char)(0xE0 | (codepoint >> 12));
-                                    *last++ = (char)(0x80 | ((codepoint >> 6) & 0x3F));
+                                    *last++ = (char)(0x80 |
+                                                     ((codepoint >> 6) & 0x3F));
                                     *last = (char)(0x80 | (codepoint & 0x3F));
                                 }
                             }
-                            it += 4;
-                            break;
-                        default:
-                            JSON_ERROR(first, "Unrecognized escape sequence");
+                                it += 4;
+                                break;
+                            default:
+                                JSON_ERROR(first,
+                                           "Unrecognized escape sequence");
                         }
 
                         ++last;
                         it += 2;
-                    }
-                    else if (*it == '"')
-                    {
+                    } else if (*it == '"') {
                         *last = 0;
                         ++it;
                         break;
-                    }
-                    else
-                    {
+                    } else {
                         *last++ = *it++;
                     }
                 }
 
-                if (!name && top->type == JSON_OBJECT)
-                {
+                if (!name && top->type == JSON_OBJECT) {
                     // field name in object
                     name = first;
-                }
-                else
-                {
+                } else {
                     // new string value
                     json_value *object = json_alloc(allocator);
 
@@ -524,20 +450,17 @@ static json_value *json_parse(char *source, const char **error_pos,
 
                     json_append(top, object);
                 }
-            }
-            break;
+            } break;
 
-        case 'n':
-        case 't':
-        case 'f':
-            {
+            case 'n':
+            case 't':
+            case 'f': {
                 CHECK_TOP();
 
                 // new null/bool value
                 json_value *object = json_alloc(allocator);
 
-                if (top->type == JSON_OBJECT && !name)
-                {
+                if (top->type == JSON_OBJECT && !name) {
                     JSON_ERROR(it, "Missing name");
                 }
 
@@ -545,53 +468,48 @@ static json_value *json_parse(char *source, const char **error_pos,
                 name = 0;
 
                 // null
-                if (it[0] == 'n' && it[1] == 'u' && it[2] == 'l' && it[3] == 'l')
-                {
+                if (it[0] == 'n' && it[1] == 'u' && it[2] == 'l' &&
+                    it[3] == 'l') {
                     object->type = JSON_NULL;
                     it += 4;
                 }
                 // true
-                else if (it[0] == 't' && it[1] == 'r' && it[2] == 'u' && it[3] == 'e')
-                {
+                else if (it[0] == 't' && it[1] == 'r' && it[2] == 'u' &&
+                         it[3] == 'e') {
                     object->type = JSON_BOOL;
                     object->int_value = 1;
                     it += 4;
                 }
                 // false
-                else if (it[0] == 'f' && it[1] == 'a' && it[2] == 'l' && it[3] == 's' && it[4] == 'e')
-                {
+                else if (it[0] == 'f' && it[1] == 'a' && it[2] == 'l' &&
+                         it[3] == 's' && it[4] == 'e') {
                     object->type = JSON_BOOL;
                     object->int_value = 0;
                     it += 5;
-                }
-                else
-                {
+                } else {
                     JSON_ERROR(it, "Unknown identifier");
                 }
 
                 json_append(top, object);
-            }
-            break;
+            } break;
 
-        case '-':
-        case '0':
-        case '1':
-        case '2':
-        case '3':
-        case '4':
-        case '5':
-        case '6':
-        case '7':
-        case '8':
-        case '9':
-            {
+            case '-':
+            case '0':
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9': {
                 CHECK_TOP();
 
                 // new number value
                 json_value *object = json_alloc(allocator);
 
-                if (top->type == JSON_OBJECT && !name)
-                {
+                if (top->type == JSON_OBJECT && !name) {
                     JSON_ERROR(it, "Missing name");
                 }
 
@@ -601,47 +519,42 @@ static json_value *json_parse(char *source, const char **error_pos,
                 object->type = JSON_INT;
 
                 char *first = it;
-                while (*it != '\x20' && *it != '\x9' && *it != '\xD' && *it != '\xA' && *it != ',' && *it != ']' && *it != '}')
-                {
-                    if (*it == '.' || *it == 'e' || *it == 'E')
-                    {
+                while (*it != '\x20' && *it != '\x9' && *it != '\xD' &&
+                       *it != '\xA' && *it != ',' && *it != ']' && *it != '}') {
+                    if (*it == '.' || *it == 'e' || *it == 'E') {
                         object->type = JSON_FLOAT;
                     }
                     ++it;
                 }
 
-                if (object->type == JSON_INT && atoi(first, it, &object->int_value) != it)
-                {
+                if (object->type == JSON_INT &&
+                    atoi(first, it, &object->int_value) != it) {
                     JSON_ERROR(first, "Bad integer number");
                 }
 
-                if (object->type == JSON_FLOAT && atof(first, it, &object->float_value) != it)
-                {
+                if (object->type == JSON_FLOAT &&
+                    atof(first, it, &object->float_value) != it) {
                     JSON_ERROR(first, "Bad float number");
                 }
 
                 json_append(top, object);
-            }
-            break;
+            } break;
 
-        default:
-            JSON_ERROR(it, "Unexpected character");
+            default:
+                JSON_ERROR(it, "Unexpected character");
         }
 
         // skip white space
-        while (*it == '\x20' || *it == '\x9' || *it == '\xD' || *it == '\xA')
-        {
+        while (*it == '\x20' || *it == '\x9' || *it == '\xD' || *it == '\xA') {
             ++it;
         }
     }
 
-    if (top)
-    {
+    if (top) {
         JSON_ERROR(it, "Not all objects/arrays have been properly closed");
     }
 
-    if (!root)
-    {
+    if (!root) {
         JSON_ERROR(it, "empty string");
     }
 
@@ -650,8 +563,7 @@ static json_value *json_parse(char *source, const char **error_pos,
 
 // ===== public interface ======
 
-struct JsonParserImpl
-{
+struct JsonParserImpl {
     block_allocator alloc;
     void *tmpbuf;
 
@@ -661,29 +573,25 @@ struct JsonParserImpl
     const char *error_desc;
     int error_line;
 
-    JsonParserImpl() : alloc(4096), tmpbuf(nullptr) { }
-    ~JsonParserImpl() { if (tmpbuf) ::free(tmpbuf); }
+    JsonParserImpl() : alloc(4096), tmpbuf(nullptr) {}
+    ~JsonParserImpl() {
+        if (tmpbuf)
+            ::free(tmpbuf);
+    }
 };
 
-JsonParser::JsonParser()
-    : m_impl(new JsonParserImpl())
-{
-}
+JsonParser::JsonParser() : m_impl(new JsonParserImpl()) {}
 
-JsonParser::~JsonParser()
-{
-    delete m_impl;
-}
+JsonParser::~JsonParser() { delete m_impl; }
 
-bool JsonParser::Parse(char *str)
-{
+bool JsonParser::Parse(char *str) {
     m_impl->alloc.reset();
-    m_impl->root = json_parse(str, &m_impl->error_pos, &m_impl->error_desc, &m_impl->error_line, &m_impl->alloc);
+    m_impl->root = json_parse(str, &m_impl->error_pos, &m_impl->error_desc,
+                              &m_impl->error_line, &m_impl->alloc);
     return m_impl->root != 0;
 }
 
-bool JsonParser::Parse(const std::string& str)
-{
+bool JsonParser::Parse(const std::string &str) {
     if (m_impl->tmpbuf)
         ::free(m_impl->tmpbuf);
     m_impl->tmpbuf = ::malloc(str.length() + 1);
@@ -691,22 +599,10 @@ bool JsonParser::Parse(const std::string& str)
     return Parse(static_cast<char *>(m_impl->tmpbuf));
 }
 
-const char *JsonParser::ErrorPos() const
-{
-    return m_impl->error_pos;
-}
+const char *JsonParser::ErrorPos() const { return m_impl->error_pos; }
 
-const char *JsonParser::ErrorDesc() const
-{
-    return m_impl->error_desc;
-}
+const char *JsonParser::ErrorDesc() const { return m_impl->error_desc; }
 
-int JsonParser::ErrorLine() const
-{
-    return m_impl->error_line;
-}
+int JsonParser::ErrorLine() const { return m_impl->error_line; }
 
-const json_value *JsonParser::Root()
-{
-    return m_impl->root;
-}
+const json_value *JsonParser::Root() { return m_impl->root; }

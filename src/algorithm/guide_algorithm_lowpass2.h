@@ -42,8 +42,7 @@
 
 #include "guiding/guiding_stats.h"
 
-class GuideAlgorithmLowpass2 : public GuideAlgorithm
-{
+class GuideAlgorithmLowpass2 : public GuideAlgorithm {
     static const int HISTORY_SIZE = 10;
     double m_aggressiveness;
     double m_minMove;
@@ -52,13 +51,14 @@ class GuideAlgorithmLowpass2 : public GuideAlgorithm
     int m_timeBase;
 
 protected:
-    class GuideAlgorithmLowpass2ConfigDialogPane : public ConfigDialogPane
-    {
+    class GuideAlgorithmLowpass2ConfigDialogPane : public ConfigDialogPane {
         GuideAlgorithmLowpass2 *m_pGuideAlgorithm;
         wxSpinCtrl *m_pAggressiveness;
         wxSpinCtrlDouble *m_pMinMove;
+
     public:
-        GuideAlgorithmLowpass2ConfigDialogPane(wxWindow *pParent, GuideAlgorithmLowpass2 *pGuideAlgorithm);
+        GuideAlgorithmLowpass2ConfigDialogPane(
+            wxWindow *pParent, GuideAlgorithmLowpass2 *pGuideAlgorithm);
         ~GuideAlgorithmLowpass2ConfigDialogPane();
 
         void LoadValues() override;
@@ -67,10 +67,11 @@ protected:
         void EnableDecControls(bool enable) override;
     };
 
-    class GuideAlgorithmLowpass2GraphControlPane : public GraphControlPane
-    {
+    class GuideAlgorithmLowpass2GraphControlPane : public GraphControlPane {
     public:
-        GuideAlgorithmLowpass2GraphControlPane(wxWindow *pParent, GuideAlgorithmLowpass2 *pGuideAlgorithm, const wxString& label);
+        GuideAlgorithmLowpass2GraphControlPane(
+            wxWindow *pParent, GuideAlgorithmLowpass2 *pGuideAlgorithm,
+            const wxString &label);
         ~GuideAlgorithmLowpass2GraphControlPane();
         void EnableDecControls(bool enable) override;
 
@@ -78,8 +79,8 @@ protected:
         GuideAlgorithmLowpass2 *m_pGuideAlgorithm;
         wxSpinCtrl *m_pAggressiveness;
         wxSpinCtrlDouble *m_pMinMove;
-        void OnAggrSpinCtrl(wxSpinEvent& evt);
-        void OnMinMoveSpinCtrlDouble(wxSpinDoubleEvent& evt);
+        void OnAggrSpinCtrl(wxSpinEvent &evt);
+        void OnMinMoveSpinCtrlDouble(wxSpinDoubleEvent &evt);
     };
 
     double GetAggressiveness() const;
@@ -95,23 +96,20 @@ public:
     void reset() override;
     double result(double input) override;
     ConfigDialogPane *GetConfigDialogPane(wxWindow *pParent) override;
-    GraphControlPane *GetGraphControlPane(wxWindow *pParent, const wxString& label) override;
+    GraphControlPane *GetGraphControlPane(wxWindow *pParent,
+                                          const wxString &label) override;
     wxString GetSettingsSummary() const override;
     wxString GetGuideAlgorithmClassName() const override { return "Lowpass2"; }
-    void GetParamNames(wxArrayString& names) const override;
-    bool GetParam(const wxString& name, double *val) const override;
-    bool SetParam(const wxString& name, double val) override;
+    void GetParamNames(wxArrayString &names) const override;
+    bool GetParam(const wxString &name, double *val) const override;
+    bool SetParam(const wxString &name, double val) override;
     double GetMinMove() const override;
     bool SetMinMove(double minMove) override;
 };
 
-inline double GuideAlgorithmLowpass2::GetMinMove() const
-{
-    return m_minMove;
-}
+inline double GuideAlgorithmLowpass2::GetMinMove() const { return m_minMove; }
 
-inline double GuideAlgorithmLowpass2::GetAggressiveness() const
-{
+inline double GuideAlgorithmLowpass2::GetAggressiveness() const {
     return m_aggressiveness;
 }
 #endif /* GUIDE_ALGORITHM_LOWPASS2_H_INCLUDED */

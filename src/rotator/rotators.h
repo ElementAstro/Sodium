@@ -36,7 +36,7 @@
 #define ROTATORS_INCLUDED
 
 #if defined(__WINDOWS__)
-# define ROTATOR_ASCOM
+#define ROTATOR_ASCOM
 #endif
 
 #define ROTATOR_SIMULATOR
@@ -44,4 +44,4 @@
 #include "rotator.h"
 #include "rotator_ascom.h"
 
-#endif // ROTATORS_INCLUDED
+#endif  // ROTATORS_INCLUDED

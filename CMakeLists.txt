@@ -122,7 +122,7 @@ generate_doc_targets(
 # WxWidgets inclusion narrowed to lightguider project only
 # include_directories(${wxWidgets_INCLUDE_DIRS})
 # include_directories(${lightguider_src_dir}/src/cameras/)
-include_directories(${lightguider_src_dir}/src/)
+include_directories(${lightguider_src_dir}/src)
 
 
 #################################################################################

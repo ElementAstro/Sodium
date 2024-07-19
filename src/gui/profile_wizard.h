@@ -37,10 +37,10 @@
 
 class wxWindow;
 
-class EquipmentProfileWizard
-{
+class EquipmentProfileWizard {
 public:
-    static bool ShowModal(wxWindow *parent, bool showGreeting, bool *darks_requested);
+    static bool ShowModal(wxWindow *parent, bool showGreeting,
+                          bool *darks_requested);
 };
 
 #endif

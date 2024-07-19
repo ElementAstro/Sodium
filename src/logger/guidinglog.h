@@ -42,9 +42,8 @@ class Mount;
 class Guider;
 struct LockPosShiftParams;
 
-struct CalibrationStepInfo
-{
-    Mount *mount;
+struct CalibrationStepInfo {
+    Mount* mount;
     wxString direction;
     int stepNumber;
     double dx;
@@ -53,15 +52,21 @@ struct CalibrationStepInfo
     double dist;
     wxString msg;
 
-    CalibrationStepInfo(Mount *mount_, const wxString& dir_, int stepNumber_, double dx_,
-        double dy_, const LGuider_Point& pos_, double dist_, const wxString& msg_ = wxEmptyString)
-        : mount(mount_), direction(dir_), stepNumber(stepNumber_), dx(dx_), dy(dy_), pos(pos_),
-        dist(dist_), msg(msg_) { }
+    CalibrationStepInfo(Mount* mount_, const wxString& dir_, int stepNumber_,
+                        double dx_, double dy_, const LGuider_Point& pos_,
+                        double dist_, const wxString& msg_ = wxEmptyString)
+        : mount(mount_),
+          direction(dir_),
+          stepNumber(stepNumber_),
+          dx(dx_),
+          dy(dy_),
+          pos(pos_),
+          dist(dist_),
+          msg(msg_) {}
 };
 
-struct GuideStepInfo
-{
-    Mount *mount;
+struct GuideStepInfo {
+    Mount* mount;
     unsigned int moveOptions;
     int frameNumber;
     double time;
@@ -85,8 +90,7 @@ struct GuideStepInfo
     int starError;
 };
 
-struct FrameDroppedInfo
-{
+struct FrameDroppedInfo {
     int frameNumber;
     double time;
     double starMass;
@@ -97,16 +101,14 @@ struct FrameDroppedInfo
     wxString status;
 };
 
-struct GuideLogSummaryInfo
-{
+struct GuideLogSummaryInfo {
     bool valid;
     unsigned int cal_cnt;
     unsigned int guide_cnt;
     double guide_dur;
     unsigned int ga_cnt;
 
-    void Clear()
-    {
+    void Clear() {
         valid = false;
         cal_cnt = 0;
         guide_cnt = 0;
@@ -117,8 +119,7 @@ struct GuideLogSummaryInfo
     void LoadSummaryInfo(wxFFile& guidelog);
 };
 
-class GuidingLog : public Logger
-{
+class GuidingLog : public Logger {
     bool m_enabled;
     wxFFile m_file;
     wxString m_fileName;
@@ -140,12 +141,13 @@ public:
 
     wxFFile& File();
 
-    void StartCalibration(const Mount *pCalibrationMount);
-    void CalibrationFailed(const Mount *pCalibrationMount, const wxString& msg);
+    void StartCalibration(const Mount* pCalibrationMount);
+    void CalibrationFailed(const Mount* pCalibrationMount, const wxString& msg);
     void CalibrationStep(const CalibrationStepInfo& info);
-    void CalibrationDirectComplete(const Mount *pCalibrationMount, const wxString& direction,
-        double angle, double rate, int parity);
-    void CalibrationComplete(const Mount *pCalibrationMount);
+    void CalibrationDirectComplete(const Mount* pCalibrationMount,
+                                   const wxString& direction, double angle,
+                                   double rate, int parity);
+    void CalibrationComplete(const Mount* pCalibrationMount);
 
     void GuidingStarted();
     void GuidingStopped();
@@ -153,34 +155,31 @@ public:
     void FrameDropped(const FrameDroppedInfo& info);
     void CalibrationFrameDropped(const FrameDroppedInfo& info);
 
-    void ServerCommand(Guider *guider, const wxString& cmd);
-    void NotifyGuidingDithered(Guider *guider, double dx, double dy);
-    void NotifySetLockPosition(Guider *guider);
-    void NotifyLockShiftParams(const LockPosShiftParams& shiftParams, const LGuider_Point& cameraRate);
+    void ServerCommand(Guider* guider, const wxString& cmd);
+    void NotifyGuidingDithered(Guider* guider, double dx, double dy);
+    void NotifySetLockPosition(Guider* guider);
+    void NotifyLockShiftParams(const LockPosShiftParams& shiftParams,
+                               const LGuider_Point& cameraRate);
     void NotifySettlingStateChange(const wxString& msg);
     void NotifyGACompleted();
     void NotifyGAResult(const wxString& msg);
-    void NotifyManualGuide(const Mount *whichMount, int direction, int duration);
+    void NotifyManualGuide(const Mount* whichMount, int direction,
+                           int duration);
 
     void SetGuidingParam(const wxString& name, double val);
     void SetGuidingParam(const wxString& name, int val);
     void SetGuidingParam(const wxString& name, bool val);
     void SetGuidingParam(const wxString& name, const wxString& val);
-    void SetGuidingParam(const wxString& name, const wxString& val, bool AlwaysLog);
+    void SetGuidingParam(const wxString& name, const wxString& val,
+                         bool AlwaysLog);
 
     bool ChangeDirLog(const wxString& newdir);
     void RemoveOldFiles();
 };
 
-inline bool GuidingLog::IsEnabled() const
-{
-    return m_enabled;
-}
+inline bool GuidingLog::IsEnabled() const { return m_enabled; }
 
-inline wxFFile& GuidingLog::File()
-{
-    return m_file;
-}
+inline wxFFile& GuidingLog::File() { return m_file; }
 
 extern GuidingLog GuideLog;
 

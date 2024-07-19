@@ -1,13 +1,14 @@
-#include <wx/wx.h>
-#include <wx/splash.h>
+#include <wx/button.h>  // 添加 wx/button.h 头文件
 #include <wx/colour.h>
 #include <wx/graphics.h>
-#include <wx/sizer.h> // 添加 wx/sizer.h 头文件
-#include <wx/button.h> // 添加 wx/button.h 头文件
+#include <wx/sizer.h>  // 添加 wx/sizer.h 头文件
+#include <wx/splash.h>
+#include <wx/wx.h>
 
 class MySplashScreen : public wxFrame {
 public:
-    MySplashScreen(const wxString& bitmapPath, const wxString& label, int timeout);
+    MySplashScreen(const wxString& bitmapPath, const wxString& label,
+                   int timeout);
 
 private:
     wxBoxSizer* m_sizer;
@@ -15,17 +16,21 @@ private:
     void OnTimer(wxTimerEvent& event);
 };
 
-MySplashScreen::MySplashScreen(const wxString& bitmapPath, const wxString& label, int timeout)
-    : wxFrame(nullptr, wxID_ANY, "Splash Screen", wxDefaultPosition, wxDefaultSize, wxBORDER_NONE | wxFRAME_SHAPED),
-      m_sizer(new wxBoxSizer(wxVERTICAL))
-{
+MySplashScreen::MySplashScreen(const wxString& bitmapPath,
+                               const wxString& label, int timeout)
+    : wxFrame(nullptr, wxID_ANY, "Splash Screen", wxDefaultPosition,
+              wxDefaultSize, wxBORDER_NONE | wxFRAME_SHAPED),
+      m_sizer(new wxBoxSizer(wxVERTICAL)) {
     // 添加位图
     wxBitmap bitmap;
-    if (bitmap.LoadFile(bitmapPath)) { // 判断图片是否加载成功
-        auto bitmapCtrl = new wxStaticBitmap(this, wxID_ANY, bitmap, wxDefaultPosition, wxDefaultSize, wxBORDER_NONE);
+    if (bitmap.LoadFile(bitmapPath)) {  // 判断图片是否加载成功
+        auto bitmapCtrl =
+            new wxStaticBitmap(this, wxID_ANY, bitmap, wxDefaultPosition,
+                               wxDefaultSize, wxBORDER_NONE);
         m_sizer->Add(bitmapCtrl, wxSizerFlags().Expand().Proportion(1));
     } else {
-        wxMessageBox("Splash Image Not Found", "Warning", wxICON_WARNING | wxOK);
+        wxMessageBox("Splash Image Not Found", "Warning",
+                     wxICON_WARNING | wxOK);
     }
 
     // 添加标签和计时器
@@ -49,8 +54,7 @@ MySplashScreen::MySplashScreen(const wxString& bitmapPath, const wxString& label
     }
 }
 
-void MySplashScreen::OnTimer(wxTimerEvent& event)
-{
+void MySplashScreen::OnTimer(wxTimerEvent& event) {
     Close(true);
     Destroy();
 }

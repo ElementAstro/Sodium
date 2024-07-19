@@ -27,8 +27,7 @@ class LogViewFrame;
 
 extern wxConfigBase *Config;
 
-class LogViewApp : public wxApp
-{
+class LogViewApp : public wxApp {
     LogViewFrame *m_frame;
     wxString m_openFile;
 
@@ -39,8 +38,8 @@ public:
 private:
     bool OnInit();
     int OnExit();
-    void OnInitCmdLine(wxCmdLineParser& parser);
-    bool OnCmdLineParsed(wxCmdLineParser& parser);
+    void OnInitCmdLine(wxCmdLineParser &parser);
+    bool OnCmdLineParsed(wxCmdLineParser &parser);
 };
 
 wxDECLARE_APP(LogViewApp);

@@ -35,22 +35,22 @@
 #ifndef EVENT_SERVER_INCLUDED
 #define EVENT_SERVER_INCLUDED
 
-#include <thread>
-#include <mutex>
 #include <atomic>
+#include <mutex>
 #include <set>
+#include <thread>
 #include "server/json_parser.h"
 
-class EventServer : public wxEvtHandler
-{
+
+class EventServer : public wxEvtHandler {
 public:
-    typedef std::set<wxSocketClient *> CliSockSet;
+    typedef std::set<wxSocketClient*> CliSockSet;
 
 private:
     JsonParser m_parser;
-    wxSocketServer *m_serverSocket;
+    wxSocketServer* m_serverSocket;
     CliSockSet m_eventServerClients;
-    wxTimer *m_configEventDebouncer;
+    wxTimer* m_configEventDebouncer;
 
 public:
     EventServer();
@@ -59,12 +59,13 @@ public:
     bool EventServerStart(unsigned int instanceId);
     void EventServerStop();
 
-    void NotifyStartCalibration(const Mount *mount);
+    void NotifyStartCalibration(const Mount* mount);
     void NotifyCalibrationStep(const CalibrationStepInfo& info);
-    void NotifyCalibrationFailed(const Mount *mount, const wxString& msg);
-    void NotifyCalibrationComplete(const Mount *mount);
-    void NotifyCalibrationDataFlipped(const Mount *mount);
-    void NotifyLooping(unsigned int exposure, const Star *star, const FrameDroppedInfo *info);
+    void NotifyCalibrationFailed(const Mount* mount, const wxString& msg);
+    void NotifyCalibrationComplete(const Mount* mount);
+    void NotifyCalibrationDataFlipped(const Mount* mount);
+    void NotifyLooping(unsigned int exposure, const Star* star,
+                       const FrameDroppedInfo* info);
     void NotifyLoopingStopped();
     void NotifyStarSelected(const LGuider_Point& pos);
     void NotifyStarLost(const FrameDroppedInfo& info);
@@ -79,8 +80,10 @@ public:
     void NotifyLockShiftLimitReached();
     void NotifyAppState();
     void NotifySettleBegin();
-    void NotifySettling(double distance, double time, double settleTime, bool starLocked);
-    void NotifySettleDone(const wxString& errorMsg, int settleFrames, int droppedFrames);
+    void NotifySettling(double distance, double time, double settleTime,
+                        bool starLocked);
+    void NotifySettleDone(const wxString& errorMsg, int settleFrames,
+                          int droppedFrames);
     void NotifyAlert(const wxString& msg, int type);
     void NotifyGuidingParam(const wxString& name, double val);
     void NotifyGuidingParam(const wxString& name, int val);

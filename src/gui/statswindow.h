@@ -35,8 +35,7 @@
 #ifndef STATSWINDOW_INCLUDED
 #define STATSWINDOW_INCLUDED
 
-class StatsWindow : public wxWindow
-{
+class StatsWindow : public wxWindow {
     bool m_visible;
     wxGrid *m_grid1;
     wxGrid *m_grid2;
@@ -48,10 +47,10 @@ class StatsWindow : public wxWindow
     int m_coolerRow;
     wxSize m_lastFrameSize;
 
-    void OnButtonLength(wxCommandEvent&);
-    void OnMenuLength(wxCommandEvent&);
-    void OnButtonClear(wxCommandEvent&);
-    void OnTimerCooler(wxTimerEvent&);
+    void OnButtonLength(wxCommandEvent &);
+    void OnMenuLength(wxCommandEvent &);
+    void OnButtonClear(wxCommandEvent &);
+    void OnTimerCooler(wxTimerEvent &);
 
 public:
     StatsWindow(wxWindow *parent);
@@ -60,7 +59,7 @@ public:
     void UpdateStats();
     void UpdateScopePointing();
     void UpdateCooler();
-    void UpdateImageSize(const wxSize& frameSize);
+    void UpdateImageSize(const wxSize &frameSize);
     void ResetImageSize();
     void SetState(bool is_active);
 

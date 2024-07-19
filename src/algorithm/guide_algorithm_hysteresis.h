@@ -40,25 +40,22 @@
 #ifndef GUIDE_ALGORITHM_HYSTERESIS_H_INCLUDED
 #define GUIDE_ALGORITHM_HYSTERESIS_H_INCLUDED
 
-class GuideAlgorithmHysteresis : public GuideAlgorithm
-{
+class GuideAlgorithmHysteresis : public GuideAlgorithm {
     double m_minMove;
     double m_hysteresis;
     double m_aggression;
     double m_lastMove;
 
 protected:
-
-    class GuideAlgorithmHysteresisConfigDialogPane : public ConfigDialogPane
-    {
+    class GuideAlgorithmHysteresisConfigDialogPane : public ConfigDialogPane {
         GuideAlgorithmHysteresis *m_pGuideAlgorithm;
         wxSpinCtrl *m_pHysteresis;
         wxSpinCtrl *m_pAggression;
         wxSpinCtrlDouble *m_pMinMove;
 
-
     public:
-        GuideAlgorithmHysteresisConfigDialogPane(wxWindow *pParent, GuideAlgorithmHysteresis *pGuideAlgorithm);
+        GuideAlgorithmHysteresisConfigDialogPane(
+            wxWindow *pParent, GuideAlgorithmHysteresis *pGuideAlgorithm);
         ~GuideAlgorithmHysteresisConfigDialogPane();
 
         void LoadValues() override;
@@ -67,10 +64,11 @@ protected:
         void EnableDecControls(bool enable) override;
     };
 
-    class GuideAlgorithmHysteresisGraphControlPane : public GraphControlPane
-    {
+    class GuideAlgorithmHysteresisGraphControlPane : public GraphControlPane {
     public:
-        GuideAlgorithmHysteresisGraphControlPane(wxWindow *pParent, GuideAlgorithmHysteresis *pGuideAlgorithm, const wxString& label);
+        GuideAlgorithmHysteresisGraphControlPane(
+            wxWindow *pParent, GuideAlgorithmHysteresis *pGuideAlgorithm,
+            const wxString &label);
         ~GuideAlgorithmHysteresisGraphControlPane();
         void EnableDecControls(bool enable) override;
 
@@ -80,9 +78,9 @@ protected:
         wxSpinCtrl *m_pHysteresis;
         wxSpinCtrlDouble *m_pMinMove;
 
-        void OnAggressionSpinCtrl(wxSpinEvent& evt);
-        void OnHysteresisSpinCtrl(wxSpinEvent& evt);
-        void OnMinMoveSpinCtrlDouble(wxSpinDoubleEvent& evt);
+        void OnAggressionSpinCtrl(wxSpinEvent &evt);
+        void OnHysteresisSpinCtrl(wxSpinEvent &evt);
+        void OnMinMoveSpinCtrlDouble(wxSpinDoubleEvent &evt);
     };
 
     double GetMinMove() const override;
@@ -96,7 +94,6 @@ protected:
     friend class GraphLogWindow;
 
 public:
-
     GuideAlgorithmHysteresis(Mount *pMount, GuideAxis axis);
     ~GuideAlgorithmHysteresis();
 
@@ -105,26 +102,24 @@ public:
     void reset() override;
     double result(double input) override;
     ConfigDialogPane *GetConfigDialogPane(wxWindow *pParent) override;
-    GraphControlPane *GetGraphControlPane(wxWindow *pParent, const wxString& label) override;
+    GraphControlPane *GetGraphControlPane(wxWindow *pParent,
+                                          const wxString &label) override;
     wxString GetSettingsSummary() const override;
-    wxString GetGuideAlgorithmClassName() const override { return "Hysteresis"; }
-    void GetParamNames(wxArrayString& names) const override;
-    bool GetParam(const wxString& name, double *val) const override;
-    bool SetParam(const wxString& name, double val) override;
+    wxString GetGuideAlgorithmClassName() const override {
+        return "Hysteresis";
+    }
+    void GetParamNames(wxArrayString &names) const override;
+    bool GetParam(const wxString &name, double *val) const override;
+    bool SetParam(const wxString &name, double val) override;
 };
 
-inline double GuideAlgorithmHysteresis::GetMinMove() const
-{
-    return m_minMove;
-}
+inline double GuideAlgorithmHysteresis::GetMinMove() const { return m_minMove; }
 
-inline double GuideAlgorithmHysteresis::GetHysteresis() const
-{
+inline double GuideAlgorithmHysteresis::GetHysteresis() const {
     return m_hysteresis;
 }
 
-inline double GuideAlgorithmHysteresis::GetAggression() const
-{
+inline double GuideAlgorithmHysteresis::GetAggression() const {
     return m_aggression;
 }
 #endif /* GUIDE_ALGORITHM_HYSTERESIS_H_INCLUDED */

@@ -34,24 +34,27 @@
 
 #include "lightguider.h"
 
-ConfirmDialog::ConfirmDialog(const wxString& prompt, const wxString& title, const wxString& affirmLabel, const wxString& negativeLabel)
-    : wxDialog(pFrame, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, wxCAPTION | wxCLOSE_BOX)
-{
+ConfirmDialog::ConfirmDialog(const wxString& prompt, const wxString& title,
+                             const wxString& affirmLabel,
+                             const wxString& negativeLabel)
+    : wxDialog(pFrame, wxID_ANY, title, wxDefaultPosition, wxDefaultSize,
+               wxCAPTION | wxCLOSE_BOX) {
     dont_ask_again = new wxCheckBox(this, wxID_ANY, _("Don't ask again"));
-    wxStaticText *txt = new wxStaticText(this, wxID_ANY, prompt);
+    wxStaticText* txt = new wxStaticText(this, wxID_ANY, prompt);
 
-    wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
     sizer->Add(txt, wxSizerFlags(0).Border(wxALL, 10));
     sizer->Add(dont_ask_again, wxSizerFlags(0).Border(wxALL, 10));
 
-    wxBoxSizer *topLevelSizer = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer* topLevelSizer = new wxBoxSizer(wxVERTICAL);
     topLevelSizer->Add(sizer, wxSizerFlags(0).Expand());
 
     // Let CreateButtonSizer create platform-neutral OK/Cancel buttons
     // with correct yes/no and EndModal event behavior - then relabel
     // the buttons if client wants something other than OK and Cancel
 
-    topLevelSizer->Add(CreateButtonSizer(wxOK | wxCANCEL), wxSizerFlags(0).Expand().Border(wxALL, 10));
+    topLevelSizer->Add(CreateButtonSizer(wxOK | wxCANCEL),
+                       wxSizerFlags(0).Expand().Border(wxALL, 10));
     if (!affirmLabel.IsEmpty())
         FindWindow(wxID_OK)->SetLabel(affirmLabel);
     if (!negativeLabel.IsEmpty())
@@ -60,17 +63,14 @@ ConfirmDialog::ConfirmDialog(const wxString& prompt, const wxString& title, cons
     SetSizerAndFit(topLevelSizer);
 }
 
-ConfirmDialog::~ConfirmDialog(void)
-{
-}
+ConfirmDialog::~ConfirmDialog(void) {}
 
-static wxString ConfigKey(const wxString& name)
-{
-    return "/Confirm" + name;
-}
+static wxString ConfigKey(const wxString& name) { return "/Confirm" + name; }
 
-bool ConfirmDialog::Confirm(const wxString& prompt, const wxString& config_key, const wxString& affirmLabel, const wxString& negativeLabel, const wxString& title_arg)
-{
+bool ConfirmDialog::Confirm(const wxString& prompt, const wxString& config_key,
+                            const wxString& affirmLabel,
+                            const wxString& negativeLabel,
+                            const wxString& title_arg) {
     wxString key(ConfigKey(config_key));
 
     bool skip_confirm = pConfig->Global.GetBoolean(key, false);
@@ -82,8 +82,7 @@ bool ConfirmDialog::Confirm(const wxString& prompt, const wxString& config_key, 
         title = _("Confirm");
 
     ConfirmDialog dlg(prompt, title, affirmLabel, negativeLabel);
-    if (dlg.ShowModal() == wxID_OK)
-    {
+    if (dlg.ShowModal() == wxID_OK) {
         if (dlg.dont_ask_again->IsChecked())
             pConfig->Global.SetBoolean(key, true);
         return true;
@@ -92,12 +91,11 @@ bool ConfirmDialog::Confirm(const wxString& prompt, const wxString& config_key, 
     return false;
 }
 
-bool ConfirmDialog::Confirm(const wxString& prompt, const wxString& config_key, const wxString& title_arg)
-{
+bool ConfirmDialog::Confirm(const wxString& prompt, const wxString& config_key,
+                            const wxString& title_arg) {
     return Confirm(prompt, config_key, wxEmptyString, wxEmptyString, title_arg);
 }
 
-void ConfirmDialog::ResetAllDontAskAgain(void)
-{
+void ConfirmDialog::ResetAllDontAskAgain(void) {
     pConfig->Global.DeleteGroup("/Confirm");
 }

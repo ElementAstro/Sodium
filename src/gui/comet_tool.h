@@ -35,9 +35,8 @@
 #ifndef COMET_TOOL_INCLUDED
 #define COMET_TOOL_INCLUDED
 
-class CometTool
-{
-    CometTool(); // not implemented
+class CometTool {
+    CometTool();  // not implemented
 public:
     static wxWindow *CreateCometToolWindow();
     static void NotifyUpdateLockPos();

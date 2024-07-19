@@ -28,23 +28,21 @@ class AnalysisWin;
 struct GuideSession;
 struct Calibration;
 
-enum DragDirection
-{
+enum DragDirection {
     DRAGDIR_UNKNOWN,
     DRAGDIR_HORZ,
     DRAGDIR_VERT,
 };
 
-class LogViewFrame : public LogViewFrameBase
-{
+class LogViewFrame : public LogViewFrameBase {
     wxString m_filename;
     int m_sessionIdx;
-    GuideSession *m_session;
-    Calibration *m_calibration;
+    GuideSession* m_session;
+    Calibration* m_calibration;
     wxTimer m_timer;
 
 public:
-    AnalysisWin *m_analysisWin;
+    AnalysisWin* m_analysisWin;
 
 public:
     LogViewFrame();
@@ -74,7 +72,7 @@ private:
     void OnVMinus(wxCommandEvent& event) override;
     void OnVReset(wxCommandEvent& event) override;
     void OnVPan(wxCommandEvent& event) override;
-    void OnVLock( wxCommandEvent& event) override;
+    void OnVLock(wxCommandEvent& event) override;
     void OnHMinus(wxCommandEvent& event) override;
     void OnHPlus(wxCommandEvent& event) override;
     void OnHReset(wxCommandEvent& event) override;
@@ -101,35 +99,30 @@ private:
     wxDECLARE_EVENT_TABLE();
 };
 
-inline bool LogViewFrame::ArcsecsSelected() const
-{
+inline bool LogViewFrame::ArcsecsSelected() const {
     return m_units->GetSelection() == 0;
 }
 
-class SettingsDialog : public SettingsDialogBase
-{
+class SettingsDialog : public SettingsDialogBase {
 public:
     wxColour m_raColor;
     wxColour m_decColor;
 
-    SettingsDialog(wxWindow *parent) : SettingsDialogBase(parent) { }
+    SettingsDialog(wxWindow* parent) : SettingsDialogBase(parent) {}
     void OnRAColor(wxCommandEvent& event);
     void OnDecColor(wxCommandEvent& event);
 };
 
-extern void SaveGeometry(const wxFrame *win, const wxString& key);
-extern void LoadGeometry(wxFrame *win, const wxString& key);
+extern void SaveGeometry(const wxFrame* win, const wxString& key);
+extern void LoadGeometry(wxFrame* win, const wxString& key);
 
-struct PointArray
-{
-    wxPoint *pts;
+struct PointArray {
+    wxPoint* pts;
     unsigned int size;
-    PointArray() : pts(nullptr), size(0) { }
+    PointArray() : pts(nullptr), size(0) {}
     ~PointArray() { delete[] pts; }
-    void alloc(unsigned int n)
-    {
-        if (size < n)
-        {
+    void alloc(unsigned int n) {
+        if (size < n) {
             delete[] pts;
             pts = new wxPoint[n];
             size = n;
@@ -138,14 +131,12 @@ struct PointArray
 };
 extern PointArray s_tmp;
 
-struct SettleParams
-{
+struct SettleParams {
     double pixels;
     double seconds;
 };
 
-struct Settings
-{
+struct Settings {
     bool excludeByServer;
     bool excludeParametric;
     SettleParams settle;
@@ -155,4 +146,4 @@ struct Settings
 };
 extern Settings s_settings;
 
-#endif // __LogViewFrame__
+#endif  // __LogViewFrame__

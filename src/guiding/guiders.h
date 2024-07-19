@@ -36,7 +36,8 @@
 #ifndef GUIDERS_H_INCLUDED
 #define GUIDERS_H_INCLUDED
 
-#include "guider.h"
 #include "algorithm/guider_multistar.h"
+#include "guider.h"
+
 
 #endif /* GUIDERS_H_INCLUDED */

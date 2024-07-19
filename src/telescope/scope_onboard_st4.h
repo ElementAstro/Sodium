@@ -36,8 +36,7 @@
 #ifndef SCOPE_ONBOARD_ST4_H_INCLUDED
 #define SCOPE_ONBOARD_ST4_H_INCLUDED
 
-class ScopeOnboardST4 : public Scope
-{
+class ScopeOnboardST4 : public Scope {
     OnboardST4 *m_pOnboardHost;
 
 protected:
@@ -55,4 +54,4 @@ public:
     MOVE_RESULT Guide(GUIDE_DIRECTION direction, int duration) override;
 };
 
-#endif // SCOPE_ONBOARD_ST4_H_INCLUDED
+#endif  // SCOPE_ONBOARD_ST4_H_INCLUDED

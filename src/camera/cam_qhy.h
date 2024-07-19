@@ -35,10 +35,9 @@
 #ifndef CAM_QHY_INCLUDED
 #define CAM_QHY_INCLUDED
 
-class QHYCameraFactory
-{
+class QHYCameraFactory {
 public:
     static GuideCamera *MakeQHYCamera();
 };
 
-#endif // QHY5IIBASE_H_INCLUDED
+#endif  // QHY5IIBASE_H_INCLUDED

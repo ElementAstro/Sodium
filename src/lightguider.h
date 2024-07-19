@@ -38,13 +38,13 @@
 #if defined(_WINDOWS)
 // ensure that windows.h does not include winsock.h which is
 // incompatible with winsock2.h
-# undef NOMINMAX
-# define NOMINMAX
-# include <winsock2.h>
-# include <windows.h>
+#undef NOMINMAX
+#define NOMINMAX
+#include <windows.h>
+#include <winsock2.h>
+
 #endif
 
-#include <wx/wx.h>
 #include <wx/aui/aui.h>
 #include <wx/bitmap.h>
 #include <wx/bmpbuttn.h>
@@ -71,11 +71,14 @@
 #include <wx/tglbtn.h>
 #include <wx/thread.h>
 #include <wx/utils.h>
+#include <wx/wx.h>
 
-#include <functional>
-#include <map>
+
 #include <math.h>
 #include <stdarg.h>
+#include <functional>
+#include <map>
+
 
 #define APPNAME _T("Light Guider")
 #define LGVERSION _T("1.0.0")
@@ -83,33 +86,33 @@
 #define LGuiderSUBVER _T("patch1")
 #define FULLVER LGVERSION LGuiderSUBVER
 
-#if defined (__WINDOWS__)
-# pragma warning(disable:4189)
-# pragma warning(disable:4018)
-# pragma warning(disable:4305)
-# pragma warning(disable:4100)
-# pragma warning(disable:4996)
-# if HAVE_VLD
-#  include <vld.h>
-# endif
-#endif // __WINDOWS__
+#if defined(__WINDOWS__)
+#pragma warning(disable : 4189)
+#pragma warning(disable : 4018)
+#pragma warning(disable : 4305)
+#pragma warning(disable : 4100)
+#pragma warning(disable : 4996)
+#if HAVE_VLD
+#include <vld.h>
+#endif
+#endif  // __WINDOWS__
 
 WX_DEFINE_ARRAY_INT(int, ArrayOfInts);
 WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 
-#if defined (__WINDOWS__)
+#if defined(__WINDOWS__)
 #define LGuider_OSNAME _T("Windows")
 #define PATHSEPCH '\\'
 #define PATHSEPSTR "\\"
 #endif
 
-#if defined (__APPLE__)
+#if defined(__APPLE__)
 #define LGuider_OSNAME _T("OSX")
 #define PATHSEPCH '/'
 #define PATHSEPSTR "/"
 #endif
 
-#if defined (__WXGTK__)
+#if defined(__WXGTK__)
 #define LGuider_OSNAME _T("Linux")
 #define PATHSEPCH '/'
 #define PATHSEPSTR _T("/")
@@ -118,15 +121,15 @@ WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 #define DEGREES_SYMBOL "\u00B0"
 #define MICRONS_SYMBOL "\u00B5m"
 
-//#define TEST_TRANSFORMS
+// #define TEST_TRANSFORMS
 
-#define ROUND(x) (int) floor((x) + 0.5)
-#define ROUNDF(x) (int) floorf((x) + 0.5)
+#define ROUND(x) (int)floor((x) + 0.5)
+#define ROUNDF(x) (int)floorf((x) + 0.5)
 #define DIV_ROUND_UP(x, y) (((x) + (y) - 1) / (y))
 
 /* eliminate warnings for unused variables */
 #define POSSIBLY_UNUSED(x) (void)(x)
-//#define POSSIBLY_UNUSED(x) printf(x)
+// #define POSSIBLY_UNUSED(x) printf(x)
 
 // these macros are used for building messages for thrown exceptions
 // It is surprisingly hard to get the line number into a string...
@@ -134,88 +137,98 @@ WX_DEFINE_ARRAY_DOUBLE(double, ArrayOfDbl);
 #define TOSTRING(x) STRINGIFY(x)
 
 #define THROW_INFO_BASE(intro, file, line) intro " " file ":" TOSTRING(line)
-#define LOG_INFO(s) (Debug.AddLine(wxString(THROW_INFO_BASE("At", __FILE__, __LINE__) "->" s)))
-#define THROW_INFO(s) (Debug.AddLine(wxString(THROW_INFO_BASE("Throw from", __FILE__, __LINE__) "->" s)))
-#define ERROR_INFO(s) (Debug.AddLine(wxString(THROW_INFO_BASE("Error thrown from", __FILE__, __LINE__) "->" s)))
+#define LOG_INFO(s)                                                       \
+    (Debug.AddLine(wxString(THROW_INFO_BASE("At", __FILE__, __LINE__) "-" \
+                                                                      ">" s)))
+#define THROW_INFO(s) \
+    (Debug.AddLine(   \
+        wxString(THROW_INFO_BASE("Throw from", __FILE__, __LINE__) "->" s)))
+#define ERROR_INFO(s)        \
+    (Debug.AddLine(wxString( \
+        THROW_INFO_BASE("Error thrown from", __FILE__, __LINE__) "->" s)))
 
-#if defined (__WINDOWS__)
+#if defined(__WINDOWS__)
 #define LGuider_MESSAGES_CATALOG "messages"
 #endif
 
-#if defined (__APPLE__)
+#if defined(__APPLE__)
 #define LGuider_MESSAGES_CATALOG "messages"
 #endif
 
-#if defined (__linux__) || defined (__FreeBSD__)
-// On Linux the messages catalogs for all the applications are in the same directory
-// in /usr/share/locale, so the catalog name must be the application name.
+#if defined(__linux__) || defined(__FreeBSD__)
+// On Linux the messages catalogs for all the applications are in the same
+// directory in /usr/share/locale, so the catalog name must be the application
+// name.
 #define LGuider_MESSAGES_CATALOG "lightguider"
 #endif
 
-#include "lightconfig.h"
+#include "algorithm/guide_algorithms.h"
+#include "ao/stepguiders.h"
+#include "camera/camera.h"
+#include "camera/cameras.h"
+#include "device/onboard_st4.h"
+#include "device/serialports.h"
 #include "gui/configdialog.h"
+#include "gui/graph-stepguider.h"
+#include "gui/graph.h"
+#include "gui/messagebox_proxy.h"
 #include "gui/optionsbutton.h"
-#include "image/usImage.h"
+#include "gui/star_profile.h"
+#include "gui/statswindow.h"
+#include "gui/target.h"
+#include "guiding/circbuf.h"
+#include "guiding/guiders.h"
 #include "guiding/point.h"
 #include "guiding/star.h"
-#include "guiding/circbuf.h"
+#include "image/usImage.h"
+#include "lightconfig.h"
 #include "logger/guidinglog.h"
-#include "gui/graph.h"
-#include "gui/statswindow.h"
-#include "gui/star_profile.h"
-#include "gui/target.h"
-#include "gui/graph-stepguider.h"
-#include "algorithm/guide_algorithms.h"
-#include "guiding/guiders.h"
-#include "gui/messagebox_proxy.h"
-#include "device/serialports.h"
-#include "win32/parallelports.h"
-#include "device/onboard_st4.h"
-#include "camera/cameras.h"
-#include "camera/camera.h"
+#include "rotator/rotators.h"
 #include "telescope/mount.h"
 #include "telescope/scopes.h"
-#include "ao/stepguiders.h"
-#include "rotator/rotators.h"
+#include "win32/parallelports.h"
 
-#include "gui/testguide.h"
+
 #include "gui/advanced_dialog.h"
+#include "gui/confirm_dialog.h"
 #include "gui/gear_dialog.h"
 #include "gui/myframe.h"
-#include "logger/debuglog.h"
-#include "worker_thread.h"
-#include "server/event_server.h"
-#include "gui/confirm_dialog.h"
-#include "lightcontrol.h"
 #include "gui/runinbg.h"
+#include "gui/testguide.h"
+#include "lightcontrol.h"
+#include "logger/debuglog.h"
+#include "server/event_server.h"
+#include "worker_thread.h"
 
-#include "image/image_math.h"
+
 #include "image/fitsiowrap.h"
+#include "image/image_math.h"
 #include "image/imagelogger.h"
+
 
 class wxSingleInstanceChecker;
 
 extern Mount *pMount;
 extern Mount *pSecondaryMount;
-extern Scope *pPointingSource;      // For using an 'aux' mount connection to get pointing info if the user has specified one
+extern Scope *pPointingSource;  // For using an 'aux' mount connection to get
+                                // pointing info if the user has specified one
 extern GuideCamera *pCamera;
 
-inline static Scope *TheScope()
-{
-    return static_cast<Scope *>(pMount && pMount->IsStepGuider() ? pSecondaryMount : pMount);
+inline static Scope *TheScope() {
+    return static_cast<Scope *>(
+        pMount && pMount->IsStepGuider() ? pSecondaryMount : pMount);
 }
 
-inline static StepGuider *TheAO()
-{
-    return static_cast<StepGuider *>(pMount && pMount->IsStepGuider() ? pMount : 0);
+inline static StepGuider *TheAO() {
+    return static_cast<StepGuider *>(pMount && pMount->IsStepGuider() ? pMount
+                                                                      : 0);
 }
 
 // these seem to be the windowing/display related globals
 extern int XWinSize;
 extern int YWinSize;
 
-class PhdApp : public wxApp
-{
+class PhdApp : public wxApp {
     wxSingleInstanceChecker *m_instanceChecker;
     long m_instanceNumber;
     bool m_resetConfig;
@@ -223,16 +236,14 @@ class PhdApp : public wxApp
     wxDateTime m_logFileTime;
 
 protected:
-
     wxLocale m_locale;
 
 public:
-
     PhdApp();
     bool OnInit();
     int OnExit();
-    void OnInitCmdLine(wxCmdLineParser& parser);
-    bool OnCmdLineParsed(wxCmdLineParser & parser);
+    void OnInitCmdLine(wxCmdLineParser &parser);
+    bool OnCmdLineParsed(wxCmdLineParser &parser);
     void TerminateApp();
     void RestartApp();
     void HandleRestart();
@@ -240,16 +251,16 @@ public:
     virtual bool Yield(bool onlyIfNeeded = false);
     static void ExecInMainThread(std::function<void()> func);
     int GetInstanceNumber() const { return m_instanceNumber; }
-    const wxString& GetLGuiderResourcesDir() const { return m_resourcesDir; }
+    const wxString &GetLGuiderResourcesDir() const { return m_resourcesDir; }
     wxString GetLocalesDir() const;
-    const wxLocale& GetLocale() const { return m_locale; }
-    const wxDateTime& GetLogFileTime() const { return m_logFileTime; }
-    static wxDateTime ImagingDay(const wxDateTime& dt);
-    static bool IsSameImagingDay(const wxDateTime& a, const wxDateTime& b);
+    const wxLocale &GetLocale() const { return m_locale; }
+    const wxDateTime &GetLogFileTime() const { return m_logFileTime; }
+    static wxDateTime ImagingDay(const wxDateTime &dt);
+    static bool IsSameImagingDay(const wxDateTime &a, const wxDateTime &b);
     void CheckLogRollover();
     wxString UserAgent() const;
 };
 
 wxDECLARE_APP(PhdApp);
 
-#endif // LGuider_H_INCLUDED
+#endif  // LGuider_H_INCLUDED

@@ -35,30 +35,21 @@
 
 #include "lightguider.h"
 
-bool OnboardST4::ST4HasGuideOutput(void)
-{
-    return false;
-}
+bool OnboardST4::ST4HasGuideOutput(void) { return false; }
 
-bool OnboardST4::ST4HostConnected(void)
-{
+bool OnboardST4::ST4HostConnected(void) {
     assert(false);
     return true;
 }
 
-bool OnboardST4::ST4HasNonGuiMove(void)
-{
+bool OnboardST4::ST4HasNonGuiMove(void) {
     assert(false);
     return true;
 }
 
-bool OnboardST4::ST4SynchronousOnly(void)
-{
-    return true;
-}
+bool OnboardST4::ST4SynchronousOnly(void) { return true; }
 
-bool OnboardST4::ST4PulseGuideScope(int direction, int duration)
-{
+bool OnboardST4::ST4PulseGuideScope(int direction, int duration) {
     assert(false);
     return true;
 }

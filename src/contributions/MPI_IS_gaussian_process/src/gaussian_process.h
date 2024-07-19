@@ -2,8 +2,8 @@
  * Copyright 2014-2017, Max Planck Society.
  * All rights reserved.
  *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
@@ -13,19 +13,20 @@
  *    and/or other materials provided with the distribution.
  *
  * 3. Neither the name of the copyright holder nor the names of its contributors
- *    may be used to endorse or promote products derived from this software without
- *    specific prior written permission.
+ *    may be used to endorse or promote products derived from this software
+ * without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
- * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
- * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
- * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  *
  */
 
@@ -45,13 +46,14 @@
 #define GAUSSIAN_PROCESS_H
 
 #include <Eigen/Dense>
-#include <vector>
+#include <cmath>
+#include <cstdint>
 #include <list>
 #include <memory>
 #include <utility>
-#include <cstdint>
-#include <cmath>
+#include <vector>
 #include "covariance_functions.h"
+
 
 // Constants
 
@@ -59,8 +61,7 @@
 // make the Cholesky decomposition stable.
 #define JITTER 1e-6
 
-class GP
-{
+class GP {
 private:
     covariance_functions::CovFunc* covFunc_;
     covariance_functions::CovFunc* covFuncProj_;
@@ -80,11 +81,11 @@ private:
 public:
     typedef std::pair<Eigen::VectorXd, Eigen::MatrixXd> VectorMatrixPair;
 
-    GP(); // allowing the standard constructor makes the use so much easier!
+    GP();  // allowing the standard constructor makes the use so much easier!
     GP(const covariance_functions::CovFunc& covFunc);
     GP(const double noise_variance,
        const covariance_functions::CovFunc& covFunc);
-    ~GP(); // Need to tidy up
+    ~GP();  // Need to tidy up
 
     GP(const GP& that);
     GP& operator=(const GP& that);
@@ -133,8 +134,7 @@ public:
      * Calls infer() everytime so that the Gram matrix is rebuild and the
      * Cholesky decomposition is computed.
      */
-    void infer(const Eigen::VectorXd& data_loc,
-               const Eigen::VectorXd& data_out,
+    void infer(const Eigen::VectorXd& data_loc, const Eigen::VectorXd& data_out,
                const Eigen::VectorXd& data_var = Eigen::VectorXd());
 
     /*!
@@ -145,10 +145,10 @@ public:
      * mode).
      */
     void inferSD(const Eigen::VectorXd& data_loc,
-                 const Eigen::VectorXd& data_out,
-                 const int n,
+                 const Eigen::VectorXd& data_out, const int n,
                  const Eigen::VectorXd& data_var = Eigen::VectorXd(),
-                 const double prediction_point = std::numeric_limits<double>::quiet_NaN());
+                 const double prediction_point =
+                     std::numeric_limits<double>::quiet_NaN());
 
     /*!
      * Sets the GP back to the prior:
@@ -162,7 +162,8 @@ public:
      * This function just builds the prior and mixed covariance matrices and
      * calls the other predict afterwards.
      */
-    Eigen::VectorXd predict(const Eigen::VectorXd& locations, Eigen::VectorXd* variances = nullptr) const;
+    Eigen::VectorXd predict(const Eigen::VectorXd& locations,
+                            Eigen::VectorXd* variances = nullptr) const;
 
     /*!
      * Predicts the mean and covariance for a vector of locations based on
@@ -171,15 +172,19 @@ public:
      * This function just builds the prior and mixed covariance matrices and
      * calls the other predict afterwards.
      */
-    Eigen::VectorXd predictProjected(const Eigen::VectorXd& locations, Eigen::VectorXd* variances = nullptr) const;
+    Eigen::VectorXd predictProjected(
+        const Eigen::VectorXd& locations,
+        Eigen::VectorXd* variances = nullptr) const;
 
     /*!
      * Does the real work for predict. Solves the Cholesky decomposition for the
      * given matrices. The Gram matrix and measurements need to be cached
      * already.
      */
-    Eigen::VectorXd predict(const Eigen::MatrixXd& prior_cov, const Eigen::MatrixXd& mixed_cov,
-                             const Eigen::MatrixXd& phi = Eigen::MatrixXd() , Eigen::VectorXd* variances = nullptr) const;
+    Eigen::VectorXd predict(const Eigen::MatrixXd& prior_cov,
+                            const Eigen::MatrixXd& mixed_cov,
+                            const Eigen::MatrixXd& phi = Eigen::MatrixXd(),
+                            Eigen::VectorXd* variances = nullptr) const;
 
     /*!
      * Sets the hyperparameters to the given vector.
@@ -200,8 +205,6 @@ public:
      * Disables the use of a explicit linear basis function.
      */
     void disableExplicitTrend();
-
-
 };
 
 #endif  // ifndef GAUSSIAN_PROCESS_H

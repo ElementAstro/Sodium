@@ -32,60 +32,56 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  *
  */
-#include "lightguider.h"
 #include "optionsbutton.h"
+#include "lightguider.h"
+
 
 #include "icons/down_arrow.xpm"
 #include "icons/down_arrow_bold.xpm"
 
 BEGIN_EVENT_TABLE(OptionsButton, wxPanel)
-    EVT_ENTER_WINDOW(OptionsButton::OnMouseEnter)
-    EVT_MOTION(OptionsButton::OnMouseMove)
-    EVT_LEAVE_WINDOW(OptionsButton::OnMouseLeave)
-    EVT_PAINT(OptionsButton::OnPaint)
-    EVT_LEFT_UP(OptionsButton::OnClick)
+EVT_ENTER_WINDOW(OptionsButton::OnMouseEnter)
+EVT_MOTION(OptionsButton::OnMouseMove)
+EVT_LEAVE_WINDOW(OptionsButton::OnMouseLeave)
+EVT_PAINT(OptionsButton::OnPaint)
+EVT_LEFT_UP(OptionsButton::OnClick)
 END_EVENT_TABLE()
 
-enum
-{
+enum {
     PADX = 5,
     PADY = 5,
 };
 
-OptionsButton::OptionsButton(wxWindow *parent, wxWindowID id, const wxString& label,
-                             const wxPoint& pos, const wxSize& size, long style, const wxString& name)
-    :
-    wxPanel(parent, id, pos, size, style, name),
-    m_highlighted(false),
-    m_label(label)
-{
+OptionsButton::OptionsButton(wxWindow* parent, wxWindowID id,
+                             const wxString& label, const wxPoint& pos,
+                             const wxSize& size, long style,
+                             const wxString& name)
+    : wxPanel(parent, id, pos, size, style, name),
+      m_highlighted(false),
+      m_label(label) {
     m_bmp = new wxBitmap(down_arrow);
     m_bmp_bold = new wxBitmap(down_arrow_bold);
 
     SetBackgroundStyle(wxBG_STYLE_PAINT);
 }
 
-OptionsButton::~OptionsButton()
-{
+OptionsButton::~OptionsButton() {
     delete m_bmp;
     delete m_bmp_bold;
 }
 
-wxSize OptionsButton::GetMinSize() const
-{
+wxSize OptionsButton::GetMinSize() const {
     wxSize txtsz = GetTextExtent(m_label);
     return wxSize(PADX + txtsz.x + PADX + m_bmp->GetWidth() + PADX,
-        PADY + txtsz.y + PADY);
+                  PADY + txtsz.y + PADY);
 }
 
-void OptionsButton::SetLabel(const wxString& label)
-{
+void OptionsButton::SetLabel(const wxString& label) {
     m_label = label;
     Refresh();
 }
 
-void OptionsButton::OnPaint(wxPaintEvent & evt)
-{
+void OptionsButton::OnPaint(wxPaintEvent& evt) {
     wxBufferedPaintDC dc(this);
 
     if (m_highlighted)
@@ -100,57 +96,46 @@ void OptionsButton::OnPaint(wxPaintEvent & evt)
     int xbmp = size.GetWidth() - m_bmp->GetWidth() - PADX;
     wxPoint bmp_pos(xbmp, 7);
     int xtxt;
-    if (GetWindowStyleFlag() & wxALIGN_CENTER_HORIZONTAL)
-    {
+    if (GetWindowStyleFlag() & wxALIGN_CENTER_HORIZONTAL) {
         xtxt = (size.GetWidth() - txtsz.GetWidth()) / 2;
-    }
-    else
-    {
+    } else {
         xtxt = PADX;
     }
 
     dc.DrawRectangle(wxPoint(0, 0), size);
     dc.SetTextBackground(wxColor(200, 200, 200));
 
-    if (m_highlighted)
-    {
+    if (m_highlighted) {
         dc.SetTextForeground(wxColor(0, 0, 0));
         dc.DrawText(m_label, xtxt, PADY);
         dc.DrawBitmap(*m_bmp_bold, bmp_pos);
-    }
-    else
-    {
+    } else {
         dc.SetTextForeground(wxColor(56, 56, 56));
         dc.DrawText(m_label, xtxt, PADY);
         dc.DrawBitmap(*m_bmp, bmp_pos);
     }
 }
 
-void OptionsButton::OnMouseEnter(wxMouseEvent& event)
-{
+void OptionsButton::OnMouseEnter(wxMouseEvent& event) {
     m_highlighted = true;
     Refresh();
 }
 
-void OptionsButton::OnMouseMove(wxMouseEvent& event)
-{
-    if (!m_highlighted)
-    {
+void OptionsButton::OnMouseMove(wxMouseEvent& event) {
+    if (!m_highlighted) {
         m_highlighted = true;
         Refresh();
     }
 }
 
-void OptionsButton::OnMouseLeave(wxMouseEvent& event)
-{
+void OptionsButton::OnMouseLeave(wxMouseEvent& event) {
     m_highlighted = false;
     Refresh();
 }
 
-void OptionsButton::OnClick(wxMouseEvent& event)
-{
+void OptionsButton::OnClick(wxMouseEvent& event) {
     wxCommandEvent cmd(wxEVT_COMMAND_BUTTON_CLICKED, GetId());
-#ifdef  __WXGTK__  // Process the event as in wxgtk_button_clicked_callback()
+#ifdef __WXGTK__  // Process the event as in wxgtk_button_clicked_callback()
     HandleWindowEvent(cmd);
 #else
     ::wxPostEvent(GetParent(), cmd);

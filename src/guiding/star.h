@@ -40,17 +40,14 @@
 
 #include "point.h"
 
-class Star : public LGuider_Point
-{
+class Star : public LGuider_Point {
 public:
-    enum FindMode
-    {
+    enum FindMode {
         FIND_CENTROID,
         FIND_PEAK,
     };
 
-    enum FindResult
-    {
+    enum FindResult {
         STAR_OK = 0,
         STAR_SATURATED,
         STAR_LOWSNR,
@@ -61,8 +58,7 @@ public:
         STAR_ERROR,
     };
 
-    enum StarFindLogType
-    {
+    enum StarFindLogType {
         FIND_LOGGING_MINIMAL,
         FIND_LOGGING_VERBOSE,
     };
@@ -75,12 +71,16 @@ public:
     Star();
 
     /*
-     * Note: contrary to most boolean LGuider functions, the star find functions return
-     *       a boolean indicating success instead of a boolean indicating an
+     * Note: contrary to most boolean LGuider functions, the star find functions
+     * return a boolean indicating success instead of a boolean indicating an
      *       error
      */
-    bool Find(const usImage *pImg, int searchRegion, FindMode mode, double min_hfd, unsigned short saturation, StarFindLogType loggingControl);
-    bool Find(const usImage *pImg, int searchRegion, int X, int Y, FindMode mode, double min_hfd, unsigned short saturation, StarFindLogType loggingControl);
+    bool Find(const usImage* pImg, int searchRegion, FindMode mode,
+              double min_hfd, unsigned short saturation,
+              StarFindLogType loggingControl);
+    bool Find(const usImage* pImg, int searchRegion, int X, int Y,
+              FindMode mode, double min_hfd, unsigned short saturation,
+              StarFindLogType loggingControl);
 
     static bool WasFound(FindResult result);
     bool WasFound() const;
@@ -92,13 +92,9 @@ private:
     FindResult m_lastFindResult;
 };
 
-inline Star::FindResult Star::GetError() const
-{
-    return m_lastFindResult;
-}
+inline Star::FindResult Star::GetError() const { return m_lastFindResult; }
 
-class GuideStar : public Star
-{
+class GuideStar : public Star {
 public:
     LGuider_Point referencePoint;
     unsigned int missCount;
@@ -106,26 +102,18 @@ public:
     unsigned int lostCount;
 
     GuideStar()
-        :
-        referencePoint(0., 0.),
-        missCount(0),
-        zeroCount(0),
-        lostCount(0)
-    {
-    }
+        : referencePoint(0., 0.), missCount(0), zeroCount(0), lostCount(0) {}
 
     GuideStar(const Star& star)
-        :
-        Star(star),
-        referencePoint(star),
-        missCount(0),
-        zeroCount(0),
-        lostCount(0)
-    {
-    }
+        : Star(star),
+          referencePoint(star),
+          missCount(0),
+          zeroCount(0),
+          lostCount(0) {}
 
-    bool AutoFind(const usImage& image, int extraEdgeAllowance, int searchRegion, const wxRect& roi,
-        std::vector<GuideStar>& foundStars, int maxStars);
+    bool AutoFind(const usImage& image, int extraEdgeAllowance,
+                  int searchRegion, const wxRect& roi,
+                  std::vector<GuideStar>& foundStars, int maxStars);
 };
 
 #endif /* STAR_H_INCLUDED */

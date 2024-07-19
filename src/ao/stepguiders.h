@@ -33,19 +33,19 @@
  *
  */
 
-#if defined (__WINDOWS__)
+#if defined(__WINDOWS__)
 #define STEPGUIDER_SXAO
 #endif
 
-#if defined (__APPLE__)
+#if defined(__APPLE__)
 #define STEPGUIDER_SXAO
 #endif
 
-#if defined (__linux__) || defined (__FreeBSD__)
+#if defined(__linux__) || defined(__FreeBSD__)
 #define STEPGUIDER_SXAO
 #endif
 
-#if defined (GUIDE_INDI)
+#if defined(GUIDE_INDI)
 #define STEPGUIDER_SXAO_INDI
 #define STEPGUIDER_SBIGAO_INDI
 #endif
@@ -56,8 +56,9 @@
 #define STEPGUIDER_SIMULATOR
 
 #include "stepguider.h"
+#include "stepguider_sbigao_indi.h"
 #include "stepguider_sxao.h"
 #include "stepguider_sxao_indi.h"
-#include "stepguider_sbigao_indi.h"
+
 
 #endif /* STEPGUIDERS_H_INCLUDED */

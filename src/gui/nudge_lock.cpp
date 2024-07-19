@@ -32,23 +32,23 @@
  *
  */
 
-#include "lightguider.h"
 #include "nudge_lock.h"
 #include "comet_tool.h"
+#include "lightguider.h"
+
 
 #include <wx/valnum.h>
 
-struct NudgeLockDialog : public wxDialog
-{
-    wxCheckBox *stayOnTop;
+struct NudgeLockDialog : public wxDialog {
+    wxCheckBox* stayOnTop;
     wxButton *upButton, *downButton, *leftButton, *rightButton;
-    wxSlider *nudgeAmountSlider;
-    wxCheckBox *stickyLockPos;
-    wxStaticText *nudgeAmountText;
+    wxSlider* nudgeAmountSlider;
+    wxCheckBox* stickyLockPos;
+    wxStaticText* nudgeAmountText;
     wxTextCtrl *lockPosCtrlX, *lockPosCtrlY;
-    wxButton *updateLockPosButton;
-    wxButton *saveLockPosButton;
-    wxButton *restoreLockPosButton;
+    wxButton* updateLockPosButton;
+    wxButton* saveLockPosButton;
+    wxButton* restoreLockPosButton;
 
     bool lockPosIsValid;
     double lockPosX, lockPosY;
@@ -72,8 +72,7 @@ struct NudgeLockDialog : public wxDialog
     DECLARE_EVENT_TABLE()
 };
 
-enum
-{
+enum {
     ID_UP_BTN = 1001,
     ID_DOWN_BTN,
     ID_LEFT_BTN,
@@ -86,27 +85,33 @@ enum
     ID_RESTORE_LOCK_POS,
 };
 
-wxBEGIN_EVENT_TABLE(NudgeLockDialog, wxDialog)
-    EVT_CHECKBOX(ID_STAY_ON_TOP, NudgeLockDialog::OnStayOnTopClicked)
-    EVT_BUTTON(ID_UP_BTN, NudgeLockDialog::OnButton)
-    EVT_BUTTON(ID_DOWN_BTN, NudgeLockDialog::OnButton)
-    EVT_BUTTON(ID_LEFT_BTN, NudgeLockDialog::OnButton)
-    EVT_BUTTON(ID_RIGHT_BTN, NudgeLockDialog::OnButton)
-    EVT_SLIDER(ID_NUDGE_AMOUNT, NudgeLockDialog::OnNudgeAmountSlider)
-    EVT_CHECKBOX(ID_STICKY, NudgeLockDialog::OnStickyChecked)
-    EVT_BUTTON(ID_SET_LOCK_POS, NudgeLockDialog::OnSetLockPosClicked)
-    EVT_BUTTON(ID_SAVE_LOCK_POS, NudgeLockDialog::OnSaveLockPosClicked)
-    EVT_BUTTON(ID_RESTORE_LOCK_POS, NudgeLockDialog::OnRestoreLockPosClicked)
-    EVT_COMMAND(wxID_ANY, APPSTATE_NOTIFY_EVENT, NudgeLockDialog::OnAppStateNotify)
-    EVT_CLOSE(NudgeLockDialog::OnClose)
-wxEND_EVENT_TABLE()
+wxBEGIN_EVENT_TABLE(NudgeLockDialog,
+                    wxDialog) EVT_CHECKBOX(ID_STAY_ON_TOP,
+                                           NudgeLockDialog::OnStayOnTopClicked)
+    EVT_BUTTON(ID_UP_BTN,
+               NudgeLockDialog::OnButton) EVT_BUTTON(ID_DOWN_BTN,
+                                                     NudgeLockDialog::OnButton)
+        EVT_BUTTON(ID_LEFT_BTN, NudgeLockDialog::OnButton)
+            EVT_BUTTON(ID_RIGHT_BTN, NudgeLockDialog::OnButton) EVT_SLIDER(
+                ID_NUDGE_AMOUNT, NudgeLockDialog::OnNudgeAmountSlider)
+                EVT_CHECKBOX(ID_STICKY, NudgeLockDialog::OnStickyChecked)
+                    EVT_BUTTON(ID_SET_LOCK_POS,
+                               NudgeLockDialog::OnSetLockPosClicked)
+                        EVT_BUTTON(ID_SAVE_LOCK_POS,
+                                   NudgeLockDialog::OnSaveLockPosClicked)
+                            EVT_BUTTON(ID_RESTORE_LOCK_POS,
+                                       NudgeLockDialog::OnRestoreLockPosClicked)
+                                EVT_COMMAND(wxID_ANY, APPSTATE_NOTIFY_EVENT,
+                                            NudgeLockDialog::OnAppStateNotify)
+                                    EVT_CLOSE(NudgeLockDialog::OnClose)
+                                        wxEND_EVENT_TABLE()
 
-static double NudgeIncrements[] = { 0.01, 0.03, 0.1, 0.3, 1, 3, 10, };
+                                            static double NudgeIncrements[] = {
+                                                0.01, 0.03, 0.1, 0.3, 1, 3, 10,
+};
 
-static int IncrIdx(double incr)
-{
-    for (unsigned int i = 0; i < WXSIZEOF(NudgeIncrements); i++)
-    {
+static int IncrIdx(double incr) {
+    for (unsigned int i = 0; i < WXSIZEOF(NudgeIncrements); i++) {
         if (fabs(incr - NudgeIncrements[i]) < 0.0001)
             return i;
     }
@@ -114,8 +119,8 @@ static int IncrIdx(double incr)
 }
 
 NudgeLockDialog::NudgeLockDialog()
-    : wxDialog(pFrame, wxID_ANY, _("Adjust Lock Position"), wxPoint(-1,-1), wxSize(300,300))
-{
+    : wxDialog(pFrame, wxID_ANY, _("Adjust Lock Position"), wxPoint(-1, -1),
+               wxSize(300, 300)) {
     stayOnTop = new wxCheckBox(this, ID_STAY_ON_TOP, _("Always on top"));
     stayOnTop->SetToolTip(_("Keep this window on top of all others"));
 
@@ -124,56 +129,77 @@ NudgeLockDialog::NudgeLockDialog()
     leftButton = new wxButton(this, ID_LEFT_BTN, _("Left"));
     rightButton = new wxButton(this, ID_RIGHT_BTN, _("Right"));
 
-    wxGridSizer *sz1 = new wxGridSizer(3, 3, 0, 0);
+    wxGridSizer* sz1 = new wxGridSizer(3, 3, 0, 0);
 
     sz1->AddStretchSpacer();
-    sz1->Add(upButton, wxSizerFlags().Expand().Border(wxALL,1));
+    sz1->Add(upButton, wxSizerFlags().Expand().Border(wxALL, 1));
     sz1->AddStretchSpacer();
 
-    sz1->Add(leftButton, wxSizerFlags().Expand().Border(wxALL,1));
+    sz1->Add(leftButton, wxSizerFlags().Expand().Border(wxALL, 1));
     sz1->AddStretchSpacer();
-    sz1->Add(rightButton, wxSizerFlags().Expand().Border(wxALL,1));
+    sz1->Add(rightButton, wxSizerFlags().Expand().Border(wxALL, 1));
 
     sz1->AddStretchSpacer();
-    sz1->Add(downButton, wxSizerFlags().Expand().Border(wxALL,1));
+    sz1->Add(downButton, wxSizerFlags().Expand().Border(wxALL, 1));
 
-    wxBoxSizer *sz0 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* sz0 = new wxBoxSizer(wxHORIZONTAL);
     sz0->AddStretchSpacer();
     sz0->Add(sz1);
     sz0->AddStretchSpacer();
 
-    wxSizer *sz2 = new wxBoxSizer(wxHORIZONTAL);
+    wxSizer* sz2 = new wxBoxSizer(wxHORIZONTAL);
 
-    sz2->Add(new wxStaticText(this, wxID_ANY, _("Step")), wxSizerFlags().Right().Border(wxALL, 5).Align(wxALIGN_CENTER_VERTICAL));
+    sz2->Add(
+        new wxStaticText(this, wxID_ANY, _("Step")),
+        wxSizerFlags().Right().Border(wxALL, 5).Align(wxALIGN_CENTER_VERTICAL));
 
-    double incr = pConfig->Global.GetDouble("/NudgeLock/Amount", NudgeIncrements[2]);
+    double incr =
+        pConfig->Global.GetDouble("/NudgeLock/Amount", NudgeIncrements[2]);
     int idx = IncrIdx(incr);
-    nudgeAmountSlider = new wxSlider(this, ID_NUDGE_AMOUNT, idx, 0, WXSIZEOF(NudgeIncrements) - 1, wxDefaultPosition, wxSize(100, -1));
-    nudgeAmountSlider->SetToolTip(_("Adjust how far the lock position moves when you click the Up/Down/Left/Right buttons"));
+    nudgeAmountSlider = new wxSlider(this, ID_NUDGE_AMOUNT, idx, 0,
+                                     WXSIZEOF(NudgeIncrements) - 1,
+                                     wxDefaultPosition, wxSize(100, -1));
+    nudgeAmountSlider->SetToolTip(
+        _("Adjust how far the lock position moves when you click the "
+          "Up/Down/Left/Right buttons"));
     sz2->Add(nudgeAmountSlider, wxSizerFlags().Expand().Border(wxALL, 0));
 
     nudgeAmountText = new wxStaticText(this, wxID_ANY, _T("1.234"));
-    sz2->Add(nudgeAmountText, wxSizerFlags().Border(wxLEFT, 5).Align(wxALIGN_CENTER_VERTICAL));
+    sz2->Add(nudgeAmountText,
+             wxSizerFlags().Border(wxLEFT, 5).Align(wxALIGN_CENTER_VERTICAL));
 
     stickyLockPos = new wxCheckBox(this, ID_STICKY, _("Sticky Lock Position"));
-    stickyLockPos->SetToolTip(_("Sticky lock position will not follow the star when guiding is stopped and restarted, or after calibration completes"));
+    stickyLockPos->SetToolTip(
+        _("Sticky lock position will not follow the star when guiding is "
+          "stopped and restarted, or after calibration completes"));
     sz2->Add(0, 0, 1, wxEXPAND, 5);
-    sz2->Add(stickyLockPos, wxSizerFlags().Border(wxALL, 5).Align(wxALIGN_CENTER_VERTICAL));
+    sz2->Add(stickyLockPos,
+             wxSizerFlags().Border(wxALL, 5).Align(wxALIGN_CENTER_VERTICAL));
 
-    wxSizer *sz3 = new wxBoxSizer(wxHORIZONTAL);
-    sz3->Add(new wxStaticText(this, wxID_ANY, _("Lock Pos:")), wxSizerFlags().Right().Border(wxALL, 5).Align(wxALIGN_CENTER_VERTICAL));
+    wxSizer* sz3 = new wxBoxSizer(wxHORIZONTAL);
+    sz3->Add(
+        new wxStaticText(this, wxID_ANY, _("Lock Pos:")),
+        wxSizerFlags().Right().Border(wxALL, 5).Align(wxALIGN_CENTER_VERTICAL));
 
-    wxFloatingPointValidator<double> valX(2, &lockPosX, wxNUM_VAL_ZERO_AS_BLANK);
+    wxFloatingPointValidator<double> valX(2, &lockPosX,
+                                          wxNUM_VAL_ZERO_AS_BLANK);
     valX.SetMin(0.0);
-    lockPosCtrlX = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, StringSize(this, _T("12345.67"), 10), 0, valX);
+    lockPosCtrlX =
+        new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition,
+                       StringSize(this, _T("12345.67"), 10), 0, valX);
     lockPosCtrlX->SetToolTip(_("Lock position X coordinate"));
-    sz3->Add(lockPosCtrlX, wxSizerFlags().Border(wxALL, 0).Align(wxALIGN_CENTER_VERTICAL));
+    sz3->Add(lockPosCtrlX,
+             wxSizerFlags().Border(wxALL, 0).Align(wxALIGN_CENTER_VERTICAL));
 
-    wxFloatingPointValidator<double> valY(2, &lockPosY, wxNUM_VAL_ZERO_AS_BLANK);
+    wxFloatingPointValidator<double> valY(2, &lockPosY,
+                                          wxNUM_VAL_ZERO_AS_BLANK);
     valY.SetMin(0.0);
-    lockPosCtrlY = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, StringSize(this, _T("12345.67"), 10), 0, valY);
+    lockPosCtrlY =
+        new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition,
+                       StringSize(this, _T("12345.67"), 10), 0, valY);
     lockPosCtrlY->SetToolTip(_("Lock position Y coordinate"));
-    sz3->Add(lockPosCtrlY, wxSizerFlags().Border(wxLEFT, 5).Align(wxALIGN_CENTER_VERTICAL));
+    sz3->Add(lockPosCtrlY,
+             wxSizerFlags().Border(wxLEFT, 5).Align(wxALIGN_CENTER_VERTICAL));
 
     wxSize s1 = StringSize(this, _("Set"), 10);
     wxSize s2 = StringSize(this, _("Save"), 10);
@@ -182,22 +208,30 @@ NudgeLockDialog::NudgeLockDialog()
     longest = wxMax(longest, s3.GetX());
 
     wxSize btnsize(longest, -1);
-    updateLockPosButton = new wxButton(this, ID_SET_LOCK_POS, _("Set"), wxDefaultPosition, btnsize);
-    updateLockPosButton->SetToolTip(_("Set the lock position to the entered coordinates"));
-    sz3->Add(updateLockPosButton, wxSizerFlags().Border(wxALL, 5).Align(wxALIGN_CENTER_VERTICAL));
-    saveLockPosButton = new wxButton(this, ID_SAVE_LOCK_POS, _("Save"), wxDefaultPosition, btnsize);
-    saveLockPosButton->SetToolTip(_("Save the current lock position so it can be restored later"));
-    sz3->Add(saveLockPosButton, wxSizerFlags().Border(wxALL, 5).Align(wxALIGN_CENTER_VERTICAL));
-    restoreLockPosButton = new wxButton(this, ID_RESTORE_LOCK_POS, _("Restore"), wxDefaultPosition, btnsize);
+    updateLockPosButton = new wxButton(this, ID_SET_LOCK_POS, _("Set"),
+                                       wxDefaultPosition, btnsize);
+    updateLockPosButton->SetToolTip(
+        _("Set the lock position to the entered coordinates"));
+    sz3->Add(updateLockPosButton,
+             wxSizerFlags().Border(wxALL, 5).Align(wxALIGN_CENTER_VERTICAL));
+    saveLockPosButton = new wxButton(this, ID_SAVE_LOCK_POS, _("Save"),
+                                     wxDefaultPosition, btnsize);
+    saveLockPosButton->SetToolTip(
+        _("Save the current lock position so it can be restored later"));
+    sz3->Add(saveLockPosButton,
+             wxSizerFlags().Border(wxALL, 5).Align(wxALIGN_CENTER_VERTICAL));
+    restoreLockPosButton = new wxButton(this, ID_RESTORE_LOCK_POS, _("Restore"),
+                                        wxDefaultPosition, btnsize);
     restoreLockPosButton->SetToolTip(_("Restore the saved lock position"));
-    sz3->Add(restoreLockPosButton, wxSizerFlags().Border(wxRIGHT, 5).Align(wxALIGN_CENTER_VERTICAL));
+    sz3->Add(restoreLockPosButton,
+             wxSizerFlags().Border(wxRIGHT, 5).Align(wxALIGN_CENTER_VERTICAL));
 
-    wxBoxSizer *outerSizer = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer* outerSizer = new wxBoxSizer(wxVERTICAL);
     outerSizer->Add(stayOnTop, wxSizerFlags().Border(wxALL, 5));
     outerSizer->AddSpacer(5);
-    outerSizer->Add(sz0, wxSizerFlags().Border(wxALL,3).Expand());
-    outerSizer->Add(sz2, wxSizerFlags().Border(wxALL,3).Expand());
-    outerSizer->Add(sz3, wxSizerFlags().Border(wxALL,3));
+    outerSizer->Add(sz0, wxSizerFlags().Border(wxALL, 3).Expand());
+    outerSizer->Add(sz2, wxSizerFlags().Border(wxALL, 3).Expand());
+    outerSizer->Add(sz3, wxSizerFlags().Border(wxALL, 3));
 
     UpdateSliderLabel();
     UpdateLockPosCtrls();
@@ -210,29 +244,21 @@ NudgeLockDialog::NudgeLockDialog()
     MyFrame::PlaceWindowOnScreen(this, xpos, ypos);
 }
 
-NudgeLockDialog::~NudgeLockDialog(void)
-{
-    pFrame->pNudgeLock = 0;
-}
+NudgeLockDialog::~NudgeLockDialog(void) { pFrame->pNudgeLock = 0; }
 
-void NudgeLockDialog::UpdateSliderLabel()
-{
+void NudgeLockDialog::UpdateSliderLabel() {
     int idx = nudgeAmountSlider->GetValue();
     double val = NudgeIncrements[idx];
     nudgeAmountText->SetLabel(wxString::Format("%.2f px", val));
 }
 
-void NudgeLockDialog::UpdateLockPosCtrls()
-{
+void NudgeLockDialog::UpdateLockPosCtrls() {
     const LGuider_Point& pos = pFrame->pGuider->LockPosition();
     lockPosIsValid = pos.IsValid();
-    if (lockPosIsValid)
-    {
+    if (lockPosIsValid) {
         lockPosX = pos.X;
         lockPosY = pos.Y;
-    }
-    else
-    {
+    } else {
         lockPosX = 0.0;
         lockPosY = 0.0;
     }
@@ -245,10 +271,8 @@ void NudgeLockDialog::UpdateLockPosCtrls()
     stickyLockPos->SetValue(pFrame->pGuider->LockPosIsSticky());
 }
 
-static bool UpdateLockPos(const LGuider_Point& newPos)
-{
-    if (pFrame->pGuider->IsValidLockPosition(newPos))
-    {
+static bool UpdateLockPos(const LGuider_Point& newPos) {
+    if (pFrame->pGuider->IsValidLockPosition(newPos)) {
         pFrame->pGuider->SetLockPosition(newPos);
         pFrame->Refresh();
         CometTool::NotifyUpdateLockPos();
@@ -257,16 +281,14 @@ static bool UpdateLockPos(const LGuider_Point& newPos)
     return false;
 }
 
-static void DoMove(double dx, double dy)
-{
+static void DoMove(double dx, double dy) {
     LGuider_Point newPos = pFrame->pGuider->LockPosition();
     newPos.X += dx;
     newPos.Y += dy;
     UpdateLockPos(newPos);
 }
 
-void NudgeLockDialog::OnStayOnTopClicked(wxCommandEvent& evt)
-{
+void NudgeLockDialog::OnStayOnTopClicked(wxCommandEvent& evt) {
     long style = GetWindowStyle();
     if (evt.IsChecked())
         SetWindowStyle(style | wxSTAY_ON_TOP);
@@ -274,16 +296,14 @@ void NudgeLockDialog::OnStayOnTopClicked(wxCommandEvent& evt)
         SetWindowStyle(style & ~wxSTAY_ON_TOP);
 }
 
-void NudgeLockDialog::OnButton(wxCommandEvent &evt)
-{
+void NudgeLockDialog::OnButton(wxCommandEvent& evt) {
     if (!lockPosIsValid)
         return;
 
     int idx = nudgeAmountSlider->GetValue();
     double incr = NudgeIncrements[idx];
 
-    switch (evt.GetId())
-    {
+    switch (evt.GetId()) {
         case ID_UP_BTN:
             DoMove(0.0, -incr);
             break;
@@ -299,8 +319,7 @@ void NudgeLockDialog::OnButton(wxCommandEvent &evt)
     }
 }
 
-void NudgeLockDialog::OnNudgeAmountSlider(wxCommandEvent& evt)
-{
+void NudgeLockDialog::OnNudgeAmountSlider(wxCommandEvent& evt) {
     UpdateSliderLabel();
 
     int idx = nudgeAmountSlider->GetValue();
@@ -308,55 +327,48 @@ void NudgeLockDialog::OnNudgeAmountSlider(wxCommandEvent& evt)
     pConfig->Global.SetDouble("/NudgeLock/Amount", val);
 }
 
-void NudgeLockDialog::OnStickyChecked(wxCommandEvent& evt)
-{
+void NudgeLockDialog::OnStickyChecked(wxCommandEvent& evt) {
     bool sticky = evt.IsChecked();
     pFrame->pGuider->SetLockPosIsSticky(sticky);
     pConfig->Global.SetBoolean("/StickyLockPosition", sticky);
     pFrame->tools_menu->FindItem(EEGG_STICKY_LOCK)->Check(sticky);
 }
 
-void NudgeLockDialog::OnSetLockPosClicked(wxCommandEvent& evt)
-{
+void NudgeLockDialog::OnSetLockPosClicked(wxCommandEvent& evt) {
     TransferDataFromWindow();
     LGuider_Point newPos(lockPosX, lockPosY);
-    if (!UpdateLockPos(newPos))
-    {
+    if (!UpdateLockPos(newPos)) {
         UpdateLockPosCtrls();
     }
 }
 
-void NudgeLockDialog::OnSaveLockPosClicked(wxCommandEvent& evt)
-{
+void NudgeLockDialog::OnSaveLockPosClicked(wxCommandEvent& evt) {
     const LGuider_Point& pos = pFrame->pGuider->LockPosition();
-    if (pos.IsValid())
-    {
+    if (pos.IsValid()) {
         pConfig->Profile.SetDouble("/NudgeLock/SavedLockPosX", pos.X);
         pConfig->Profile.SetDouble("/NudgeLock/SavedLockPosY", pos.Y);
     }
 }
 
-void NudgeLockDialog::OnRestoreLockPosClicked(wxCommandEvent& evt)
-{
+void NudgeLockDialog::OnRestoreLockPosClicked(wxCommandEvent& evt) {
     double x = pConfig->Profile.GetDouble("/NudgeLock/SavedLockPosX", -1.0);
     double y = pConfig->Profile.GetDouble("/NudgeLock/SavedLockPosY", -1.0);
     if (x < 0.0 || y < 0.0)
         return;
 
-    if (ConfirmDialog::Confirm(wxString::Format(_("Set lock position to saved value (%.2f,%.2f)?"), x, y),
-        "/RestoreSavedLockPosOK", _("Restore saved Lock Pos")))
-    {
+    if (ConfirmDialog::Confirm(
+            wxString::Format(_("Set lock position to saved value (%.2f,%.2f)?"),
+                             x, y),
+            "/RestoreSavedLockPosOK", _("Restore saved Lock Pos"))) {
         UpdateLockPos(LGuider_Point(x, y));
     }
 }
 
-void NudgeLockDialog::OnAppStateNotify(wxCommandEvent& evt)
-{
+void NudgeLockDialog::OnAppStateNotify(wxCommandEvent& evt) {
     UpdateLockPosCtrls();
 }
 
-void NudgeLockDialog::OnClose(wxCloseEvent& evt)
-{
+void NudgeLockDialog::OnClose(wxCloseEvent& evt) {
     // save the window position
     int x, y;
     GetPosition(&x, &y);
@@ -366,16 +378,13 @@ void NudgeLockDialog::OnClose(wxCloseEvent& evt)
     evt.Skip();
 }
 
-wxWindow *NudgeLockTool::CreateNudgeLockToolWindow()
-{
+wxWindow* NudgeLockTool::CreateNudgeLockToolWindow() {
     return new NudgeLockDialog();
 }
 
-void NudgeLockTool::UpdateNudgeLockControls()
-{
+void NudgeLockTool::UpdateNudgeLockControls() {
     // notify nudge lock tool to update its controls
-    if (pFrame && pFrame->pNudgeLock)
-    {
+    if (pFrame && pFrame->pNudgeLock) {
         wxCommandEvent event(APPSTATE_NOTIFY_EVENT, pFrame->GetId());
         event.SetEventObject(pFrame);
         wxPostEvent(pFrame->pNudgeLock, event);

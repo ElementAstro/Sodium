@@ -36,10 +36,10 @@
  * Copyright (c) 2010, Ivan Vashchaev
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
- *  of this software and associated documentation files (the "Software"), to deal
- *  in the Software without restriction, including without limitation the rights
- *  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *  copies of the Software, and to permit persons to whom the Software is
+ *  of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+ * sell copies of the Software, and to permit persons to whom the Software is
  *  furnished to do so, subject to the following conditions:
  *
  *  The above copyright notice and this permission notice shall be included in
@@ -49,16 +49,15 @@
  *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- *  THE SOFTWARE.
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
  */
 
 #ifndef JSON_PARSER_H
 #define JSON_PARSER_H
 
-enum json_type
-{
+enum json_type {
     JSON_NULL,
     JSON_OBJECT,
     JSON_ARRAY,
@@ -68,16 +67,14 @@ enum json_type
     JSON_BOOL,
 };
 
-struct json_value
-{
+struct json_value {
     json_value *parent;
     json_value *next_sibling;
     json_value *first_child;
     json_value *last_child;
 
     char *name;
-    union
-    {
+    union {
         char *string_value;
         int int_value;
         float float_value;
@@ -86,12 +83,13 @@ struct json_value
     json_type type;
 };
 
-#define json_for_each(_item, _container) for (const json_value *_item = _container->first_child; _item; _item = _item->next_sibling)
+#define json_for_each(_item, _container)                           \
+    for (const json_value *_item = _container->first_child; _item; \
+         _item = _item->next_sibling)
 
 struct JsonParserImpl;
 
-class JsonParser
-{
+class JsonParser {
     JsonParserImpl *m_impl;
 
 public:
@@ -99,7 +97,7 @@ public:
     ~JsonParser();
 
     bool Parse(char *str);
-    bool Parse(const std::string& str);
+    bool Parse(const std::string &str);
 
     const char *ErrorPos() const;
     const char *ErrorDesc() const;
