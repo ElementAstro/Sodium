@@ -1,6 +1,6 @@
 /*
  *  guide_algorithms.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee
@@ -40,8 +40,9 @@
 #ifndef GUIDE_ALGORITHMS_H_INCLUDED
 #define GUIDE_ALGORITHMS_H_INCLUDED
 
-enum GUIDE_ALGORITHM {
-    GUIDE_ALGORITHM_NONE = -1,
+enum GUIDE_ALGORITHM
+{
+    GUIDE_ALGORITHM_NONE=-1,
     GUIDE_ALGORITHM_IDENTITY,
     GUIDE_ALGORITHM_HYSTERESIS,
     GUIDE_ALGORITHM_LOWPASS,
@@ -52,13 +53,12 @@ enum GUIDE_ALGORITHM {
 };
 
 #include "guide_algorithm.h"
-#include "guide_algorithm_gaussian_process.h"
-#include "guide_algorithm_hysteresis.h"
 #include "guide_algorithm_identity.h"
+#include "guide_algorithm_hysteresis.h"
 #include "guide_algorithm_lowpass.h"
 #include "guide_algorithm_lowpass2.h"
 #include "guide_algorithm_resistswitch.h"
+#include "guide_algorithm_gaussian_process.h"
 #include "guide_algorithm_zfilter.h"
-
 
 #endif /* GUIDE_ALGORITHMS_H_INCLUDED */

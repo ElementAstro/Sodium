@@ -1,6 +1,6 @@
 /*
  *  runinbg.cpp
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Andy Galasso.
  *  Copyright (c) 2014-2017 Andy Galasso
@@ -32,19 +32,20 @@
  *
  */
 
-#include "lightguider.h"
+#include "phd.h"
 
 #include <wx/progdlg.h>
 
-struct ProgressWindow : public wxProgressDialog {
-    ProgressWindow(wxWindow *parent, const wxString &title,
-                   const wxString &message)
-        : wxProgressDialog(
-              title, message, 100, parent,
-              wxPD_APP_MODAL | wxPD_AUTO_HIDE | wxPD_SMOOTH | wxPD_CAN_ABORT) {}
+struct ProgressWindow : public wxProgressDialog
+{
+    ProgressWindow(wxWindow *parent, const wxString& title, const wxString& message)
+        : wxProgressDialog(title, message, 100, parent, wxPD_APP_MODAL | wxPD_AUTO_HIDE | wxPD_SMOOTH | wxPD_CAN_ABORT)
+    {
+    }
 };
 
-struct RunInBgImpl : public wxTimer, public wxThreadHelper {
+struct RunInBgImpl : public wxTimer, public wxThreadHelper
+{
     RunInBg *m_bg;
     wxWindow *m_parent;
     wxString m_title;
@@ -59,51 +60,54 @@ struct RunInBgImpl : public wxTimer, public wxThreadHelper {
     wxString m_errorMsg;
     unsigned int m_popupDelayMillis;
 
-    RunInBgImpl(RunInBg *bg, wxWindow *parent, const wxString &title,
-                const wxString &message)
+    RunInBgImpl(RunInBg *bg, wxWindow *parent, const wxString& title, const wxString& message)
         : m_bg(bg),
-          m_parent(parent),
-          m_title(title),
-          m_message(message),
-          m_updateMsg(nullptr),
-          m_win(0),
-          m_shown(false),
-          m_done(false),
-          m_canceled(false),
-          m_popupDelayMillis(2500) {}
+        m_parent(parent),
+        m_title(title),
+        m_message(message),
+        m_updateMsg(nullptr),
+        m_win(0),
+        m_shown(false),
+        m_done(false),
+        m_canceled(false),
+        m_popupDelayMillis(2500)
+    {
+    }
 
-    bool Run() {
+    bool Run()
+    {
         bool err = false;
 
         wxBusyCursor busy;
         if (m_parent)
-            m_parent->SetCursor(wxCURSOR_WAIT);  // need to do this too!
+            m_parent->SetCursor(wxCURSOR_WAIT); // need to do this too!
 #ifndef __APPLE__
         // this makes the progress window inaccessible on OSX
         wxWindowDisabler wd;
-#endif  // __APPLE__
+#endif // __APPLE__
 
         CreateThread();
         wxThread *thread = GetThread();
         thread->Run();
-        m_showTime =
-            wxDateTime::UNow() + wxTimeSpan(0, 0, m_popupDelayMillis / 1000,
-                                            m_popupDelayMillis % 1000);
-        Start(250);  // start timer
-        while (!m_done && !m_canceled) {
+        m_showTime = wxDateTime::UNow() + wxTimeSpan(0, 0, m_popupDelayMillis / 1000, m_popupDelayMillis % 1000);
+        Start(250); // start timer
+        while (!m_done && !m_canceled)
+        {
             wxYield();
             wxMilliSleep(20);
         }
-        Stop();  // stop timer
-        if (m_canceled && !m_done) {
+        Stop(); // stop timer
+        if (m_canceled && !m_done)
+        {
             // give it a bit of time to respond to cancel before killing it
-            for (int i = 0; i < 50 && !m_done; i++) {
+            for (int i = 0; i < 50 && !m_done; i++)
+            {
                 wxYield();
                 wxMilliSleep(20);
             }
-            if (!m_done) {
-                Debug.AddLine(
-                    "Background thread did not respond to cancel... kill it");
+            if (!m_done)
+            {
+                Debug.AddLine("Background thread did not respond to cancel... kill it");
                 m_bg->OnKill();
                 thread->Kill();
                 thread = 0;
@@ -112,7 +116,8 @@ struct RunInBgImpl : public wxTimer, public wxThreadHelper {
         }
         if (m_canceled && m_errorMsg.empty())
             m_errorMsg = _("The operation was canceled");
-        if (m_win) {
+        if (m_win)
+        {
             delete m_win;
             m_win = 0;
         }
@@ -125,37 +130,45 @@ struct RunInBgImpl : public wxTimer, public wxThreadHelper {
         return err;
     }
 
-    void SetMessage(const wxString &message) {
-        if (m_win) {
+    void SetMessage(const wxString& message)
+    {
+        if (m_win)
+        {
             wxCriticalSectionLocker _lck(m_updateMsgCS);
             m_updateMsg = new wxString(message);
-        } else
+        }
+        else
             m_message = message;
     }
 
-    void Notify()  // timer notification
+    void Notify() // timer notification
     {
-        if (!m_shown && wxDateTime::UNow() >= m_showTime) {
+        if (!m_shown && wxDateTime::UNow() >= m_showTime)
+        {
             m_win = new ProgressWindow(m_parent, m_title, m_message);
             m_shown = true;
         }
-        if (m_win) {
+        if (m_win)
+        {
             wxString *updateMsg;
-            {  // lock scope
+            { // lock scope
                 wxCriticalSectionLocker _lck(m_updateMsgCS);
                 updateMsg = m_updateMsg;
                 m_updateMsg = nullptr;
             }
 
             bool cont;
-            if (updateMsg) {
+            if (updateMsg)
+            {
                 cont = m_win->Pulse(*updateMsg);
                 m_message = *updateMsg;
                 delete updateMsg;
-            } else
+            }
+            else
                 cont = m_win->Pulse();
 
-            if (!cont) {
+            if (!cont)
+            {
                 m_canceled = true;
                 Debug.AddLine("Canceled");
                 m_bg->OnCancel();
@@ -165,35 +178,58 @@ struct RunInBgImpl : public wxTimer, public wxThreadHelper {
         }
     }
 
-    wxThread::ExitCode Entry() {
+    wxThread::ExitCode Entry()
+    {
         bool err = m_bg->Entry();
         m_done = true;
-        return (wxThread::ExitCode)err;
+        return (wxThread::ExitCode) err;
     }
 };
 
-RunInBg::RunInBg(wxWindow *parent, const wxString &title,
-                 const wxString &message)
-    : m_impl(new RunInBgImpl(this, parent, title, message)) {}
+RunInBg::RunInBg(wxWindow *parent, const wxString& title, const wxString& message)
+    : m_impl(new RunInBgImpl(this, parent, title, message))
+{
+}
 
-RunInBg::~RunInBg(void) { delete m_impl; }
+RunInBg::~RunInBg(void)
+{
+    delete m_impl;
+}
 
-void RunInBg::SetPopupDelay(unsigned int millis) {
+void RunInBg::SetPopupDelay(unsigned int millis)
+{
     m_impl->m_popupDelayMillis = millis;
 }
 
-bool RunInBg::Run(void) { return m_impl->Run(); }
+bool RunInBg::Run(void)
+{
+    return m_impl->Run();
+}
 
-void RunInBg::SetMessage(const wxString &message) {
+void RunInBg::SetMessage(const wxString& message)
+{
     m_impl->SetMessage(message);
 }
 
-void RunInBg::SetErrorMsg(const wxString &msg) { m_impl->m_errorMsg = msg; }
+void RunInBg::SetErrorMsg(const wxString& msg)
+{
+    m_impl->m_errorMsg = msg;
+}
 
-wxString RunInBg::GetErrorMsg(void) { return m_impl->m_errorMsg; }
+wxString RunInBg::GetErrorMsg(void)
+{
+    return m_impl->m_errorMsg;
+}
 
-bool RunInBg::IsCanceled(void) { return m_impl->m_canceled; }
+bool RunInBg::IsCanceled(void)
+{
+    return m_impl->m_canceled;
+}
 
-void RunInBg::OnCancel() {}
+void RunInBg::OnCancel()
+{
+}
 
-void RunInBg::OnKill() {}
+void RunInBg::OnKill()
+{
+}

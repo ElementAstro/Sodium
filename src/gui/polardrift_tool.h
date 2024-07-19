@@ -1,6 +1,6 @@
 /*
  *  polardrift_tool.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Ken Self
  *  Copyright (c) 2017 Ken Self
@@ -34,11 +34,11 @@
 #ifndef POLARDRIFT_TOOL_H
 #define POLARDRIFT_TOOL_H
 
-class PolarDriftTool {
+class PolarDriftTool
+{
     PolarDriftTool() = delete;
-
 public:
-    static wxWindow* CreatePolarDriftToolWindow();
+    static wxWindow *CreatePolarDriftToolWindow();
     static bool UpdateState();
     static void PaintHelper(wxAutoBufferedPaintDCBase& dc, double scale);
 };

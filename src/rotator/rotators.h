@@ -1,6 +1,6 @@
 /*
  *  rotators.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2015 Andy Galasso
@@ -39,9 +39,11 @@
 #define ROTATOR_ASCOM
 #endif
 
+#define ROTATOR_INDI
 #define ROTATOR_SIMULATOR
 
 #include "rotator.h"
 #include "rotator_ascom.h"
+#include "rotator_indi.h"
 
-#endif  // ROTATORS_INCLUDED
+#endif // ROTATORS_INCLUDED

@@ -1,9 +1,9 @@
 /*
- *  stepguider_sxAO.h
- *  LGuider Guiding
+ *  imagelogger.h
+ *  PHD2 Guiding
  *
- *  Created by Bret McKee
- *  Copyright (c) 2013 Bret McKee
+ *  Created by Andy Galasso
+ *  Copyright (c) 2017 openphdguiding.org
  *  All rights reserved.
  *
  *  This source code is distributed under the following "BSD" license
@@ -14,7 +14,7 @@
  *    Redistributions in binary form must reproduce the above copyright notice,
  *     this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *    Neither the name of openphdguiding.org nor the names of its
+ *    Neither the name of OpenPHDGuiding.org nor the names of its
  *     contributors may be used to endorse or promote products derived from
  *     this software without specific prior written permission.
  *
@@ -32,12 +32,42 @@
  *
  */
 
-#ifndef STEPGUIDER_SXAO_H_INCLUDED
-#define STEPGUIDER_SXAO_H_INCLUDED
+#ifndef IMAGELOGGER_INCLUDED
+#define IMAGELOGGER_INCLUDED
 
-class StepGuiderSxAoFactory {
-public:
-    static StepGuider *MakeStepGuiderSxAo();
+struct ImageLoggerSettings
+{
+    bool loggingEnabled;
+    bool logFramesOverThreshRel;
+    bool logFramesOverThreshPx;
+    bool logFramesDropped;
+    bool logAutoSelectFrames;
+    bool logNextNFrames;
+    double guideErrorThreshRel; // relative error theshold
+    double guideErrorThreshPx; // pixel error theshold
+    unsigned int logNextNFramesCount;
+
+    ImageLoggerSettings() :
+        loggingEnabled(false), logFramesOverThreshRel(false), logFramesOverThreshPx(false),
+        logFramesDropped(false), logAutoSelectFrames(false), logNextNFrames(false)
+    { }
 };
 
-#endif  // if !defined(STEPGUIDER_SXAO_H_INCLUDED)
+class ImageLogger
+{
+public:
+
+    static void Init();
+    static void Destroy();
+
+    static void GetSettings(ImageLoggerSettings *settings);
+    static void ApplySettings(const ImageLoggerSettings& settings);
+
+    static void SaveImage(usImage *img);
+    static void LogImage(const usImage *img, const FrameDroppedInfo& info);
+    static void LogImage(const usImage *img, double distance);
+    static void LogImageStarDeselected(const usImage *img);
+    static void LogAutoSelectImage(const usImage *img, bool succeeded);
+};
+
+#endif // IMAGELOGGER_INCLUDED

@@ -1,6 +1,6 @@
 /*
  *  gear_dialog.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2013 Bret McKee
@@ -14,9 +14,9 @@
  *    Redistributions in binary form must reproduce the above copyright notice,
  *     this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *    Neither the name of Bret McKee, Dad Dog Development, Ltd. nor the names of
- * its contributors may be used to endorse or promote products derived from this
- * software without specific prior written permission.
+ *    Neither the name of Bret McKee, Dad Dog Development, Ltd. nor the names of its
+ *     contributors may be used to endorse or promote products derived from
+ *     this software without specific prior written permission.
  *
  *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -37,12 +37,13 @@
 
 class wxGridBagSizer;
 
-class GearDialog : public wxDialog {
-    GuideCamera* m_pCamera;
-    Scope* m_pScope;
-    Scope* m_pAuxScope;
-    StepGuider* m_pStepGuider;
-    Rotator* m_pRotator;
+class GearDialog : public wxDialog
+{
+    GuideCamera *m_pCamera;
+    Scope       *m_pScope;
+    Scope       *m_pAuxScope;
+    StepGuider  *m_pStepGuider;
+    Rotator     *m_pRotator;
 
     bool m_cameraUpdated;
     bool m_mountUpdated;
@@ -56,43 +57,43 @@ class GearDialog : public wxDialog {
     double m_imageScaleRatio;
     wxArrayString m_cameraIds;
 
-    wxGridBagSizer* m_gearSizer;
+    wxGridBagSizer *m_gearSizer;
 
-    wxChoice* m_profiles;
-    OptionsButton* m_btnProfileManage;
-    wxMenu* m_menuProfileManage;
+    wxChoice *m_profiles;
+    OptionsButton *m_btnProfileManage;
+    wxMenu *m_menuProfileManage;
 
-    wxChoice* m_pCameras;
-    wxButton* m_selectCameraButton;
-    wxButton* m_pSetupCameraButton;
-    wxToggleButton* m_pConnectCameraButton;
+    wxChoice *m_pCameras;
+    wxButton *m_selectCameraButton;
+    wxButton *m_pSetupCameraButton;
+    wxToggleButton *m_pConnectCameraButton;
 
-    wxChoice* m_pScopes;
-    wxButton* m_pSetupScopeButton;
-    wxToggleButton* m_pConnectScopeButton;
+    wxChoice *m_pScopes;
+    wxButton *m_pSetupScopeButton;
+    wxToggleButton *m_pConnectScopeButton;
 
-    wxChoice* m_pAuxScopes;
-    wxButton* m_pSetupAuxScopeButton;
-    wxToggleButton* m_pConnectAuxScopeButton;
+    wxChoice *m_pAuxScopes;
+    wxButton *m_pSetupAuxScopeButton;
+    wxToggleButton *m_pConnectAuxScopeButton;
 
-    wxButton* m_moreButton;
+    wxButton *m_moreButton;
     bool m_showMoreGear;
 
-    wxChoice* m_pStepGuiders;
-    wxButton* m_pSetupStepGuiderButton;
-    wxToggleButton* m_pConnectStepGuiderButton;
+    wxChoice *m_pStepGuiders;
+    wxButton *m_pSetupStepGuiderButton;
+    wxToggleButton *m_pConnectStepGuiderButton;
 
-    wxChoice* m_pRotators;
-    wxButton* m_pSetupRotatorButton;
-    wxToggleButton* m_pConnectRotatorButton;
+    wxChoice *m_pRotators;
+    wxButton *m_pSetupRotatorButton;
+    wxToggleButton *m_pConnectRotatorButton;
 
-    wxButton* m_pConnectAllButton;
-    wxButton* m_pDisconnectAllButton;
+    wxButton *m_pConnectAllButton;
+    wxButton *m_pDisconnectAllButton;
 
     bool m_flushConfig;
 
 public:
-    GearDialog(wxWindow* pParent);
+    GearDialog(wxWindow *pParent);
     ~GearDialog();
 
     void Initialize();
@@ -101,13 +102,13 @@ public:
 
     void ShowProfileWizard();
     void ShowProfileWizard(wxCommandEvent& evt);
-    bool SetProfile(int profileId, wxString* error);
-    bool ConnectAll(wxString* error);
-    bool DisconnectAll(wxString* error);
+    bool SetProfile(int profileId, wxString *error);
+    bool ConnectAll(wxString *error);
+    bool DisconnectAll(wxString *error);
     void Shutdown(bool forced);
     bool IsEmptyProfile();
     bool ReconnectCamera();
-    Scope* AuxScope() const;
+    Scope *AuxScope() const;
     wxString SelectedCameraId() const;
 
 private:
@@ -171,9 +172,12 @@ private:
 
     void OnButtonWizard(wxCommandEvent& event);
 
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
-inline Scope* GearDialog::AuxScope() const { return m_pAuxScope; }
+inline Scope *GearDialog::AuxScope() const
+{
+    return m_pAuxScope;
+}
 
-#endif  // GEAR_DIALOG_H_INCLUDED
+#endif // GEAR_DIALOG_H_INCLUDED

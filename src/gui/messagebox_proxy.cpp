@@ -1,6 +1,6 @@
 /*
  *  messagebox_proxy.cpp
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee
@@ -33,23 +33,25 @@
  *
  */
 
-#include "lightguider.h"
+#include "phd.h"
 
-void wxMessageBoxProxy::showMessageBox(void) {
-    m_result =
-        ::wxMessageBox(m_message, m_caption, m_style, m_parent, m_x, m_y);
+void wxMessageBoxProxy::showMessageBox(void)
+{
+    m_result = ::wxMessageBox(m_message, m_caption, m_style, m_parent, m_x, m_y);
     m_semaphore.Post();
 }
 
-int wxMessageBoxProxy::wxMessageBox(const wxString& message,
-                                    const wxString& caption, int style,
-                                    wxWindow* parent, int x, int y) {
+int wxMessageBoxProxy::wxMessageBox(const wxString& message, const wxString& caption, int style, wxWindow *parent, int x, int y)
+{
     int ret;
 
-    if (wxThread::IsMain()) {
+    if (wxThread::IsMain())
+    {
         Debug.AddLine(wxString::Format(_T("wxMessageBoxProxy(%s)"), message));
         ret = ::wxMessageBox(message, caption, style, parent, x, y);
-    } else {
+    }
+    else
+    {
         m_message = message;
         m_caption = caption;
         m_style = style;
@@ -70,8 +72,9 @@ int wxMessageBoxProxy::wxMessageBox(const wxString& message,
     return ret;
 }
 
-void MyFrame::OnMessageBoxProxy(wxCommandEvent& evt) {
-    wxMessageBoxProxy* pRequest = (wxMessageBoxProxy*)evt.GetClientData();
+void MyFrame::OnMessageBoxProxy(wxCommandEvent& evt)
+{
+    wxMessageBoxProxy *pRequest = (wxMessageBoxProxy *)evt.GetClientData();
 
     pRequest->showMessageBox();
 }

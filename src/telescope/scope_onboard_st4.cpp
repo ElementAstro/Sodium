@@ -1,6 +1,6 @@
 /*
  *  scope_onboard_st4.cpp
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee
@@ -33,49 +33,56 @@
  *
  */
 
+#include "phd.h"
 #include "scope_onboard_st4.h"
-#include "lightguider.h"
 
+ScopeOnboardST4::ScopeOnboardST4(void)
+    :
+    m_pOnboardHost(nullptr)
+{
+}
 
-ScopeOnboardST4::ScopeOnboardST4(void) : m_pOnboardHost(nullptr) {}
-
-ScopeOnboardST4::~ScopeOnboardST4(void) {
-    if (IsConnected()) {
+ScopeOnboardST4::~ScopeOnboardST4(void)
+{
+    if (IsConnected())
+    {
         Disconnect();
     }
     m_pOnboardHost = nullptr;
 }
 
-bool ScopeOnboardST4::ConnectOnboardST4(OnboardST4* pOnboardHost) {
+bool ScopeOnboardST4::ConnectOnboardST4(OnboardST4 *pOnboardHost)
+{
     bool bError = false;
 
-    try {
-        if (!pOnboardHost) {
-            throw ERROR_INFO(
-                "Attempt to Connect OnboardST4 mount with pOnboardHost == "
-                "NULL");
+    try
+    {
+        if (!pOnboardHost)
+        {
+            throw ERROR_INFO("Attempt to Connect OnboardST4 mount with pOnboardHost == NULL");
         }
 
         m_pOnboardHost = pOnboardHost;
 
-        if (IsConnected()) {
+        if (IsConnected())
+        {
             Disconnect();
         }
 
-        if (!m_pOnboardHost->ST4HasGuideOutput()) {
-            throw ERROR_INFO(
-                "Attempt to Connect Onboard ST4 mount when host does not have "
-                "guide output");
+        if (!m_pOnboardHost->ST4HasGuideOutput())
+        {
+            throw ERROR_INFO("Attempt to Connect Onboard ST4 mount when host does not have guide output");
         }
 
-        if (!m_pOnboardHost->ST4HostConnected()) {
-            throw ERROR_INFO(
-                "Attempt to Connect Onboard ST4 mount when host is not "
-                "connected");
+        if (!m_pOnboardHost->ST4HostConnected())
+        {
+            throw ERROR_INFO("Attempt to Connect Onboard ST4 mount when host is not connected");
         }
 
         Scope::Connect();
-    } catch (const wxString& Msg) {
+    }
+    catch (const wxString& Msg)
+    {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -83,13 +90,15 @@ bool ScopeOnboardST4::ConnectOnboardST4(OnboardST4* pOnboardHost) {
     return bError;
 }
 
-bool ScopeOnboardST4::Disconnect(void) {
+bool ScopeOnboardST4::Disconnect(void)
+{
     bool bError = false;
 
-    try {
-        if (!IsConnected()) {
-            throw ERROR_INFO(
-                "Attempt to Disconnect On Camera mount when not connected");
+    try
+    {
+        if (!IsConnected())
+        {
+            throw ERROR_INFO("Attempt to Disconnect On Camera mount when not connected");
         }
 
         assert(m_pOnboardHost);
@@ -97,7 +106,9 @@ bool ScopeOnboardST4::Disconnect(void) {
         m_pOnboardHost = nullptr;
 
         bError = Scope::Disconnect();
-    } catch (const wxString& Msg) {
+    }
+    catch (const wxString& Msg)
+    {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -105,32 +116,34 @@ bool ScopeOnboardST4::Disconnect(void) {
     return bError;
 }
 
-Mount::MOVE_RESULT ScopeOnboardST4::Guide(GUIDE_DIRECTION direction,
-                                          int duration) {
+Mount::MOVE_RESULT ScopeOnboardST4::Guide(GUIDE_DIRECTION direction, int duration)
+{
     MOVE_RESULT result = MOVE_OK;
 
-    try {
-        if (!IsConnected()) {
-            throw ERROR_INFO(
-                "Attempt to Guide On Camera mount when not connected");
+    try
+    {
+        if (!IsConnected())
+        {
+            throw ERROR_INFO("Attempt to Guide On Camera mount when not connected");
         }
 
-        if (!m_pOnboardHost) {
-            throw ERROR_INFO(
-                "Attempt to Guide OnboardST4 mount when m_pOnboardHost == "
-                "NULL");
+        if (!m_pOnboardHost)
+        {
+            throw ERROR_INFO("Attempt to Guide OnboardST4 mount when m_pOnboardHost == NULL");
         }
 
-        if (!m_pOnboardHost->ST4HostConnected()) {
-            throw ERROR_INFO(
-                "Attempt to Guide On Camera mount when camera is not "
-                "connected");
+        if (!m_pOnboardHost->ST4HostConnected())
+        {
+            throw ERROR_INFO("Attempt to Guide On Camera mount when camera is not connected");
         }
 
-        if (m_pOnboardHost->ST4PulseGuideScope(direction, duration)) {
+        if (m_pOnboardHost->ST4PulseGuideScope(direction,duration))
+        {
             result = MOVE_ERROR;
         }
-    } catch (const wxString& Msg) {
+    }
+    catch (const wxString& Msg)
+    {
         POSSIBLY_UNUSED(Msg);
         result = MOVE_ERROR;
     }
@@ -138,58 +151,62 @@ Mount::MOVE_RESULT ScopeOnboardST4::Guide(GUIDE_DIRECTION direction,
     return result;
 }
 
-bool ScopeOnboardST4::HasNonGuiMove(void) {
+bool ScopeOnboardST4::HasNonGuiMove(void)
+{
     bool bReturn = false;
 
-    try {
-        if (!IsConnected()) {
-            throw ERROR_INFO(
-                "Attempt to HasNonGuiMove OnboardST4 when not connected");
+    try
+    {
+        if (!IsConnected())
+        {
+            throw ERROR_INFO("Attempt to HasNonGuiMove OnboardST4 when not connected");
         }
 
-        if (!m_pOnboardHost) {
-            throw ERROR_INFO(
-                "Attempt HasNonGuiMove OnboardST4 when m_pOnboardHost == NULL");
+        if (!m_pOnboardHost)
+        {
+            throw ERROR_INFO("Attempt HasNonGuiMove OnboardST4 when m_pOnboardHost == NULL");
         }
 
-        if (!m_pOnboardHost->ST4HostConnected()) {
-            throw ERROR_INFO(
-                "Attempt to HasNonGuiMove OnboardST4 when host is not "
-                "connected");
+        if (!m_pOnboardHost->ST4HostConnected())
+        {
+            throw ERROR_INFO("Attempt to HasNonGuiMove OnboardST4 when host is not connected");
         }
 
         bReturn = m_pOnboardHost->ST4HasNonGuiMove();
-    } catch (const wxString& Msg) {
+    }
+    catch (const wxString& Msg)
+    {
         POSSIBLY_UNUSED(Msg);
     }
 
     return bReturn;
 }
 
-bool ScopeOnboardST4::SynchronousOnly(void) {
+bool ScopeOnboardST4::SynchronousOnly(void)
+{
     bool syncOnly = true;
 
-    try {
-        if (!IsConnected()) {
-            throw ERROR_INFO(
-                "ScopeOnboardST4: Attempt to get SynchronousOnly when not "
-                "connected");
+    try
+    {
+        if (!IsConnected())
+        {
+            throw ERROR_INFO("ScopeOnboardST4: Attempt to get SynchronousOnly when not connected");
         }
 
-        if (!m_pOnboardHost) {
-            throw ERROR_INFO(
-                "ScopeOnboardST4: Attempt get SynchronousOnly m_pOnboardHost "
-                "== NULL");
+        if (!m_pOnboardHost)
+        {
+            throw ERROR_INFO("ScopeOnboardST4: Attempt get SynchronousOnly m_pOnboardHost == NULL");
         }
 
-        if (!m_pOnboardHost->ST4HostConnected()) {
-            throw ERROR_INFO(
-                "ScopeOnboardST4: Attempt to get SynchronousOnly when host not "
-                "connected");
+        if (!m_pOnboardHost->ST4HostConnected())
+        {
+            throw ERROR_INFO("ScopeOnboardST4: Attempt to get SynchronousOnly when host not connected");
         }
 
         syncOnly = m_pOnboardHost->ST4SynchronousOnly();
-    } catch (const wxString& Msg) {
+    }
+    catch (const wxString& Msg)
+    {
         POSSIBLY_UNUSED(Msg);
     }
 

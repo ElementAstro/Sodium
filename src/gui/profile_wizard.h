@@ -1,5 +1,5 @@
 /*  profile_wizard.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bruce Waddington
  *  Copyright (c) 2014 Bruce Waddington
@@ -37,10 +37,10 @@
 
 class wxWindow;
 
-class EquipmentProfileWizard {
+class EquipmentProfileWizard
+{
 public:
-    static bool ShowModal(wxWindow *parent, bool showGreeting,
-                          bool *darks_requested);
+    static bool ShowModal(wxWindow *parent, bool showGreeting, bool *darks_requested);
 };
 
 #endif

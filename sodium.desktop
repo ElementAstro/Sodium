@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Encoding=UTF-8
+Name=Sodium
+Comment=Sodium Modified from PHD2
+Exec=lightguider
+Icon=sodium
+Terminal=false
+Type=Application
+Categories=Astronomy;
+GenericName=Sodium

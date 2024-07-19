@@ -1,6 +1,6 @@
 /*
  *  scope_ascom.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -44,7 +44,8 @@
 
 #include "comdispatch.h"
 
-class ScopeASCOM : public Scope {
+class ScopeASCOM : public Scope
+{
     GITEntry m_gitEntry;
 
     // DISPIDs we reuse
@@ -74,16 +75,16 @@ class ScopeASCOM : public Scope {
     bool m_abortSlewWhenGuidingStuck;
     bool m_checkForSyncPulseGuide;
 
-    wxString m_choice;  // name of chosen scope
+    wxString m_choice; // name of chosen scope
 
     // private functions
-    bool Create(DispatchObj &obj);
+    bool Create(DispatchObj& obj);
     bool IsGuiding(DispatchObj *pScopeDriver);
     bool IsSlewing(DispatchObj *pScopeDriver);
     void AbortSlew(DispatchObj *pScopeDriver);
 
 public:
-    ScopeASCOM(const wxString &choice);
+    ScopeASCOM(const wxString& choice);
     virtual ~ScopeASCOM();
     static wxArrayString EnumAscomScopes();
 
@@ -97,7 +98,7 @@ public:
 
     MOVE_RESULT Guide(GUIDE_DIRECTION direction, int durationMs) override;
 
-    double GetDeclination() override;
+    double GetDeclinationRadians() override;
     bool GetGuideRates(double *pRAGuideRate, double *pDecGuideRate) override;
     bool GetCoordinates(double *ra, double *dec, double *siderealTime) override;
     bool GetSiteLatLong(double *latitude, double *longitude) override;
@@ -113,5 +114,5 @@ public:
     PierSide SideOfPier() override;
 };
 
-#endif  // GUIDE_ASCOM
-#endif  // SCOPE_ASCOM_INCLUDED
+#endif // GUIDE_ASCOM
+#endif // SCOPE_ASCOM_INCLUDED

@@ -1,6 +1,6 @@
 /*
  *  optionsbutton.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2013 Andy Galasso
@@ -35,23 +35,24 @@
 #ifndef OPTIONSBUTTON_INCLUDED
 #define OPTIONSBUTTON_INCLUDED
 
-class OptionsButton : public wxPanel {
+class OptionsButton : public wxPanel
+{
     bool m_highlighted;
     wxString m_label;
-    wxBitmap* m_bmp;
-    wxBitmap* m_bmp_bold;
+    wxBitmap *m_bmp;
+    wxBitmap *m_bmp_bold;
 
 public:
-    OptionsButton(wxWindow* parent, wxWindowID id, const wxString& label,
-                  const wxPoint& pos = wxDefaultPosition,
-                  const wxSize& size = wxDefaultSize,
-                  long style = wxTAB_TRAVERSAL,
-                  const wxString& name = "OptionsButton");
+
+    OptionsButton(wxWindow *parent, wxWindowID id, const wxString& label,
+                  const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize,
+                  long style = wxTAB_TRAVERSAL, const wxString& name = "OptionsButton");
     ~OptionsButton();
 
     void SetLabel(const wxString& label);
 
 private:
+
     wxSize GetMinSize() const;
 
     void OnPaint(wxPaintEvent& evt);
@@ -60,7 +61,7 @@ private:
     void OnMouseLeave(wxMouseEvent& evt);
     void OnClick(wxMouseEvent& evt);
 
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
 #endif

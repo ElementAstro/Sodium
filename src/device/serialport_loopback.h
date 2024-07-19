@@ -1,6 +1,6 @@
 /*
  *  serialport_loopback.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2013 Bret McKee
@@ -36,18 +36,19 @@
 #if !defined(SERIALPORT_LOOPBACK_H_INCLUDED)
 #define SERIALPORT_LOOPBACK_H_INCLUDED
 
-class SerialPortLoopback : public SerialPort {
+class SerialPortLoopback : public SerialPort
+{
     const static int MaxDataSize = 128;
     char m_data;
 
 public:
+
     wxArrayString GetSerialPortList() override;
 
     SerialPortLoopback();
     virtual ~SerialPortLoopback();
 
-    bool Connect(const wxString &portName, int baud, int dataBits, int stopBits,
-                 PARITY Parity, bool useRTS, bool useDTR) override;
+    bool Connect(const wxString& portName, int baud, int dataBits, int stopBits, PARITY Parity, bool useRTS, bool useDTR) override;
     bool Disconnect() override;
 
     bool Send(const unsigned char *pData, unsigned count) override;
@@ -56,4 +57,4 @@ public:
     bool Receive(unsigned char *pData, unsigned count) override;
 };
 
-#endif  // SERIALPORT_LOOPBACK_H_INCLUDED
+#endif // SERIALPORT_LOOPBACK_H_INCLUDED

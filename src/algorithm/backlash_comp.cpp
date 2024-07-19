@@ -1,6 +1,6 @@
 /*
  *  backlash_comp.cpp
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bruce Waddington
  *  Copyright (c) 2015 Bruce Waddington and Andy Galasso
@@ -34,7 +34,7 @@
  */
 
 #include "backlash_comp.h"
-#include "lightguider.h"
+#include "phd.h"
 
 
 #include <algorithm>
@@ -900,11 +900,11 @@ BacklashTool::MeasurementResults BacklashTool::ComputeBacklashPx(
     return rslt;
 }
 
-void BacklashTool::DecMeasurementStep(const LGuider_Point &currentCamLoc) {
+void BacklashTool::DecMeasurementStep(const PHD_Point &currentCamLoc) {
     double decDelta = 0.;
     double amt = 0;
     // double fakeDeltas []= {0, -5, -2, 2, 4, 5, 5, 5, 5 };
-    LGuider_Point currMountLocation;
+    PHD_Point currMountLocation;
     double tol;
     try {
         if (m_scope->TransformCameraCoordinatesToMountCoordinates(

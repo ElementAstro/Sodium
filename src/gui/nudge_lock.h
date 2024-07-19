@@ -1,6 +1,6 @@
 /*
  *  nudge_lock_tool.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2014 Andy Galasso
@@ -36,8 +36,9 @@
 #ifndef NUDGE_LOCK_TOOL_INCLUDED
 #define NUDGE_LOCK_TOOL_INCLUDED
 
-class NudgeLockTool {
-    NudgeLockTool();  // not implemented
+class NudgeLockTool
+{
+    NudgeLockTool(); // not implemented
 public:
     static wxWindow *CreateNudgeLockToolWindow();
     static void UpdateNudgeLockControls();

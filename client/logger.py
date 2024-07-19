@@ -21,7 +21,8 @@ Boston, MA 02110-1301, USA.
 import os
 import logging
 
-def create_logger(name : str) -> logging.Logger:
+
+def create_logger(name: str) -> logging.Logger:
     """
         Create a logger instance for the given name.
         Args : name : str # usually the name of the module
@@ -32,13 +33,15 @@ def create_logger(name : str) -> logging.Logger:
     filename = f'logs/{name}.log'
     fh = logging.FileHandler(filename, mode='w+', encoding='utf-8')
     ch = logging.StreamHandler()
-    formatter = logging.Formatter('[%(asctime)s][%(name)s][%(levelname)s] - %(message)s')
+    formatter = logging.Formatter(
+        '[%(asctime)s][%(name)s][%(levelname)s] - %(message)s')
     logger.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
     ch.setFormatter(formatter)
     logger.addHandler(fh)
     logger.addHandler(ch)
     return logger
+
 
 # if the log folder is not exist, create it
 if not os.path.exists("./logs"):

@@ -1,6 +1,6 @@
 /*
  *  parallelport_win32.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2013 Bret McKee
@@ -33,13 +33,15 @@
  *
  */
 
-#if !defined(PARALLELPORT_WIN32_H_INCLUDED) && defined(__WINDOWS__)
+#if !defined(PARALLELPORT_WIN32_H_INCLUDED) && defined (__WINDOWS__)
 #define PARALLELPORT_WIN32_H_INCLUDED
 
-class ParallelPortWin32 : public ParallelPort {
+class ParallelPortWin32:public ParallelPort
+{
     short m_portAddr;
 
 public:
+
     ParallelPortWin32(void);
     virtual ~ParallelPortWin32(void);
 
@@ -48,8 +50,8 @@ public:
     virtual bool Connect(const wxString& portName);
     virtual bool Disconnect(void);
 
-    virtual bool ReadByte(UINT8* pData);
+    virtual bool ReadByte(UINT8 *pData);
     virtual bool WriteByte(UINT8 data);
 };
 
-#endif  // PARALLELPORT_WIN32_H_INCLUDED
+#endif // PARALLELPORT_WIN32_H_INCLUDED

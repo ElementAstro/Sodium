@@ -1,9 +1,10 @@
 /*
  *  darks_dialog.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
- *  Created by Bruce Waddington in collaboration with David Ault and Andy
- * Galasso Copyright (c) 2014 Bruce Waddington All rights reserved.
+ *  Created by Bruce Waddington in collaboration with David Ault and Andy Galasso
+ *  Copyright (c) 2014 Bruce Waddington
+ *  All rights reserved.
  *
  *  This source code is distributed under the following "BSD" license
  *  Redistribution and use in source and binary forms, with or without
@@ -35,25 +36,12 @@
 #ifndef DarksDialog_h_included
 #define DarksDialog_h_included
 
-class DarksDialog : public wxDialog {
+class DarksDialog : public wxDialog
+{
 private:
     bool m_cancelling;
     bool m_started;
     // wx UI controls
-
-    void OnStart(wxCommandEvent &evt);
-    void OnStop(wxCommandEvent &evt);
-    void OnReset(wxCommandEvent &evt);
-    void SaveProfileInfo();
-    void ShowStatus(const wxString msg, bool appending);
-    bool CreateMasterDarkFrame(usImage &dark, int expTime, int frameCount);
-
-public:
-    DarksDialog(wxWindow *parent, bool darkLibrary);
-    ~DarksDialog(void);
-
-    bool OnServerStart();
-
     wxComboBox *m_pDarkMinExpTime;
     wxComboBox *m_pDarkMaxExpTime;
     wxSpinCtrl *m_pDarkCount;
@@ -68,9 +56,20 @@ public:
     wxStatusBar *m_pStatusBar;
     wxButton *m_pStopBtn;
     wxArrayString m_expStrings;
+    void OnStart(wxCommandEvent& evt);
+    void OnStop(wxCommandEvent& evt);
+    void OnReset(wxCommandEvent& evt);
+    void SaveProfileInfo();
+    void ShowStatus(const wxString msg, bool appending);
+    bool CreateMasterDarkFrame(usImage& dark, int expTime, int frameCount);
+
+public:
+    DarksDialog(wxWindow *parent, bool darkLibrary);
+    ~DarksDialog(void);
 
 private:
     bool buildDarkLib;
+
 };
 
 #endif

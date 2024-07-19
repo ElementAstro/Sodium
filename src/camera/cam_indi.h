@@ -1,6 +1,6 @@
 /*
  *  cam_indi.h
- *  Open LGuider Guiding
+ *  Open PHD Guiding
  *
  *  Copyright (c) 2020 Andy Galasso.
  *  All rights reserved.
@@ -36,9 +36,10 @@
 
 class GuideCamera;
 
-class INDICameraFactory {
+class INDICameraFactory
+{
 public:
     static GuideCamera *MakeINDICamera();
 };
 
-#endif  // CAM_INDI_INCLUDED
+#endif // CAM_INDI_INCLUDED

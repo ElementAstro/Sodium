@@ -1,6 +1,6 @@
 /*
  *  drift_tool.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2013 Andy Galasso
@@ -34,8 +34,9 @@
 #ifndef DRIFT_TOOL_H
 #define DRIFT_TOOL_H
 
-class DriftTool {
-    DriftTool();  // not implemented
+class DriftTool
+{
+    DriftTool(); // not implemented
 public:
     static wxWindow *CreateDriftToolWindow();
 };

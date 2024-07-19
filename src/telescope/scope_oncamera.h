@@ -1,6 +1,6 @@
 /*
  *  scope_oncamera.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee
@@ -37,7 +37,8 @@
 
 #include "scope_onboard_st4.h"
 
-class ScopeOnCamera : public ScopeOnboardST4 {
+class ScopeOnCamera : public ScopeOnboardST4
+{
 public:
     ScopeOnCamera();
     virtual ~ScopeOnCamera();
@@ -48,4 +49,4 @@ public:
     bool HasNonGuiMove() override;
 };
 
-#endif  // GUIDE_ONCAMERA
+#endif // GUIDE_ONCAMERA

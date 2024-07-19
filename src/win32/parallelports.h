@@ -1,6 +1,6 @@
 /*
  *  parallelports.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2013 Bret McKee
@@ -39,4 +39,4 @@
 #include "parallelport.h"
 #include "parallelport_win32.h"
 
-#endif  // PARALLELPORTS_H_INCLUDED
+#endif // PARALLELPORTS_H_INCLUDED

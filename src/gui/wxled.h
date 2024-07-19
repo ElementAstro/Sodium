@@ -10,33 +10,35 @@
 #ifndef _WX_LED_H_
 #define _WX_LED_H_
 
+#include <wx/window.h>
 #include <wx/bitmap.h>
 #include <wx/dcclient.h>
 #include <wx/thread.h>
-#include <wx/window.h>
 
-class WXDLLEXPORT wxLed : public wxWindow {
-public:
-    wxLed(wxWindow* parent, wxWindowID id, const char* disabledColor = "000000",
-          const wxPoint& pos = wxDefaultPosition,
-          const wxSize& size = wxDefaultSize);
-    ~wxLed();
+class WXDLLEXPORT wxLed : public wxWindow
+{
+	public :
 
-    bool Enable(bool enable = true);
-    void SetColor(const char* rgb);
+		wxLed (wxWindow * parent, wxWindowID id, const char * disabledColor = "000000", const wxPoint & pos = wxDefaultPosition, const wxSize & size = wxDefaultSize) ;
+		~wxLed () ;
 
-protected:
-    char m_enabledColor[7];
-    char m_disabledColor[7];
-    char m_color[7];
-    wxBitmap* m_bitmap;
-    wxMutex m_mutex;
+		bool Enable (bool enable = true) ;
+		void SetColor (const char * rgb) ;
 
-    void OnPaint(wxPaintEvent& event);
-    virtual void SetBitmap(const char* color);
+	protected :
 
-private:
-    DECLARE_EVENT_TABLE()
-};
+		char m_enabledColor [7] ;
+		char m_disabledColor [7] ;
+		char m_color [7] ;
+		wxBitmap * m_bitmap ;
+		wxMutex m_mutex ;
 
-#endif  // _WX_LED_H_
+		void OnPaint (wxPaintEvent & event) ;
+		virtual void SetBitmap (const char * color) ;
+
+	private :
+
+		wxDECLARE_EVENT_TABLE();
+} ;
+
+#endif // _WX_LED_H_

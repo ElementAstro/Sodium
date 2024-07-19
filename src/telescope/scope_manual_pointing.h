@@ -1,6 +1,6 @@
 /*
  *  scope_manual_pointing.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Andy Galasso.
  *  Copyright (c) 2016 openphdguiding.org
@@ -35,18 +35,19 @@
 #ifndef SCOPE_MANUAL_POINTING_INCLUDED
 #define SCOPE_MANUAL_POINTING_INCLUDED
 
-class ScopeManualPointing : public Scope {
-    double m_latitude;   // degrees
-    double m_longitude;  // degrees
-    double m_ra;         // hours
-    double m_dec;        // radians
+class ScopeManualPointing : public Scope
+{
+    double m_latitude; // degrees
+    double m_longitude; // degrees
+    double m_ra; // hours
+    double m_dec; // radians
     PierSide m_sideOfPier;
 
 public:
     static wxString GetDisplayName();
     bool Connect() override;
     MOVE_RESULT Guide(GUIDE_DIRECTION, int) override;
-    double GetDeclination() override;
+    double GetDeclinationRadians() override;
     bool GetCoordinates(double *ra, double *dec, double *siderealTime) override;
     bool GetSiteLatLong(double *latitude, double *longitude) override;
     PierSide SideOfPier() override;

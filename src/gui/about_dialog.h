@@ -1,6 +1,6 @@
 /*
  *  about_dialog.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Sylvain Girard.
  *  Copyright (c) 2013 Sylvain Girard.
@@ -35,14 +35,16 @@
 #ifndef ABOUT_DIALOG_H_INCLUDED
 #define ABOUT_DIALOG_H_INCLUDED
 
-class AboutDialog : public wxDialog {
+class AboutDialog :
+    public wxDialog
+{
 public:
     AboutDialog(void);
     ~AboutDialog(void);
 
 private:
-    void OnLink(wxHtmlLinkEvent& event);
-    DECLARE_EVENT_TABLE()
+    void OnLink(wxHtmlLinkEvent & event);
+    wxDECLARE_EVENT_TABLE();
 };
 
-#endif  // ABOUT_DIALOG_H_INCLUDED
+#endif // ABOUT_DIALOG_H_INCLUDED

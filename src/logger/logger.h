@@ -1,6 +1,6 @@
 /*
  *  logger.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bruce Waddington
  *  Copyright (c) 2013 Bruce Waddington
@@ -35,15 +35,18 @@
 #ifndef LOGGER_H_INCLUDED
 #define LOGGER_H_INCLUDED
 
-class Logger {
+class Logger
+{
     wxString m_CurrentDir;
     bool m_Initialized;
 
 protected:
+
     bool SetLogDir(const wxString& newdir);
     virtual bool ChangeDirLog(const wxString& newdir);
 
 public:
+
     Logger();
     virtual ~Logger();
 

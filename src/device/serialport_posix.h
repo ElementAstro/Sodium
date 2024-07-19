@@ -1,6 +1,6 @@
 /*
  *  serialport_posix.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Hans Lambermont
  *  Copyright (c) 2016 Hans Lambermont
@@ -35,24 +35,25 @@
 #if !defined(SERIALPORT_POSIX_H_INCLUDED)
 #define SERIALPORT_POSIX_H_INCLUDED
 
-#if defined(__linux__) || defined(__APPLE__) || defined(__FreeBSD__)
+#if defined (__linux__) || defined (__APPLE__) || defined (__FreeBSD__)
 
 #include <termios.h>
 
-class SerialPortPosix : public SerialPort {
+class SerialPortPosix : public SerialPort
+{
     int m_fd;
-#if defined(__APPLE__)
+#if defined (__APPLE__)
     struct termios m_originalAttrs;
 #endif
 
 public:
+
     wxArrayString GetSerialPortList() override;
 
     SerialPortPosix();
     virtual ~SerialPortPosix();
 
-    bool Connect(const wxString &portName, int baud, int dataBits, int stopBits,
-                 PARITY Parity, bool useRTS, bool useDTR) override;
+    bool Connect(const wxString& portName, int baud, int dataBits, int stopBits, PARITY Parity, bool useRTS, bool useDTR) override;
     bool Disconnect() override;
 
     bool Send(const unsigned char *pData, unsigned count) override;
@@ -64,6 +65,6 @@ public:
     bool SetDTR(bool asserted) override;
 };
 
-#endif  // __linux__ || __APPLE__
+#endif // __linux__ || __APPLE__
 
-#endif  // SERIALPORT_POSIX_H_INCLUDED
+#endif // SERIALPORT_POSIX_H_INCLUDED

@@ -1,6 +1,6 @@
 /*
  *  serialport_loopback.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2013 Bret McKee
@@ -33,35 +33,46 @@
  *
  */
 
-#include "lightguider.h"
+#include "phd.h"
 
 #ifdef USE_LOOPBACK_SERIAL
 
-wxArrayString SerialPortLoopback::GetSerialPortList(void) {
+wxArrayString SerialPortLoopback::GetSerialPortList(void)
+{
     wxArrayString ret;
 
-    try {
+    try
+    {
         DWORD res = 0;
 
         ret.Add("Loopback 1");
-    } catch (const wxString& Msg) {
+    }
+    catch (const wxString& Msg)
+    {
         POSSIBLY_UNUSED(Msg);
     }
 
     return ret;
 }
 
-SerialPortLoopback::SerialPortLoopback(void) { m_data = 0; }
+SerialPortLoopback::SerialPortLoopback(void)
+{
+    m_data = 0;
+}
 
-SerialPortLoopback::~SerialPortLoopback(void) {}
+SerialPortLoopback::~SerialPortLoopback(void)
+{
+}
 
-bool SerialPortLoopback::Connect(const wxString& portName, int baud,
-                                 int dataBits, int stopBits, PARITY Parity,
-                                 bool useRTS, bool useDTR) {
+bool SerialPortLoopback::Connect(const wxString& portName, int baud, int dataBits, int stopBits, PARITY Parity, bool useRTS, bool useDTR)
+{
     bool bError = false;
 
-    try {
-    } catch (const wxString& Msg) {
+    try
+    {
+    }
+    catch (const wxString& Msg)
+    {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -69,11 +80,15 @@ bool SerialPortLoopback::Connect(const wxString& portName, int baud,
     return bError;
 }
 
-bool SerialPortLoopback::Disconnect(void) {
+bool SerialPortLoopback::Disconnect(void)
+{
     bool bError = false;
 
-    try {
-    } catch (const wxString& Msg) {
+    try
+    {
+    }
+    catch (const wxString& Msg)
+    {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -81,11 +96,15 @@ bool SerialPortLoopback::Disconnect(void) {
     return bError;
 }
 
-bool SerialPortLoopback::SetReceiveTimeout(int timeoutMs) {
+bool SerialPortLoopback::SetReceiveTimeout(int timeoutMs)
+{
     bool bError = false;
 
-    try {
-    } catch (const wxString& Msg) {
+    try
+    {
+    }
+    catch (const wxString& Msg)
+    {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -93,12 +112,16 @@ bool SerialPortLoopback::SetReceiveTimeout(int timeoutMs) {
     return bError;
 }
 
-bool SerialPortLoopback::Send(const unsigned char* pData, unsigned count) {
+bool SerialPortLoopback::Send(const unsigned char *pData, unsigned count)
+{
     bool bError = false;
 
-    try {
+    try
+    {
         m_data = *pData;
-    } catch (const wxString& Msg) {
+    }
+    catch (const wxString& Msg)
+    {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -106,26 +129,35 @@ bool SerialPortLoopback::Send(const unsigned char* pData, unsigned count) {
     return bError;
 }
 
-bool SerialPortLoopback::Receive(unsigned char* pData, unsigned count) {
+bool SerialPortLoopback::Receive(unsigned char *pData, unsigned count)
+{
     bool bError = false;
 
-    try {
-        if (count == 3) {
-            char* pVersion = "999";
+    try
+    {
+        if (count == 3)
+        {
+            char *pVersion = "999";
 
             memcpy(pData, pVersion, strlen(pVersion));
-        } else {
-            if (m_data == 0) {
+        }
+        else
+        {
+            if (m_data == 0)
+            {
                 throw ERROR_INFO("not enough characters");
             }
 
-            if (m_data == 'R') {
+            if (m_data == 'R')
+            {
                 m_data = 'K';
             }
 
             *pData = m_data;
         }
-    } catch (const wxString& Msg) {
+    }
+    catch (const wxString& Msg)
+    {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -133,4 +165,4 @@ bool SerialPortLoopback::Receive(unsigned char* pData, unsigned count) {
     return bError;
 }
 
-#endif  // USE_LOOPBACK_SERIAL
+#endif // USE_LOOPBACK_SERIAL

@@ -1,6 +1,6 @@
 /*
  *  serialport.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2013 Bret McKee
@@ -36,13 +36,15 @@
 #ifndef SERIALPORT_H_INCLUDED
 #define SERIALPORT_H_INCLUDED
 
-class SerialPort {
+class SerialPort
+{
 public:
-    enum PARITY {
-        ParityNone = 0,
-        ParityOdd = 1,
-        ParityEven = 2,
-        ParityMark = 3,
+    enum PARITY
+    {
+        ParityNone  = 0,
+        ParityOdd   = 1,
+        ParityEven  = 2,
+        ParityMark  = 3,
         ParitySpace = 4,
     };
 
@@ -52,9 +54,7 @@ public:
     SerialPort(void);
     virtual ~SerialPort(void);
 
-    virtual bool Connect(const wxString &portName, int baud, int dataBits,
-                         int stopBits, PARITY Parity, bool useRTS,
-                         bool useDTR) = 0;
+    virtual bool Connect(const wxString& portName, int baud, int dataBits, int stopBits, PARITY Parity, bool useRTS, bool useDTR) = 0;
     virtual bool Disconnect(void) = 0;
 
     virtual bool Send(const unsigned char *pData, unsigned count) = 0;
@@ -66,4 +66,4 @@ public:
     virtual bool SetDTR(bool asserted) = 0;
 };
 
-#endif  // SERIALPORT_H_INCLUDED
+#endif // SERIALPORT_H_INCLUDED

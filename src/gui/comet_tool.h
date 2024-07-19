@@ -1,6 +1,6 @@
 /*
  *  comet_tool.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2014 Andy Galasso
@@ -35,8 +35,9 @@
 #ifndef COMET_TOOL_INCLUDED
 #define COMET_TOOL_INCLUDED
 
-class CometTool {
-    CometTool();  // not implemented
+class CometTool
+{
+    CometTool(); // not implemented
 public:
     static wxWindow *CreateCometToolWindow();
     static void NotifyUpdateLockPos();

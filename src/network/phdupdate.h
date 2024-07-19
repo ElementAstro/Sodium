@@ -1,9 +1,9 @@
 /*
- *  cam_qhy5.h
- *  LGuider Guiding
+ *  phdupdate.h
+ *  Open PHD Guiding
  *
- *  Created by Craig Stark.
- *  Copyright (c) 2012 Craig Stark.
+ *  Created by Andy Galasso
+ *  Copyright (c) 2017 Andy Galasso.
  *  All rights reserved.
  *
  *  This source code is distributed under the following "BSD" license
@@ -14,7 +14,7 @@
  *    Redistributions in binary form must reproduce the above copyright notice,
  *     this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *    Neither the name of Craig Stark, Stark Labs nor the names of its
+ *    Neither the name of openphdguiding.org nor the names of its
  *     contributors may be used to endorse or promote products derived from
  *     this software without specific prior written permission.
  *
@@ -32,27 +32,40 @@
  *
  */
 
-#ifndef QHY5_H_INCLUDED
-#define QHY5_H_INCLUDED
+#ifndef PHDUPDATE_INCLUDED
+#define PHDUPDATE_INCLUDED
 
-class CameraQHY5 : public GuideCamera {
-    unsigned char* RawBuffer;
-    bool m_QHY5;
-
-public:
-    CameraQHY5();
-    ~CameraQHY5();
-    bool Capture(int duration, usImage& img, int options,
-                 const wxRect& subframe) override;
-    bool Connect(const wxString& camId) override;
-    bool Disconnect() override;
-    void InitCapture() override;
-
-    bool ST4PulseGuideScope(int direction, int duration) override;
-    bool ST4HasNonGuiMove() override { return true; }
-    bool HasNonGuiCapture() override { return true; }
-    void ClearGuidePort();
-    wxByte BitsPerPixel() override;
+enum UpdateSeries
+{
+    UPD_SERIES_MAIN,
+    UPD_SERIES_DEV,
 };
 
-#endif  // QHY5IIIBASE_H_INCLUDED
+struct UpdaterSettings
+{
+    bool enabled;
+    UpdateSeries series;
+};
+
+class PHD2Updater
+{
+public:
+
+    // start the updater process at app init
+    static void InitUpdater();
+
+    // for Brain dialog UI
+    static void GetSettings(UpdaterSettings *settings);
+    static void SetSettings(const UpdaterSettings& settings);
+
+    // explicitly check for updates now
+    static void CheckNow();
+
+    // stop the updater process at app exit
+    static void StopUpdater();
+
+    // MyFrame needs to call this when it receives thread messages from the updater
+    static void OnUpdaterStateChanged();
+};
+
+#endif

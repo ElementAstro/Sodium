@@ -1,6 +1,6 @@
 /*
  *  calstep_dialog.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bruce Waddington
  *  Copyright (c) 2013 Bruce Waddington
@@ -36,8 +36,10 @@
 #ifndef CalstepDialog_h_included
 #define CalstepDialog_h_included
 
-class CalstepDialog : public wxDialog {
+class CalstepDialog : public wxDialog
+{
 private:
+
     // wx UI controls
     wxBoxSizer *m_pVSizer;
     wxFlexGridSizer *m_pInputTableSizer;
@@ -67,31 +69,25 @@ private:
     double m_dDeclination;
     int m_calibrationDistance;
 
-    void OnReset(wxCommandEvent &evt);
+    void OnReset(wxCommandEvent& evt);
 
 public:
+
     enum { DEFAULT_STEPS = 12, DEFAULT_DISTANCE = 25 };
     static const double DEFAULT_GUIDESPEED;
 
-    CalstepDialog(wxWindow *parent, int focalLength, double pixelSize,
-                  int binning);
+    CalstepDialog(wxWindow *parent, int focalLength, double pixelSize, int binning);
     ~CalstepDialog(void);
-    bool GetResults(int *focalLength, double *pixelSize, int *binning,
-                    int *stepSize, int *distance);
+    bool GetResults(int *focalLength, double *pixelSize, int *binning, int *stepSize, int *distance);
 
-    static int GetCalibrationDistance(int focalLength, double pixelSize,
-                                      int binning);
-    static void GetCalibrationStepSize(int focalLength, double pixelSize,
-                                       int binning, double guideSpeed,
-                                       int desiredSteps, double declination,
-                                       int distance, double *imageScale,
-                                       int *stepSize);
+    static int GetCalibrationDistance(int focalLength, double pixelSize, int binning);
+    static void GetCalibrationStepSize(int focalLength, double pixelSize, int binning, double guideSpeed,
+        int desiredSteps, double declination, int distance, double *imageScale, int *stepSize);
 
 private:
-    void OnText(wxCommandEvent &evt);
-    void OnSpinCtrlDouble(wxSpinDoubleEvent &evt);
-    void AddTableEntry(wxFlexGridSizer *pTable, const wxString &label,
-                       wxWindow *pControl, const wxString &toolTip);
+    void OnText(wxCommandEvent& evt);
+    void OnSpinCtrlDouble(wxSpinDoubleEvent& evt);
+    void AddTableEntry(wxFlexGridSizer *pTable, const wxString& label, wxWindow *pControl, const wxString& toolTip);
     void DoRecalc(void);
 };
 

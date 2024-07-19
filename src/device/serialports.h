@@ -1,6 +1,6 @@
 /*
  *  serialports.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2013 Bret McKee
@@ -37,13 +37,12 @@
 #define SERIALPORTS_H_INCLUDED
 
 #include "serialport.h"
+#include "serialport_win32.h"
 #include "serialport_mac.h"
 #include "serialport_posix.h"
-#include "serialport_win32.h"
-
 
 #ifdef USE_LOOPBACK_SERIAL
 #include "serialport_loopback.h"
 #endif
 
-#endif  // SERIALPORTS_H_INCLUDED
+#endif // SERIALPORTS_H_INCLUDED

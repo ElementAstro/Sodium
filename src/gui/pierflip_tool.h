@@ -1,6 +1,6 @@
 /*
  *  pierflip_tool.h
- *  Open LGuider Guiding
+ *  Open PHD Guiding
  *
  *  Created by Andy Galasso
  *  Copyright (c) 2018 Andy Galasso.
@@ -35,7 +35,8 @@
 #ifndef PIERFLIP_TOOL_INCLUDED
 #define PIERFLIP_TOOL_INCLUDED
 
-class PierFlipTool {
+class PierFlipTool
+{
 public:
     static bool CanRunTool(wxString *error);
     static void ShowPierFlipCalTool();

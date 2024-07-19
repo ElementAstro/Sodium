@@ -1,6 +1,6 @@
 /*
  *  gear_simulator.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Copyright (c) 2018 Andy Galasso
  *  All rights reserved.
@@ -38,7 +38,8 @@ class GuideCamera;
 class StepGuider;
 class Rotator;
 
-class GearSimulator {
+class GearSimulator
+{
 public:
     static GuideCamera *MakeCamSimulator();
     static void FlipPierSide(GuideCamera *camera);

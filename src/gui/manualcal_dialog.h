@@ -1,6 +1,6 @@
 /*
  *  manualcal_dialog.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Sylvain Girard
  *  Copyright (c) 2013 Sylvain Girard
@@ -36,7 +36,9 @@
 #ifndef ManualCalDialog_h_included
 #define ManualCalDialog_h_included
 
-class ManualCalDialog : public wxDialog {
+class ManualCalDialog :
+    public wxDialog
+{
 private:
     wxChoice *m_binning;
     wxTextCtrl *m_pXRate;
@@ -45,10 +47,10 @@ private:
     wxTextCtrl *m_pYAngle;
     wxTextCtrl *m_pDeclination;
 
-    int StringWidth(const wxString &string);
+    int StringWidth(const wxString& string);
 
 public:
-    ManualCalDialog(const Calibration &cal);
+    ManualCalDialog(const Calibration& cal);
     ~ManualCalDialog(void);
 
     void GetValues(Calibration *cal);

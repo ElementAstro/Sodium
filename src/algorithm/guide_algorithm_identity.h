@@ -1,6 +1,6 @@
 /*
  *  guide_algorithm_identity.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee
@@ -40,14 +40,14 @@
 #ifndef GUIDE_ALGORITHM_IDENTITY_H_INCLUDED
 #define GUIDE_ALGORITHM_IDENTITY_H_INCLUDED
 
-class GuideAlgorithmIdentity : public GuideAlgorithm {
+class GuideAlgorithmIdentity : public GuideAlgorithm
+{
 protected:
-    class GuideAlgorithmIdentityConfigDialogPane : public ConfigDialogPane {
+    class GuideAlgorithmIdentityConfigDialogPane : public ConfigDialogPane
+    {
         GuideAlgorithmIdentity *m_pGuideAlgorithm;
-
     public:
-        GuideAlgorithmIdentityConfigDialogPane(
-            wxWindow *pParent, GuideAlgorithmIdentity *pGuideAlgorithm);
+        GuideAlgorithmIdentityConfigDialogPane(wxWindow *pParent, GuideAlgorithmIdentity *pGuideAlgorithm);
         ~GuideAlgorithmIdentityConfigDialogPane();
 
         void LoadValues() override;

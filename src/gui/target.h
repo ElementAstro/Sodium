@@ -1,6 +1,6 @@
 /*
  *  target.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Sylvain Girard
  *  Copyright (c) 2013 Sylvain Girard
@@ -14,9 +14,9 @@
  *    Redistributions in binary form must reproduce the above copyright notice,
  *     this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *    Neither the name of Bret McKee, Dad Dog Development Ltd, nor the names of
- * its contributors may be used to endorse or promote products derived from this
- * software without specific prior written permission.
+ *    Neither the name of Bret McKee, Dad Dog Development Ltd, nor the names of its
+ *     contributors may be used to endorse or promote products derived from
+ *     this software without specific prior written permission.
  *
  *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
@@ -38,8 +38,9 @@
 
 class TargetWindow;
 
-class TargetClient : public wxWindow {
-    TargetClient(wxWindow* parent);
+class TargetClient : public wxWindow
+{
+    TargetClient(wxWindow *parent);
     ~TargetClient(void);
 
     static const unsigned int m_maxHistorySize = 400;
@@ -47,13 +48,14 @@ class TargetClient : public wxWindow {
     unsigned int m_minLength;
     unsigned int m_maxLength;
 
-    struct {
+    struct
+    {
         double ra;
         double dec;
     } m_history[m_maxHistorySize];
 
-    unsigned int m_nItems;  // # of items in the history
-    unsigned int m_length;  // # of items to display
+    unsigned int m_nItems;    // # of items in the history
+    unsigned int m_length;     // # of items to display
     double m_zoom;
     double m_refCircleRadius;
 
@@ -63,18 +65,19 @@ class TargetClient : public wxWindow {
 
     friend class TargetWindow;
 
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
-class TargetWindow : public wxWindow {
-    OptionsButton* m_lengthButton;
-    wxCheckBox* m_enableRefCircle;
-    wxSpinCtrlDouble* m_refCircleRadius;
-    TargetClient* m_pClient;
+class TargetWindow : public wxWindow
+{
+    OptionsButton *m_lengthButton;
+    wxCheckBox *m_enableRefCircle;
+    wxSpinCtrlDouble *m_refCircleRadius;
+    TargetClient *m_pClient;
     bool m_visible;
 
 public:
-    TargetWindow(wxWindow* parent);
+    TargetWindow(wxWindow *parent);
     ~TargetWindow(void);
 
     void AppendData(const GuideStepInfo& step);
@@ -90,7 +93,7 @@ private:
     void OnCheckBoxRefCircle(wxCommandEvent& event);
     void OnRefCircleRadius(wxSpinDoubleEvent& event);
 
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
-#endif  // TARGET_H_INCLUDED
+#endif // TARGET_H_INCLUDED

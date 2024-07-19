@@ -1,6 +1,6 @@
 /*
  *  staticpa_tool.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Ken Self
  *  Copyright (c) 2017 Ken Self
@@ -34,11 +34,11 @@
 #ifndef STATICPA_TOOL_H
 #define STATICPA_TOOL_H
 
-class StaticPaTool {
+class StaticPaTool
+{
     StaticPaTool() = delete;
-
 public:
-    static wxWindow* CreateStaticPaToolWindow();
+    static wxWindow *CreateStaticPaToolWindow();
     static void PaintHelper(wxAutoBufferedPaintDCBase& dc, double scale);
     static void NotifyStarLost();
     static bool UpdateState();

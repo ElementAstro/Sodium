@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2017 Mattia Verga <mattia.verga@tiscali.it> -->
 <component type="desktop-application">
-    <id>phd2.desktop</id>
+    <id>sodium.desktop</id>
     <metadata_license>CC0-1.0</metadata_license>
     <project_license>BSD-3-Clause</project_license>
-    <name>LightGuider</name>
+    <name>Sodium</name>
     <summary>Telescope guiding software</summary>
     
     <description>
         <p>
-        LightGuider is telescope guiding software that simplifies the process
+        Sodium is telescope guiding software that simplifies the process
         of tracking a guide star, letting you concentrate on other aspects of
         deep-sky imaging or spectroscopy.
         </p>
@@ -21,7 +21,7 @@
         </ul>
     </description>
     
-    <launchable type="desktop-id">phd2.desktop</launchable>
+    <launchable type="desktop-id">sodium.desktop</launchable>
     
     <screenshots>
         <screenshot type="default">

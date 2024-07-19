@@ -36,20 +36,22 @@ import threading
 
 from logger import lightguider_logger as logger
 
+
 class switch(object):
     """switch function NOTE : must call break after all"""
+
     def __init__(self, value):
         self.value = value
         self.fall = False
- 
+
     def __iter__(self):
         """Return the match method once, then stop"""
         yield self.match
         raise StopIteration
-    
+
     def match(self, *args):
         """Indicate whether or not to enter a case suite"""
-        if self.fall  or not args:
+        if self.fall or not args:
             return True
         elif self.value in args:
             self.fall = True
@@ -65,7 +67,7 @@ def check_process_exist(process_name: str) -> bool:
         process_name : str
     Returns: bool
     """
-    #for proc in psutil.process_iter():
+    # for proc in psutil.process_iter():
     #    if proc.name() == process_name:
     #        return True
     return True
@@ -268,11 +270,13 @@ class lightguiderClientWorker(object):
                 lightguider_path = "/usr/bin/lightguider"
             else:
                 lightguider_path = path
-        logger.debug("lightguider executable path : {}".format(lightguider_path))
+        logger.debug(
+            "lightguider executable path : {}".format(lightguider_path))
 
         # Check whether the executable is existing
         if not os.path.exists(lightguider_path):
-            logger.error("lightguider executable path does not exist: {}".format(lightguider_path))
+            logger.error(
+                "lightguider executable path does not exist: {}".format(lightguider_path))
         self.lightguider_instance = asyncio.subprocess.create_subprocess_exec(
             program=lightguider_path,
             stdout=asyncio.subprocess.PIPE,
@@ -368,7 +372,8 @@ class lightguiderClientWorker(object):
             self.conn.connect(host, port)
             self._is_server_connected = True
             # Start a standalone thread to listen to the lightguider server
-            self._background_task = threading.Thread(target=self.background_task)
+            self._background_task = threading.Thread(
+                target=self.background_task)
             self._background_task.daemon = True
             self._background_task.start()
         except OSError:
@@ -484,7 +489,8 @@ class lightguiderClientWorker(object):
             self.response = None
         if "error" in response:
             logger.error(
-                "Guiding Error : {})".format(response.get("error").get("message"))
+                "Guiding Error : {})".format(
+                    response.get("error").get("message"))
             )
         return response
 
@@ -635,7 +641,8 @@ class lightguiderClientWorker(object):
             resp["message"] = "Failed to get current profile"
             return resp
         self._current_profile["id"] = res.get("result").get("id")
-        logger.debug("Current profile id : {}".format(self._current_profile["id"]))
+        logger.debug("Current profile id : {}".format(
+            self._current_profile["id"]))
         # Check if the profile list is empty
         if not self._profiles:
             await self.get_profiles()
@@ -658,7 +665,8 @@ class lightguiderClientWorker(object):
             self._current_profile["camera"] = (
                 res.get("result").get("camera").get("name")
             )
-            self._current_profile["mount"] = res.get("result").get("mount").get("name")
+            self._current_profile["mount"] = res.get(
+                "result").get("mount").get("name")
         except KeyError:
             pass
         resp["profile"] = self._current_profile
@@ -1758,9 +1766,9 @@ class lightguiderClientWorker(object):
             resp["message"] = "Send command failed"
             resp["error"] = e
             return resp
-        
+
         print(res)
-        
+
         if "error" in res:
             resp["message"] = "Failed to get the dark library path"
             resp["error"] = res.get("error")
@@ -1956,7 +1964,8 @@ class lightguiderClientWorker(object):
         Args : None
         Returns : None
         """
-        logger.warning("Star locked position reached the edge of the camera frame")
+        logger.warning(
+            "Star locked position reached the edge of the camera frame")
 
     async def __looping_exposures(self, message: dict) -> None:
         """
@@ -2024,7 +2033,8 @@ class lightguiderClientWorker(object):
         self._starlost_status["avg_dist"] = message.get("AvgDist")
         self._starlost_error = message.get("Status")
         logger.error(
-            f"Star Lost , SNR : {self._starlost_status['snr']} , StarMass : {self._starlost_status['star_mass']} , AvgDist : {self._starlost_status['avg_dist']}"
+            f"Star Lost , SNR : {self._starlost_status['snr']} , StarMass : {
+                self._starlost_status['star_mass']} , AvgDist : {self._starlost_status['avg_dist']}"
         )
         self._is_guiding = False
         self._is_calibrating = False
@@ -2061,7 +2071,8 @@ class lightguiderClientWorker(object):
 
         self._guiding_status["avg_dist"] = message.get("AvgDist")
         logger.debug(
-            "Guide step average distance : {}".format(self._guiding_status["avg_dist"])
+            "Guide step average distance : {}".format(
+                self._guiding_status["avg_dist"])
         )
 
         self._guiding_status["dx"] = message.get("dx")
@@ -2075,7 +2086,8 @@ class lightguiderClientWorker(object):
                 self._guiding_status["ra_raw_distance"]
             )
         )
-        self._guiding_status["dec_raw_distance"] = message.get("DECDistanceRaw")
+        self._guiding_status["dec_raw_distance"] = message.get(
+            "DECDistanceRaw")
         logger.debug(
             "Guide step DECDistanceRaw : {}".format(
                 self._guiding_status["dec_raw_distance"]
@@ -2097,20 +2109,24 @@ class lightguiderClientWorker(object):
 
         self._guiding_status["ra_duration"] = message.get("RADuration")
         logger.debug(
-            "Guide step RADuration : {}".format(self._guiding_status["ra_duration"])
+            "Guide step RADuration : {}".format(
+                self._guiding_status["ra_duration"])
         )
         self._guiding_status["dec_duration"] = message.get("DECDuration")
         logger.debug(
-            "Guide step DECDuration : {}".format(self._guiding_status["dec_duration"])
+            "Guide step DECDuration : {}".format(
+                self._guiding_status["dec_duration"])
         )
 
         self._guiding_status["ra_direction"] = message.get("RADirection")
         logger.debug(
-            "Guide step RADirection : {}".format(self._guiding_status["ra_direction"])
+            "Guide step RADirection : {}".format(
+                self._guiding_status["ra_direction"])
         )
         self._guiding_status["dec_direction"] = message.get("DECDirection")
         logger.debug(
-            "Guide step DECDirection : {}".format(self._guiding_status["dec_direction"])
+            "Guide step DECDirection : {}".format(
+                self._guiding_status["dec_direction"])
         )
 
         self._guiding_status["snr"] = message.get("SNR")

@@ -1,6 +1,6 @@
 /*
  *  config_indi.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Craig Stark
  *  Copyright (c) 2006, 2007, 2008, 2009 Craig Stark.
@@ -39,85 +39,88 @@
 #ifndef _CONFIG_INDI_H_
 #define _CONFIG_INDI_H_
 
+#include <libindi/baseclient.h>
 #include <libindi/basedevice.h>
-#include <libindi/indibasetypes.h>
 #include <libindi/indiproperty.h>
-#include "indi/indiclient.h"
+#include <libindi/indibasetypes.h>
 
-#include "gui/indi_gui.h"
+#include "indi_gui.h"
 
-enum IndiDevType {
+enum IndiDevType
+{
     INDI_TYPE_CAMERA,
     INDI_TYPE_MOUNT,
     INDI_TYPE_AUX_MOUNT,
     INDI_TYPE_AO,
+    INDI_TYPE_ROTATOR,
 };
 
-class INDIConfig : public wxDialog, public LightIndiClient {
-    static bool s_verbose;
+class INDIConfig : public wxDialog, public INDI::BaseClient
+{
+        static bool s_verbose;
 
-    wxTextCtrl *host;
-    wxTextCtrl *port;
-    wxButton *connect;
-    wxStaticText *connect_status;
-    wxStaticText *devlabel;
-    wxComboBox *dev;
-    wxComboBox *ccd;
-    wxCheckBox *forcevideo;
-    wxCheckBox *forceexposure;
-    wxButton *guiBtn;
-    wxButton *okBtn;
+        wxTextCtrl *host;
+        wxTextCtrl *port;
+        wxButton *connect;
+        wxStaticText *connect_status;
+        wxStaticText *devlabel;
+        wxComboBox *dev;
+        wxComboBox *ccd;
+        wxCheckBox *forcevideo;
+        wxCheckBox *forceexposure;
+        wxButton *guiBtn;
+        wxButton *okBtn;
 
-    IndiGui *m_gui;
-    IndiDevType dev_type;
+        IndiGui *m_gui;
+        IndiDevType dev_type;
 
-public:
-    INDIConfig(wxWindow *parent, const wxString &title, IndiDevType devtype);
-    ~INDIConfig();
+    public:
 
-    long INDIport;
-    wxString INDIhost;
-    wxString INDIDevName;
-    long INDIDevCCD;
-    bool INDIForceVideo;
-    bool INDIForceExposure;
+        INDIConfig(wxWindow *parent, const wxString& title, IndiDevType devtype);
+        ~INDIConfig();
 
-    void Connect();
-    void Disconnect();
-    void SetSettings();
-    void SaveSettings();
+        long     INDIport;
+        wxString INDIhost;
+        wxString INDIDevName;
+        long     INDIDevCCD;
+        bool     INDIForceVideo;
+        bool     INDIForceExposure;
 
-    static void LoadProfileSettings();
-    static bool Verbose();
-    static void SetVerbose(bool val);
+        void Connect();
+        void Disconnect();
+        void SetSettings();
+        void SaveSettings();
 
-    void OnUpdateFromThread(wxThreadEvent &event);
+        static void LoadProfileSettings();
+        static bool Verbose();
+        static void SetVerbose(bool val);
 
-protected:
-    void newDevice(INDI::BaseDevice *dp) override;
-    void removeDevice(INDI::BaseDevice *dp) override {};
-    void newProperty(INDI::Property *property) override;
-    void removeProperty(INDI::Property *property) override {}
-    void newBLOB(IBLOB *bp) override {}
-    void newSwitch(ISwitchVectorProperty *svp) override {}
-    void newNumber(INumberVectorProperty *nvp) override {}
-    void newMessage(INDI::BaseDevice *dp, int messageID) override {}
-    void newText(ITextVectorProperty *tvp) override {}
-    void newLight(ILightVectorProperty *lvp) override {}
-    void IndiServerConnected() override;
-    void IndiServerDisconnected(int exit_code) override;
+        void OnUpdateFromThread(wxThreadEvent& event);
 
-private:
-    void OnConnectButton(wxCommandEvent &evt);
-    void OnIndiGui(wxCommandEvent &evt);
-    void OnDevSelected(wxCommandEvent &evt);
-    void OnVerboseChecked(wxCommandEvent &evt);
-    void OnForceVideoChecked(wxCommandEvent &evt);
-    void UpdateControlStates();
+    protected:
 
-    wxDECLARE_EVENT_TABLE();
+        void newDevice(INDI::BaseDevice dp) override;
+        void removeDevice(INDI::BaseDevice dp) override {};
+        void newProperty(INDI::Property property) override;
+        void removeProperty(INDI::Property property) override {}
+        void serverConnected() override;
+        void serverDisconnected(int exit_code) override;
+
+    private:
+
+        void OnConnectButton(wxCommandEvent& evt);
+        void OnIndiGui(wxCommandEvent& evt);
+        void OnDevSelected(wxCommandEvent& evt);
+        void OnVerboseChecked(wxCommandEvent& evt);
+        void OnForceVideoChecked(wxCommandEvent& evt);
+        void UpdateControlStates();
+
+        wxDECLARE_EVENT_TABLE();
 };
 
-inline bool INDIConfig::Verbose() { return INDIConfig::s_verbose; }
+inline bool INDIConfig::Verbose()
+{
+    return INDIConfig::s_verbose;
+}
 
 #endif

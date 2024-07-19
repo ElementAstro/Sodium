@@ -1,6 +1,6 @@
 /*
  *  starcross_test.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bruce Waddington
  *  Copyright (c) 2016 Bruce Waddington
@@ -36,7 +36,8 @@
 #ifndef starcross_h_included
 #define starcross_h_included
 
-enum SCT_STATES {
+enum SCT_STATES
+{
     SCT_STATE_NONE,
     SCT_STATE_WEST,
     SCT_STATE_EAST,
@@ -46,21 +47,23 @@ enum SCT_STATES {
     SCT_STATE_NORTH_RETURN,
     SCT_STATE_DONE
 };
-struct SCT_StepInfo {
+struct SCT_StepInfo
+{
     int pulseCount;
     GUIDE_DIRECTION direction;
     SCT_STATES state;
     wxString explanation;
 };
 
-class StarCrossDialog : public wxDialog {
-    DECLARE_EVENT_TABLE()
+class StarCrossDialog : public wxDialog
+{
+    wxDECLARE_EVENT_TABLE();
 
 public:
-    StarCrossDialog(wxWindow* parent);
+    StarCrossDialog(wxWindow *parent);
     ~StarCrossDialog();
-
 private:
+
     wxSpinCtrlDouble* m_CtlGuideSpeed;
     wxSpinCtrlDouble* m_CtlNumPulses;
     wxSpinCtrlDouble* m_CtlPulseSize;
@@ -80,7 +83,6 @@ private:
     void SuggestParams();
     void SynchDetailSliders();
     void SynchSummarySliders();
-
 public:
     void OnSuggest(wxCommandEvent& evt);
     void OnViewControl(wxCommandEvent& evt);

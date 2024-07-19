@@ -1,6 +1,6 @@
 /*
  *  worker_thread.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee
@@ -39,16 +39,15 @@
 class MyFrame;
 
 /*
- * There are two worker threads in LGuider.  The primary thread handles all
- * exposure requests, and move requests for the first mount.  The secondary
- * thread handles move requests for the second mount, so that on systems with
- * two mounts (probably an AO and a telescope), the second mount can be moving
- * while we image and guide with the first mount.
+ * There are two worker threads in PHD.  The primary thread handles all exposure requests,
+ * and move requests for the first mount.  The secondary thread handles move requests for the
+ * second mount, so that on systems with two mounts (probably an AO and a telescope), the
+ * second mount can be moving while we image and guide with the first mount.
  *
  * The worker threads have three queues, one for move requests (higher priority)
- * and one for exposure requests (lower priority) and one "wakeup queue". The wx
- * queue routines do not have a way to wait on multiple queues, so there is no
- * easy way to implement the dual queue priority model without a third queue.
+ * and one for exposure requests (lower priority) and one "wakeup queue". The wx queue
+ * routines do not have a way to wait on multiple queues, so there is no easy way
+ * to implement the dual queue priority model without a third queue.
  *
  * When something is enqueued on either of the work queues, a dummy message is
  * also enqueued on the wakeup queue, which wakes the thread up.  It then finds
@@ -57,50 +56,56 @@ class MyFrame;
  *
  */
 
-struct EXPOSE_REQUEST {
-    usImage *pImage;
-    int exposureDuration;
-    int options;
-    wxRect subframe;
-    bool error;
-    wxSemaphore *pSemaphore;
+struct EXPOSE_REQUEST
+{
+    usImage         *pImage;
+    int              exposureDuration;
+    int              options;
+    wxRect           subframe;
+    bool             error;
+    wxSemaphore     *pSemaphore;
 };
 
-struct MOVE_REQUEST {
-    Mount *mount;
-    int duration;
-    GUIDE_DIRECTION direction;
-    bool axisMove;
-    unsigned int moveOptions;
+struct MOVE_REQUEST
+{
+    Mount             *mount;
+    int                duration;
+    GUIDE_DIRECTION    direction;
+    bool               axisMove;
+    unsigned int       moveOptions;
     Mount::MOVE_RESULT moveResult;
-    GuiderOffset ofs;
-    wxSemaphore *semaphore;
+    GuiderOffset       ofs;
+    wxSemaphore       *semaphore;
 };
 
-struct MoveCompleteEvent : public wxThreadEvent {
+struct MoveCompleteEvent : public wxThreadEvent
+{
     unsigned int moveOptions;
     Mount::MOVE_RESULT result;
     Mount *mount;
 
-    MoveCompleteEvent(const MOVE_REQUEST &move);
+    MoveCompleteEvent(const MOVE_REQUEST& move);
 };
 
-class WorkerThread : public wxThread {
+class WorkerThread : public wxThread
+{
     // types and routines for the server->worker message queue
-    enum WORKER_REQUEST_TYPE {
-        REQUEST_NONE,  // not used
+    enum WORKER_REQUEST_TYPE
+    {
+        REQUEST_NONE,       // not used
         REQUEST_TERMINATE,
         REQUEST_EXPOSE,
         REQUEST_MOVE,
     };
 
     /*
-     * this struct is passed through the message queue to the worker thread
-     * to request work
-     */
-    struct WORKER_THREAD_REQUEST {
+    * this struct is passed through the message queue to the worker thread
+    * to request work
+    */
+    struct WORKER_THREAD_REQUEST
+    {
         WORKER_REQUEST_TYPE request;
-        struct  // we'd prefer a union, but the request types are not POD
+        struct // we'd prefer a union, but the request types are not POD
         {
             EXPOSE_REQUEST expose;
             MOVE_REQUEST move;
@@ -116,6 +121,7 @@ class WorkerThread : public wxThread {
     bool m_skipSendExposeComplete;
 
 public:
+
     enum InterruptBits {
         _BITNR_STOP,
         _BITNR_TERMINATE,
@@ -145,14 +151,11 @@ private:
      *
      * These are the routines for processing requests on the worker
      * thread.  For most requests there are 4 routines:
-     * - a routine to post a request on the worker thread queue
-     * (EnqueueWorkerThread...)
+     * - a routine to post a request on the worker thread queue (EnqueueWorkerThread...)
      *      - arguments are passed in a struct for ARGS_....
      * - a routine called from Guider::Entry() which does the work Handle...)
-     * - a routine called when the work is done that enqueues an event
-     * (SendWorkerThread...)
-     * - the routine that is called in response to the receipt of that event
-     * (OnWorkerThread...)
+     * - a routine called when the work is done that enqueues an event (SendWorkerThread...)
+     * - the routine that is called in response to the receipt of that event (OnWorkerThread...)
      *
      */
 
@@ -163,8 +166,7 @@ public:
     static unsigned int InterruptRequested(void);
     static unsigned int StopRequested(void);
     static unsigned int TerminateRequested(void);
-    static unsigned int MilliSleep(
-        int ms, unsigned int checkInterrupts = INT_TERMINATE);
+    static unsigned int MilliSleep(int ms, unsigned int checkInterrupts = INT_TERMINATE);
 
     bool IsKillable() const;
     bool SetKillable(bool killable);
@@ -178,83 +180,85 @@ protected:
 
     /*************      Expose      **************************/
 public:
-    void EnqueueWorkerThreadExposeRequest(usImage *pImage, int exposureDuration,
-                                          int exposureOptions,
-                                          const wxRect &subframe);
+    void EnqueueWorkerThreadExposeRequest(usImage *pImage, int exposureDuration, int exposureOptions, const wxRect& subframe);
     void SetSkipExposeComplete();
-
 protected:
     bool HandleExpose(EXPOSE_REQUEST *args);
     void SendWorkerThreadExposeComplete(usImage *pImage, bool bError);
-    // in the frame class: void
-    // MyFrame::OnWorkerThreadExposeComplete(wxThreadEvent& event);
+    // in the frame class: void MyFrame::OnWorkerThreadExposeComplete(wxThreadEvent& event);
 
     /*************      Guide       **************************/
 public:
-    void EnqueueWorkerThreadMoveRequest(Mount *mount, const GuiderOffset &ofs,
-                                        unsigned int moveOptions);
-    void EnqueueWorkerThreadAxisMove(Mount *mount,
-                                     const GUIDE_DIRECTION direction,
-                                     int duration, unsigned int moveOptions);
-
+    void EnqueueWorkerThreadMoveRequest(Mount *mount, const GuiderOffset& ofs, unsigned int moveOptions);
+    void EnqueueWorkerThreadAxisMove(Mount *mount, const GUIDE_DIRECTION direction, int duration, unsigned int moveOptions);
 protected:
     void HandleMove(MOVE_REQUEST *args);
-    void SendWorkerThreadMoveComplete(const MOVE_REQUEST &move);
+    void SendWorkerThreadMoveComplete(const MOVE_REQUEST& move);
     // in the frame class: void MyFrame::OnMoveComplete(wxThreadEvent& event);
 
-    void EnqueueMessage(const WORKER_THREAD_REQUEST &message);
+    void EnqueueMessage(const WORKER_THREAD_REQUEST& message);
 };
 
-inline void WorkerThread::RequestStop(void) {
-    m_interruptRequested = m_interruptRequested | INT_STOP;
+inline void WorkerThread::RequestStop(void)
+{
+    m_interruptRequested |= INT_STOP;
 }
 
-inline WorkerThread *WorkerThread::This(void) {
+inline WorkerThread *WorkerThread::This(void)
+{
     return static_cast<WorkerThread *>(wxThread::This());
 }
 
-inline unsigned int WorkerThread::InterruptRequested(void) {
+inline unsigned int WorkerThread::InterruptRequested(void)
+{
     WorkerThread *thr = WorkerThread::This();
     return thr ? thr->m_interruptRequested : 0;
 }
 
-inline unsigned int WorkerThread::StopRequested(void) {
+inline unsigned int WorkerThread::StopRequested(void)
+{
     return InterruptRequested() & INT_STOP;
 }
 
-inline unsigned int WorkerThread::TerminateRequested(void) {
+inline unsigned int WorkerThread::TerminateRequested(void)
+{
     return InterruptRequested() & INT_TERMINATE;
 }
 
-inline bool WorkerThread::IsKillable(void) const { return m_killable; }
+inline bool WorkerThread::IsKillable(void) const
+{
+    return m_killable;
+}
 
-inline bool WorkerThread::SetKillable(bool killable) {
+inline bool WorkerThread::SetKillable(bool killable)
+{
     bool prev = m_killable;
     m_killable = killable;
     return prev;
 }
 
-class WorkerThreadKillGuard {
+class WorkerThreadKillGuard
+{
     WorkerThread *m_thread;
     bool m_prev;
-
 public:
-    WorkerThreadKillGuard(WorkerThread *thread = WorkerThread::This())
-        : m_thread(thread) {
+    WorkerThreadKillGuard(WorkerThread *thread = WorkerThread::This()) : m_thread(thread)
+    {
         m_prev = m_thread ? m_thread->SetKillable(false) : true;
     }
-    ~WorkerThreadKillGuard() {
+    ~WorkerThreadKillGuard()
+    {
         if (m_thread)
             m_thread->SetKillable(m_prev);
     }
 };
 
-class Watchdog : public wxStopWatch {
+class Watchdog : public wxStopWatch
+{
     long m_timeout_ms;
-
 public:
-    Watchdog(unsigned int timeout_ms, unsigned int grace_period_ms)
-        : m_timeout_ms(timeout_ms + grace_period_ms) {}
+    Watchdog(unsigned int timeout_ms, unsigned int grace_period_ms) : m_timeout_ms(timeout_ms + grace_period_ms)
+        { }
     bool Expired(void) const { return Time() > m_timeout_ms; }
 };
 

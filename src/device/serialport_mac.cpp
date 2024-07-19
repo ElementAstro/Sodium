@@ -1,6 +1,6 @@
 /*
  *  serialport_mac.cpp
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Craig Stark on 4/17/13.
  *  Copyright (c) 2013 Craig Stark.
@@ -34,47 +34,50 @@
 
 #ifdef __APPLE__
 
+#include "phd.h"
 #include <IOKit/serial/IOSerialKeys.h>
-#include "lightguider.h"
 
+#if __ENVIRONMENT_MAC_OS_X_VERSION_MIN_REQUIRED__ < 120000
+# define IOMainPort IOMasterPort
+#endif
 
-static kern_return_t createSerialIterator(io_iterator_t *serialIterator) {
-    kern_return_t kernResult;
-    mach_port_t masterPort;
-    CFMutableDictionaryRef classesToMatch;
+static kern_return_t createSerialIterator(io_iterator_t *serialIterator)
+{
+    kern_return_t   kernResult;
+    mach_port_t     masterPort;
+    CFMutableDictionaryRef  classesToMatch;
 
-    if ((kernResult = IOMasterPort(0, &masterPort)) != KERN_SUCCESS) {
-        printf("IOMasterPort returned %d\n", kernResult);
+    if ((kernResult = IOMainPort(0, &masterPort)) != KERN_SUCCESS)
+    {
+        printf("IOMainPort returned %d\n", kernResult);
         return kernResult;
     }
 
-    if ((classesToMatch = IOServiceMatching(kIOSerialBSDServiceValue)) ==
-        NULL) {
+    if ((classesToMatch = IOServiceMatching(kIOSerialBSDServiceValue)) == NULL)
+    {
         printf("IOServiceMatching returned NULL\n");
         return kernResult;
     }
 
-    CFDictionarySetValue(classesToMatch, CFSTR(kIOSerialBSDTypeKey),
-                         CFSTR(kIOSerialBSDAllTypes));
-    kernResult = IOServiceGetMatchingServices(masterPort, classesToMatch,
-                                              serialIterator);
-    if (kernResult != KERN_SUCCESS) {
+    CFDictionarySetValue(classesToMatch, CFSTR(kIOSerialBSDTypeKey),CFSTR(kIOSerialBSDAllTypes));
+    kernResult = IOServiceGetMatchingServices(masterPort, classesToMatch, serialIterator);
+    if (kernResult != KERN_SUCCESS)
+    {
         printf("IOServiceGetMatchingServices returned %d\n", kernResult);
     }
 
     return kernResult;
 }
 
-static const char *getRegistryString(io_object_t sObj, const char *propName) {
+static const char *getRegistryString(io_object_t sObj, const char *propName)
+{
     static char resultStr[256];
     //   CFTypeRef  nameCFstring;
     CFStringRef nameCFstring;
     resultStr[0] = 0;
-    nameCFstring = (CFStringRef)IORegistryEntryCreateCFProperty(
-        sObj,
-        CFStringCreateWithCString(kCFAllocatorDefault, propName,
-                                  kCFStringEncodingASCII),
-        kCFAllocatorDefault, 0);
+    nameCFstring = (CFStringRef) IORegistryEntryCreateCFProperty(sObj,
+                                                                 CFStringCreateWithCString(kCFAllocatorDefault, propName, kCFStringEncodingASCII),
+                                                                 kCFAllocatorDefault, 0);
     if (nameCFstring) {
         CFStringGetCString(nameCFstring, resultStr, sizeof(resultStr),
                            kCFStringEncodingASCII);
@@ -83,16 +86,17 @@ static const char *getRegistryString(io_object_t sObj, const char *propName) {
     return resultStr;
 }
 
-wxArrayString SerialPortMac::GetSerialPortList(void) {
+wxArrayString SerialPortMac::GetSerialPortList(void)
+{
     wxArrayString ret;
 
     io_iterator_t iterator;
     kern_return_t result = createSerialIterator(&iterator);
-    if (result == KERN_SUCCESS) {
+    if (result == KERN_SUCCESS){
         io_object_t port;
-        while ((port = IOIteratorNext(iterator)) != 0) {
-            const char *name = getRegistryString(port, kIOCalloutDeviceKey);
-            if (name) {
+        while ((port = IOIteratorNext(iterator)) != 0){
+            const char* name = getRegistryString(port,kIOCalloutDeviceKey);
+            if (name){
                 ret.Add(name);
             }
             IOObjectRelease(port);
@@ -103,4 +107,4 @@ wxArrayString SerialPortMac::GetSerialPortList(void) {
     return ret;
 }
 
-#endif  // _APPLE_
+#endif // _APPLE_

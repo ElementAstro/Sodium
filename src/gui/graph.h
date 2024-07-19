@@ -1,6 +1,6 @@
 /*
  *  graph.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -36,23 +36,26 @@
 #define GRAPHCLASS
 
 #include <deque>
-#include "guiding/guiding_stats.h"
+#include "guiding_stats.h"
 
 class GraphControlPane;
 
-enum GRAPH_UNITS {
+enum GRAPH_UNITS
+{
     UNIT_PIXELS,
     UNIT_ARCSEC,
 };
 
 // accumulator for trend line calculation
-struct TrendLineAccum {
+struct TrendLineAccum
+{
     double sum_y;
     double sum_xy;
     double sum_y2;
 };
 
-struct S_HISTORY {
+struct S_HISTORY
+{
     wxLongLong_t timestamp;
     double dx;
     double dy;
@@ -66,30 +69,25 @@ struct S_HISTORY {
     char decDir;
     bool raLimited;
     bool decLimited;
-    S_HISTORY() {}
+    S_HISTORY() { }
     S_HISTORY(const GuideStepInfo& step)
         : timestamp(::wxGetUTCTimeMillis().GetValue()),
-          dx(step.cameraOffset.X),
-          dy(step.cameraOffset.Y),
-          ra(step.mountOffset.X),
-          dec(step.mountOffset.Y),
-          starSNR(step.starSNR),
-          starMass(step.starMass),
-          raDur(step.durationRA),
-          decDur(step.durationDec),
-          raDir(step.directionRA),
-          decDir(step.directionDec),
-          raLimited(step.raLimited),
-          decLimited(step.decLimited) {}
+        dx(step.cameraOffset.X), dy(step.cameraOffset.Y), ra(step.mountOffset.X), dec(step.mountOffset.Y),
+        starSNR(step.starSNR), starMass(step.starMass),
+        raDur(step.durationRA), decDur(step.durationDec),
+        raDir(step.directionRA), decDir(step.directionDec),
+        raLimited(step.raLimited), decLimited(step.decLimited) { }
 };
 
-struct DitherInfo {
+struct DitherInfo
+{
     wxLongLong_t timestamp;
     double dRa;
     double dDec;
 };
 
-struct SummaryStats {
+struct SummaryStats
+{
     S_HISTORY cur;
     unsigned int nr;
     double rms_ra;
@@ -104,9 +102,11 @@ struct SummaryStats {
     unsigned int dec_limit_cnt;
 };
 
-class GraphLogClientWindow : public wxWindow {
+class GraphLogClientWindow : public wxWindow
+{
 public:
-    enum GRAPH_MODE {
+    enum GRAPH_MODE
+    {
         MODE_RADEC,
         MODE_DXDY,
     };
@@ -130,11 +130,11 @@ private:
     wxLongLong_t m_timeBase;
     bool m_ditherStarted;
 
-    wxPoint* m_line1;
-    wxPoint* m_line2;
+    wxPoint *m_line1;
+    wxPoint *m_line2;
 
-    TrendLineAccum m_trendLineAccum[4];  // dx, dy, ra, dec
-    int m_raSameSides;                   // accumulator for RA osc index
+    TrendLineAccum m_trendLineAccum[4]; // dx, dy, ra, dec
+    int m_raSameSides; // accumulator for RA osc index
     SummaryStats m_stats;
 
     GRAPH_MODE m_mode;
@@ -152,7 +152,7 @@ private:
     friend class GraphLogWindow;
 
 public:
-    GraphLogClientWindow(wxWindow* parent);
+    GraphLogClientWindow(wxWindow *parent);
     ~GraphLogClientWindow();
 
     bool SetMinLength(unsigned int minLength);
@@ -170,44 +170,46 @@ public:
 
 private:
     void RecalculateTrendLines();
-    void UpdateStats(unsigned int nr, const S_HISTORY* cur);
+    void UpdateStats(unsigned int nr, const S_HISTORY *cur);
 
     void OnPaint(wxPaintEvent& evt);
     void OnLeftBtnDown(wxMouseEvent& evt);
 
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
-inline unsigned int GraphLogClientWindow::GetItemCount() const {
+inline unsigned int GraphLogClientWindow::GetItemCount() const
+{
     return wxMin(m_history.size(), m_length);
 }
 
-class GraphLogWindow : public wxWindow {
-    OptionsButton* m_pLengthButton;
-    OptionsButton* m_pHeightButton;
-    int m_heightButtonLabelVal;  // value currently displayed on height button:
-                                 // <0 for arc-sec, >0 for pixels
-    OptionsButton* m_pSettingsButton;
-    wxCheckBox* m_pCheckboxTrendlines;
-    wxCheckBox* m_pCheckboxCorrections;
-    wxStaticText* RALabel;
-    wxStaticText* DecLabel;
-    wxStaticText* OscIndexLabel;
-    wxStaticText* RMSLabel;
-    wxFlexGridSizer* m_pControlSizer;
+class GraphLogWindow : public wxWindow
+{
+    OptionsButton *m_pLengthButton;
+    OptionsButton *m_pHeightButton;
+    int m_heightButtonLabelVal; // value currently displayed on height button: <0 for arc-sec, >0 for pixels
+    OptionsButton *m_pSettingsButton;
+    wxCheckBox *m_pCheckboxTrendlines;
+    wxCheckBox *m_pCheckboxCorrections;
+    wxStaticText *RALabel;
+    wxStaticText *DecLabel;
+    wxStaticText *OscIndexLabel;
+    wxStaticText *RMSLabel;
+    wxFlexGridSizer *m_pControlSizer;
     int m_ControlNbRows;
-    GraphControlPane* m_pXControlPane;
-    GraphControlPane* m_pYControlPane;
-    GraphControlPane* m_pScopePane;
+    GraphControlPane *m_pXControlPane;
+    GraphControlPane *m_pYControlPane;
+    GraphControlPane *m_pScopePane;
 
     bool m_visible;
-    GraphLogClientWindow* m_pClient;
+    GraphLogClientWindow *m_pClient;
 
     int StringWidth(const wxString& string);
     void UpdateHeightButtonLabel();
     void UpdateRADecDxDyLabels();
 
 public:
+
     enum {
         DefaultMinLength = 50,
         DefaultMaxLength = 400,
@@ -215,7 +217,7 @@ public:
         DefaultMaxHeight = 16,
     };
 
-    GraphLogWindow(wxWindow* parent);
+    GraphLogWindow(wxWindow *parent);
     ~GraphLogWindow();
 
     void AppendData(const GuideStepInfo& step);
@@ -225,16 +227,14 @@ public:
     void UpdateControls();
     void SetState(bool is_active);
     void EnableTrendLines(bool enable);
-    GraphLogClientWindow::GRAPH_MODE SetMode(
-        GraphLogClientWindow::GRAPH_MODE newMode);
+    GraphLogClientWindow::GRAPH_MODE SetMode(GraphLogClientWindow::GRAPH_MODE newMode);
     int GetLength() const;
     void SetLength(int length);
     int GetHeight() const;
     void SetHeight(int height);
-    wxMenu* GetLengthMenu();
+    wxMenu *GetLengthMenu();
     unsigned int GetHistoryItemCount() const;
-    void EnableDecControls(bool enable);  // For changes to Dec mode made
-                                          // outside of graph pane (e.g. AD)
+    void EnableDecControls(bool enable);        // For changes to Dec mode made outside of graph pane (e.g. AD)
 
     void OnPaint(wxPaintEvent& evt);
     void OnButtonSettings(wxCommandEvent& evt);
@@ -263,21 +263,21 @@ public:
     const SummaryStats& Stats() const { return m_pClient->m_stats; }
     void ResetData();
 
-    DECLARE_EVENT_TABLE()
+    wxDECLARE_EVENT_TABLE();
 };
 
-class GraphControlPane : public wxWindow {
+class GraphControlPane : public wxWindow
+{
 public:
-    GraphControlPane(wxWindow* pParent, const wxString& label);
+    GraphControlPane(wxWindow *pParent, const wxString& label);
     ~GraphControlPane();
     virtual void UpdateControls();
     virtual void EnableDecControls(bool enable);
-
 protected:
-    wxBoxSizer* m_pControlSizer;
+    wxBoxSizer *m_pControlSizer;
 
     int StringWidth(const wxString& string);
-    void DoAdd(wxControl* pCtrl, const wxString& lbl);
+    void DoAdd(wxControl *pCtrl, const wxString& lbl);
 };
 
 #endif

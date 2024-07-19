@@ -1,6 +1,6 @@
 /*
  *  serialport_mac.cpp
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Craig Stark on 4/17/13.
  *  Copyright (c) 2013 Craig Stark.
@@ -32,12 +32,13 @@
  *
  */
 
-#if !defined(SERIALPORT_MAC_H_INCLUDED) && defined(__APPLE__)
+#if !defined(SERIALPORT_MAC_H_INCLUDED) && defined (__APPLE__)
 #define SERIALPORT_MAC_H_INCLUDED
 
 #include "serialport_posix.h"
 
-class SerialPortMac : public SerialPortPosix {
+class SerialPortMac : public SerialPortPosix
+{
 public:
     wxArrayString GetSerialPortList() override;
 };

@@ -1,6 +1,6 @@
 /*
  *  parallelport.cpp
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2013 Bret McKee
@@ -33,19 +33,26 @@
  *
  */
 
-#include "lightguider.h"
+#include "phd.h"
 
-ParallelPort::ParallelPort(void) {}
+ParallelPort::ParallelPort(void)
+{
+}
 
-ParallelPort::~ParallelPort(void) {}
+ParallelPort::~ParallelPort(void)
+{
+}
 
-bool ParallelPort::ManipulateByte(BYTE clearBits, BYTE setBits) {
+bool ParallelPort::ManipulateByte(BYTE clearBits, BYTE setBits)
+{
     bool bError = false;
 
-    try {
+    try
+    {
         BYTE origData;
 
-        if (ReadByte(&origData)) {
+        if (ReadByte(&origData))
+        {
             throw ERROR_INFO("ParallelPort: ReadByte failed");
         }
 
@@ -54,15 +61,16 @@ bool ParallelPort::ManipulateByte(BYTE clearBits, BYTE setBits) {
         data &= ~clearBits;
         data |= setBits;
 
-        Debug.Write(
-            wxString::Format("ParallelPort::ManipulateByte: orig=0x%x "
-                             "clearBits=0x%x setBits=0x%x data=0x%x\n",
-                             origData, clearBits, setBits, data));
+        Debug.Write(wxString::Format("ParallelPort::ManipulateByte: orig=0x%x clearBits=0x%x setBits=0x%x data=0x%x\n",
+                                     origData, clearBits, setBits, data));
 
-        if (WriteByte(data)) {
+        if (WriteByte(data))
+        {
             throw ERROR_INFO("ParallelPort: WriteByte failed");
         }
-    } catch (const wxString& Msg) {
+    }
+    catch (const wxString& Msg)
+    {
         POSSIBLY_UNUSED(Msg);
         bError = true;
     }
@@ -70,7 +78,8 @@ bool ParallelPort::ManipulateByte(BYTE clearBits, BYTE setBits) {
     return bError;
 }
 
-ParallelPort* ParallelPort::ParallelPortFactory(void) {
+ParallelPort *ParallelPort::ParallelPortFactory(void)
+{
 #if defined(_WINDOWS_)
     return new ParallelPortWin32();
 #else

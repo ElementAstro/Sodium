@@ -1,6 +1,6 @@
 /*
  *  camcal_import_dialog.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bruce Waddington
  *  Copyright (c) 2015 Bruce Waddington
@@ -36,9 +36,11 @@
 #ifndef CamCalImportDialog_h_included
 #define CamCalImportDialog_h_included
 
-class CamCalImportDialog : public wxDialog {
+class CamCalImportDialog : public wxDialog
+{
 public:
-    CamCalImportDialog(wxWindow* parent);
+
+    CamCalImportDialog(wxWindow *parent);
     ~CamCalImportDialog(void);
 
 private:

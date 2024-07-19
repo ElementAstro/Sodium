@@ -1,6 +1,6 @@
 /*
  *  stepguider_sxao_indi.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Hans Lambermont
  *  Copyright (c) 2016 Hans Lambermont
@@ -35,9 +35,10 @@
 #ifndef STEPGUIDER_SXAO_INDI_H_INCLUDED
 #define STEPGUIDER_SXAO_INDI_H_INCLUDED
 
-class StepGuiderSxAoIndiFactory {
+class StepGuiderSxAoIndiFactory
+{
 public:
     static StepGuider *MakeStepGuiderSxAoIndi();
 };
 
-#endif  // STEPGUIDER_SXAO_INDI_H_INCLUDED
+#endif // STEPGUIDER_SXAO_INDI_H_INCLUDED

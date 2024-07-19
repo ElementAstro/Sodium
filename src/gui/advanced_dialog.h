@@ -1,6 +1,6 @@
 /*
  *  advanced_dialog.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -53,11 +53,12 @@ enum TAB_PAGES {
     AD_UNASSIGNED_PAGE
 };
 
-class AdvancedDialog : public wxDialog {
+class AdvancedDialog : public wxDialog
+{
     MyFrame *m_pFrame;
     wxBookCtrlBase *m_pNotebook;
     MyFrameConfigDialogPane *m_pGlobalPane;
-    Guider::GuiderConfigDialogPane *m_pGuiderPane;
+    Guider::GuiderConfigDialogPane* m_pGuiderPane;
     CameraConfigDialogPane *m_pCameraPane;
     Mount::MountConfigDialogPane *m_pMountPane;
     AOConfigDialogPane *m_pAOPane;
@@ -78,8 +79,10 @@ class AdvancedDialog : public wxDialog {
     wxPanel *m_pDevicesSettingsPanel;
     wxTipWindow *m_tip;
     wxTimer *m_tipTimer;
+    bool m_imageScaleChanged;
 
 public:
+
     static const double MIN_FOCAL_LENGTH;
     static const double MAX_FOCAL_LENGTH;
 
@@ -99,8 +102,8 @@ public:
     void Preload();
 
     bool Validate() override;
-    void ShowInvalid(wxWindow *ctrl, const wxString &message);
-
+    void ShowInvalid(wxWindow *ctrl, const wxString& message);
+    void FlagImageScaleChange() { m_imageScaleChanged = true; }     // Allows image scale adjustment to be made only once when AD is closed
     int GetFocalLength();
     void SetFocalLength(int val);
     double GetPixelSize();
@@ -108,8 +111,7 @@ public:
     int GetBinning();
     void SetBinning(int binning);
     void MakeImageScaleAdjustments();
-    void ResetGuidingParams();
-    Mount::MountConfigDialogPane *GetCurrentMountPane() { return m_pMountPane; }
+    Mount::MountConfigDialogPane* GetCurrentMountPane() { return m_pMountPane; }
 
     wxWindow *GetTabLocation(BRAIN_CTRL_IDS id);
 
@@ -123,6 +125,7 @@ private:
     void BuildCtrlSets();
     void CleanupCtrlSets();
     void ConfirmLayouts();
+    double DetermineGuideSpeed();
 };
 
-#endif  // ADVANCED_DIALOG_H_INCLUDED
+#endif // ADVANCED_DIALOG_H_INCLUDED

@@ -1,6 +1,6 @@
 /*
  *  serialport.cpp
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2013 Bret McKee
@@ -33,13 +33,18 @@
  *
  */
 
-#include "lightguider.h"
+#include "phd.h"
 
-SerialPort::SerialPort(void) {}
+SerialPort::SerialPort(void)
+{
+}
 
-SerialPort::~SerialPort(void) {}
+SerialPort::~SerialPort(void)
+{
+}
 
-SerialPort *SerialPort::SerialPortFactory(void) {
+SerialPort *SerialPort::SerialPortFactory(void)
+{
 #if defined(_WINDOWS_)
     return new SerialPortWin32();
 #elif defined(__APPLE__)

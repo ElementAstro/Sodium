@@ -1,6 +1,6 @@
 /*
  *  backlash_comp.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bruce Waddington
  *  Copyright (c) 2015 Bruce Waddington and Andy Galasso
@@ -36,7 +36,7 @@
 #ifndef BACKLASH_COMP_H_INCLUDED
 #define BACKLASH_COMP_H_INCLUDED
 
-#include "guiding/guiding_stats.h"
+#include "guiding_stats.h"
 
 class Scope;
 class BLCHistory;
@@ -65,10 +65,10 @@ class BacklashTool {
     bool m_backlashExemption;
     int m_backlashResultMs;
     double m_northRate;
-    LGuider_Point m_lastMountLocation;
-    LGuider_Point m_startingPoint;
-    LGuider_Point m_markerPoint;
-    LGuider_Point m_endSouth;
+    PHD_Point m_lastMountLocation;
+    PHD_Point m_startingPoint;
+    PHD_Point m_markerPoint;
+    PHD_Point m_endSouth;
     wxString m_lastStatus;       // Translated for UI
     wxString m_lastStatusDebug;  // Always English for debug log
     Scope *m_scope;
@@ -122,7 +122,7 @@ public:
     ~BacklashTool();
     void StartMeasurement(double DriftPerMin);
     void StopMeasurement();
-    void DecMeasurementStep(const LGuider_Point &currentLoc);
+    void DecMeasurementStep(const PHD_Point &currentLoc);
     void CleanUp();
     BLT_STATE GetBltState() const { return m_bltState; }
     MeasurementResults GetMeasurementQuality() const { return m_Rslt; }

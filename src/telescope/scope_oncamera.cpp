@@ -1,6 +1,6 @@
 /*
  *  scope_oncamera.cpp
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee
@@ -33,20 +33,32 @@
  *
  */
 
-#include "lightguider.h"
+#include "phd.h"
 
 #ifdef GUIDE_ONCAMERA
 
-ScopeOnCamera::ScopeOnCamera() { m_Name = "On Camera"; }
+ScopeOnCamera::ScopeOnCamera()
+{
+    m_Name =  "On Camera";
+}
 
-ScopeOnCamera::~ScopeOnCamera() {}
+ScopeOnCamera::~ScopeOnCamera()
+{
+}
 
-bool ScopeOnCamera::Connect() {
+bool ScopeOnCamera::Connect()
+{
     return ScopeOnboardST4::ConnectOnboardST4(pCamera);
 }
 
-bool ScopeOnCamera::RequiresCamera() { return true; }
+bool ScopeOnCamera::RequiresCamera()
+{
+    return true;
+}
 
-bool ScopeOnCamera::HasNonGuiMove() { return true; }
+bool ScopeOnCamera::HasNonGuiMove()
+{
+    return true;
+}
 
-#endif  // GUIDE_ONCAMERA
+#endif // GUIDE_ONCAMERA

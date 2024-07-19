@@ -1,6 +1,6 @@
 /*
  *  guiders.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Bret McKee
  *  Copyright (c) 2012 Bret McKee
@@ -36,8 +36,7 @@
 #ifndef GUIDERS_H_INCLUDED
 #define GUIDERS_H_INCLUDED
 
-#include "algorithm/guider_multistar.h"
 #include "guider.h"
-
+#include "guider_multistar.h"
 
 #endif /* GUIDERS_H_INCLUDED */

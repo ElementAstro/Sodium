@@ -1,6 +1,6 @@
 /*
  *  testguide.h
- *  LGuider Guiding
+ *  PHD Guiding
  *
  *  Created by Craig Stark.
  *  Copyright (c) 2006-2010 Craig Stark.
@@ -35,11 +35,12 @@
 #ifndef TESTGUIDE_H_INCLUDED
 #define TESTGUIDE_H_INCLUDED
 
-class TestGuide {
-    TestGuide();  // not implemented
+class TestGuide
+{
+    TestGuide(); // not implemented
 public:
     static wxWindow *CreateManualGuideWindow();
     static void ManualGuideUpdateControls();
 };
 
-#endif  // TESTGUIDE_H_INCLUDED
+#endif //TESTGUIDE_H_INCLUDED
