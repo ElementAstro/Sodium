@@ -110,6 +110,16 @@ public:
     Scope* AuxScope() const;
     wxString SelectedCameraId() const;
 
+    // shared memory
+    void SelectedCameraIDFromShm(wxString name);  // QHY MOD
+
+    void ChoiceCameraFromShm(const wxString& choice,
+                             int index);  // add by CJQ 2023.3.27
+
+    void OnChoiceScopeFromShm(const wxString& choice, int index);
+
+    wxString glCameraIdFromShm = "INDI Camera";  // QHY MOD
+
 private:
     void LoadGearChoices();
     void UpdateGearPointers();

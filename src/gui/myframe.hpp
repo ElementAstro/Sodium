@@ -53,6 +53,8 @@ wxDECLARE_EVENT(REQUEST_MOUNT_MOVE_EVENT, wxCommandEvent);
 wxDECLARE_EVENT(WXMESSAGEBOX_PROXY_EVENT, wxCommandEvent);
 wxDECLARE_EVENT(STATUSBAR_ENQUEUE_EVENT, wxCommandEvent);
 wxDECLARE_EVENT(STATUSBAR_TIMER_EVENT, wxTimerEvent);
+// shared memory
+wxDECLARE_EVENT(SHM_TIMER_EVENT,wxTimerEvent);
 wxDECLARE_EVENT(SET_STATUS_TEXT_EVENT, wxThreadEvent);
 wxDECLARE_EVENT(ALERT_FROM_THREAD_EVENT, wxThreadEvent);
 
@@ -101,6 +103,41 @@ struct SingleExposure {
     bool enabled;
     int duration;
     wxRect subframe;
+};
+
+// shared memory
+struct GuideErrorInfoToShm {
+    double SelectedStarX = 0;
+    double SelectedStarY = 0;
+    double dX = 0;    // unit: px
+    double dY = 0;    // unit: px
+    double dRA = 0;   // unit: px
+    double dDEC = 0;  // unit: px
+    double SNR = 0;
+    double MASS = 0;
+    int RADUR = 0;
+    int DECDUR = 0;
+    char RADIR;
+    char DECDIR;
+    double RMSErrorX = 0;      // unit: px
+    double RMSErrorY = 0;      // unit: px
+    double RMSErrorTotal = 0;  // unit: px
+    double PixelRatio = 0;     // pixel * PixelRatio = arcsec
+};
+
+// shared memory
+struct GuideRealTimeInfoToShm {
+    bool isSelected = false;
+    double SelectedStarX = 0;
+    double SelectedStarY = 0;
+
+    bool showLockedCross = false;
+    double LockedPositionX = 0;
+    double LockedPositionY = 0;
+
+    unsigned char MultiStarNumber;  // maxium 30
+    uint16_t MultiStarX[32];        // maxium 32 stars
+    uint16_t MultiStarY[32];        // maxium 32 stars
 };
 
 class MyFrameConfigDialogCtrlSet : public ConfigDialogCtrlSet {
@@ -164,6 +201,9 @@ protected:
     int GetTimeLapse() const;
     int GetExposureDelay();
 
+    // shared memory
+    int CopyImageToShm(usImage* img);
+
     bool SetFocalLength(int focalLength);
 
     friend class MyFrameConfigDialogPane;
@@ -193,6 +233,14 @@ private:
 public:
     MyFrame();
     virtual ~MyFrame();
+
+    void CopyGuideErrorDataToShm(GuideErrorInfoToShm g);
+    void CopyGuiderRealTimeDataToShm(GuideRealTimeInfoToShm g);
+
+    // BY QIU 2022.11.27 shared memory
+    int shmid;
+    char* qBuffer;                       // mapped buffer with shared memory
+    bool enableShmCommunication = true;  // By QIU
 
     Guider* pGuider;
     wxMenuBar* Menubar;
@@ -254,6 +302,18 @@ public:
     bool m_rawImageMode;
     bool m_rawImageModeWarningDone;
     wxSize m_prevDarkFrameSize;
+
+    // shared memory
+    bool StarLostAlert;
+    bool InGuiding = false;
+    char direction_;
+    int step_;
+    double dist_;
+    int ControlNum = 0;
+    int sdk_direction;
+    int sdk_duration;
+
+    int ControlStatus = 0;
 
     void RegisterTextCtrl(wxTextCtrl* ctrl);
 
@@ -489,6 +549,20 @@ public:
         double max = 100, double initial = 0, double inc = 1,
         const wxString& name = wxT("wxSpinCtrlDouble"));
 
+    uint8_t MSB(uint16_t i) {
+        uint8_t j;
+        j = (i & ~0x00ff) >> 8;
+        return j;
+    }
+
+    uint8_t LSB(uint16_t i) {
+        uint8_t j;
+        j = i & ~0xff00;
+        return j;
+    }
+
+    void getTimeNow(int index);
+
 private:
     wxCriticalSection m_CSpWorkerThread;
     WorkerThread* m_pPrimaryWorkerThread;
@@ -496,6 +570,9 @@ private:
 
     wxSocketServer* SocketServer;
     wxTimer m_statusbarTimer;
+
+    // shared memory
+    wxTimer shmTimer;
 
     int m_exposureDuration;
     AutoExposureCfg m_autoExp;
@@ -516,6 +593,8 @@ private:
     void OnAlertFromThread(wxThreadEvent& event);
     void OnReconnectCameraFromThread(wxThreadEvent& event);
     void OnStatusBarTimerEvent(wxTimerEvent& evt);
+    // shared memory
+    void OnShmTimerEvent(wxTimerEvent &evt);
     void OnUpdaterStateChanged(wxThreadEvent& event);
     void OnMessageBoxProxy(wxCommandEvent& evt);
     void SetupMenuBar();

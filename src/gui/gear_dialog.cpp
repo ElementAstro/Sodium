@@ -35,7 +35,6 @@
 #include "profile_wizard.hpp"
 #include "sodium.hpp"
 
-
 #include <wx/gbsizer.h>
 #include <functional>
 
@@ -984,6 +983,56 @@ void GearDialog::OnChoiceCamera(wxCommandEvent& event) {
     m_cameraUpdated = true;
 }
 
+void GearDialog::ChoiceCameraFromShm(const wxString& choice,
+                                     int index)  // add by CJQ 2023.3.27
+{
+    m_lastCamera =
+        pConfig->Profile.GetString("/camera/LastMenuChoice", _("None"));
+    SetMatchingSelection(m_pCameras, m_lastCamera);
+    m_pCameras->SetSelection(index);
+    // m_pScopes->SetSelection(3);
+    try {
+        wxString choice_ =
+            m_pCameras->GetStringSelection();  // return the selected item from
+                                               // the list box
+
+        std::string aaa = std::string(choice_.ToStdString());
+        DEBUG_INFO("choice previous %s", aaa.c_str());
+
+        // delete the previous built class
+        delete m_pCamera;
+        m_pCamera = nullptr;
+
+        UpdateGearPointers();
+
+        m_pCamera = GuideCamera::Factory(choice_);
+
+        aaa = std::string(choice_.ToStdString());
+        DEBUG_INFO("choice after %s", aaa.c_str());
+
+        Debug.AddLine(wxString::Format("Created new camera of type %s = %p",
+                                       choice_, m_pCamera));
+
+        if (pConfig->Profile.GetString("/camera/LastMenuChoice",
+                                       wxEmptyString) != choice_) {
+            pConfig->Profile.SetString("/camera/LastMenuChoice", choice_);
+            m_flushConfig = true;
+        }
+
+        m_selectCameraButton->Enable(m_pCamera && m_pCamera->CanSelectCamera());
+
+        if (!m_pCamera) {
+            throw THROW_INFO("SetCameraType: m_pCamera == NULL");
+        }
+    } catch (const wxString& Msg) {
+        POSSIBLY_UNUSED(Msg);
+    }
+
+    UpdateButtonState();
+
+    m_cameraUpdated = true;
+}
+
 static void AutoLoadDefectMap() {
     if (pConfig->Profile.GetBoolean("/camera/AutoLoadDefectMap", true)) {
         Debug.AddLine("auto-loading defect map");
@@ -1012,6 +1061,23 @@ static wxString SelectedCameraId(const wxString& camName) {
 
 wxString GearDialog::SelectedCameraId() const {
     return ::SelectedCameraId(m_lastCamera);
+}
+
+void GearDialog::SelectedCameraIDFromShm(wxString name) {
+    DEBUG_INFO(
+        "gear_dialog.cpp | set global cameraID from QHYCCD share memory "
+        "command");
+    glCameraIdFromShm = name;
+    //  pConfig->Profile.SetString("/indi/INDIcam", glCameraIdFromShm);
+    //  pConfig->dev->SetValue(glCameraIdFromShm);
+    //  INDIConfig::dev->SetValue(glCameraIdFromShm);
+    //  DoConnectCamera(false);
+    //  pConfig->Profile.SetString("/indi/INDIcam", glCameraIdFromShm);
+
+    // wxString errMsg;
+    // ConnectAll(&errMsg);
+    wxCommandEvent dummyEvent;
+    OnButtonConnectAll(dummyEvent);
 }
 
 void GearDialog::OnButtonSelectCamera(wxCommandEvent& event) {
@@ -1090,6 +1156,19 @@ bool GearDialog::DoConnectCamera(bool autoReconnecting) {
         }
 
         wxString newCam = m_pCameras->GetStringSelection();
+
+        // shared memory
+        wxString baseID = glCameraIdFromShm;  // QHY MOD
+
+        if (baseID != "") {
+            newCam = wxString::Format(
+                "%s%s%s", "INDI Camera [", baseID,
+                "]");  // QHY MOD use glCameraIdFromShm replace it
+        }
+        // newCam="INDI Camera ["+baseID+"]";
+
+        std::string aaa = std::string(newCam.ToStdString());
+        DEBUG_INFO("newCam:%s", aaa.c_str());
 
         Debug.Write(wxString::Format(_T("gear_dialog: DoConnectCamera [%s]\n"),
                                      newCam));
@@ -1314,6 +1393,43 @@ void GearDialog::UpdateGearPointers() {
 }
 
 void GearDialog::OnChoiceScope(wxCommandEvent& event) {
+    try {
+        wxString choice = m_pScopes->GetStringSelection();
+
+        delete m_pScope;
+        m_pScope = nullptr;
+        UpdateGearPointers();
+
+        m_pScope = Scope::Factory(choice);
+        Debug.AddLine(wxString::Format("Created new scope of type %s = %p",
+                                       choice, m_pScope));
+
+        if (pConfig->Profile.GetString("/scope/LastMenuChoice",
+                                       wxEmptyString) != choice) {
+            pConfig->Profile.SetString("/scope/LastMenuChoice", choice);
+            m_flushConfig = true;
+        }
+
+        if (!m_pScope) {
+            throw THROW_INFO("OnChoiceScope: m_pScope == NULL");
+        }
+
+        m_ascomScopeSelected = choice.Contains("ASCOM");
+    } catch (const wxString& Msg) {
+        POSSIBLY_UNUSED(Msg);
+    }
+
+    UpdateButtonState();
+
+    m_mountUpdated = true;
+}
+
+// shared memory
+void GearDialog::OnChoiceScopeFromShm(const wxString& choice, int index) {
+    m_lastCamera =
+        pConfig->Profile.GetString("/scope/LastMenuChoice", _("None"));
+    SetMatchingSelection(m_pScopes, m_lastCamera);
+    m_pScopes->SetSelection(index);
     try {
         wxString choice = m_pScopes->GetStringSelection();
 

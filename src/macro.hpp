@@ -96,3 +96,5 @@
 // name.
 #define SODIUM_MESSAGES_CATALOG "sodium"
 #endif
+
+#define DEBUG_INFO(fmt, args...) printf("\033[33m[%s:%d]\033[0m "#fmt"\r\n", __func__, __LINE__, ##args)   //by QIU
