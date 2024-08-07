@@ -97,4 +97,17 @@
 #define SODIUM_MESSAGES_CATALOG "sodium"
 #endif
 
-#define DEBUG_INFO(fmt, args...) printf("\033[33m[%s:%d]\033[0m "#fmt"\r\n", __func__, __LINE__, ##args)   //by QIU
+#define DEBUG_INFO(fmt, args...)                                      \
+    printf("\033[33m[%s:%d]\033[0m " #fmt "\r\n", __func__, __LINE__, \
+           ##args)  // by QIU
+
+// ALIGNAS
+#if defined(_MSC_VER) || defined(__INTEL_COMPILER)
+#define ATOM_ALIGNAS(x) __declspec(align(x))
+#define ATOM_PACKED __pragma(pack(push, 1))
+#define ATOM_PACKED_END __pragma(pack(pop))
+#else
+#define ATOM_ALIGNAS(x) __attribute__((aligned(x)))
+#define ATOM_PACKED __attribute__((packed))
+#define ATOM_PACKED_END
+#endif

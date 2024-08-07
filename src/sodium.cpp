@@ -31,6 +31,10 @@
 #include <X11/Xlib.h>
 #endif  // __linux__
 
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/sinks/rotating_file_sink.h>
+
 // #define DEVBUILD
 
 // Globals
@@ -451,7 +455,37 @@ struct EarlyLogger : public wxLog {
     }
 };
 
+void setup_logger() {
+    try {
+        // 创建控制台日志记录器（带彩色输出）
+        auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+        console_sink->set_level(spdlog::level::info);
+        console_sink->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%^%l%$] [thread %t] %v");
+
+        // 创建滚动文件日志记录器
+        auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>("logs/my_log.txt", 1024 * 1024 * 5, 3);
+        file_sink->set_level(spdlog::level::debug);
+        file_sink->set_pattern("[%Y-%m-%d %H:%M:%S.%e] [%l] [thread %t] %v");
+
+        // 创建多重日志记录器
+        std::vector<spdlog::sink_ptr> sinks{console_sink, file_sink};
+        auto logger = std::make_shared<spdlog::logger>("multi_sink", sinks.begin(), sinks.end());
+        logger->set_level(spdlog::level::debug);
+        logger->flush_on(spdlog::level::err);
+
+        // 将其设置为默认日志记录器
+        spdlog::set_default_logger(logger);
+        spdlog::set_level(spdlog::level::debug); // 全局日志级别
+        spdlog::flush_on(spdlog::level::info);   // 刷新级别
+
+        spdlog::info("Logger initialized successfully");
+    } catch (const spdlog::spdlog_ex &ex) {
+        std::cout << "Log initialization failed: " << ex.what() << std::endl;
+    }
+}
+
 bool PhdApp::OnInit() {
+    setup_logger();
 #ifdef __APPLE__
     // for newer versions of OSX the app will hang if the wx log code
     // tries to display a message box in OnOnit.  As a workaround send
