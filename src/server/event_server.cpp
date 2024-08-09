@@ -546,7 +546,7 @@ struct JRpcResponse : public JObj {
 
 static wxString parser_error(const JsonParser &parser) {
     spdlog::error("Failed to parser JSON message from client...");
-    spdlog::debug("invalid JSON request: %s on line %d at \"%.12s...\"",
+    spdlog::debug("invalid JSON request: {} on line {} at \"{}...\"",
                   parser.ErrorDesc(), parser.ErrorLine(), parser.ErrorPos());
     return wxString::Format(
         "invalid JSON request: %s on line %d at \"%.12s...\"",
@@ -928,7 +928,9 @@ static void set_connected(JObj &response, const json_value *params) {
         std::string action = connect ? "connect" : "disconnect";
         spdlog::debug("Try to {} all devices", action);
         wxString errMsg;
-        spdlog::info("Device dialog is {}", pFrame->pGearDialog->IsShownOnScreen() ? "active" : "inactive");
+        spdlog::info(
+            "Device dialog is {}",
+            pFrame->pGearDialog->IsShownOnScreen() ? "active" : "inactive");
         if (pFrame->pGearDialog->IsShown()) {
             spdlog::warn("Device dialog is active, we will try to kill it!");
             if ((pFrame->pGearDialog->Close(true))) {
@@ -3282,26 +3284,24 @@ static bool handle_request(JRpcCall &call) {
                    {"delete_profile", &delete_profile},
                    {"delete_all_profiles", &delete_all_profiles}};
 
-    for (unsigned int i = 0; i < WXSIZEOF(methods); i++) {
-        if (strcmp(call.method->string_value, methods[i].name) == 0) {
-            (*methods[i].fn)(call.response, params);
-            if (id) {
+    for (auto &method : methods) {
+        if (strcmp(call.method->string_value, method.name) == 0) {
+            (*method.fn)(call.response, params);
+            if (id != nullptr) {
                 call.response << jrpc_id(id);
                 return true;
-            } else {
-                return false;
             }
+            return false;
         }
     }
 
-    if (id) {
+    if (id != nullptr) {
         call.response << jrpc_error(JSONRPC_METHOD_NOT_FOUND,
                                     "method not found")
                       << jrpc_id(id);
         return true;
-    } else {
-        return false;
     }
+    return false;
 }
 
 static void handle_cli_input_complete(wxSocketClient *cli, char *input,
